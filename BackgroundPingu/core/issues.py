@@ -108,7 +108,6 @@ class IssueChecker:
             "optifine",
             "sodium-extra",
             "biomethreadlocalfix",
-            "sleepbackground-3.8-1.8.x-1.12.x",
             "tab-focus",
             "voyager",
             "forceport",
