@@ -232,11 +232,12 @@ All other mods, including Fabric API, are banned[.](https://cdn.discordapp.com/a
     ):
         text = "Common piechart directories:"
         if directory in ["Mapless / Preemptive", "All"]:
-            text += "\nMapless / Preemptive: ```root.gameRenderer.level.entities```"
+            text += "\n- Mapless / Preemptive: ```root.gameRenderer.level.entities```"
         if directory in ["Village / Fortress", "All"]:
-            text += "\nVillage / Fortress: ```root.tick.level.entities.blockEntities```"""
+            text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
         
-        text = text.replace("```\n", "```")
+        text += "\nIf you're using the StandardSettings mod, you can paste these on the `piedirectory:` line to reset your pie chart to the given directory on reset."
+
         return await ctx.respond(text)
 
     @commands.slash_command(name="perch", description="Gives the command to force the dragon to perch.")
@@ -337,7 +338,7 @@ Get AHK **version 1.1** here if you don't have it yet: <https://www.autohotkey.c
 ### The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="ram", description="Gives a guide to change the amount of allocated RAM on MultiMC/Prism.")
+    @commands.slash_command(name="ram", description="Gives a guide to change the amount of allocated RAM.")
     async def ram(
         self,
         ctx: discord.ApplicationContext,
