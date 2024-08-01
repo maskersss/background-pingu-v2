@@ -35,8 +35,7 @@ When you open your Minecraft launcher now it will show Fabric as an option. With
 
     @commands.slash_command(name="mmclog", description="Shows how to send a log on MultiMC/Prism Launcher.")
     async def mmclog(self, ctx: discord.ApplicationContext):
-        text = "Please follow this image in order to send a log[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-        return await ctx.respond(text)
+        return await self.log(ctx, "MultiMC / Prism")
 
     @commands.slash_command(name="mcsr", description="Gives an explanation that MCSR != Ranked.")
     async def mcsr(self, ctx: discord.ApplicationContext):
@@ -69,20 +68,7 @@ You may remap keys using external programs, but:
 
     @commands.slash_command(name="rebind", description="Gives a guide to rebind keys using AutoHotkey.")
     async def rebind(self, ctx: discord.ApplicationContext):
-        text = """To rebind keys, you can download AutoHotkey (<https://www.autohotkey.com/>, **make sure to get version 1.1**) and create a file with your desired key bindings. For instance, if you want to swap the keys "F3" and "r", you can create a file and name it *something*.ahk with the following content:
-```ahk
-#IfWinActive Minecraft
-*F3::r
-*r::F3```Launch the file, and the input of keys "F3" and "r" will be swapped (which means pressing "r" will open the debug menu).
-You can customize the key bindings as desired, see this for help: <https://www.autohotkey.com/docs/v1/KeyList.htm> 
-
-**Rebind Rules**
-You may remap keys using external programs, but:
-• Each game input may have only one key, and each key may cause only one game input
-• F3 shortcuts (such as F3+C, Shift+F3, etc.) can't be bound to a single button
-• Inputs must be buttons - no scrolling the scroll-wheel or similar
-• Rebinding "Attack/Destroy" or "Use Item/Place Block" to a keyboard button in order to abuse as an autoclicker is not allowed"""
-        return await ctx.respond(text)
+        return await self.ahk(ctx)
 
     @commands.slash_command(name="new", description="Provides a comprehensive guide to start learning speedrunning.")
     async def new(self, ctx: discord.ApplicationContext):
@@ -402,6 +388,10 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
         text = """<https://github.com/Knawk/mc-MiniPracticeKit>
 https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915"""
         return await ctx.respond(text)
+
+    @commands.slash_command(name="minipracticekit", description="Gives a link to ModCheck.")
+    async def minipracticekit(self, ctx: discord.ApplicationContext):
+        return await self.mpk(ctx)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
     async def onecycle(self, ctx: discord.ApplicationContext):
