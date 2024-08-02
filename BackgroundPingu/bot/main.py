@@ -20,8 +20,11 @@ class BackgroundPingu(asb):
 
         self.color = 0xFFFFFF
 
+        intents = discord.Intents.default()
+        intents.message_content = True
+
         super().__init__(
-            intents=discord.Intents.all(),
+            intents=intents,
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions(everyone=False),
             owner_ids=[810863994985250836, 695658634436411404],
