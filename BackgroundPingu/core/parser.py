@@ -577,7 +577,6 @@ class Log:
             r"Unable to launch\n.*",
             r"Exception caught from launcher\n.*",
             r"Reported exception thrown!\n.*",
-            r"Shutdown failure!\n.*",
             r"Minecraft has crashed!.*",
             r"A mod crashed on startup!\n.*",
             r"Encountered an unexpected exception\n.*",
