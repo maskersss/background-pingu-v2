@@ -329,6 +329,8 @@ class Log:
     
     @cached_property
     def mod_loader(self) -> ModLoader:
+        if self.type == LogType.LAUNCHER_LOG: return None
+        
         match = re.compile(r"Main Class:\n(.*)\n").search(self._content)
         if not match is None:
             line = match.group(1)
