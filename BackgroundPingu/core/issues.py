@@ -28,31 +28,36 @@ class IssueBuilder:
     def top_info(self, key: str, *args):
         return self._add_to("top_info", "‼️ **" + self.bot.strings.get(f"top_info.{key}", key).format(*args) + "**")
 
-    def error(self, key: str, *args, experimental: bool=False, bold: bool=False):
+    def error(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
+        if key is None: return
         text = self.bot.strings.get(f"error.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
         return self._add_to("error", "<:dangerkekw:1123554236626636880> " + text)
     
-    def warning(self, key: str, *args, experimental: bool=False, bold: bool=False):
+    def warning(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
+        if key is None: return
         text = self.bot.strings.get(f"warning.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
         return self._add_to("warning", "<:warningkekw:1123563914454634546> " + text)
     
-    def note(self, key: str, *args, experimental: bool=False, bold: bool=False):
+    def note(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
+        if key is None: return
         text = self.bot.strings.get(f"note.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
         return self._add_to("note", "<:kekw:1123554521738657842> " + text)
 
-    def info(self, key: str, *args, experimental: bool=False, bold: bool=False):
+    def info(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
+        if key is None: return
         text = self.bot.strings.get(f"info.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
         return self._add_to("info", "<:infokekw:1123567743355060344> " + text)
 
-    def add(self, key: str, *args, experimental: bool=False, bold: bool=False):
+    def add(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
+        if key is None: return
         text = self.bot.strings.get(f"add.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
