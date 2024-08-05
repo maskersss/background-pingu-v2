@@ -1016,6 +1016,11 @@ class IssueChecker:
             builder.error("old_wp_with_stateoutput")
             found_crash_cause = True
         
+        if self.log.has_mod("beachfilter"):
+            builder.error("beachfilter_unsupported")
+            if self.log.has_content_in_stacktrace("atum"):
+                found_crash_cause = True
+        
         if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.StackOverflowError") and self.log.has_content("$atum$createDesiredWorld"):
             builder.error("stack_overflow_crash")
             found_crash_cause = True
@@ -1103,13 +1108,14 @@ class IssueChecker:
         if not match is None:
             builder.info("send_watchdog_report", match.group(1))
             found_crash_cause = True
+        
+        if self.log.has_content_in_stacktrace("java.lang.NoSuchFieldError: freezePreview"):
+            builder.error("old_mod_crash", "SleepBackground", "https://mods.tildejustin.dev/")
+            found_crash_cause = True
 
         if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):
             if self.log.has_mod("autoresetter"):
                 builder.error("downgrade_atum")
-                found_crash_cause = True
-            elif self.log.has_mod("beachfilter"):
-                builder.error("old_mod_crash", "beachfilter", "https://github.com/DuncanRuns/BeachFilter-Mod/releases/latest/")
                 found_crash_cause = True
             elif self.log.has_mod("fsg-wrapper-mod"):
                 builder.error("old_mod_crash", "fsg wrapper", "https://modrinth.com/mod/fsg-mod/versions/")
@@ -1120,10 +1126,6 @@ class IssueChecker:
                     experimental=(self.log.minecraft_version != "1.16.1")
                 )
                 found_crash_cause = True
-        
-        if self.log.has_content_in_stacktrace("java.lang.NoSuchFieldError: freezePreview"):
-            builder.error("old_mod_crash", "SleepBackground", "https://mods.tildejustin.dev/")
-            found_crash_cause = True
 
         if (not found_crash_cause and
             (self.log.stacktrace is None and self.log.exitcode == -1073741819
