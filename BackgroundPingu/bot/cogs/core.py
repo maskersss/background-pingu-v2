@@ -40,7 +40,7 @@ class Core(Cog):
                     found_result = True
             except Exception as e:
                 error = "".join(traceback.format_exception(e))
-                result["text"] = f"```\n{error}\n```\n<@810863994985250836>, <@695658634436411404> :bug:"
+                result["text"] = f"```\n{error}\n```\n<@695658634436411404> :bug:"
                 found_result = True
             if found_result: break
         return result
