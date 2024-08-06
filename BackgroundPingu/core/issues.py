@@ -567,6 +567,7 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: can't find class com.llamalad7.mixinextras",
             "java.lang.ClassNotFoundException: com.llamalad7.mixinextras",
             "java.lang.NoClassDefFoundError: com/redlimerl/speedrunigt",
+            "$zmm000$setspawnmod$failOnNonRandomSpawns",
         ]):
             builder.error("old_fabric_crash").add(self.log.fabric_guide, "update")
             found_crash_cause = True
