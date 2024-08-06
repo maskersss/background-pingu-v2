@@ -816,7 +816,10 @@ class IssueChecker:
         
         pattern = r"Uncaught exception in thread \"Thread-\d+\"\njava\.util\.ConcurrentModificationException: null"
         if "java.util.ConcurrentModificationException" in re.sub(pattern, "", self.log._content):
-            if self.log.short_version == "1.16" and not self.log.has_mod("voyager"):
+            if (self.log.is_newer_than("1.14") and not self.log.is_newer_than("1.17")
+                and (self.log.major_java_version is None or self.log.major_java_version > 8)
+                and not self.log.has_mod("voyager")
+            ):
                 builder.error("no_voyager_crash")
             elif self.log.has_content("[SEVERE] [ForgeModLoader] Unable to launch") and not self.log.has_mod("legacyjavafixer"):
                 builder.error("legacyjavafixer")
