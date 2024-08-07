@@ -292,7 +292,13 @@ class Log:
 
     @cached_property
     def type(self) -> LogType:
-        if any([self._content.startswith(launcher.value) for launcher in Launcher]):
+        if any([self.has_pattern(rf"^{launcher}") for launcher in [
+            "multimc",
+            "ultimmc",
+            "prism",
+            "polymc",
+            "pollymc",
+        ]]):
             return LogType.FULL_LOG
 
         if any(self.has_content(thread_dump) for thread_dump in [
