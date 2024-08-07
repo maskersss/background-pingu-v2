@@ -71,7 +71,6 @@
     "error.locked_libs": "Another process appears to be locking your native library JARs. To solve this, restart your PC.",
     "error.m1_multimc_hack": "You seem to be using `M1 MultiMC hack`. It can often cause issues. You should use [**Prism Launcher**](https://prismlauncher.org/) instead.",
     "error.mac_too_new_java": "You are using too new of a `Java` version. Please follow the steps on [**this wiki page**](https://prismlauncher.org/wiki/getting-started/installing-java/#older-minecraft-on-macos) to install 8u241. You don't need to uninstall the other Java version.",
-    "error.mayas_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**Maya's Mods**](https://discord.gg/s9m8gf6pju) server.",
     "error.mclogs_cutoff": "Your log seems to be too large, which caused it to get cut off at `25000` lines by `mclo.gs`.",
     "error.mcsr_corrupted_mods_config": "One of the config files in the `.minecraft/config/mcsr/` folder seems to be corrupted. You can try deleting / renaming the folder to see if it'll fix the crash.",
     "error.midnight_bug": "Your log seems to be cut off due to `Minecraft` generating a new log at midnight.",
