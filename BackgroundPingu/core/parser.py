@@ -679,10 +679,10 @@ class Log:
                 "antiresourcereload",
                 "fast-reset",
                 "atum",
+                "state-output",
             ]
             if not self.minecraft_version == "1.16.1":
                 mods += [
-                    "state-output",
                     "sleepbackground",
                 ]
         
