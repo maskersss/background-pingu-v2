@@ -1118,7 +1118,10 @@ class IssueChecker:
             builder.info("send_watchdog_report", match.group(1))
             found_crash_cause = True
         
-        if self.log.has_content_in_stacktrace("java.lang.NoSuchFieldError: freezePreview"):
+        if any(self.log.has_content_in_stacktrace(outdated_sleepbg) for outdated_sleepbg in [
+            "java.lang.NoSuchFieldError: freezePreview",
+            "does not have member field 'boolean freezePreview'",
+        ]):
             builder.error("old_mod_crash", "SleepBackground", "https://mods.tildejustin.dev/")
             found_crash_cause = True
 
