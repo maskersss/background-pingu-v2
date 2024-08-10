@@ -657,7 +657,10 @@ class IssueChecker:
                 elif self.log.max_allocated < min_limit_1:
                     builder.note("too_little_ram").add(*self.log.ram_guide)
             
-            if is_mcsr_log and not any(temp is None for temp in self.log.recommended_max_allocated):
+            if (is_mcsr_log
+                and not any(temp is None for temp in self.log.recommended_max_allocated)
+                and len(self.log.whatever_mods) > 0
+            ):
                 max_limit_0, max_limit_1, max_limit_2 = self.log.recommended_max_allocated
                 if self.log.max_allocated > max_limit_0:
                     builder.error("too_much_ram").add(*self.log.ram_guide)
