@@ -487,7 +487,7 @@ class Log:
             max_limit_1 *= 1.3
             max_limit_2 *= 1.3
         
-        if self.has_mod("seedqueue"):
+        if self.is_seedqueue_log:
             max_limit_0, max_limit_1 = None, None
         
         return (max_limit_0, max_limit_1, max_limit_2)
@@ -508,7 +508,7 @@ class Log:
 
     @cached_property
     def ram_guide(self) -> tuple[str, str, str, str]:
-        if self.has_mod("seedqueue"):
+        if self.is_seedqueue_log:
             sq_min, sq_max = self.seedqueue_ram
             sq_min = int(round(sq_min, -1))
             sq_max = int(round(sq_max, -1))
@@ -629,15 +629,10 @@ class Log:
         if self.has_content("com.mcsrranked"): return True
         
         return False
-    
+
     @cached_property
-    def is_not_julti_log(self) -> bool:
-        if self.is_ranked_log: return True
-        
-        if self.minecraft_folder is None: return False
-        
-        if not self.minecraft_folder.replace(self.minecraft_version, "").split("/.minecraft")[0][-1].isdigit():
-            return True
+    def is_seedqueue_log(self) -> bool:
+        if self.has_mod("seedqueue"): return True
         
         return False
     
@@ -658,7 +653,6 @@ class Log:
         mods += [
             "lithium",
             "speedrunapi",
-            "seedqueue",
         ]
 
         if self.launcher != Launcher.OFFICIAL_LAUNCHER and not self.is_newer_than("1.17"):
@@ -669,6 +663,7 @@ class Log:
 
         if self.is_ssg_log:
             mods += [
+                "seedqueue",
                 "setspawn",
                 "chunkcacher",
                 "speedrunigt",
@@ -676,6 +671,7 @@ class Log:
             ]
         elif not self.has_mod("mcsrranked") and not self.has_mod("peepopractice"):
             mods += [
+                "seedqueue",
                 "antigone",
                 "worldpreview",
                 "speedrunigt",
@@ -683,11 +679,11 @@ class Log:
                 "antiresourcereload",
                 "fast-reset",
                 "atum",
-                "sleepbackground",
             ]
-            if not self.is_not_julti_log:
+            if not self.minecraft_version == "1.16.1":
                 mods += [
                     "state-output",
+                    "sleepbackground",
                 ]
         
         return mods
@@ -772,6 +768,6 @@ stacktrace={self.stacktrace}
 exitcode={self.exitcode}
 is_ssg_log={self.is_ssg_log}
 is_ranked_log={self.is_ranked_log}
-is_not_julti_log={self.is_not_julti_log}
+is_seedqueue_log={self.is_seedqueue_log}
 recommended_mods={self.recommended_mods}
 """.strip()
