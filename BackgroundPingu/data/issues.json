@@ -22,7 +22,7 @@
     "add.k4_setup_guide": "Check out [**this video**](https://www.youtube.com/watch?v=VL8Syekw4Q0) for a guide on how to set up for Minecraft speedrunning.",
     "add.mac_setup_guide": "You can check out [**this guide**](https://www.youtube.com/watch?v=GomIeW5xdBM) for how to set up speedrunning on a Mac.",
     "add.mod_download": "You can download `{}` [**here**]({}).",
-    "add.modcheck_v1_warning": "**The previous version (1.0) of `ModCheck` is no longer supported.** Please ensure that your `ModCheck` is up-to-date.",
+    "add.modcheck_v1_warning": "**The previous versions (v1/v2) of `ModCheck` are no longer supported.** Please ensure that your `ModCheck` is up-to-date.",
     "add.optifine_alternatives": "See [**this page**](https://prismlauncher.org/wiki/getting-started/install-of-alternatives/) for more information.",
     "add.prism_java_compat_check": "Make sure to enable `Skip Java compatibility checks` in `Prism`.",
     "add.update_mods": "You can get the latest versions of all mods from [**this website**](https://mods.tildejustin.dev/) or by using [**ModCheck**](https://github.com/tildejustin/modcheck/releases/latest).",
