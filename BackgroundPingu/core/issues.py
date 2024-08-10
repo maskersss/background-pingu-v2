@@ -694,8 +694,8 @@ class IssueChecker:
         if self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
             builder.error("mac_too_new_java")
         
-        if self.log.has_content_in_stacktrace("Pixel format not accelerated"):
-            builder.error("gl_pixel_format")
+        if not self.log.is_newer_than("1.17") and self.log.has_content_in_stacktrace("Pixel format not accelerated"):
+            builder.error("unsupported_intel_gpu")
         
         if self.log.has_content("Z garbage collector is not supported by Graal"):
             builder.error("zgc_graalvm_crash")
@@ -715,12 +715,17 @@ class IssueChecker:
             else:
                 builder.error("openal_crash", experimental=True)
         
-        if self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]"):
-            if self.log.has_content("speedrunigt") or self.log.is_ranked_log:
-                builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
-            else:
-                builder.error("gl_pixel_format")
+        if (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+            and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
+        ):
+            builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
             if self.log.stacktrace is None: found_crash_cause = True
+        
+        elif (not self.log.is_newer_than("1.17")
+            and self.log.stacktrace is None
+            and self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+        ):
+            builder.error("unsupported_intel_gpu", experimental=True)
         
         elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
             wrong_mods = [mod for mod in self.log.whatever_mods if "xaero" in mod.lower()]
