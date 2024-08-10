@@ -139,7 +139,7 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         text = """[**Mac speedrunning discord**](https://discord.gg/sczfsdE39W)
 
 Mac eye measuring tutorial: https://discord.com/channels/83066801105145856/405839885509984256/1173097881985617920
-Mac wall/multi instancing by Slackow: https://discord.com/channels/83066801105145856/405839885509984256/1243768413571125249
+To run several instances, use [**SeedQueue**](<https://youtu.be/mOkLwOWgE7w>).
 
 Speedrunning on Mac setup tutorial: https://www.youtube.com/watch?v=GomIeW5xdBM"""
         return await ctx.respond(text)
@@ -170,12 +170,46 @@ Watch the 1st video for a rough overview, the 2nd and 3rd for more information a
 
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
     async def julti(self, ctx: discord.ApplicationContext):
-        text = "https://youtu.be/_8gQkgZcTKo"
+        text = """__**Julti is no longer required for wall on 1.16.1, [SeedQueue](<https://youtu.be/mOkLwOWgE7w>) is recommended instead.**__
+Julti [tutorial](https://youtu.be/_8gQkgZcTKo) and discord: https://discord.gg/cXf86mXAWR"""
+        return await ctx.respond(text)
+    
+    @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
+    async def seedqueue(self, ctx: discord.ApplicationContext):
+        text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
+Tutorial: https://youtu.be/mOkLwOWgE7w
+Download: <https://github.com/KingContaria/seedqueue/releases>
+Wiki: <https://github.com/KingContaria/seedqueue/wiki>
+Discord server: <https://discord.gg/9P6PJkHCdU>"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="wall", description="Gives a link to a Julti tutorial.")
+    @commands.slash_command(name="sq", description="Explains what SeedQueue is.")
+    async def sq(self, ctx: discord.ApplicationContext):
+        return await self.seedqueue(ctx)
+
+    @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
     async def wall(self, ctx: discord.ApplicationContext):
-        text = "https://youtu.be/_8gQkgZcTKo"
+        return await self.seedqueue(ctx)
+    
+    @commands.slash_command(name="zgc", description="Gives an explanation of Z Garbage Collector.")
+    async def zgc(
+        self,
+        ctx: discord.ApplicationContext,
+        launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
+    ):
+        text = """Z Garbage Collector (ZGC) is a garbage collector that improves performance and reduces lag spikes, though it uses more memory. It's currently **recommended** over the default GC if you use SeedQueue.
+To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (type `!!java` in <#433058639956410383>), then"""
+        if launcher == "MultiMC / Prism":
+            text += "\n- If you're on MultiMC or Prism: Go to `Settings > Java` and set your JVM arguments to `-XX:+UseZGC`."
+        else:
+            text += "\n- If you're on the official Minecraft launcher: Go to Installations > \"...\" for the installation you're using > Edit > More options and in the JVM arguments text field, find and replace `-XX:+UseG1GC` with `-XX:+UseZGC`."
+        
+        return await ctx.respond(text)
+    
+    @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
+    async def graalvm(self, ctx: discord.ApplicationContext):
+        text = """GraalVM is a Java compiler that performs worse than other compilers at the start of sessions, but speeds up as the session goes on.
+See [this](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d#graalvm>) for a guide."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="modcheck", description="Gives a link to ModCheck.")
@@ -186,7 +220,7 @@ Watch the 1st video for a rough overview, the 2nd and 3rd for more information a
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
     async def one_sixteen_mods(self, ctx: discord.ApplicationContext):
         text = """Download the mods here: <https://mods.tildejustin.dev/>
-All other mods are banned[.](https://i.imgur.com/rkRBoRw.png)"""
+All other mods are banned[.](https://i.imgur.com/hGFNA6c.png)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
@@ -199,16 +233,15 @@ Don't forget to check the info in the readme!"""
     async def peepopractice(self, ctx: discord.ApplicationContext):
         text = """PeepoPractice is a Fabric 1.16.1 mod to practice splits of a Minecraft Any% speedrun. 
 It includes a mapless split, bastion split, fortress split, postblind split, stronghold split, end split and more. 
-Join the discord server linked in the github for updates and more info! 
 Don't forget to check the FAQ in the readme! 
 <https://github.com/faluhub/peepoPractice>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
     async def allowedmods(self, ctx: discord.ApplicationContext):
-        text = """If you use Optifine (allowed only in pre-1.15), please read the [**detailed mod rules**](<http://bombch.us/DOOK>).
-The allowed mods can be found and downloaded [**here**](<https://mods.tildejustin.dev/> ).
-All other mods, including Fabric API, are banned[.](https://cdn.discordapp.com/attachments/433058639956410383/1251953904363769876/image.png)"""
+        text = """If you use Optifine (allowed only in pre-1.15), please read the [detailed mod rules](<http://bombch.us/DOOK>).
+The allowed mods can be found and downloaded from <https://mods.tildejustin.dev/>.
+All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.png)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="piedirectory", description="Gives the useful pie directories.")
@@ -223,7 +256,7 @@ All other mods, including Fabric API, are banned[.](https://cdn.discordapp.com/a
         if directory in ["Village / Fortress", "All"]:
             text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
         
-        text += "\nIf you're using the StandardSettings mod, you can paste these on the `piedirectory:` line to reset your pie chart to the given directory on reset."
+        text += "\nIf you're using the StandardSettings mod, you paste them into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
 
         return await ctx.respond(text)
 
@@ -234,9 +267,9 @@ All other mods, including Fabric API, are banned[.](https://cdn.discordapp.com/a
 
     @commands.slash_command(name="standardsettings", description="Explains what StandardSettings is.")
     async def standardsettings(self, ctx: discord.ApplicationContext):
-        text = """If your settings reset whenever you create a world, you are probably using StandardSettings <https://github.com/Slackow/StandardSettings>
-If you want to change the values that the settings reset to, click the link above and scroll down for instructions
-If you don't want your settings to reset, remove StandardSettings from your mods folder"""
+        text = """If your settings reset whenever you create a world, you are probably using StandardSettings.
+If you want to change what do the settings reset to, go to `Options > Book and Quill > StandardSettings` and configure them.
+If you don't want your settings to reset, set "Toggle StandardSettings" there to "OFF"."""
         return await ctx.respond(text)
 
     # remove the spaces          (here) when uncommenting, also for `/modpack`
@@ -331,7 +364,7 @@ Get AHK **version 1.1** here if you don't have it yet: <https://www.autohotkey.c
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
     ):
-        if launcher == "MultiMC / Prism": text = "https://cdn.discordapp.com/attachments/433058639956410383/995651366280245328/unknown.png"
+        if launcher == "MultiMC / Prism": text = "https://i.imgur.com/UgdLz7W.png"
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
         return await ctx.respond(text)
 
@@ -341,7 +374,7 @@ Get AHK **version 1.1** here if you don't have it yet: <https://www.autohotkey.c
 [Advanced routes](<https://bit.ly/2ZwM3lI>)"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="crafting", description="Gives links to search crafting resources.s")
+    @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext):
         text = """[Overview of Language Crafting for Minecraft Speedruns](https://docs.google.com/document/d/1jSeciLoEgSwWWCdNk0dKignzxJskxJ5_zeCQmcdGmTg) *(contains: Vietnamese, Ukrainian, Korean, Bosnian, English)*
 [Search crafting languages comparison](<https://docs.google.com/spreadsheets/d/1NM5U84PjTBA6oMDSyFgveVVWcP7i0aCIFqvQCNUotYE/edit#gid=1472263979>)
@@ -389,10 +422,6 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
         text = """<https://github.com/Knawk/mc-MiniPracticeKit>
 https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915"""
         return await ctx.respond(text)
-
-    @commands.slash_command(name="minipracticekit", description="Gives a link to ModCheck.")
-    async def minipracticekit(self, ctx: discord.ApplicationContext):
-        return await self.mpk(ctx)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
     async def onecycle(self, ctx: discord.ApplicationContext):
