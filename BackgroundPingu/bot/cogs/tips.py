@@ -198,7 +198,7 @@ Discord server: <https://discord.gg/9P6PJkHCdU>"""
         launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
     ):
         text = """Z Garbage Collector (ZGC) is a garbage collector that improves performance and reduces lag spikes, though it uses more memory. It's currently **recommended** over the default GC if you use SeedQueue.
-To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (type `!!java` in <#433058639956410383>), then"""
+To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/java`), then"""
         if launcher == "MultiMC / Prism":
             text += "\n- If you're on MultiMC or Prism: Go to `Settings > Java` and set your JVM arguments to `-XX:+UseZGC`."
         else:
