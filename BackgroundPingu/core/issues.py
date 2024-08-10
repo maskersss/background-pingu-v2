@@ -1185,7 +1185,6 @@ class IssueChecker:
 
         if not found_crash_cause:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
-                "at org.mcsr.speedrunapi.config",
                 "com.google.gson.stream.MalformedJsonException",
                 "Cannot invoke \"com.google.gson.JsonObject.entrySet()\"",
             ]):
