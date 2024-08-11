@@ -512,7 +512,7 @@ class Log:
             sq_min, sq_max = self.seedqueue_ram
             sq_min = int(round(sq_min, -1))
             sq_max = int(round(sq_max, -1))
-            seedqueue = f" + `{sq_min}-{sq_max}` MB per instance"
+            seedqueue = f" + `{sq_min}-{sq_max}` MB per `Max Queued Seed`"
         else:
             seedqueue = ""
         
@@ -671,7 +671,6 @@ class Log:
             ]
         elif not self.has_mod("mcsrranked") and not self.has_mod("peepopractice"):
             mods += [
-                "seedqueue",
                 "antigone",
                 "worldpreview",
                 "speedrunigt",
@@ -681,10 +680,10 @@ class Log:
                 "atum",
                 "state-output",
             ]
+            if not self.has_mod("fsg-mod") and not self.has_mod("pogloot"):
+                mods.append("seedqueue")
             if not self.minecraft_version == "1.16.1":
-                mods += [
-                    "sleepbackground",
-                ]
+                mods.append("sleepbackground")
         
         return mods
     
