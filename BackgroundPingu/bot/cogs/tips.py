@@ -219,7 +219,7 @@ See [this](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d#g
 
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
     async def one_sixteen_mods(self, ctx: discord.ApplicationContext):
-        text = """Download the mods here: <https://mods.tildejustin.dev/>
+        text = """Download the mods by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>) or from <https://mods.tildejustin.dev/>
 All other mods are banned[.](https://i.imgur.com/hGFNA6c.png)"""
         return await ctx.respond(text)
 
@@ -240,7 +240,7 @@ Don't forget to check the FAQ in the readme!
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
     async def allowedmods(self, ctx: discord.ApplicationContext):
         text = """If you use Optifine (allowed only in pre-1.15), please read the [detailed mod rules](<http://bombch.us/DOOK>).
-The allowed mods can be found and downloaded from <https://mods.tildejustin.dev/>.
+All allowed mods can be downloaded from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.png)"""
         return await ctx.respond(text)
 
