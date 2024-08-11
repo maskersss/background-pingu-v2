@@ -999,9 +999,15 @@ class IssueChecker:
                     builder.error("incompatible_mod", "esimod", incompatible_mod)
         
         if self.log.has_mod("PeepoPractice"):
-            for incompatible_mod in ["WorldPreview", "Atum"]:
+            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "fast-reset"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "PeepoPractice", incompatible_mod)
+                    found_crash_cause = True
+        
+        if self.log.is_seedqueue_log:
+            for incompatible_mod in ["PogLoot"]:
+                if self.log.has_mod(incompatible_mod):
+                    builder.error("incompatible_mod", "SeedQueue", incompatible_mod)
                     found_crash_cause = True
 
         if self.log.has_content_in_stacktrace("Mixin apply for mod areessgee failed areessgee.mixins.json:nether.StructureFeatureMixin from mod areessgee -> net.minecraft.class_3195"):

@@ -680,7 +680,11 @@ class Log:
                 "atum",
                 "state-output",
             ]
-            if not self.has_mod("fsg-mod") and not self.has_mod("pogloot"):
+            if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
+                "fsg-mod",
+                "beachfilter",
+                "pogloot",
+            ]):
                 mods.append("seedqueue")
             if not self.minecraft_version == "1.16.1":
                 mods.append("sleepbackground")
