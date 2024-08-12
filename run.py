@@ -9,9 +9,8 @@ def run_bot():
         main.BackgroundPingu().run(secrets.Discord.TOKEN)
     except HTTPException as e:
         if e.status == 429:  # 429 is the status code for rate limiting
-            print("We are being rate-limited. Retrying in 10 minutes...")
+            print("We are being rate-limited. Sleeping for 10 minutes...")
             sleep(600)
-            run_bot()  # Retry running the bot
         else:
             print(f"An HTTP error occurred:")
             raise e
