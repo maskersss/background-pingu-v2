@@ -55,10 +55,20 @@ class Log:
             content = re.sub(pattern, replacement, content)
             self.leaked_session_id = True
         else: self.leaked_session_id = False
+        
+        self.lines = content.count("\n") + 1
+        if self.lines > 16000:
+            lines = content.splitlines()
+            content = (
+                "\n".join(lines[:6000])
+                + "\n" * 10
+                + "--- Log truncated: Middle portion omitted ---"
+                + "\n" * 10
+                + "\n".join(lines[-10000:])
+            )
 
         self._content = content
         self._lower_content = self._content.lower()
-        self.lines = self._content.count("\n") + 1
     
     @staticmethod
     def from_link(link: str):
