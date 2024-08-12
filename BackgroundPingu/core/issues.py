@@ -900,8 +900,7 @@ class IssueChecker:
         
         if not ranked_mod is None:
             match = re.search(r"(\d+\.\d+(\.\d+)?)", ranked_mod)
-        else:
-            match = None
+        else: match = None
         
         if not match is None:
             extracted_version = match.group(1)
@@ -911,6 +910,7 @@ class IssueChecker:
 
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
+                    found_crash_cause = True
             except version.InvalidVersion:
                 pass
 
