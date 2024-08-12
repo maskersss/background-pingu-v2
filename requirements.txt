@@ -1,0 +1,7 @@
+cached-property==1.5.2
+requests==2.30.0
+packaging==23.1
+py-cord==2.4.1
+python-dotenv==0.21.1
+semver==3.0.1
+aiohttp==3.7.4.post0
