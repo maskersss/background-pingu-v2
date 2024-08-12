@@ -231,10 +231,10 @@ Don't forget to check the info in the readme!"""
 
     @commands.slash_command(name="peepopractice", description="Gives a link to PeepoPractice.")
     async def peepopractice(self, ctx: discord.ApplicationContext):
-        text = """PeepoPractice is a Fabric 1.16.1 mod to practice splits of a Minecraft Any% speedrun. 
-It includes a mapless split, bastion split, fortress split, postblind split, stronghold split, end split and more. 
+        text = """PeepoPractice is a versatile Fabric 1.16.1 mod to practice splits of Minecraft speedruns. It includes mapless, bastion, fortress, postblind, stronghold, end, AA splits and more.
 Don't forget to check the FAQ in the readme! 
-<https://github.com/faluhub/peepoPractice>"""
+<https://github.com/faluhub/peepoPractice>
+*PeepoPractice is incompatible with FastReset and requires Java 17+. Do `/java` if you need help with updating your Java version.*"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
