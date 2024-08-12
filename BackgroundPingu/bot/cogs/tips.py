@@ -130,8 +130,13 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "macOS"], required=False, default="Windows"),
     ):
-        setup_guide = "https://www.youtube.com/watch?v=VL8Syekw4Q0" if os == "Windows" else "https://www.youtube.com/watch?v=GomIeW5xdBM"
-        text = f":warning: Using Java 21 instead of 19.0.1 is completely fine.\n{setup_guide}"
+        if os == "macOS": text = "https://www.youtube.com/watch?v=GomIeW5xdBM"
+        else: text = """Setup video tutorial: https://youtu.be/VL8Syekw4Q0
+This will work for other categories/versions of Minecraft by substituting any mention of 1.16.1 & RSG for your chosen category/version.
+Any version of Java above 17 is recommended, you do not need the exact version shown in the video."""
+        
+        text += "\nMod configs, including Sodium Video Settings, are now located in `Options > Book & Quill (top right)`."
+        
         return await ctx.respond(text)
 
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
