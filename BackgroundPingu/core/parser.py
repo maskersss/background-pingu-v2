@@ -645,6 +645,16 @@ class Log:
         if self.has_mod("seedqueue"): return True
         
         return False
+
+    @cached_property
+    def modcheck_v1_warning(self) -> bool:
+        if any(self.has_mod(mod) for mod in [
+            "speedrunapi",
+            "seedqueue",
+        ]):
+            return None
+        
+        return "modcheck_v1_warning"
     
     @cached_property
     def recommended_mods(self) -> list[str]:

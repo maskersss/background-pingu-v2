@@ -286,13 +286,13 @@ class IssueChecker:
                     "outdated_mods",
                     len(outdated_mods),
                     "`, `".join([mod for mod in outdated_mods.keys()]),
-                ).add("update_mods").add("modcheck_v1_warning")
+                ).add("update_mods").add(self.log.modcheck_v1_warning)
             elif len(outdated_mods) == 0:
                 builder.warning(
                     "missing_mods",
                     len(missing_mods),
                     "`, `".join([mod[0] for mod in missing_mods]),
-                ).add("update_mods").add("modcheck_v1_warning")
+                ).add("update_mods").add(self.log.modcheck_v1_warning)
             else:
                 builder.warning(
                     "missing_and_outdated_mods",
@@ -302,7 +302,7 @@ class IssueChecker:
                     len(outdated_mods),
                     "s" if len(outdated_mods) > 1 else "",
                     "`, `".join([mod for mod in outdated_mods.keys()]),
-                ).add("update_mods").add("modcheck_v1_warning")
+                ).add("update_mods").add(self.log.modcheck_v1_warning)
         elif len(outdated_mods) + len(missing_mods) > 0:
             if len(outdated_mods) > 0:
                 builder.note(
@@ -320,7 +320,7 @@ class IssueChecker:
                     "them" if len(missing_mods) > 1 else "it",
                     ", ".join(f"[**{name}**]({link})" for name, link in missing_mods),
                 )
-            builder.add("update_mods").add("modcheck_v1_warning")
+            builder.add("update_mods").add(self.log.modcheck_v1_warning)
 
         for key, value in all_incompatible_mods.items():
             for incompatible_mod in value:
@@ -975,18 +975,18 @@ class IssueChecker:
                         ranked_rong_mods.append("Fabric API" if match == "fabric" else match)
 
             if len(ranked_rong_versions) > 5:
-                builder.error("ranked_rong_versions", f"`{len(ranked_rong_versions)}` mods (`{ranked_rong_versions[0]}, {ranked_rong_versions[1]}, ...`) that are", "them").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_versions", f"`{len(ranked_rong_versions)}` mods (`{ranked_rong_versions[0]}, {ranked_rong_versions[1]}, ...`) that are", "them").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
             elif len(ranked_rong_versions) > 1:
-                builder.error("ranked_rong_versions", f"`{len(ranked_rong_versions)}` mods (`{', '.join(ranked_rong_versions)}`) that are", "them").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_versions", f"`{len(ranked_rong_versions)}` mods (`{', '.join(ranked_rong_versions)}`) that are", "them").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
             elif len(ranked_rong_versions) > 0:
-                builder.error("ranked_rong_versions", f"a mod `{ranked_rong_versions[0]}` that is", "it").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_versions", f"a mod `{ranked_rong_versions[0]}` that is", "it").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
 
             if len(ranked_rong_files) > 5:
-                builder.error("ranked_rong_files", f"`{len(ranked_rong_files)}` mods (`{ranked_rong_files[0]}, {ranked_rong_files[1]}, ...`) that seem", "them").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_files", f"`{len(ranked_rong_files)}` mods (`{ranked_rong_files[0]}, {ranked_rong_files[1]}, ...`) that seem", "them").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
             elif len(ranked_rong_files) > 1:
-                builder.error("ranked_rong_files", f"`{len(ranked_rong_files)}` mods (`{', '.join(ranked_rong_files)}`) that seem", "them").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_files", f"`{len(ranked_rong_files)}` mods (`{', '.join(ranked_rong_files)}`) that seem", "them").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
             elif len(ranked_rong_files) > 0:
-                builder.error("ranked_rong_files", f"a mod `{ranked_rong_files[0]}` that seems", "it").add("update_mods_ranked").add("modcheck_v1_warning")
+                builder.error("ranked_rong_files", f"a mod `{ranked_rong_files[0]}` that seems", "it").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
 
             if len(ranked_rong_mods) > 5:
                 builder.error("ranked_rong_mods", f"`{len(ranked_rong_mods)}` mods (`{ranked_rong_mods[0]}, {ranked_rong_mods[1]}, ...`) that are", "them")
@@ -1005,7 +1005,7 @@ class IssueChecker:
                 found_crash_cause = True
             if self.log.is_newer_than("1.15"):
                 if is_mcsr_log:
-                    builder.error("use_sodium_not_optifine_mcsr").add("update_mods").add("modcheck_v1_warning")
+                    builder.error("use_sodium_not_optifine_mcsr").add("update_mods").add(self.log.modcheck_v1_warning)
                 elif self.log.mod_loader == ModLoader.FORGE:
                     builder.error("use_sodium_not_optifine", "Embeddium").add("optifine_alternatives")
                 else:
@@ -1088,7 +1088,7 @@ class IssueChecker:
             builder.error("corrupted_file", match.group(1))
         
         if self.log.has_mod("serversiderng"):
-            builder.error("using_ssrng").add("modcheck_v1_warning")
+            builder.error("using_ssrng").add(self.log.modcheck_v1_warning)
         
         if all(self.log.has_content(text) for text in [
             "net.minecraft.class_148: Feature placement",
