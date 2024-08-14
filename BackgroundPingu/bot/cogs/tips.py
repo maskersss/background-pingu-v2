@@ -272,7 +272,7 @@ All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.
 
     @commands.slash_command(name="standardsettings", description="Explains what StandardSettings is.")
     async def standardsettings(self, ctx: discord.ApplicationContext):
-        text = """If your settings reset whenever you create a world, you are probably using StandardSettings.
+        text = """If your settings reset whenever you create a world, you are probably using [StandardSettings](<https://github.com/KingContaria/StandardSettings/>).
 If you want to change what do the settings reset to, go to `Options > Book and Quill > StandardSettings` and configure them.
 If you don't want your settings to reset, set "Toggle StandardSettings" there to "OFF"."""
         return await ctx.respond(text)
