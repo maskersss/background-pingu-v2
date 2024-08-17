@@ -1202,9 +1202,10 @@ class IssueChecker:
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
         if (not found_crash_cause
+            and not self.log.minecraft_version is None
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
-            and self.log.has_content("minecraft")
             and not self.log.lines > 16000
+            and self.log.has_content("minecraft")
         ):
             builder.info("upload_log_attachment")
 
