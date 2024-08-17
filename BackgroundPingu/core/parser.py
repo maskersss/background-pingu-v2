@@ -48,13 +48,6 @@ class Log:
 
         # just replacing pc_username with "" is a bad idea
         # for instance, if it's "Alex", it could also replace it in the mod "Alex Caves", which would leak it
-
-        pattern = r"Session ID is token:.{50,}?\n"
-        if re.search(pattern, content) is not None:
-            replacement = "Session ID is (redacted))\n"
-            content = re.sub(pattern, replacement, content)
-            self.leaked_session_id = True
-        else: self.leaked_session_id = False
         
         self.lines = content.count("\n") + 1
         if self.lines > 16000:
@@ -66,6 +59,13 @@ class Log:
                 + "\n" * 10
                 + "\n".join(lines[-10000:])
             )
+
+        pattern = r"Session ID is token:.{50,}?\n"
+        if re.search(pattern, content) is not None:
+            replacement = "Session ID is (redacted))\n"
+            content = re.sub(pattern, replacement, content)
+            self.leaked_session_id = True
+        else: self.leaked_session_id = False
 
         self._content = content
         self._lower_content = self._content.lower()
