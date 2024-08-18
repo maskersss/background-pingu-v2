@@ -1248,13 +1248,13 @@ class IssueChecker:
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
         if (not found_crash_cause
-            and not self.log.is_log
+            and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
             and not self.log.lines > 16000
             and self.log.has_content("minecraft")
         ):
             builder.info("upload_log_attachment")
-
+        
         if not found_crash_cause:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
                 "com.google.gson.stream.MalformedJsonException",
