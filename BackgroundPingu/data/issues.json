@@ -112,6 +112,7 @@
     "error.send_full_log": "If you got a crash, please send the full log from `Edit{} > Minecraft Log`.",
     "error.snowman_crash": "This could be a rare issue often referred to as a snowman crash. It should happen really rarely; there aren't any known solutions to it.",
     "error.sodium_config_crash": "Your config file for `Sodium` seems to be corrupted. Resolve the issue by deleting `sodium-options.json` from the `.minecraft/config/` directory.",
+    "error.sodium_config_crash_mcsr": "Your config file for `Sodium` seems to be corrupted. Resolve the issue by deleting `sodium.json` from the `.minecraft/config/mcsr/` directory.",
     "error.sodium_rtss": "RivaTuner Statistics Server (RTSS) is not compatible with Sodium. See [**this page**](https://github.com/CaffeineMC/sodium-fabric/wiki/Known-Issues#rtss-incompatible) for more details.",
     "error.stack_overflow_crash": "This seems to be a crash caused by doing too many resets in a row without letting it finish loading a preview. It's fixed in the latest `Atum` version.",
     "error.starlight_crash": "This seems to be a rare crash caused by `Starlight` that was fixed in a newer update.",
