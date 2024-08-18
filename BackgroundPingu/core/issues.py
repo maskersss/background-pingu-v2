@@ -911,6 +911,32 @@ class IssueChecker:
 
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
+                    if self.log.is_prism: builder.add("update_mods_prism")
+                    found_crash_cause = True
+            except version.InvalidVersion:
+                pass
+        
+        fsg_mod = None
+        for mod in self.log.whatever_mods:
+            if "fsg-mod" in mod.lower():
+                fsg_mod = mod
+                break
+        
+        if not fsg_mod is None:
+            match = re.search(r"(\d+\.\d+(\.\d+)?)", fsg_mod)
+        else: match = None
+        
+        if not match is None:
+            extracted_version = match.group(1)
+            try:
+                extracted_version = version.parse(extracted_version)
+                needed_version = version.parse("2.4.1")
+
+                if extracted_version < needed_version:
+                    builder.error("old_mod_version", "fsg-mod", "https://modrinth.com/mod/fsg-mod/versions/")
+                    if (self.log.is_prism
+                        and not extracted_version == version.parse("2.4.0") # duncan deleted 2.4.0 lol
+                    ): builder.add("update_mods_prism")
                     found_crash_cause = True
             except version.InvalidVersion:
                 pass
