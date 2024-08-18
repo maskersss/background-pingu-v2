@@ -45,8 +45,9 @@ class Core(Cog):
             if found_result: break
         return result
     
-    async def get_settings(self, msg: discord.Message):
+    async def get_settings(self, msg: discord.Message) -> tuple[str, bool]:
         found_result = False
+        hidden = True
         result = {
             "text": None,
             "embed": None,
@@ -65,7 +66,7 @@ class Core(Cog):
         
         for link, log in logs:
             try:
-                reply, success = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).seedqueue_settings()
+                reply, success, hidden = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).seedqueue_settings()
                 if success:
                     result["text"] = reply
                     found_result = True
@@ -74,7 +75,8 @@ class Core(Cog):
                 result["text"] = f"```\n{error}\n```\n<@695658634436411404> :bug:"
                 found_result = True
             if found_result: break
-        return result
+        
+        return (result, found_result, hidden)
 
     async def build_embed(self, results: issues.IssueBuilder, messages: list[str], msg: discord.Message):
         embed = discord.Embed(
@@ -107,10 +109,15 @@ class Core(Cog):
     
     @commands.message_command(name="Recommend Settings")
     async def recommend_settings_cmd(self, ctx: discord.ApplicationContext, msg: discord.Message):
-        result = await self.get_settings(msg)
-        if self.should_reply(result):
-            return await ctx.response.send_message(content=result["text"], embed=result["embed"], view=result["view"])
-        return await ctx.response.send_message(":x: **No SeedQueue log found in this message.**", ephemeral=True)
+        result, found_result, hidden = await self.get_settings(msg)
+        if found_result:
+            return await ctx.response.send_message(
+                content=result["text"],
+                embed=result["embed"],
+                view=result["view"],
+                ephemeral=hidden,
+            )
+        return await ctx.response.send_message(":x: **No log found in this message.**", ephemeral=True)
 
 def setup(bot: BackgroundPingu):
     bot.add_cog(Core(bot))

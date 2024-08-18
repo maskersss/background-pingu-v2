@@ -1361,10 +1361,19 @@ class IssueChecker:
         
         return builder
 
-    def seedqueue_settings(self) -> tuple[str, bool]:
+    def seedqueue_settings(self) -> tuple[str, bool, bool]:
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
-            output = "idk ill add a better error msg later"
-            return (output, False)
+            if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
+                if not self.log.has_mod("seedqueue"):
+                    output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and send the log again."
+                else:
+                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure to wait until the game opens before sending the log."
+            elif not self.log.type is None:
+                output = f"You sent a {self.log.type.value}. Send the full log instead."
+            else:
+                return ("", False, True)
+            
+            return (output, True, True)
         
         output = ""
         notes = []
@@ -1410,4 +1419,4 @@ class IssueChecker:
         
         output = output.strip()
 
-        return (output, True)
+        return (output, True, False)
