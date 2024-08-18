@@ -158,8 +158,14 @@ class Log:
     
     @cached_property
     def minecraft_folder(self) -> str:
+        # mmc/prism logs
         match = re.compile(r"Minecraft folder is:\n(.*)\n").search(self._content)
         if not match is None: return match.group(1).strip()
+
+        # seedqueue logging
+        match = re.compile(r"-Djava.library.path=(.*)$").search(self.java_arguments)
+        if not match is None: 
+            return match.group(1).strip().replace("/natives", "/.minecraft")
 
         return None
     
