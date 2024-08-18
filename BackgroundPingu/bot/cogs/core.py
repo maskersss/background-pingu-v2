@@ -48,11 +48,8 @@ class Core(Cog):
     async def get_settings(self, msg: discord.Message) -> tuple[str, bool]:
         found_result = False
         hidden = True
-        result = {
-            "text": None,
-            "embed": None,
-            "view": None
-        }
+        result = None
+        
         link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
         matches = re.findall(link_pattern, msg.content)
         if len(msg.attachments) > 0:
@@ -68,11 +65,11 @@ class Core(Cog):
             try:
                 reply, success, hidden = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).seedqueue_settings()
                 if success:
-                    result["text"] = reply
+                    result = reply
                     found_result = True
             except Exception as e:
                 error = "".join(traceback.format_exception(e))
-                result["text"] = f"```\n{error}\n```\n<@695658634436411404> :bug:"
+                result = f"```\n{error}\n```\n<@695658634436411404> :bug:"
                 found_result = True
             if found_result: break
         
@@ -109,12 +106,10 @@ class Core(Cog):
     
     @commands.message_command(name="Recommend Settings")
     async def recommend_settings_cmd(self, ctx: discord.ApplicationContext, msg: discord.Message):
-        result, found_result, hidden = await self.get_settings(msg)
+        reply, found_result, hidden = await self.get_settings(msg)
         if found_result:
             return await ctx.response.send_message(
-                content=result["text"],
-                embed=result["embed"],
-                view=result["view"],
+                content=reply,
                 ephemeral=hidden,
             )
         return await ctx.response.send_message(":x: **No log found in this message.**", ephemeral=True)
