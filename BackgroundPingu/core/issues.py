@@ -1360,3 +1360,54 @@ class IssueChecker:
                 builder.error("chunk_multidraw")
         
         return builder
+
+    def seedqueue_settings(self) -> tuple[str, bool]:
+        if any(item is None for item in [self.log.processors, self.log.pc_ram]):
+            output = "idk ill add a better error msg later"
+            return (output, False)
+        
+        output = ""
+        notes = []
+        
+        free_ram = self.log.pc_ram
+        if self.log.operating_system == OperatingSystem.LINUX: free_ram -= 1500
+        else: free_ram -= 3500
+        free_ram -= 2000 # for other programs i.e. obs, very rough estimate
+        
+        if free_ram < 1800:
+            notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
+
+        max_queued = (free_ram - 2000) / 250
+        if max_queued < 1: max_queued = 1
+        if max_queued > 30: max_queued = 30
+
+        max_allocated = 2000 + max_queued * 250
+        max_allocated = round(max_allocated, -2)
+
+
+        max_generating_wall = self.log.processors
+        if self.log.operating_system == OperatingSystem.LINUX: max_generating_wall -= 1
+        else: max_generating_wall -= 2
+
+        if max_generating_wall < 1: max_generating_wall = 1
+        if max_generating_wall > max_queued: max_generating_wall = max_queued
+
+        max_generating = max_generating_wall // 6 # this is horrible pls backseat
+
+        java_args = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
+        if max_allocated > 3000:
+            java_args += f" -XX:SoftMaxHeapSize={int(round(max_allocated * 0.8, -2))}m"
+
+        output = "Recommended SeedQueue settings:\n"
+        output += f"- Max Queued Seeds: {max_queued}\n"
+        output += f"- Max Generating Seeds: {max_generating}\n"
+        output += f"- Max Generating Seeds (Wall): {max_generating_wall}\n\n"
+        output += f"Recommended Max Memory Allocation: {max_allocated} MB\n"
+        output += f"Recommended Java Arguments:\n```\n{java_args}\n```\n"
+
+        for note in notes:
+            output += f"\n_{note}_"
+        
+        output = output.strip()
+
+        return (output, True)

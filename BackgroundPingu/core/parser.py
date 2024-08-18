@@ -163,9 +163,10 @@ class Log:
         if not match is None: return match.group(1).strip()
 
         # seedqueue logging
-        match = re.compile(r"-Djava.library.path=(.*)$").search(self.java_arguments)
-        if not match is None: 
-            return match.group(1).strip().replace("/natives", "/.minecraft")
+        if not self.java_arguments is None:
+            match = re.compile(r"-Djava.library.path=(.*)$").search(self.java_arguments)
+            if not match is None:
+                return match.group(1).strip().replace("/natives", "/.minecraft")
 
         return None
     
@@ -535,6 +536,22 @@ class Log:
             max_ram *= 1.2
 
         return (min_ram, max_ram)
+
+    @cached_property
+    def processors(self) -> int:
+        pattern = re.compile(r"Available Processors: ([0-9]+)\n")
+        match = pattern.search(self._content)
+        if not match is None:
+            return int(match.group(1))
+        return None
+
+    @cached_property
+    def pc_ram(self) -> int:
+        pattern = re.compile(r"Total Physical Memory \(MB\): ([0-9]+)\n")
+        match = pattern.search(self._content)
+        if not match is None:
+            return int(match.group(1))
+        return None
 
     @cached_property
     def ram_guide(self) -> tuple[str, str, str, str]:
