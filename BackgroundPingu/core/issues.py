@@ -1141,14 +1141,6 @@ class IssueChecker:
                 builder.error("exitcode_805306369")
                 found_crash_cause = True
 
-        if not self.log.minecraft_folder is None:
-            if not found_crash_cause and "OneDrive" in self.log.minecraft_folder:
-                builder.note("onedrive")
-            if "C:/Program Files" in self.log.minecraft_folder:
-                builder.note("program_files")
-            if "Rar$" in self.log.minecraft_folder:
-                builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
-
         if self.log.lines == 25000:
             builder.error("mclogs_cutoff")
         
@@ -1193,6 +1185,17 @@ class IssueChecker:
                     experimental=(self.log.minecraft_version != "1.16.1")
                 )
                 found_crash_cause = True
+
+        if not self.log.minecraft_folder is None:
+            if "!" in self.log.minecraft_folder:
+                builder.error("exclamation_mark_in_path")
+                found_crash_cause = True
+            if not found_crash_cause and "OneDrive" in self.log.minecraft_folder:
+                builder.note("onedrive")
+            if "C:/Program Files" in self.log.minecraft_folder:
+                builder.note("program_files")
+            if "Rar$" in self.log.minecraft_folder:
+                builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
 
         if (not found_crash_cause and
             (self.log.stacktrace is None and self.log.exitcode == -1073741819

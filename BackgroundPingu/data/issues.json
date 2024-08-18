@@ -49,6 +49,7 @@
     "error.downgrade_atum": "This crash may be fixed by downgrading `Atum` to [**version 1.1.3**](https://modrinth.com/mod/atum/versions).",
     "error.eav_crash": "This crash may be caused by one of the following:",
     "error.entity_culling": "If your entity counter on F3 is `-1`, turn off `Entity Culling` in `Video Settings`.",
+    "error.exclamation_mark_in_path": "You have a `!` in your instance path, which breaks Java. You should fix this.",
     "error.exitcode": "Your game crashed with exitcode `{}`. Here are some possible causes:",
     "error.exitcode_805306369": "This crash is likely caused by the line `maxFps:0` in your `.minecraft/options.txt` file. If you find it, change `0` to the value you want and save the file.",
     "error.failed_to_download_log": "Failed to download the log (`{}`). Try sending it in a different way (`mclo.gs` link, `paste.ee` link, attached file).",
