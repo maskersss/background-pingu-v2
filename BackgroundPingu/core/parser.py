@@ -665,6 +665,11 @@ class Log:
         if self.has_mod("seedqueue"): return True
         
         return False
+    
+    @cached_property
+    def is_log(self) -> bool:
+        if self.minecraft_version is None: return False
+        return True
 
     @cached_property
     def modcheck_v1_warning(self) -> bool:
@@ -812,5 +817,6 @@ exitcode={self.exitcode}
 is_ssg_log={self.is_ssg_log}
 is_ranked_log={self.is_ranked_log}
 is_seedqueue_log={self.is_seedqueue_log}
+is_log={self.is_log}
 recommended_mods={self.recommended_mods}
 """.strip()

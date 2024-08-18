@@ -523,25 +523,32 @@ class IssueChecker:
             r"You might want to install a 64bit Java version",
             r", using 32 \((.+)\) architecture, from"
         ]):
-            if self.log.operating_system == OperatingSystem.MACOS:
+            if self.log.operating_system == OperatingSystem.MACOS and not self.log.launcher == Launcher.PRISM:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
             else:
                 builder.error("32_bit_java").add("java_update_guide")
             found_crash_cause = True
         
-        if not found_crash_cause and is_mcsr_log and not self.log.major_java_version is None and self.log.major_java_version < 17:
+        if (not found_crash_cause
+            and is_mcsr_log
+            and not self.log.major_java_version is None
+            and self.log.major_java_version < 17
+        ):
             builder.note("not_using_java_17", self.log.major_java_version).add(self.log.java_update_guide)
             if self.log.is_prism: builder.add("prism_java_compat_check")
 
-        if self.log.operating_system == OperatingSystem.MACOS and not self.log.has_content("32-bit architecture") and not self.log.is_intel_mac:
+        if (self.log.operating_system == OperatingSystem.MACOS
+            and not self.log.is_intel_mac
+            and not self.log.has_content("32-bit architecture")
+        ):
             if self.log.launcher == Launcher.MULTIMC:
                 builder.note("mac_use_prism").add("mac_setup_guide")
             elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
                 builder.note("mac_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("prism_java_compat_check")
 
-        if ((self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1"))
-            and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:") # so it works on snapshots too
+        if ((self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1")) # so it works on snapshots too
+            and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 builder.error("update_mmc")
@@ -552,10 +559,10 @@ class IssueChecker:
         if self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
             builder.error("try_changing_lwjgl_version", self.log.edit_instance)
         
-        if self.log.has_pattern(r"Switching to No Sound\s*\(Silent Mode\)") and not self.log.is_newer_than("1.13"):
+        if not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*\(Silent Mode\)"):
             builder.error("try_changing_lwjgl_version", self.log.edit_instance, experimental=True)
         
-        if any(self.log.has_content(new_java_old_fabric) for new_java_old_fabric in [
+        if not found_crash_cause and any(self.log.has_content(new_java_old_fabric) for new_java_old_fabric in [
             "java.lang.IllegalArgumentException: Unsupported class file major version ",
             "java.lang.IllegalArgumentException: Class file major version "
         ]):
@@ -595,7 +602,10 @@ class IssueChecker:
             elif self.log.fabric_version < version.parse("0.16.0"):
                 builder.note("old_fabric").add(self.log.fabric_guide, "update")
         
-        if len(self.log.mods) == 0 and self.log.has_content(".mrpack\n"):
+        if (not found_crash_cause
+            and len(self.log.mods) == 0
+            and self.log.has_content(".mrpack\n")
+        ):
             builder.error("using_modpack_as_mod", self.log.launcher.value if self.log.launcher is not None else "your launcher")
 
         if len(self.log.mods) > 0 and self.log.mod_loader == ModLoader.VANILLA:
@@ -672,8 +682,6 @@ class IssueChecker:
         if self.log.has_content("There is not enough space on the disk"):
             builder.error("out_of_disk_space")
             found_crash_cause = True
-        elif not found_crash_cause and self.log.has_content("Failed to store chunk"):
-            builder.note("out_of_disk_space", experimental=True)
         
         if any(self.log.has_pattern(out_of_memory_on_pc) for out_of_memory_on_pc in [
             r"There is insufficient memory for the Java Runtime Environment to continue",
@@ -691,34 +699,36 @@ class IssueChecker:
                 if not latest_version is None:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
         
-        if self.log.has_content("Failed to download the assets index"):
+        if not found_crash_cause and self.log.has_content("Failed to download the assets index"):
             builder.error("assets_index_fail")
         
-        if self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
+        if not found_crash_cause and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
             builder.error("mac_too_new_java")
         
         if not self.log.is_newer_than("1.17") and self.log.has_content_in_stacktrace("Pixel format not accelerated"):
             builder.error("unsupported_intel_gpu")
         
-        if self.log.has_content("Z garbage collector is not supported by Graal"):
+        if not found_crash_cause and self.log.has_content("Z garbage collector is not supported by Graal"):
             builder.error("zgc_graalvm_crash")
             found_crash_cause = True
         
-        if self.log.has_content("Could not find or load main class"):
+        if not found_crash_cause and self.log.has_content("Could not find or load main class"):
             pattern = r"Could not find or load main class (.*)\n"
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("wrong_java_arg", match.group(1))
                 found_crash_cause = True
         
-        if self.log.has_content("[libopenal.so"):
+        if not found_crash_cause and self.log.has_content("[libopenal.so"):
             if self.log.operating_system == OperatingSystem.LINUX:
                 builder.error("openal_crash")
                 found_crash_cause = True
             else:
                 builder.error("openal_crash", experimental=True)
         
-        if (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+        if found_crash_cause: pass
+
+        elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
             and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
         ):
             builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
@@ -736,8 +746,7 @@ class IssueChecker:
             builder.error("mods_crash", "; ".join(wrong_mods))
             found_crash_cause = True
         
-        elif (not found_crash_cause
-            and self.log.stacktrace is None
+        elif (self.log.stacktrace is None
             and (self.log.has_content("A fatal error has been detected by the Java Runtime Environment") or self.log.has_content("EXCEPTION_ACCESS_VIOLATION"))
         ):
             builder.error("eav_crash", experimental=True)
@@ -759,21 +768,25 @@ class IssueChecker:
             builder.add("eav_crash_disclaimer")
             if self.log.stacktrace is None: found_crash_cause = True
         
-        if self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
+        if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
             builder.error("intel_hd2000").add("intell_hd2000_info")
 
-        if self.log.has_content("org.lwjgl.LWJGLException: Could not choose GLX13 config") or self.log.has_content("GLFW error 65545: GLX: Failed to find a suitable GLXFBConfig"):
+        if (not found_crash_cause
+            and (self.log.has_content("org.lwjgl.LWJGLException: Could not choose GLX13 config")
+                 or self.log.has_content("GLFW error 65545: GLX: Failed to find a suitable GLXFBConfig"))
+        ):
             builder.error("outdated_nvidia_flatpack_driver", experimental=True)
         
-        if self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V"):
+        if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V"):
             builder.error("forge_java_bug")
             found_crash_cause = True
         
-        if self.log.has_content_in_stacktrace("java.lang.IllegalStateException: GLFW error before init: [0x10008]Cocoa: Failed to find service port for display"):
+        if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.IllegalStateException: GLFW error before init: [0x10008]Cocoa: Failed to find service port for display"):
             builder.error("incompatible_forge_mac")
             found_crash_cause = True
         
-        system_libs = [lib for lib in ["GLFW", "OpenAL"] if self.log.has_content("Using system " + lib)]
+        if found_crash_cause: system_libs = []
+        else: system_libs = [lib for lib in ["GLFW", "OpenAL"] if self.log.has_content("Using system " + lib)]
         system_arg = None
         if len(system_libs) == 2: system_arg = f"{system_libs[0]} and {system_libs[1]} installations"
         elif len(system_libs) == 1: system_arg = f"{system_libs[0]} installation"
@@ -787,19 +800,18 @@ class IssueChecker:
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
                 builder.warning("builtin_lib_recommendation", system_arg)
 
-        required_mod_match = re.findall(r"requires (.*?) of (\w+),", self.log._content)
-        for required_mod in required_mod_match:
-            mod_name = required_mod[1]
-            if mod_name.lower() == "fabric": builder.error("requires_fabric_api")
-            else: builder.error("requires_mod", mod_name)
+        if not found_crash_cause:
+            required_mod_match = re.findall(r"requires (.*?) of (\w+),", self.log._content)
+            for required_mod in required_mod_match:
+                mod_name = required_mod[1]
+                if mod_name.lower() == "fabric": builder.error("requires_fabric_api")
+                else: builder.error("requires_mod", mod_name)
         
-        if is_mcsr_log and self.log.has_mod("fabric-api"):
-            builder.warning("using_fabric_api")
-        
-        if self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
+        if not found_crash_cause and self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
             builder.error("try_admin_launch")
         
-        if self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
+        if found_crash_cause: pass
+        elif self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
             builder.error("old_sodium_crash")
             metadata = self.get_mod_metadata("sodium")
             if not metadata is None:
@@ -812,20 +824,16 @@ class IssueChecker:
             else: builder.error("sodium_config_crash")
             found_crash_cause = True
         
-        if self.log.has_content_in_stacktrace("me.voidxwalker.options.extra.ExtraOptions.lambda$load"):
+        if not found_crash_cause and self.log.has_content_in_stacktrace("me.voidxwalker.options.extra.ExtraOptions.lambda$load"):
             builder.error("corrupted_mod_config", "extra-options")
             found_crash_cause = True
         
-        if self.log.has_content_in_stacktrace("return value of \"me.duncanruns.fsgmod.FSGModConfig.getInstance()\" is null"):
-            builder.error("corrupted_mod_config", "fsgmod")
-            found_crash_cause = True
-        
-        if self.log.has_content_in_stacktrace("Tried to stop SeedQueue off-thread!"):
+        if not found_crash_cause and self.log.has_content_in_stacktrace("Tried to stop SeedQueue off-thread!"):
             builder.error("mcsr_corrupted_mods_config", experimental=True)
             found_crash_cause = True
         
         pattern = r"Uncaught exception in thread \"Thread-\d+\"\njava\.util\.ConcurrentModificationException: null"
-        if "java.util.ConcurrentModificationException" in re.sub(pattern, "", self.log._content):
+        if not found_crash_cause and "java.util.ConcurrentModificationException" in re.sub(pattern, "", self.log._content):
             if (self.log.is_newer_than("1.14") and not self.log.is_newer_than("1.17")
                 and (self.log.major_java_version is None or self.log.major_java_version > 8)
                 and not self.log.has_mod("voyager")
@@ -834,18 +842,18 @@ class IssueChecker:
             elif self.log.has_content("[SEVERE] [ForgeModLoader] Unable to launch") and not self.log.has_mod("legacyjavafixer"):
                 builder.error("legacyjavafixer")
         
-        if all(self.log.has_content_in_stacktrace(lithium_crash) for lithium_crash in [
+        if not found_crash_cause and all(self.log.has_content_in_stacktrace(lithium_crash) for lithium_crash in [
             "java.lang.IllegalStateException: Adding Entity listener a second time",
             "me.jellysquid.mods.lithium.common.entity.tracker.nearby",
         ]):
             builder.error("lithium_crash")
             found_crash_cause = True
         
-        if any(self.log.has_content_in_stacktrace(f"at net.minecraft.class_{i}") for i in ["507", "513"]):
+        if not found_crash_cause and any(self.log.has_content_in_stacktrace(f"at net.minecraft.class_{i}") for i in ["507", "513"]):
             builder.error("recipe_book_crash", experimental=True)
             # found_crash_cause = True
         
-        if is_mcsr_log and any(self.log.has_content_in_stacktrace(snowman_crash) for snowman_crash in [
+        if not found_crash_cause and is_mcsr_log and any(self.log.has_content_in_stacktrace(snowman_crash) for snowman_crash in [
             "Cannot invoke \"net.minecraft.class_1657.method_7325()\"",
             "Cannot invoke \"net.minecraft.class_4184.method_19326()\"",
         ]):
@@ -856,7 +864,7 @@ class IssueChecker:
             builder.error("snowman_crash", experimental=True)
         
         # first is supposedly biome id out of bounds crash
-        if any(self.log.has_content_in_stacktrace(legacy_crash_fix) for legacy_crash_fix in [
+        if not found_crash_cause and any(self.log.has_content_in_stacktrace(legacy_crash_fix) for legacy_crash_fix in [
             "Cannot invoke \"net.minecraft.class_1170.method_3833()\" because the return value of \"net.minecraft.class_1170.method_6428(int)\" is null",
             "java.lang.RuntimeException: Already decorating",
             "TickNextTick list out of synch",
@@ -864,7 +872,7 @@ class IssueChecker:
             builder.error("legacy_crash_fix").add("update_mods")
             found_crash_cause = True
         
-        if self.log.has_pattern(r"Description: Exception in server tick loop[\s\n]*java\.lang\.IllegalStateException: Lock is no longer valid"):
+        if not found_crash_cause and self.log.has_pattern(r"Description: Exception in server tick loop[\s\n]*java\.lang\.IllegalStateException: Lock is no longer valid"):
             builder.error("wp_3_plus_crash")
             found_crash_cause = True
             metadata = self.get_mod_metadata("worldpreview")
@@ -874,7 +882,7 @@ class IssueChecker:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
             found_crash_cause = True
 
-        if self.log.has_content("Launched instance in offline mode") and self.log.has_content("(missing)\n"):
+        if self.log.has_content("(missing)\n") and self.log.has_content("Launched instance in offline mode"):
             builder.error("online_launch_required", self.log.edit_instance)
             found_crash_cause = True
         
@@ -886,7 +894,7 @@ class IssueChecker:
             builder.error("forge_too_new_java")
             found_crash_cause = True
         
-        if any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
+        if not found_crash_cause and any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
             "RivaTuner Statistics Server (RTSS) is not compatible with Sodium",
             "READ ME! You appear to be using the RivaTuner Statistics Server (RTSS)!"
         ]):
@@ -898,7 +906,6 @@ class IssueChecker:
             if "mcsrranked" in mod.lower():
                 ranked_mod = mod
                 break
-        
         if not ranked_mod is None:
             match = re.search(r"(\d+\.\d+(\.\d+)?)", ranked_mod)
         else: match = None
@@ -921,7 +928,6 @@ class IssueChecker:
             if "fsg-mod" in mod.lower():
                 fsg_mod = mod
                 break
-        
         if not fsg_mod is None:
             match = re.search(r"(\d+\.\d+(\.\d+)?)", fsg_mod)
         else: match = None
@@ -941,7 +947,11 @@ class IssueChecker:
             except version.InvalidVersion:
                 pass
 
-        if self.log.has_mod("peepopractice-1") or self.log.has_mod("peepopractice-2.0"):
+        if (self.log.has_mod("peepopractice")
+            and (self.log.has_mod("peepopractice-1")
+                 or self.log.has_mod("peepopractice-2.0")
+                 or self.log.has_mod("peepopractice-2.1"))
+        ):
             builder.error("old_mod_version", "PeepoPractice", "https://github.com/faluhub/peepoPractice/releases/latest/")
 
         if self.log.has_pattern(r"^Prism Launcher version: [2-7]"):
@@ -1024,10 +1034,13 @@ class IssueChecker:
                 builder.error("ranked_rong_mods", f"a mod `{ranked_rong_mods[0]}` that is", "it")
         
         if self.log.has_mod("optifine"):
-            for incompatible_mod in ["WorldPreview", "Starlight"]:
+            for incompatible_mod in ["Starlight"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "Optifine", incompatible_mod)
                     found_crash_cause = True
+            if self.log.has_mod("worldpreview") and self.log.is_newer_than("1.9"):
+                builder.error("incompatible_mod", "Optifine", "WorldPreview")
+                found_crash_cause = True
             if self.log.has_mod("z-buffer-fog") and self.log.is_newer_than("1.14"):
                 builder.error("incompatible_mod", "Optifine", "z-buffer-fog")
                 found_crash_cause = True
@@ -1039,13 +1052,8 @@ class IssueChecker:
                 else:
                     builder.error("use_sodium_not_optifine", "Sodium").add("optifine_alternatives")
         
-        if self.log.has_mod("esimod"):
-            for incompatible_mod in ["serverSideRNG", "SpeedRunIGT", "WorldPreview", "mcsrranked"]:
-                if self.log.has_mod(incompatible_mod):
-                    builder.error("incompatible_mod", "esimod", incompatible_mod)
-        
         if self.log.has_mod("PeepoPractice"):
-            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "fast-reset"]:
+            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "fast-reset", "AreEssGee"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "PeepoPractice", incompatible_mod)
                     found_crash_cause = True
@@ -1055,10 +1063,6 @@ class IssueChecker:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "SeedQueue", incompatible_mod)
                     found_crash_cause = True
-
-        if self.log.has_content_in_stacktrace("Mixin apply for mod areessgee failed areessgee.mixins.json:nether.StructureFeatureMixin from mod areessgee -> net.minecraft.class_3195"):
-            builder.error("incompatible_mod", "AreEssGee", "PeepoPractice")
-            found_crash_cause = True
         
         if self.log.has_mod("speedrunigt") and self.log.has_mod("stronghold-trainer"):
             builder.error("incompatible_mod", "SpeedRunIGT", "Stronghold Trainer")
@@ -1085,11 +1089,14 @@ class IssueChecker:
             if self.log.has_content_in_stacktrace("atum"):
                 found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.StackOverflowError") and self.log.has_content("$atum$createDesiredWorld"):
+        if (not found_crash_cause
+            and self.log.has_content_in_stacktrace("java.lang.StackOverflowError")
+            and self.log.has_content("$atum$createDesiredWorld")
+        ):
             builder.error("stack_overflow_crash")
             found_crash_cause = True
         
-        if self.log.has_content("Mappings not present!"):
+        if not found_crash_cause and self.log.has_content("Mappings not present!"):
             if not self.log.is_newer_than("1.14") and self.log.mod_loader == ModLoader.FABRIC:
                 builder.error("legacy_fabric_modpack")
                 found_crash_cause = True
@@ -1105,20 +1112,21 @@ class IssueChecker:
                 "Forge" if self.log.mod_loader == ModLoader.FORGE else "Intermediary Mappings",
                 self.log.edit_instance,
             )
-            found_crash_cause = True
+            if self.log.has_content("Mapping source name conflicts detected:"): found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed"):
             builder.error("delete_dot_fabric")
         
-        pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip END header not found"
-        match = re.search(pattern, self.log._content)
-        if not match is None:
-            builder.error("corrupted_file", match.group(1))
+        if not found_crash_cause:
+            pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip END header not found"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                builder.error("corrupted_file", match.group(1))
         
         if self.log.has_mod("serversiderng"):
-            builder.error("using_ssrng").add(self.log.modcheck_v1_warning)
+            builder.error("using_ssrng").add("modcheck_v1_warning")
         
-        if all(self.log.has_content(text) for text in [
+        if not found_crash_cause and all(self.log.has_content(text) for text in [
             "net.minecraft.class_148: Feature placement",
             "java.lang.ArrayIndexOutOfBoundsException",
             "StarLightInterface",
@@ -1159,11 +1167,12 @@ class IssueChecker:
             builder.error("forge_missing_dependencies")
             found_crash_cause = True
 
-        pattern = r"\[Integrated Watchdog/ERROR\]:? This crash report has been saved to: (.*\.txt)"
-        match = re.search(pattern, self.log._content)
-        if not match is None:
-            builder.info("send_watchdog_report", match.group(1))
-            found_crash_cause = True
+        if not found_crash_cause:
+            pattern = r"\[Integrated Watchdog/ERROR\]:? This crash report has been saved to: (.*\.txt)"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                builder.info("send_watchdog_report", match.group(1))
+                found_crash_cause = True
         
         if any(self.log.has_content_in_stacktrace(outdated_sleepbg) for outdated_sleepbg in [
             "java.lang.NoSuchFieldError: freezePreview",
@@ -1197,10 +1206,10 @@ class IssueChecker:
             if "Rar$" in self.log.minecraft_folder:
                 builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
 
-        if (not found_crash_cause and
-            (self.log.stacktrace is None and self.log.exitcode == -1073741819
-            or self.log.has_content("The instruction at 0x%p referenced memory at 0x%p. The memory could not be %s.")
-        )):
+        if (not found_crash_cause
+            and self.log.stacktrace is None
+            and self.log.exitcode == -1073741819
+        ):
             builder.error("exitcode", "-1073741819", experimental=True)
             builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
             builder.add("exitcode_1073741819_2")
@@ -1212,27 +1221,34 @@ class IssueChecker:
                 builder.add(f"exitcode_1073741819_4")
             builder.add("exitcode_1073741819_5").add("exitcode_1073741819_1")
 
-        if not found_crash_cause and self.log.stacktrace is None and self.log.exitcode == -1073740791:
+        if (not found_crash_cause
+            and self.log.stacktrace is None
+            and self.log.exitcode == -1073740791
+        ):
             builder.error("exitcode", "-1073740791", experimental=True)
             builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
             builder.add("exitcode_1073741819_2")
             if self.log.lines < 500: builder.add("exitcode_1073741819_4")
             builder.add("exitcode_1073741819_5")
 
-        if not found_crash_cause and self.log.stacktrace is None and self.log.exitcode == -1073740771:
+        if (not found_crash_cause
+            and self.log.stacktrace is None
+            and self.log.exitcode == -1073740771
+        ):
             builder.error("exitcode", "-1073740771", experimental=True)
             builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
             builder.add("exitcode_1073741819_2")
             if self.log.lines < 500: builder.add("exitcode_1073741819_4")
             builder.add("exitcode_1073741819_5")
 
-        if (not found_crash_cause and self.log.is_multimc_or_fork
+        if (not found_crash_cause
+            and self.log.is_multimc_or_fork
             and not self.log.type in [LogType.FULL_LOG, LogType.THREAD_DUMP, LogType.LAUNCHER_LOG]
         ):
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
         if (not found_crash_cause
-            and not self.log.minecraft_version is None
+            and not self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
             and not self.log.lines > 16000
             and self.log.has_content("minecraft")
