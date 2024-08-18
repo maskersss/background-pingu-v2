@@ -1406,6 +1406,9 @@ class IssueChecker:
         java_args = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         if max_allocated > 3000:
             java_args += f" -XX:SoftMaxHeapSize={int(round(max_allocated * 0.8, -2))}m"
+        
+        if self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
+            notes.append("You are not using GraalVM. It's generally recommended, see [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
 
         output = "Recommended SeedQueue settings:\n"
         output += f"- Max Queued Seeds: {max_queued}\n"
@@ -1415,7 +1418,7 @@ class IssueChecker:
         output += f"Recommended Java Arguments:\n```\n{java_args}\n```\n"
 
         for note in notes:
-            output += f"\n_{note}_"
+            output += f"_{note}_\n"
         
         output = output.strip()
 
