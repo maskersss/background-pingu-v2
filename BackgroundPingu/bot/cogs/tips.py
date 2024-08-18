@@ -2,11 +2,41 @@ import discord, re
 from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
+from BackgroundPingu.core import parser, issues
 
 class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
         super().__init__()
         self.bot = bot
+    
+    @commands.slash_command(name="recommend_settings", description="Gives recommended settings for SeedQueue based on a log.")
+    async def recommend_settings(
+        self,
+        ctx: discord.ApplicationContext,
+        log: discord.Option(str, required=False),
+    ):
+        if log is None:
+            text = "Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text, ephemeral=True)
+
+        link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
+        match = re.search(link_pattern, log)
+        if match is None:
+            text = "No link found. Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text, ephemeral=True)
+
+        link = match.group(0)     
+        (link, log) = (link.split("?ex")[0], parser.Log.from_link(link))
+        if log is None:
+            text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text, ephemeral=True)
+
+        reply, success, hidden = issues.IssueChecker(self.bot, log, link, ctx.guild.id if not ctx.guild is None else None).seedqueue_settings()
+        if not success:
+            text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)."
+            return await ctx.respond(text, ephemeral=True)
+        else:
+            return await ctx.respond(reply, ephemeral=hidden)
     
     @commands.slash_command(name="fabric", description="A guide on how to install Fabric.")
     async def fabric(

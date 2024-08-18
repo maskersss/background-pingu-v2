@@ -11,13 +11,7 @@ class Core(Cog):
         super().__init__()
         self.bot = bot
     
-    async def check_log(self, msg: discord.Message, include_content=False):
-        found_result = False
-        result = {
-            "text": None,
-            "embed": None,
-            "view": None
-        }
+    async def get_logs_from_message(self, msg: discord.Message, include_content=False):
         link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
         matches = re.findall(link_pattern, msg.content)
         if len(msg.attachments) > 0:
@@ -29,6 +23,18 @@ class Core(Cog):
         logs = [(link, log) for (link, log) in logs if not log is None]
         logs = sorted(logs, key=lambda x: len(x[1]._content), reverse=True) # check the longest logs first
         if include_content: logs.append(("message", parser.Log(msg.content))) # check the message itself (last)
+
+        return logs
+    
+    async def check_log(self, msg: discord.Message, include_content=False):
+        found_result = False
+        result = {
+            "text": None,
+            "embed": None,
+            "view": None
+        }
+        
+        logs = await self.get_logs_from_message(msg, include_content)
         
         for link, log in logs:
             try:
@@ -50,17 +56,8 @@ class Core(Cog):
         hidden = True
         result = None
         
-        link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
-        matches = re.findall(link_pattern, msg.content)
-        if len(msg.attachments) > 0:
-            for attachment in msg.attachments:
-                matches.append(attachment.url)
-        if len(matches) > 3: matches = random.sample(matches, 3)
+        logs = await self.get_logs_from_message(msg, include_content=False)
 
-        logs = [(match.split("?ex")[0], parser.Log.from_link(match)) for match in matches]
-        logs = [(link, log) for (link, log) in logs if not log is None]
-        logs = sorted(logs, key=lambda x: len(x[1]._content), reverse=True) # check the longest logs first
-        
         for link, log in logs:
             try:
                 reply, success, hidden = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).seedqueue_settings()
