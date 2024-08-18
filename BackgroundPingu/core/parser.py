@@ -88,9 +88,16 @@ class Log:
     def mods(self) -> list[str]:
         pattern = re.compile(r"\[✔️\]\s+([^\[\]]+\.jar)")
         mods = pattern.findall(self._content)
+        if len(mods) > 0: return mods
+
         pattern = re.compile(r"\[✔\]\s+([^\[\]\n]+)")
-        mods += [mod.rstrip("\n").replace(" ", "+") + ".jar" for mod in pattern.findall(self._content)]
+        mods = [mod.rstrip("\n").replace(" ", "+") + ".jar" for mod in pattern.findall(self._content)]
+        if len(mods) > 0: return mods
+
+        pattern = re.compile(r"\[✔️\]\s+([^\[\]\n]+)")
+        mods = [mod + ".jar" for mod in pattern.findall(self._content)]
         return mods
+
     
     @cached_property
     def fabric_mods(self) -> list[str]:
@@ -382,11 +389,18 @@ class Log:
     
     @cached_property
     def java_arguments(self) -> str:
+        # multimc/prism logs
         match = re.compile(r"Java Arguments:\n(.*?)\n", re.DOTALL).search(self._content)
         if not match is None:
             return match.group(1)
         
-        match = re.compile(r"JVM Flags: \S+ total; (.*(?:\n|$))", re.DOTALL).search(self._content)
+        # crash reports
+        match = re.compile(r"JVM Flags: \S+ total; ([^\n]*)", re.DOTALL).search(self._content)
+        if not match is None:
+            return match.group(1)
+        
+        # seedqueue logging
+        match = re.compile(r"JVM Arguments: ([^\n]*)", re.DOTALL).search(self._content)
         if not match is None:
             return match.group(1)
         
