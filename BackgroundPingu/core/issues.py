@@ -1410,13 +1410,13 @@ class IssueChecker:
         if self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, see [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
 
-        output = "Recommended SeedQueue settings:\n"
-        output += f"- Max Queued Seeds: {max_queued}\n"
-        output += f"- Max Generating Seeds: {max_generating}\n"
+        output = "## Recommended SeedQueue settings:\n"
+        output += f"- **Max Queued Seeds:** {max_queued}\n"
+        output += f"- **Max Generating Seeds:** {max_generating}\n"
         output += "_This might not be optimal. You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
-        output += f"- Max Generating Seeds (Wall): {max_generating_wall}\n\n"
-        output += f"Recommended Max Memory Allocation: {max_allocated} MB\n"
-        output += f"Recommended Java Arguments:\n```\n{java_args}\n```\n"
+        output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n\n"
+        output += f"**Recommended Max Memory Allocation:** {max_allocated} MB\n"
+        output += f"### Recommended Java Arguments:\n```\n{java_args}\n```\n"
 
         for note in notes:
             output += f"_{note}_\n"
