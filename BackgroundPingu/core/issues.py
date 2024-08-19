@@ -1381,18 +1381,18 @@ class IssueChecker:
         
         free_ram = self.log.pc_ram
         if self.log.operating_system == OperatingSystem.LINUX: free_ram -= 1500
-        else: free_ram -= 3500
+        else: free_ram -= 3200
         free_ram -= 2000 # for other programs i.e. obs, very rough estimate
         
         if free_ram < 1800:
             notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
 
-        max_queued = (free_ram - 2000) / 250
+        max_queued = (free_ram - 2000) // 250
         if max_queued < 1: max_queued = 1
         if max_queued > 30: max_queued = 30
 
         max_allocated = 2000 + max_queued * 250
-        max_allocated = round(max_allocated, -2)
+        max_allocated = int(round(max_allocated, -2))
 
 
         max_generating_wall = self.log.processors
