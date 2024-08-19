@@ -523,13 +523,12 @@ class IssueChecker:
             r"You might want to install a 64bit Java version",
             r", using 32 \((.+)\) architecture, from"
         ]):
-            if self.log.operating_system == OperatingSystem.MACOS and not self.log.launcher == Launcher.PRISM:
+            if self.log.operating_system == OperatingSystem.MACOS and not self.log.is_prism:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
             else:
                 builder.error("32_bit_java").add("java_update_guide")
-            found_crash_cause = True
         
-        if (not found_crash_cause
+        elif (not found_crash_cause
             and is_mcsr_log
             and not self.log.major_java_version is None
             and self.log.major_java_version < 17
