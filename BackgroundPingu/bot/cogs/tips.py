@@ -121,21 +121,24 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         self,
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC", "Prism", "Official Launcher", "All"], required=False, default="All"),
-        os: discord.Option(str, choices=["Windows", "macOS"], required=False, default="Windows"),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
         setup_guide = "https://www.youtube.com/watch?v=VL8Syekw4Q0" if os == "Windows" else "https://www.youtube.com/watch?v=GomIeW5xdBM"
         
         if launcher == "Official Launcher":
             text = f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Watch [**this video**](<{setup_guide}>) to set up for speedrunning."
         else:
-            if os == "macOS": query_string = "?os=mac&package=jdk"
-            else: query_string = "?os=windows&arch=x64&package=jdk"
-            text = f"* You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
-            if os == "Windows":
-                text += " Download and run the `.msi` file if you're on Windows."
+            if os == "Linux":
+                text = f"You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>)."
             else:
-                text += " Download and run the `.pkg` file if you're on macOS."
-            text += "\n  * If prompted, it is recommended you install Java **for all users**."
+                if os == "macOS": query_string = "?os=mac&package=jdk"
+                else: query_string = "?os=windows&arch=x64&package=jdk"
+                text = f"* You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
+                if os == "Windows":
+                    text += " Download and run the `.msi` file if you're on Windows."
+                else:
+                    text += " Download and run the `.pkg` file if you're on macOS."
+                text += "\n  * If prompted, it is recommended you install Java **for all users**."
 
             text += """\n* After installing Java, follow the steps in the image below (assuming you're using MultiMC or Prism Launcher)[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)
  * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu."""
@@ -158,9 +161,10 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
     async def setup(
         self,
         ctx: discord.ApplicationContext,
-        os: discord.Option(str, choices=["Windows", "macOS"], required=False, default="Windows"),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
         if os == "macOS": text = "https://www.youtube.com/watch?v=GomIeW5xdBM"
+        elif os == "Linux": text = "https://sathya-pramodh.github.io/linux-mcsr/"
         else: text = """Setup video tutorial: https://youtu.be/VL8Syekw4Q0
 This will work for other categories/versions of Minecraft by substituting any mention of 1.16.1 & RSG for your chosen category/version.
 Any version of Java above 17 is recommended, you do not need the exact version shown in the video."""
