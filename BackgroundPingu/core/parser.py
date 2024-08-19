@@ -712,10 +712,8 @@ class Log:
         else:
             mods.append("sodium")
         if not self.is_newer_than("1.20"): mods.append("starlight")
-        mods += [
-            "lithium",
-            "speedrunapi",
-        ]
+        if not self.is_ranked_log: mods.append("speedrunapi")
+        mods.append("lithium")
 
         if self.launcher != Launcher.OFFICIAL_LAUNCHER and not self.is_newer_than("1.17"):
             mods.append("voyager")
