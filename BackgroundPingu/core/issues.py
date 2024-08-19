@@ -864,11 +864,13 @@ class IssueChecker:
             builder.error("snowman_crash", experimental=True)
         
         # first is supposedly biome id out of bounds crash
-        if not found_crash_cause and any(self.log.has_content_in_stacktrace(legacy_crash_fix) for legacy_crash_fix in [
-            "Cannot invoke \"net.minecraft.class_1170.method_3833()\" because the return value of \"net.minecraft.class_1170.method_6428(int)\" is null",
-            "java.lang.RuntimeException: Already decorating",
-            "TickNextTick list out of synch",
-        ]):
+        if (not found_crash_cause
+            and not self.log.is_newer_than("1.14")
+            and any(self.log.has_content_in_stacktrace(legacy_crash_fix) for legacy_crash_fix in [
+                "Cannot invoke \"net.minecraft.class_1170.method_3833()\" because the return value of \"net.minecraft.class_1170.method_6428(int)\" is null",
+                "java.lang.RuntimeException: Already decorating",
+                "TickNextTick list out of synch",
+        ])):
             builder.error("legacy_crash_fix").add("update_mods")
             found_crash_cause = True
         
@@ -961,7 +963,7 @@ class IssueChecker:
                 builder.note("old_prism_version")
                 if self.log.has_content("AppData/Roaming/PrismLauncher"): builder.add("update_prism_installer")
 
-        match = re.search(r"MultiMC version: 0\.7\.0-(.{4})", self.log._content)
+        match = re.search(r"^MultiMC version: 0\.7\.0-(.{4})", self.log._content)
         if not match is None and self.log.operating_system == OperatingSystem.WINDOWS:
             if match.group(1) < "3863" or match.group(1) == "stab":
                 builder.note("semi_old_mmc_version")
