@@ -1377,6 +1377,7 @@ class IssueChecker:
             return (output, True, True)
         
         output = ""
+        missing_mods = []
         notes = ["These settings are likely not optimal and are just rough suggestions."]
         
         free_ram = self.log.pc_ram
@@ -1409,6 +1410,20 @@ class IssueChecker:
         
         if self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, see [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
+        elif not self.log.major_java_version is None and self.log.major_java_version < 17:
+            notes.append(f"You're using `Java {self.log.major_java_version}`. It is recommended to use `Java 17+` instead for better performance. See `/java` or `/graalvm` for a guide.")
+
+        if len(self.log.whatever_mods) > 0:
+            for recommended_mod in self.log.recommended_mods:
+                if not self.log.has_mod(recommended_mod):
+                    metadata = self.get_mod_metadata(recommended_mod)
+                    if metadata is None: continue
+                    latest_version = self.get_latest_version(metadata)
+                    if latest_version is None: continue
+                    missing_mods.append(recommended_mod)
+        if len(missing_mods) > 0:
+            notes.append(f"You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
+
 
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
