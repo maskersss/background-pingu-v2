@@ -1368,7 +1368,7 @@ class IssueChecker:
                 if not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and send the log again."
                 else:
-                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure to wait until the game opens before sending the log."
+                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure you have the latest SeedQueue version and make sure to wait until the game opens before sending the log."
             elif not self.log.type is None:
                 output = f"You sent a {self.log.type.value}. Send the full log instead."
             else:
