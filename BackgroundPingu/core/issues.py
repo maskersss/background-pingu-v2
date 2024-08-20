@@ -1071,7 +1071,7 @@ class IssueChecker:
         
         if self.log.has_normal_mod("continuity") and self.log.has_mod("sodium") and not self.log.has_mod("indium"):
             builder.error("missing_dependency", "continuity", "indium")
-            if self.log.has_content("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
+            if not found_crash_cause and self.log.has_content("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
                 found_crash_cause = True
         elif self.log.has_content_in_stacktrace("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
             builder.error("missing_dependency_2", "indium")
@@ -1087,7 +1087,7 @@ class IssueChecker:
         
         if self.log.has_mod("beachfilter"):
             builder.error("beachfilter_unsupported")
-            if self.log.has_content_in_stacktrace("atum"):
+            if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):
                 found_crash_cause = True
         
         if (not found_crash_cause
@@ -1113,7 +1113,7 @@ class IssueChecker:
                 "Forge" if self.log.mod_loader == ModLoader.FORGE else "Intermediary Mappings",
                 self.log.edit_instance,
             )
-            if self.log.has_content("Mapping source name conflicts detected:"): found_crash_cause = True
+            if not found_crash_cause and self.log.has_content("Mapping source name conflicts detected:"): found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed"):
             builder.error("delete_dot_fabric")
