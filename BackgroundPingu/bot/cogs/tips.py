@@ -104,11 +104,11 @@ You may remap keys using external programs, but:
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 any% random seed glitchless, so we're assuming you're planning to run this category.
 
-Watch this video <https://youtu.be/VL8Syekw4Q0> to set up minecraft for speedrunning. It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/VL8Syekw4Q0>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
 
-The most important things to learn when starting out are bastion routes and one-cycling. Watch these videos <https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu> for introductory bastion routes and this video <https://youtu.be/JaVyuTyDxxs> for one-cycling.
+The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
-In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a more comprehensive document <https://docs.google.com/document/d/1zDC0n38EhvcMaXVFVeZwONszmdXonXlFO1rBXqvhxE4/edit?usp=sharing>, but since it covers a lot of strategies it may seem overwhelming at first, so take it easy."""
+In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLxjqy7mY2UwGvzbhjJt5vHw_ZtUFPsxlx>) and a [more comprehensive document](<https://docs.google.com/document/d/1zDC0n38EhvcMaXVFVeZwONszmdXonXlFO1rBXqvhxE4/edit?usp=sharing>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="jarfix", description="Gives a link to Jarfix.")
@@ -347,10 +347,10 @@ If you want a custom modpack, go [here](<https://mods.tildejustin.dev/?type=modp
 [Blaze](<https://github.com/Semperzz/Blaze-Practice>)
 [Buried treasure](<https://github.com/Mescht/BTPractice>)
 [Crafting](<https://github.com/Semperzz/Crafting-Practice-v2>) / [Search crafting](<https://github.com/7rowl/Search-Crafting-Practice>)
-[One cycle / End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice>)
+[One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice>)
 [Overworld](<https://github.com/7rowl/OWPractice>)
 [Portals](<https://github.com/Semperzz/Portal-Practice>)
-[Zero cycle](<https://web.archive.org/web/20230325094650/https://zerocycle.repl.co/_zero_cycle_practice_astraf_nayoar.zip>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
+[Zero cycle](<https://github.com/Mescht/Zero-Practice>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
 [PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>)"""
         return await ctx.respond(text)
@@ -409,10 +409,19 @@ Get AHK **version 1.1** here if you don't have it yet: <https://www.autohotkey.c
 
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
-        text = """[Introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
+        text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
+[Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
 [Advanced routes](<https://bit.ly/2ZwM3lI>)"""
         return await ctx.respond(text)
-
+    
+    @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
+    async def fortress(self, ctx: discord.ApplicationContext):
+        text = """Basic fortress guide: <https://youtu.be/pmx9LyUvLTk> (find fortress with pieray, blaze bed/tnt, spawnerless and more)
+More tips: <https://youtu.be/9LpyDBPC3u4>
+Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>
+Fortress binoculars (find fortress if a treasure spawner exists): https://discord.com/channels/83066801105145856/861092932832198687/1247271210409136168"""
+        return await ctx.respond(text)
+    
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext):
         text = """[Overview of Language Crafting for Minecraft Speedruns](https://docs.google.com/document/d/1jSeciLoEgSwWWCdNk0dKignzxJskxJ5_zeCQmcdGmTg) *(contains: Vietnamese, Ukrainian, Korean, Bosnian, English)*
