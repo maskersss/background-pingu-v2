@@ -491,6 +491,19 @@ Additionally. [practice setting up your inventory for zero cycle](https://github
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await ctx.respond(text)
+    
+    @commands.slash_command(name="help", description="Gives a guide to using the bot.")
+    async def help(self, ctx: discord.ApplicationContext):
+        text = """- **Log Analysis**: Send a message containing a Minecraft log link from paste.ee or mclo.gs, or upload a log file directly in the chat. The bot will analyze the log and provide feedback automatically.
+- **/tags**: Use this command to get a list of all available tags related to MCSR strategies, guides, and more.
+- **Need Help?**: If you're still unsure after the bot's response, please ask in the appropriate help channel.
+
+Source code available at: <https://github.com/maskersss/background-pingu-v2>"""
+        return await ctx.respond(text)
+    
+    @commands.slash_command(name="info", description="Gives a guide to using the bot.")
+    async def info(self, ctx: discord.ApplicationContext):
+        return await self.help(ctx)
 
     # @commands.slash_command(name="", description="")
     # async def (self, ctx: discord.ApplicationContext):
