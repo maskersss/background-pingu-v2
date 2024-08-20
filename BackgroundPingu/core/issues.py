@@ -1387,7 +1387,7 @@ class IssueChecker:
         if free_ram < 1800:
             notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
 
-        max_queued = min((free_ram - 2000) // 250, self.log.processors * 2)
+        max_queued = int((free_ram - 2000) // 250)
         if max_queued < 1: max_queued = 1
         if max_queued > 30: max_queued = 30
 
@@ -1396,13 +1396,12 @@ class IssueChecker:
 
 
         max_generating_wall = self.log.processors
-        if self.log.operating_system == OperatingSystem.LINUX: max_generating_wall -= 1
-        else: max_generating_wall -= 2
+        max_generating_wall = int(max_generating_wall // 1.66)
 
         if max_generating_wall < 1: max_generating_wall = 1
         if max_generating_wall > max_queued: max_generating_wall = max_queued
 
-        max_generating = max_generating_wall // 6 # this is horrible pls backseat
+        max_generating = int(max_generating_wall // 6) # this is horrible pls backseat
 
         java_args = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         if max_allocated > 3000:
