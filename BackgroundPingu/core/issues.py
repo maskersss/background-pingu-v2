@@ -1377,7 +1377,7 @@ class IssueChecker:
             return (output, True, True)
         
         output = ""
-        notes = []
+        notes = ["These settings are likely not optimal and are just rough suggestions."]
         
         free_ram = self.log.pc_ram
         if self.log.operating_system == OperatingSystem.LINUX: free_ram -= 1500
@@ -1387,7 +1387,7 @@ class IssueChecker:
         if free_ram < 1800:
             notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
 
-        max_queued = (free_ram - 2000) // 250
+        max_queued = min((free_ram - 2000) // 250, self.log.processors * 2)
         if max_queued < 1: max_queued = 1
         if max_queued > 30: max_queued = 30
 
@@ -1414,7 +1414,7 @@ class IssueChecker:
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
-        output += "_This might not be optimal. You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
+        output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
         output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n\n"
         output += f"**Recommended Max Memory Allocation:** {max_allocated} MB\n"
         output += f"### Recommended Java Arguments:\n```\n{java_args}\n```\n"
