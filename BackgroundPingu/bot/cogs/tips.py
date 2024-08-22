@@ -374,9 +374,9 @@ Requires [Eye Zoom Macro](https://discord.com/channels/83066801105145856/4058398
         text = "If your entity counter on F3 is `-1` or there isn't a `blockEntities` slice on the piechart in `root.gameRenderer.level.entities`, turn off `Entity Culling` in `Video Settings`."
         return await ctx.respond(text)
 
-    @commands.slash_command(name="chunk_multidraw", description="Explains how to turn off Chunk Multidraw.")
-    async def chunk_multidraw(self, ctx: discord.ApplicationContext):
-        text = "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Video Settings` from the main screen."
+    @commands.slash_command(name="multidraw", description="Explains how to turn off Chunk Multidraw.")
+    async def multidraw(self, ctx: discord.ApplicationContext):
+        text = "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Options > Book and Quill > Sodium`."
         return await ctx.respond(text)
 
     @commands.slash_command(name="igpu", description="Gives a guide to get Minecraft to use the high-performance GPU.")
