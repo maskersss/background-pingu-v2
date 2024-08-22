@@ -300,6 +300,7 @@ class Log:
         
         if any(self.has_content(modrinth) for modrinth in [
             "com.modrinth.theseus",
+            "ModrinthApp",
         ]):
             return Launcher.MODRINTH
         
