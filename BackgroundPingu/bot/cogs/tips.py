@@ -216,7 +216,7 @@ Julti [tutorial](https://youtu.be/_8gQkgZcTKo) and discord: https://discord.gg/c
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
     async def seedqueue(self, ctx: discord.ApplicationContext):
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
-Tutorial: https://youtu.be/mOkLwOWgE7w
+Tutorial: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
 Download: <https://github.com/KingContaria/seedqueue/releases>
 Wiki: <https://github.com/KingContaria/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
