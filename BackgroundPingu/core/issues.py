@@ -2,6 +2,7 @@ import semver, re, requests
 from packaging import version
 from BackgroundPingu.bot.main import BackgroundPingu
 from BackgroundPingu.core.parser import Log, ModLoader, OperatingSystem, LogType, Launcher
+from math import sqrt
 
 class IssueBuilder:
     def __init__(self, bot: BackgroundPingu, log: Log) -> None:
@@ -1398,9 +1399,15 @@ class IssueChecker:
         max_allocated = 2000 + max_queued * 250
         max_allocated = int(round(max_allocated, -2))
 
-
         max_generating_wall = self.log.processors
-        max_generating_wall = int(max_generating_wall // 1.66)
+        if self.log.operating_system == OperatingSystem.LINUX: max_generating_wall -= 1
+        else: max_generating_wall -= 2
+        
+        if max_generating_wall > 32:
+            max_generating_wall = max_generating_wall * 0.6
+        elif max_generating_wall > 8:
+            max_generating_wall = 4 * (sqrt(max_generating_wall + 1) - 1)
+        max_generating_wall = int(max_generating_wall)
 
         if max_generating_wall < 1: max_generating_wall = 1
         if max_generating_wall > max_queued: max_generating_wall = max_queued
