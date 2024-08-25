@@ -559,8 +559,8 @@ class IssueChecker:
         if self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
             builder.error("try_changing_lwjgl_version", self.log.edit_instance)
         
-        if not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*\(Silent Mode\)"):
-            builder.error("try_changing_lwjgl_version", self.log.edit_instance, experimental=True)
+        if not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
+            builder.error("silent_mode", self.log.edit_instance, experimental=True)
         
         if not found_crash_cause and any(self.log.has_content(new_java_old_fabric) for new_java_old_fabric in [
             "java.lang.IllegalArgumentException: Unsupported class file major version ",

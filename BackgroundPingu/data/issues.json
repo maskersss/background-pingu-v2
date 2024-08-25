@@ -112,6 +112,7 @@
     "error.requires_mod": "A mod you're using is requiring a mod called `{}`, but it is not present. Download it and add it to your mods folder.",
     "error.rong_modloader": "You seem to be using `{}` mods, but you have `{}` installed.",
     "error.send_full_log": "If you got a crash, please send the full log from `Edit{} > Minecraft Log`.",
+    "error.silent_mode": "Your game is running in Silent Mode. To fix this, make sure you don't have any weird characters in the instance path (try moving the launcher folder to `C:/`). You can also try changing your LWJGL version in `Edit{} > Version`.",
     "error.snowman_crash": "This could be a rare issue often referred to as a snowman crash. It should happen really rarely; there aren't any known solutions to it.",
     "error.sodium_config_crash_old": "Your config file for `Sodium` seems to be corrupted. Resolve the issue by deleting `sodium-options.json` from the `.minecraft/config/` directory.",
     "error.sodium_rtss": "RivaTuner Statistics Server (RTSS) is not compatible with Sodium. See [**this page**](https://github.com/CaffeineMC/sodium-fabric/wiki/Known-Issues#rtss-incompatible) for more details.",
