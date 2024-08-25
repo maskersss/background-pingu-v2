@@ -820,9 +820,12 @@ class IssueChecker:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
             found_crash_cause = True
         elif self.log.has_content_in_stacktrace("me.jellysquid.mods.sodium.client.SodiumClientMod.options"):
-            if self.log.has_mod("speedrunapi"): builder.error("sodium_config_crash_mcsr")
-            else: builder.error("sodium_config_crash")
-            found_crash_cause = True
+            if self.log.has_mod("sodiummac"):
+                builder.error("sodiummac_crash")
+                found_crash_cause = True
+            elif not self.log.has_mod("speedrunapi"):
+                builder.error("sodium_config_crash_old")
+                found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("me.voidxwalker.options.extra.ExtraOptions.lambda$load"):
             builder.error("corrupted_mod_config", "extra-options")
