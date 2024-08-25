@@ -123,10 +123,10 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         launcher: discord.Option(str, choices=["MultiMC", "Prism", "Official Launcher", "All"], required=False, default="All"),
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
-        setup_guide = "https://www.youtube.com/watch?v=VL8Syekw4Q0" if os == "Windows" else "https://www.youtube.com/watch?v=GomIeW5xdBM"
-        
+        launcher_name = "Prism" if os == "macOS" else "MultiMC"
+
         if launcher == "Official Launcher":
-            text = f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Watch [**this video**](<{setup_guide}>) to set up for speedrunning."
+            text = f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning."
         else:
             if os == "Linux":
                 text = f"You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>)."
@@ -143,7 +143,7 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
             text += """\n* After installing Java, follow the steps in the image below (assuming you're using MultiMC or Prism Launcher)[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)
  * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu."""
             if launcher in ["Prism", "All"]: text += "\n * On Prism, also make sure to disable the Java compatibility check in Settings > Java."
-            if launcher == "All": text += f"\n* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Watch [**this video**](<{setup_guide}>) to set up MultiMC for speedrunning."
+            if launcher == "All": text += f"\n* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning."
         
         return await ctx.respond(text)
 
