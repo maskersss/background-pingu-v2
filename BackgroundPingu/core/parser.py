@@ -299,8 +299,9 @@ class Log:
                 return Launcher.PRISM
         
         if any(self.has_content(modrinth) for modrinth in [
-            "com.modrinth.theseus",
-            "ModrinthApp",
+            r"com.modrinth.theseus",
+            r"ModrinthApp",
+            r"{MINECRAFT_USERNAME}",
         ]):
             return Launcher.MODRINTH
         
