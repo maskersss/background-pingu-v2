@@ -1064,7 +1064,14 @@ class IssueChecker:
                     found_crash_cause = True
         
         if self.log.is_seedqueue_log:
-            for incompatible_mod in ["PogLoot", "mcsrranked", "worldpreview-1.16.1-rev.988b7ab-dirty", "autoresetter-0.0.3"]:
+            for incompatible_mod in [
+                "PogLoot",
+                "mcsrranked",
+                "beachfilter",
+                "fsg-mod",
+                "worldpreview-1.16.1-rev.988b7ab-dirty",
+                "autoresetter-0.0.3",
+            ]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "SeedQueue", incompatible_mod)
                     found_crash_cause = True
