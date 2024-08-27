@@ -109,7 +109,7 @@
     "error.really_old_fabric": "You're using a really old version of `Fabric Loader`. You should update it.",
     "error.recipe_book_crash": "This seems to be a rare recipe book crash. It should happen really rarely; there aren't any known solutions to it.",
     "error.requires_fabric_api": "You're using a mod that requires `Fabric API`. It is a mod that is separate to `Fabric Loader`. You can download it [**here**](https://modrinth.com/mod/fabric-api).",
-    "error.requires_mod": "A mod you're using is requiring a mod called `{}`, but it is not present. Download it and add it to your mods folder.",
+    "error.requires_mod": "A mod you're using is requiring a mod `{}`, but it is not present. Download it and add it to your mods folder.",
     "error.rong_modloader": "You seem to be using `{}` mods, but you have `{}` installed.",
     "error.send_full_log": "If you got a crash, please send the full log from `Edit{} > Minecraft Log`.",
     "error.silent_mode": "Your game is running in Silent Mode. To fix this, make sure you don't have any weird characters in the instance path (try moving the launcher folder to `C:/`). You can also try changing your LWJGL version in `Edit{} > Version`.",

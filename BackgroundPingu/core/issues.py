@@ -802,11 +802,16 @@ class IssueChecker:
                 builder.warning("builtin_lib_recommendation", system_arg)
 
         if not found_crash_cause:
-            required_mod_match = re.findall(r"requires (.*?) of (\w+),", self.log._content)
-            for required_mod in required_mod_match:
-                mod_name = required_mod[1]
-                if mod_name.lower() == "fabric": builder.error("requires_fabric_api")
-                else: builder.error("requires_mod", mod_name)
+            match = re.findall(r"requires (.*?) of (\w+),", self.log._lower_content)
+            required_mods = set([required_mod[1] for required_mod in match])
+            for mod_name in required_mods:
+                if mod_name == "fabric":
+                    builder.error("requires_fabric_api")
+                else:
+                    builder.error("requires_mod", mod_name)
+                found_crash_cause = True
+            if any(mcsr_mod.lower() in " ".join(required_mods) for mcsr_mod in self.mcsr_mods):
+                builder.add("update_mods")
         
         if not found_crash_cause and self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
             builder.error("try_admin_launch")
