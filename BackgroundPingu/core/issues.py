@@ -1,8 +1,8 @@
 import semver, re, requests
 from packaging import version
+from math import sqrt
 from BackgroundPingu.bot.main import BackgroundPingu
 from BackgroundPingu.core.parser import Log, ModLoader, OperatingSystem, LogType, Launcher
-from math import sqrt
 
 class IssueBuilder:
     def __init__(self, bot: BackgroundPingu, log: Log) -> None:
@@ -1212,9 +1212,8 @@ class IssueChecker:
             elif self.log.has_content_in_stacktrace("java.lang.ClassNotFoundException: me.voidxwalker.autoreset.Atum"):
                 builder.error(
                     "downgrade_atum",
-                    experimental=(self.log.minecraft_version != "1.16.1")
+                    experimental=True,
                 )
-                found_crash_cause = True
 
         if not self.log.minecraft_folder is None:
             if "!" in self.log.minecraft_folder:
