@@ -925,7 +925,7 @@ class IssueChecker:
             extracted_version = match.group(1)
             try:
                 extracted_version = version.parse(extracted_version)
-                needed_version = version.parse("3.2.17")
+                needed_version = version.parse("3.3")
 
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
