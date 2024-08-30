@@ -1071,9 +1071,13 @@ class IssueChecker:
                     builder.error("use_sodium_not_optifine", "Sodium").add("optifine_alternatives")
         
         if self.log.has_mod("PeepoPractice"):
-            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "fast-reset", "AreEssGee"]:
+            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "AreEssGee"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "PeepoPractice", incompatible_mod)
+                    found_crash_cause = True
+            if self.log.has_mod("fast-reset"):
+                builder.error("incompatible_mod", "PeepoPractice", "fast-reset")
+                if self.log.has_content_in_stacktrace("java.lang.StackOverflowError"):
                     found_crash_cause = True
         
         if self.log.is_seedqueue_log:
