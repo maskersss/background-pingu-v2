@@ -713,6 +713,10 @@ class IssueChecker:
             builder.error("zgc_graalvm_crash")
             found_crash_cause = True
         
+        if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
+            builder.error("softmaxheap_over_xmx")
+            found_crash_cause = True
+        
         if not found_crash_cause and self.log.has_content("Could not find or load main class"):
             pattern = r"Could not find or load main class (.*)\n"
             match = re.search(pattern, self.log._content)
