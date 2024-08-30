@@ -691,14 +691,13 @@ class Log:
         return True
 
     @cached_property
-    def modcheck_v1_warning(self) -> bool:
-        if any(self.has_mod(mod) for mod in [
-            "speedrunapi",
-            "seedqueue",
+    def modcheck_v1_warning(self) -> str:
+        if any(self.has_mod(old_mod) for old_mod in [
+            "fast-reset-1",
         ]):
-            return None
+            return "modcheck_v1_warning"
         
-        return "modcheck_v1_warning"
+        return None
     
     @cached_property
     def recommended_mods(self) -> list[str]:
