@@ -507,7 +507,8 @@ Additionally. [practice setting up your inventory for zero cycle](https://github
 - **/tags**: Use this command to get a list of all available tags related to MCSR strategies, guides, and more.
 - **Need Help?**: If you're still unsure after the bot's response, please ask in the appropriate help channel.
 
-Source code available at: <https://github.com/maskersss/background-pingu-v2>"""
+If you have any questions or suggestions regarding the bot, feel free to ping or dm `maskers`.
+Source code available on [GitHub](<https://github.com/maskersss/background-pingu-v2>)."""
         return await ctx.respond(text)
     
     @commands.slash_command(name="info", description="Gives a guide to using the bot.")
