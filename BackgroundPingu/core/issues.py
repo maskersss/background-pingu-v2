@@ -1431,7 +1431,8 @@ class IssueChecker:
         if max_generating_wall < 1: max_generating_wall = 1
         if max_generating_wall > max_queued: max_generating_wall = max_queued
 
-        max_generating = int(max_generating_wall // 6) # this is horrible pls backseat
+        # discussion from seedqueue discord: https://discord.com/channels/1262887973154848828/1272158999298707488/1279137330690654290
+        max_generating = int(self.log.processors // 5)
 
         java_args = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         if max_allocated > 3000:
