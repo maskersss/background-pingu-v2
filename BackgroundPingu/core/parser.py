@@ -742,7 +742,7 @@ class Log:
                 "state-output",
             ]
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
-                "fsg-mod",
+                "fsg",
                 "beachfilter",
                 "pogloot",
             ]):
