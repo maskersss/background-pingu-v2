@@ -713,6 +713,10 @@ class IssueChecker:
             builder.error("zgc_graalvm_crash")
             found_crash_cause = True
         
+        if self.log.has_content_in_stacktrace("Tried to play a broken sound file from a SeedQueue customization pack"):
+            builder.error("sq_empty_sound_file")
+            found_crash_cause = True
+        
         if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
             builder.error("softmaxheap_over_xmx")
             found_crash_cause = True

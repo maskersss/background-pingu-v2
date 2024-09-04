@@ -118,6 +118,7 @@
     "error.sodium_rtss": "RivaTuner Statistics Server (RTSS) is not compatible with Sodium. See [**this page**](https://github.com/CaffeineMC/sodium-fabric/wiki/Known-Issues#rtss-incompatible) for more details.",
     "error.sodiummac_crash": "This looks like a crash caused by a bug in `Sodium Mac 3.3.1` that will be fixed in future versions. If [a new version](https://mods.tildejustin.dev/?version=1.16.1&run=rsg&os=osx) wasn't released yet, try again, this crash only has a 50% chance of happening.",
     "error.softmaxheap_over_xmx": "`-XX:SoftMaxHeapSize` must be less than or equal to the maximum memory allocation. You should set it to 60-80% of it.",
+    "error.sq_empty_sound_file": "Tried to play a broken sound file from a SeedQueue customization pack! If you are using empty sound files to mute sounds on the wall screen, use short silent ones instead.",
     "error.stack_overflow_crash": "This seems to be a crash caused by doing too many resets in a row without letting it finish loading a preview. It's fixed in the latest `Atum` version.",
     "error.starlight_crash": "This seems to be a rare crash caused by `Starlight` that was fixed in a newer update.",
     "error.too_little_ram_crash": "You have too little RAM allocated, which caused this crash.",
