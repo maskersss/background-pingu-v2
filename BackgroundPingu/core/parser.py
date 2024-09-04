@@ -635,6 +635,7 @@ class Log:
             r"Reported exception thrown!\n.*",
             r"Minecraft has crashed!.*",
             r"A mod crashed on startup!\n.*",
+            r"Unreported exception thrown!\n.*",
             r"Encountered an unexpected exception\n.*",
             r"Unhandled game exception\n.*",
         ]
