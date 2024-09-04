@@ -33,12 +33,17 @@ class Core(Cog):
             "embed": None,
             "view": None
         }
-        
         logs = await self.get_logs_from_message(msg, include_content)
         
         for link, log in logs:
             try:
-                results = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).check()
+                results = issues.IssueChecker(
+                    self.bot,
+                    log,
+                    link,
+                    msg.guild.id if not msg.guild is None else None,
+                    msg.channel.id if not msg.channel is None else None,
+                ).check()
                 if results.has_values():
                     messages = results.build()
                     result["embed"] = await self.build_embed(results, messages, msg)
@@ -60,7 +65,13 @@ class Core(Cog):
 
         for link, log in logs:
             try:
-                reply, success, hidden = issues.IssueChecker(self.bot, log, link, msg.guild.id if not msg.guild is None else None).seedqueue_settings()
+                reply, success, hidden = issues.IssueChecker(
+                    self.bot,
+                    log,
+                    link,
+                    msg.guild.id if not msg.guild is None else None,
+                    msg.channel.id if not msg.channel is None else None,
+                ).seedqueue_settings()
                 if success:
                     result = reply
                     found_result = True

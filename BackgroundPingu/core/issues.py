@@ -93,11 +93,12 @@ class IssueBuilder:
         return messages
 
 class IssueChecker:
-    def __init__(self, bot: BackgroundPingu, log: Log, link: str, server_id: int) -> None:
+    def __init__(self, bot: BackgroundPingu, log: Log, link: str, server_id: int, channel_id: int) -> None:
         self.bot = bot
         self.log = log
         self.link = link
         self.server_id = server_id
+        self.channel_id = channel_id
         self.java_17_mods = [
             "areessgee",
             "peepopractice",
@@ -1284,6 +1285,13 @@ class IssueChecker:
             builder.info("upload_log_attachment")
         
         if not found_crash_cause:
+            for server_id, channel_ids in [
+                (83066801105145856, [727673359860760627]), # javacord
+            ]:
+                if self.server_id == server_id and not self.channel_id in channel_ids:
+                    builder.info("ask_in_support_channel", server_id, channel_ids[0])
+        
+        if not found_crash_cause:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
                 "com.google.gson.stream.MalformedJsonException",
                 "Cannot invoke \"com.google.gson.JsonObject.entrySet()\"",
@@ -1348,6 +1356,16 @@ class IssueChecker:
             elif "ranked" in " ".join(wrong_mods) and self.server_id != 1056779246728658984:
                 builder.error(
                     "ranked_mod_crash",
+                    "s" if len(wrong_mods) > 1 else "",
+                    "; ".join(wrong_mods[:12]),
+                    "" if len(wrong_mods) > 1 else "s",
+                )
+            elif any(mayasmod in " ".join(wrong_mods) for mayasmod in [
+                "peepopractice",
+                "areessgee",
+            ]) and self.server_id != 1070838405925179392:
+                builder.error(
+                    "mayas_mod_crash",
                     "s" if len(wrong_mods) > 1 else "",
                     "; ".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",

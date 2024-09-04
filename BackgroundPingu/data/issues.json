@@ -136,6 +136,7 @@
     "error.wp_3_plus_crash": "This seems to be a rare crash caused by `WorldPreview 3.0.0 - 4.0.1`. It should be fixed in `WorldPreview 4.0.2+`.",
     "error.wrong_java_arg": "You have `{}` in your Java arguments, while it's not a valid argument. Either fix it or remove it.",
     "error.zgc_graalvm_crash": "Old `GraalVM` versions did not support `ZGC`. You should use a newer `GraalVM` version.",
+    "info.ask_in_support_channel": "If this response did not help you, you should ask in https://discord.com/channels/{}/{}.",
     "info.leaked_username": "Your log has your PC username in it. You might want to delete it.",
     "info.send_full_log": "Please send the full {} log from `Edit{} > Minecraft Log`.",
     "info.send_watchdog_report": "Please send `{}` as it would have more info about this crash.",
