@@ -1101,11 +1101,7 @@ class IssueChecker:
             builder.error("incompatible_mod", "SpeedRunIGT", "Stronghold Trainer")
             found_crash_cause = True
         
-        if self.log.has_normal_mod("continuity") and self.log.has_mod("sodium") and not self.log.has_mod("indium"):
-            builder.error("missing_dependency", "continuity", "indium")
-            if not found_crash_cause and self.log.has_content("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
-                found_crash_cause = True
-        elif self.log.has_content_in_stacktrace("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
+        if self.log.has_content_in_stacktrace("Cannot invoke \"net.fabricmc.fabric.api.renderer.v1.Renderer.meshBuilder()\""):
             builder.error("missing_dependency_2", "indium")
             found_crash_cause = True
         
