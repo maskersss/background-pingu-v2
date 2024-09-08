@@ -506,6 +506,15 @@ Additionally. [practice setting up your inventory for zero cycle](https://github
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await ctx.respond(text)
+
+    @commands.slash_command(name="extraoptions", description="Gives a link to Extra Options mod and an explanation of SRC rules regarding it.")
+    async def extraoptions(self, ctx: discord.ApplicationContext):
+        text = """⚠️ **__Warning!__** ⚠️ 
+This mod may result in your run being __**rejected**__ if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> 
+Link **(read the above warning)**: 
+||<https://github.com/tildejustin/extra-options/releases/latest>||
+This mod allows you to adjust FOV and distortion effects through accessibility settings."""
+        return await ctx.respond(text)
     
     @commands.slash_command(name="help", description="Gives a guide to using the bot.")
     async def help(self, ctx: discord.ApplicationContext):
