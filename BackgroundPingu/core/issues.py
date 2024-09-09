@@ -693,7 +693,11 @@ class IssueChecker:
             builder.error("out_of_memory_pc", experimental=True)
             found_crash_cause = True
 
-        if self.log.has_mod("phosphor") and not self.log.minecraft_version == "1.12.2":
+        if (self.log.has_mod("phosphor")
+            and (self.log.minecraft_version is None
+                 or self.log.is_newer_than("1.14")
+            )
+        ):
             builder.note("starlight_better")
             metadata = self.get_mod_metadata("starlight")
             if not metadata is None:
