@@ -736,16 +736,15 @@ class IssueChecker:
             else:
                 builder.error("openal_crash", experimental=True)
         
-        if found_crash_cause: pass
+        if found_crash_cause or not self.log.stacktrace is None: pass
 
         elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
             and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
         ):
             builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
-            if self.log.stacktrace is None: found_crash_cause = True
+            found_crash_cause = True
         
         elif (not self.log.is_newer_than("1.17")
-            and self.log.stacktrace is None
             and self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
         ):
             builder.error("unsupported_intel_gpu", experimental=True)
@@ -756,8 +755,8 @@ class IssueChecker:
             builder.error("mods_crash", "; ".join(wrong_mods))
             found_crash_cause = True
         
-        elif (self.log.stacktrace is None
-            and (self.log.has_content("A fatal error has been detected by the Java Runtime Environment") or self.log.has_content("EXCEPTION_ACCESS_VIOLATION"))
+        elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
+            or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
@@ -776,7 +775,7 @@ class IssueChecker:
                 and self.log.operating_system != OperatingSystem.MACOS
             ): builder.add("eav_crash_srigt")
             builder.add("eav_crash_disclaimer")
-            if self.log.stacktrace is None: found_crash_cause = True
+            found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
             builder.error("intel_hd2000").add("intell_hd2000_info")
