@@ -92,6 +92,7 @@
     "error.no_java": "You don't have `Java` selected.",
     "error.no_loader": "You are using mods, but you haven't installed a mod loader.",
     "error.no_voyager_crash": "This is a rare crash that can be prevented by using [**Voyager**](https://github.com/modmuss50/Voyager/releases/latest). You should install it.",
+    "error.not_a_mod": "You put `{}` in the `mods` folder, but it's not a mod, and it will make Minecraft crash while in the `mods` folder. You should move it.",
     "error.old_fabric_crash": "This crash seems to be caused by using an outdated version of `Fabric Loader`. You should update it.",
     "error.old_mod_crash": "This crash seems to be caused by using an outdated version of `{}`. You need to update it, download the latest version [**here**]({}).",
     "error.old_mod_version": "You're using an old `{}` mod version. You should update it, you can download the latest version [**here**]({}).",

@@ -99,6 +99,10 @@ class IssueChecker:
         self.link = link
         self.server_id = server_id
         self.channel_id = channel_id
+        self.not_mods = [
+            "Julti",
+            "Jingle",
+        ]
         self.java_17_mods = [
             "areessgee",
             "peepopractice",
@@ -123,7 +127,7 @@ class IssueChecker:
             "mcsrranked",
             "mangodfps",
             "statsperreset",
-        ]
+        ] + self.not_mods
         self.mcsr_mods = [
             "worldpreview",
             "anchiale",
@@ -827,6 +831,11 @@ class IssueChecker:
         
         if not found_crash_cause and self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
             builder.error("try_admin_launch")
+        
+        for not_a_mod in self.not_mods:
+            if self.log.has_mod(not_a_mod):
+                builder.error("not_a_mod", not_a_mod)
+                found_crash_cause = True
         
         if found_crash_cause: pass
         elif self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
