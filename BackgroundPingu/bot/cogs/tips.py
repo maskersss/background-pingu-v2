@@ -110,7 +110,7 @@ You may remap keys using external programs, but:
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 any% random seed glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/VL8Syekw4Q0>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/OEpZlv6cQsI>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
@@ -171,11 +171,8 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
     ):
         if os == "macOS": text = "https://www.youtube.com/watch?v=GomIeW5xdBM"
         elif os == "Linux": text = "https://sathya-pramodh.github.io/linux-mcsr/"
-        else: text = """Setup video tutorial: https://youtu.be/VL8Syekw4Q0
-This will work for other categories/versions of Minecraft by substituting any mention of 1.16.1 & RSG for your chosen category/version.
-Any version of Java above 17 is recommended, you do not need the exact version shown in the video."""
-        
-        text += "\nMod configs, including Sodium Video Settings, are now located in `Options > Book & Quill (top right)`."
+        else: text = """1.16.1 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
+For other other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)
 
