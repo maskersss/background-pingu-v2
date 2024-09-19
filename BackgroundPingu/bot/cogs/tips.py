@@ -122,6 +122,11 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         text = "Jarfix fixes the jar file association on Windows: https://johann.loefflmann.net/en/software/jarfix/index.html"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="folderinafolder", description="Explains the correct practice map folder structure.")
+    async def folderinafolder(self, ctx: discord.ApplicationContext):
+        text = "https://cdn.discordapp.com/attachments/433058639956410383/1195805874120314941/image.png"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="java", description="Gives a guide to update Java.")
     async def java(
         self,
