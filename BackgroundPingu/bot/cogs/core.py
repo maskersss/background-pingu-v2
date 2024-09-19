@@ -58,14 +58,13 @@ class Core(Cog):
     
     async def get_settings(self, msg: discord.Message) -> tuple[str, bool]:
         found_result = False
-        hidden = True
         result = None
         
         logs = await self.get_logs_from_message(msg, include_content=False)
 
         for link, log in logs:
             try:
-                reply, success, hidden = issues.IssueChecker(
+                reply, success = issues.IssueChecker(
                     self.bot,
                     log,
                     link,
@@ -81,7 +80,7 @@ class Core(Cog):
                 found_result = True
             if found_result: break
         
-        return (result, found_result, hidden)
+        return (result, found_result)
 
     async def build_embed(self, results: issues.IssueBuilder, messages: list[str], msg: discord.Message):
         embed = discord.Embed(
@@ -114,12 +113,9 @@ class Core(Cog):
     
     @commands.message_command(name="Recommend Settings")
     async def recommend_settings_cmd(self, ctx: discord.ApplicationContext, msg: discord.Message):
-        reply, found_result, hidden = await self.get_settings(msg)
+        reply, found_result = await self.get_settings(msg)
         if found_result:
-            return await ctx.response.send_message(
-                content=reply,
-                ephemeral=hidden,
-            )
+            return await ctx.response.send_message(content=reply)
         return await ctx.response.send_message(":x: **No log found in this message.**", ephemeral=True)
 
 def setup(bot: BackgroundPingu):

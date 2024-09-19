@@ -31,18 +31,18 @@ class Tips(Cog):
             text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             return await ctx.respond(text, ephemeral=True)
 
-        reply, success, hidden = issues.IssueChecker(
+        text, success = issues.IssueChecker(
             self.bot,
             log,
             link,
             ctx.guild_id,
             ctx.channel_id,
         ).seedqueue_settings()
+        
         if not success:
             text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)."
-            return await ctx.respond(text, ephemeral=True)
-        else:
-            return await ctx.respond(reply, ephemeral=hidden)
+        
+        return await ctx.respond(text)
     
     @commands.slash_command(name="fabric", description="A guide on how to install Fabric.")
     async def fabric(

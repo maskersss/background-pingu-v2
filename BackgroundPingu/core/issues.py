@@ -1419,7 +1419,7 @@ class IssueChecker:
         
         return builder
 
-    def seedqueue_settings(self) -> tuple[str, bool, bool]:
+    def seedqueue_settings(self) -> tuple[str, bool]:
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if not self.log.has_mod("seedqueue"):
@@ -1429,9 +1429,9 @@ class IssueChecker:
             elif not self.log.type is None:
                 output = f"You sent a {self.log.type.value}. Send the full log instead."
             else:
-                return ("", False, True)
+                return ("", False)
             
-            return (output, True, True)
+            return (output, True)
         
         output = ""
         missing_mods = []
@@ -1503,4 +1503,4 @@ class IssueChecker:
         
         output = output.strip()
 
-        return (output, True, False)
+        return (output, True)
