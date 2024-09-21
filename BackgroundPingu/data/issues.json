@@ -19,7 +19,7 @@
     "add.intell_hd2000_info": "For more information about this issue and possible solutions, please refer to [**this page**](https://prismlauncher.org/wiki/getting-started/installing-java/#a-note-about-intel-hd-20003000-on-windows-10).",
     "add.java_override_warning": "Note that your instance's `Java` settings seem to override global `Java` settings, so you'll need to select `Java` there (or disable the override).",
     "add.java_update_guide": "Use [**this guide**](https://docs.google.com/document/d/1PIjyPMulI3r5aZpfywt5OQR_12qEzX5UTfU8DQHtNp8/edit) to update your Java version. It is recommended you install Java **for all users**.",
-    "add.k4_setup_guide": "Check out [**this video**](https://www.youtube.com/watch?v=VL8Syekw4Q0) for a guide on how to set up for Minecraft speedrunning.",
+    "add.k4_setup_guide": "Check out [**this video**](https://www.youtube.com/watch?v=OEpZlv6cQsI) for a guide on how to set up for Minecraft speedrunning.",
     "add.mac_setup_guide": "You can check out [**this guide**](https://www.youtube.com/watch?v=GomIeW5xdBM) for how to set up speedrunning on a Mac.",
     "add.mod_download": "You can download `{}` [**here**]({}).",
     "add.modcheck_v1_warning": "**The previous versions (v1/v2) of `ModCheck` are no longer supported.** Please ensure that your `ModCheck` is up-to-date.",
