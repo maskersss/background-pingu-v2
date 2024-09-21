@@ -361,6 +361,9 @@ class IssueChecker:
         if is_mcsr_log and self.log.launcher == Launcher.MODRINTH:
             builder.note("modrinth_app_illegal").add(self.log.setup_guide)
         
+        if self.log.launcher == Launcher.TL:
+            builder.error("tl_malware").add(self.log.setup_guide)
+        
         if (self.log.operating_system == OperatingSystem.MACOS
             and self.log.has_mod("sodium") and not self.log.has_mod("sodiummac")
         ):

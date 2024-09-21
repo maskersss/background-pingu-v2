@@ -20,6 +20,7 @@ class Launcher(enum.Enum):
     MULTIMC = "MultiMC"
     PRISM = "Prism"
     MODRINTH = "Modrinth App"
+    TL = "TL"
 
 class ModLoader(enum.Enum):
     FABRIC = "Fabric"
@@ -304,6 +305,9 @@ class Log:
             r"{MINECRAFT_USERNAME}",
         ]):
             return Launcher.MODRINTH
+        
+        if self.has_content(".tlauncher"):
+            return Launcher.TL
         
         if (self.has_content("\\AppData\\Roaming\\.minecraft")
             or self.has_content("/AppData/Roaming/.minecraft")
