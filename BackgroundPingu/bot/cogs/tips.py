@@ -16,20 +16,20 @@ class Tips(Cog):
         log: discord.Option(str, required=False),
     ):
         if log is None:
-            text = "Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            return await ctx.respond(text, ephemeral=True)
+            text = "Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text)
 
         link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
         match = re.search(link_pattern, log)
         if match is None:
-            text = "No link found. Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            return await ctx.respond(text, ephemeral=True)
+            text = "No link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text)
 
         link = match.group(0)     
         (link, log) = (link.split("?ex")[0], parser.Log.from_link(link))
         if log is None:
-            text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            return await ctx.respond(text, ephemeral=True)
+            text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            return await ctx.respond(text)
 
         text, success = issues.IssueChecker(
             self.bot,
