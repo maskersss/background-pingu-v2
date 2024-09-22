@@ -26,6 +26,7 @@
     "add.optifine_alternatives": "See [**this page**](https://prismlauncher.org/wiki/getting-started/install-of-alternatives/) for more information.",
     "add.prism_java_compat_check": "Make sure to enable `Skip Java compatibility checks` in `Prism`.",
     "add.ranked_mods_disclaimer": "If you're still confused, it's possible the latest versions of mods aren't whitelisted. In this case, you should ask for help in https://discord.com/channels/1056779246728658984/1074385256070791269 in [**MCSR Ranked Discord**](https://mcsrranked.com/discord).",
+    "add.too_new_java": "If you have the latest version of `Fabric Loader`, use a lower `Java` version instead, for example `Java 21`.",
     "add.update_mods": "You can get the latest versions of all mods from [**this website**](https://mods.tildejustin.dev/) or by using [**ModCheck**](https://github.com/tildejustin/modcheck/releases/latest).",
     "add.update_mods_prism": "To update it in `Prism`, you can do `Edit > Mods > Check for Updates`.",
     "add.update_mods_ranked": "You can get the latest versions of all mods from [**this website**](https://gist.github.com/RedLime/bb1d3f49a01ff43f21bc218da964cdd8) or by using [**ModCheck**](https://github.com/tildejustin/modcheck/releases/latest).",

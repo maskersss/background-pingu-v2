@@ -576,7 +576,10 @@ class IssueChecker:
             "java.lang.IllegalArgumentException: Class file major version "
         ]):
             mod_loader = self.log.mod_loader.value if self.log.mod_loader.value is not None else "mod"
-            builder.error("new_java_old_fabric_crash", mod_loader, mod_loader).add(self.log.fabric_guide, "update")
+            builder.error("new_java_old_fabric_crash", mod_loader, mod_loader)
+            if not self.log.major_java_version is None and self.log.major_java_version >= 23:
+                builder.add("too_new_java")
+            builder.add(self.log.fabric_guide, "update")
             found_crash_cause = True
             
         elif any(self.log.has_content_in_stacktrace(crash) for crash in [
@@ -1299,7 +1302,7 @@ class IssueChecker:
         ):
             builder.info("upload_log_attachment")
         
-        if not found_crash_cause:
+        if not found_crash_cause and is_mcsr_log:
             for server_id, channel_ids in [
                 (83066801105145856, [727673359860760627]), # javacord
             ]:
