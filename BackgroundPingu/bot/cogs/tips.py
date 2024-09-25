@@ -215,6 +215,11 @@ Watch the 1st video for a rough overview, the 2nd and 3rd for more information a
         text = "The pie chart may occasionally bug and give spikes significantly higher than expected. Assuming you're on Windows and your Minecraft is using an NVIDIA GPU, you can fix this by turning off \"Threaded optimization\" in the NVIDIA Control Panel, which you can access by right-clicking your Desktop[:](https://cdn.discordapp.com/attachments/433058639956410383/1166992505296920628/image.png)"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="jingle", description="Gives a link to Jingle's GitHub page.")
+    async def jingle(self, ctx: discord.ApplicationContext):
+        text = "Application that provides a lot of useful utilities for speedrunning: <https://github.com/DuncanRuns/Jingle>"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
     async def julti(self, ctx: discord.ApplicationContext):
         text = """__**Julti is no longer required for wall on 1.16.1, [SeedQueue](<https://youtu.be/mOkLwOWgE7w>) is recommended instead.**__
