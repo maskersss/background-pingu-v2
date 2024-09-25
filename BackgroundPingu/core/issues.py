@@ -724,17 +724,44 @@ class IssueChecker:
         if not self.log.is_newer_than("1.17") and self.log.has_content_in_stacktrace("Pixel format not accelerated"):
             builder.error("unsupported_intel_gpu")
         
-        if not found_crash_cause and self.log.has_content("Z garbage collector is not supported by Graal"):
-            builder.error("zgc_graalvm_crash")
-            found_crash_cause = True
-        
         if self.log.has_content_in_stacktrace("Tried to play a broken sound file from a SeedQueue customization pack"):
             builder.error("sq_empty_sound_file")
+            found_crash_cause = True
+        
+        if not found_crash_cause and self.log.has_content("Z garbage collector is not supported by Graal"):
+            builder.error("zgc_graalvm_crash")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
             builder.error("softmaxheap_over_xmx")
             found_crash_cause = True
+        
+        if self.log.is_seedqueue_log and not self.log.java_arguments is None:
+            temp = False
+            if not self.log.has_java_argument("-XX:+UseZGC"):
+                builder.note("use_zgc")
+                temp = True
+            else:
+                if (not self.log.max_allocated is None
+                    and self.log.max_allocated > 5000
+                    and not self.log.has_java_argument("-XX:SoftMaxHeapSize")
+                ):
+                    builder.note("use_softmaxheapsize")
+                    temp = True
+                if (not self.log.major_java_version is None
+                    and self.log.major_java_version >= 23
+                    and not self.log.has_java_argument("-XX:-ZGenerational")          
+                ):
+                    builder.note("use_anti_zgenerational")
+                    temp = True
+                if self.log.has_java_argument("-XX:+ZGenerational"):
+                    builder.note("use_zgenerational_is_bad")
+                    temp = True
+            if temp:
+                if self.server_id == 83066801105145856:
+                    builder.add("java_guide_javacord")
+                else:
+                    builder.add("java_guide")
         
         if not found_crash_cause and self.log.has_content("Could not find or load main class"):
             pattern = r"Could not find or load main class (.*)\n"
@@ -1474,7 +1501,10 @@ class IssueChecker:
         # discussion from seedqueue discord: https://discord.com/channels/1262887973154848828/1272158999298707488/1279137330690654290
         max_generating = int(self.log.processors // 5)
 
-        java_args = "-XX:+UseZGC -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
+        java_args = "-XX:+UseZGC"
+        if not self.log.major_java_version is None and self.log.major_java_version >= 23:
+            java_args += " -XX:-ZGenerational"
+        java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         if max_allocated > 3000:
             java_args += f" -XX:SoftMaxHeapSize={int(round(max_allocated * 0.8, -2))}m"
         
