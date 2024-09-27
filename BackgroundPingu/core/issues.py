@@ -736,6 +736,14 @@ class IssueChecker:
             builder.error("softmaxheap_over_xmx")
             found_crash_cause = True
         
+        pattern = r"Unrecognized VM option '(.*)'"
+        match = re.search(pattern, self.log._content)
+        if not match is None:
+            if "UseZGC" in match.group(1):
+                builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
+            else:
+                builder.error("unrecognized_vm_option", match.group(1))
+        
         if self.log.is_seedqueue_log and not self.log.java_arguments is None:
             temp = False
             if not self.log.has_java_argument("-XX:+UseZGC"):
@@ -1511,7 +1519,7 @@ class IssueChecker:
         if self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, see [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
         elif not self.log.major_java_version is None and self.log.major_java_version < 17:
-            notes.append(f"You're using `Java {self.log.major_java_version}`. It is recommended to use `Java 17+` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            notes.append(f"You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
 
         if len(self.log.whatever_mods) > 0:
             for recommended_mod in self.log.recommended_mods:
