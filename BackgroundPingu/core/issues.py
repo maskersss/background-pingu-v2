@@ -162,6 +162,7 @@ class IssueChecker:
             "voyager",
             "planifolia",
             "retino",
+            "ferritecore",
         ]
     
     def get_mod_metadata(self, mod_filename: str) -> dict:
@@ -1394,6 +1395,9 @@ class IssueChecker:
                         if len(mod_name) > 2 and mod_name in self.log.stacktrace:
                             if not mod in wrong_mods: wrong_mods.append(mod)
             
+            if not is_mcsr_log and any(mcsr_mod in " ".join(wrong_mods) for mcsr_mod in self.mcsr_mods):
+                is_mcsr_log = True
+
             if corrupted_config:
                 if any("speedrunapi" in mod for mod in wrong_mods):
                     builder.error("mcsr_corrupted_mods_config")
@@ -1424,9 +1428,15 @@ class IssueChecker:
                     "" if len(wrong_mods) > 1 else "s",
                 )
             elif len(wrong_mods) == 1:
-                builder.error("mod_crash", wrong_mods[0])
+                if is_mcsr_log:
+                    builder.error("mod_crash", wrong_mods[0])
+                else:
+                    builder.error("mod_crash_disable", wrong_mods[0])
             elif len(wrong_mods) > 0 and len(wrong_mods) < 10:
-                builder.error("mods_crash", "; ".join(wrong_mods))
+                if is_mcsr_log:
+                    builder.error("mods_crash", "; ".join(wrong_mods))
+                else:
+                    builder.error("mods_crash_disable", "; ".join(wrong_mods))
         
         
         if self.link == "message":
