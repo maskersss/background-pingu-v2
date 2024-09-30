@@ -988,7 +988,7 @@ class IssueChecker:
             extracted_version = match.group(1)
             try:
                 extracted_version = version.parse(extracted_version)
-                needed_version = version.parse("3.3")
+                needed_version = version.parse("4.0")
 
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
@@ -1550,7 +1550,9 @@ class IssueChecker:
         output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n\n"
         output += f"**Recommended Max Memory Allocation:** {max_allocated} MB\n"
         output += f"_You might need slightly more or less depending on the category, i.e. less for SSG and more for AA._\n"
-        output += f"### Recommended Java Arguments:\n```\n{java_args}\n```\n"
+        output += f"### Recommended Java Arguments:\n"
+        output += f"*(copy them into `Edit{self.log.edit_instance} > Settings > Java arguments`)*\n"
+        output += f"```\n{java_args}\n```\n"
 
         for note in notes:
             output += f"_{note}_\n"
