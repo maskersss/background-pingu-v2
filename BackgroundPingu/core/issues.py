@@ -747,7 +747,7 @@ class IssueChecker:
         
         if self.log.is_seedqueue_log and not self.log.java_arguments is None:
             temp = False
-            if not self.log.has_java_argument("-XX:+UseZGC"):
+            if not self.log.has_java_argument("UseZGC"):
                 builder.note("use_zgc")
                 temp = True
             else:
