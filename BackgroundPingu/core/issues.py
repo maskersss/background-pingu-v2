@@ -1547,11 +1547,11 @@ class IssueChecker:
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
         output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
-        output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n\n"
-        output += f"**Recommended Max Memory Allocation:** {max_allocated} MB\n"
+        output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n"
+        output += f"## Recommended Edit{self.log.edit_instance} > Settings:\n"
+        output += f"**Max Memory Allocation:** {max_allocated} MB\n"
         output += f"_You might need slightly more or less depending on the category, i.e. less for SSG and more for AA._\n"
-        output += f"### Recommended Java Arguments:\n"
-        output += f"*(copy them into `Edit{self.log.edit_instance} > Settings > Java arguments`)*\n"
+        output += f"### Java Arguments:\n"
         output += f"```\n{java_args}\n```\n"
 
         for note in notes:
