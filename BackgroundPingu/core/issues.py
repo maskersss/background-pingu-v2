@@ -580,7 +580,8 @@ class IssueChecker:
             builder.error("new_java_old_fabric_crash", mod_loader, mod_loader)
             if not self.log.major_java_version is None and self.log.major_java_version >= 23:
                 builder.add("too_new_java")
-            builder.add(self.log.fabric_guide, "update")
+            else:
+                builder.add(self.log.fabric_guide, "update")
             found_crash_cause = True
             
         elif any(self.log.has_content_in_stacktrace(crash) for crash in [
@@ -742,6 +743,7 @@ class IssueChecker:
         if not match is None:
             if "UseZGC" in match.group(1):
                 builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
+                if self.log.is_prism: builder.add("prism_java_compat_check")
             else:
                 builder.error("unrecognized_vm_option", match.group(1))
         
@@ -1500,24 +1502,29 @@ class IssueChecker:
         if max_queued < 1: max_queued = 1
         if max_queued > 30: max_queued = 30
 
-        max_allocated = 2000 + max_queued * 250
-        max_allocated = int(round(max_allocated, -2))
-
         max_generating_wall = self.log.processors
         if self.log.operating_system == OperatingSystem.LINUX: max_generating_wall -= 1
         else: max_generating_wall -= 2
-        
         if max_generating_wall > 32:
             max_generating_wall = max_generating_wall * 0.6
         elif max_generating_wall > 8:
             max_generating_wall = 4 * (sqrt(max_generating_wall + 1) - 1)
+        
         max_generating_wall = int(max_generating_wall)
-
         if max_generating_wall < 1: max_generating_wall = 1
         if max_generating_wall > max_queued: max_generating_wall = max_queued
 
+        # cap max queued seeds based on max generating wall
+        max_queued = min(
+            max_queued,
+            max(max_generating_wall * 2.4, 6),
+        )
+
         # discussion from seedqueue discord: https://discord.com/channels/1262887973154848828/1272158999298707488/1279137330690654290
         max_generating = int(self.log.processors // 5)
+
+        max_allocated = 2000 + max_queued * 250
+        max_allocated = int(round(max_allocated, -2))
 
         java_args = "-XX:+UseZGC"
         if not self.log.major_java_version is None and self.log.major_java_version >= 23:
