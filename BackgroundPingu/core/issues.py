@@ -589,6 +589,7 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: com.llamalad7.mixinextras",
             "java.lang.NoClassDefFoundError: com/redlimerl/speedrunigt",
             "$zmm000$setspawnmod$failOnNonRandomSpawns",
+            "Type 'java/lang/String' (current frame, stack[1]) is not assignable to 'net/minecraft/class_2248'", # ranked: https://discord.com/channels/1056779246728658984/1293645786395054190
         ]):
             builder.error("old_fabric_crash").add(self.log.fabric_guide, "update")
             found_crash_cause = True
@@ -1517,7 +1518,7 @@ class IssueChecker:
         # cap max queued seeds based on max generating wall
         max_queued = min(
             max_queued,
-            max(max_generating_wall * 2.4, 6),
+            round(max(max_generating_wall * 2.4, 6)),
         )
 
         # discussion from seedqueue discord: https://discord.com/channels/1262887973154848828/1272158999298707488/1279137330690654290
