@@ -40,7 +40,7 @@ class Tips(Cog):
         ).seedqueue_settings()
         
         if not success:
-            text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)."
+            text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
         
         return await ctx.respond(text)
     
