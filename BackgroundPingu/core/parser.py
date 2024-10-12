@@ -713,10 +713,7 @@ class Log:
 
         if not self.is_newer_than("1.15"): return mods
         
-        if self.operating_system == OperatingSystem.MACOS and self.minecraft_version == "1.16.1":
-            mods.append("sodiummac")
-        else:
-            mods.append("sodium")
+        mods.append("sodium")
         if not self.is_newer_than("1.20"): mods.append("starlight")
         if not self.is_ranked_log: mods.append("speedrunapi")
         mods.append("lithium")
