@@ -578,7 +578,7 @@ class IssueChecker:
         ]):
             mod_loader = self.log.mod_loader.value if self.log.mod_loader.value is not None else "mod"
             builder.error("new_java_old_fabric_crash", mod_loader, mod_loader)
-            if not self.log.major_java_version is None and self.log.major_java_version >= 23:
+            if not self.log.major_java_version is None and self.log.major_java_version >= 25:
                 builder.add("too_new_java")
             else:
                 builder.add(self.log.fabric_guide, "update")
