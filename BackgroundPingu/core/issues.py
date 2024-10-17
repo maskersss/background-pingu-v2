@@ -537,6 +537,7 @@ class IssueChecker:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
             else:
                 builder.error("32_bit_java").add("java_update_guide")
+                if self.log.is_prism: builder.add("prism_java_compat_check")
         
         elif (not found_crash_cause
             and is_mcsr_log
