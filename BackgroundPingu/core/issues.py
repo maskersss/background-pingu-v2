@@ -495,9 +495,9 @@ class IssueChecker:
             else: builder.error("java_comp_check")
             found_crash_cause = True
         
-        if not found_crash_cause and any(self.log.has_content(crash_32_bit_java) for crash_32_bit_java in [
-            "Could not reserve enough space for ",
-            "Invalid maximum heap size: "
+        if not found_crash_cause and any(self.log.has_pattern(crash_32_bit_java) for crash_32_bit_java in [
+            r"Could not reserve enough space for",
+            r"Invalid (maximum|initial) heap size",
         ]):
             builder.error("32_bit_java_crash").add(self.log.java_update_guide)
             if self.log.is_prism: builder.add("prism_java_compat_check")
