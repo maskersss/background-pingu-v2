@@ -854,13 +854,20 @@ class IssueChecker:
         elif len(system_libs) == 1: system_arg = f"{system_libs[0]} installation"
         if not system_arg is None:
             if self.log.has_content("Failed to locate library:"):
-                builder.error("builtin_lib_crash",
-                              system_arg,
-                              self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                              " > Tweaks" if self.log.is_prism else "")
+                builder.error(
+                    "builtin_lib_crash",
+                    system_arg,
+                    self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                    " > Tweaks" if self.log.is_prism else ""
+                )
                 found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
-                builder.warning("builtin_lib_recommendation", system_arg)
+                builder.error(
+                    "builtin_lib_prob_crash",
+                    system_arg,
+                    self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                    " > Tweaks" if self.log.is_prism else ""
+                )
 
         if not found_crash_cause:
             match = re.findall(r"requires (.*?) of (\w+),", self.log._lower_content)
