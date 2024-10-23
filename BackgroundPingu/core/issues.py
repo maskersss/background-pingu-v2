@@ -1175,7 +1175,9 @@ class IssueChecker:
             builder.error("incompatible_mod", "WorldPreview", "carpet")
             found_crash_cause = True
         
-        if self.log.has_content_in_stacktrace("java.lang.ClassNotFoundException: dev.tildejustin.stateoutput.State"):
+        if (self.log.minecraft_version in [None, "1.16.1"]
+            and self.log.has_content_in_stacktrace("java.lang.ClassNotFoundException: dev.tildejustin.stateoutput.State")
+        ):
             builder.error("old_wp_with_stateoutput")
             found_crash_cause = True
         
