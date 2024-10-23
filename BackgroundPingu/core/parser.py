@@ -609,6 +609,9 @@ class Log:
         if self.launcher == Launcher.OFFICIAL_LAUNCHER:
             return self.setup_guide
 
+        if self.operating_system == OperatingSystem.LINUX:
+            return "java_update_guide_linux"
+
         return "java_update_guide"
     
     @cached_property
