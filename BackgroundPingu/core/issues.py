@@ -379,16 +379,15 @@ class IssueChecker:
             wrong_mods = []
             wrong_outdated_mods = []
 
-            for installed_mod in self.log.whatever_mods:
-                for mod in self.java_17_mods:
-                    if mod in installed_mod.lower():
-                        wrong_mods.append(mod)
-                for mod in self.outdated_java_17_mods:
-                    if mod in installed_mod.lower():
-                        wrong_outdated_mods.append(mod)
-                for mod in self.not_needed_java_17_mods:
-                    if mod in installed_mod.lower():
-                        wrong_not_needed_mods.append(mod)
+            for mod in self.java_17_mods:
+                if self.log.has_mod(mod):
+                    wrong_mods.append(mod)
+            for mod in self.outdated_java_17_mods:
+                if self.log.has_mod(mod):
+                    wrong_outdated_mods.append(mod)
+            for mod in self.not_needed_java_17_mods:
+                if self.log.has_mod(mod):
+                    wrong_not_needed_mods.append(mod)
             
             if len(wrong_mods) == 0:
                 for mod in self.java_17_mods:
