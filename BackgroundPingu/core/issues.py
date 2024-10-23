@@ -1053,6 +1053,7 @@ class IssueChecker:
         
         if (self.log.mod_loader in [ModLoader.FORGE, None]
             and not found_crash_cause
+            and not is_mcsr_log
             and any(self.log.has_content(delete_launcher_cache_crash) for delete_launcher_cache_crash in [
                 "Caused by: java.lang.NoSuchMethodError: 'boolean net.minecraftforge.",
                 "Unable to detect the forge installer!",
