@@ -106,6 +106,7 @@ class IssueChecker:
         self.java_17_mods = [
             "areessgee",
             "peepopractice",
+            "standardsettings-1.2.3.1+1.16.5",
         ]
         self.outdated_java_17_mods = [
             "antiresourcereload-1.16.1-4.0.0",
