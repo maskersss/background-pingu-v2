@@ -22,6 +22,7 @@
     "add.java_guide_javacord": "See [**this guide**](https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d) or DM `/recommend_settings` to me for a guide on how to fix it.",
     "add.java_override_warning": "Note that your instance's `Java` settings seem to override global `Java` settings, so you'll need to select `Java` there (or disable the override).",
     "add.java_update_guide": "Use [**this guide**](https://docs.google.com/document/d/1PIjyPMulI3r5aZpfywt5OQR_12qEzX5UTfU8DQHtNp8/edit) to update your Java version. It is recommended you install Java **for all users**.",
+    "add.java_update_guide_linux": "Use [**this guide**](https://prismlauncher.org/wiki/getting-started/installing-java/) to update your Java version.",
     "add.k4_setup_guide": "Check out [**this video**](https://www.youtube.com/watch?v=OEpZlv6cQsI) for a guide on how to set up for Minecraft speedrunning.",
     "add.mac_setup_guide": "You can check out [**this guide**](https://www.youtube.com/watch?v=GomIeW5xdBM) for how to set up speedrunning on a Mac.",
     "add.mod_download": "You can download `{}` [**here**]({}).",
