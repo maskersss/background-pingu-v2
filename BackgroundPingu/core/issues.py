@@ -747,7 +747,10 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
-            builder.error("softmaxheap_over_xmx")
+            if self.log.max_allocated is None or self.log.max_allocated < 5000:
+                builder.error("wrong_java_arg", self.log.get_java_arg("-XX:SoftMaxHeapSize"))
+            else:
+                builder.error("softmaxheap_over_xmx")
             found_crash_cause = True
         
         if self.log.is_seedqueue_log and not self.log.java_arguments is None:

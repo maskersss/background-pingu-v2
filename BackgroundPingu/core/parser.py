@@ -757,7 +757,7 @@ class Log:
     def get_java_arg(self, arg: str) -> str:
         if self.java_arguments is None: return arg
         for java_arg in self.java_arguments.split(" "):
-            if arg in java_arg: return java_arg.strip().strip('[],')
+            if arg.lower() in java_arg.lower(): return java_arg.strip().strip('[],')
         return arg
     
     def is_newer_than(self, compared_version: str) -> bool:
