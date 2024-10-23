@@ -1399,6 +1399,7 @@ class IssueChecker:
                         mod_name = mod.lower().replace(".jar", "")
                         if not self.log.minecraft_version is None: mod_name = mod_name.replace(self.log.minecraft_version, "")
                         for c in ["+", "_", "=", ",", " "]: mod_name = mod_name.replace(c, "-")
+                        
                         mod_name_parts = mod_name.split("-")
                         mod_name = ""
                         for part in mod_name_parts:
@@ -1413,8 +1414,9 @@ class IssueChecker:
                             for c in range(10): part = part.replace(str(c), "")
                             if part == "": break
                             elif len(part) > 1: mod_name += part0
+                        
                         if len(mod_name) < 5 and mod_name != "atum": mod_name = f".{mod_name}"
-                        if len(mod_name) > 2 and mod_name in self.log.stacktrace:
+                        if len(mod_name) > 2 and self.log.has_content_in_stacktrace(mod_name):
                             if not mod in wrong_mods: wrong_mods.append(mod)
             
             if not is_mcsr_log and any(mcsr_mod in " ".join(wrong_mods) for mcsr_mod in self.mcsr_mods):
