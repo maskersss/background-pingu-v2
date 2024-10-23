@@ -1032,6 +1032,9 @@ class IssueChecker:
             except version.InvalidVersion:
                 pass
 
+            if self.log.has_mod("beachfilter"):
+                builder.error("incompatible_mod", "beachfilter", "fsg-mod")
+
         if (self.log.has_mod("peepopractice")
             and (self.log.has_mod("peepopractice-1")
                  or self.log.has_mod("peepopractice-2.0")
