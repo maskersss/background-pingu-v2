@@ -692,6 +692,7 @@ class Log:
     
     @cached_property
     def is_log(self) -> bool:
+        if self.type == LogType.LAUNCHER_LOG: return True
         if self.minecraft_version is None: return False
         return True
 
