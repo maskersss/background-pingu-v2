@@ -525,6 +525,16 @@ class IssueChecker:
             builder.error("headless_java")
             found_crash_cause = True
         
+        pattern = r"Unrecognized VM option '(.*)'"
+        match = re.search(pattern, self.log._content)
+        if not match is None:
+            if "UseZGC" in match.group(1):
+                builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
+                if self.log.is_prism: builder.add("prism_java_compat_check")
+            else:
+                builder.error("unrecognized_vm_option", match.group(1))
+            found_crash_cause = True
+        
         if self.log.has_content("mcwrap.py"):
             if self.log.launcher is None or self.log.launcher == Launcher.MULTIMC or not self.log.has_content("mac-lwjgl-fix"):
                 builder.error("m1_multimc_hack").add("mac_setup_guide")
@@ -739,15 +749,6 @@ class IssueChecker:
         if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
             builder.error("softmaxheap_over_xmx")
             found_crash_cause = True
-        
-        pattern = r"Unrecognized VM option '(.*)'"
-        match = re.search(pattern, self.log._content)
-        if not match is None:
-            if "UseZGC" in match.group(1):
-                builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
-                if self.log.is_prism: builder.add("prism_java_compat_check")
-            else:
-                builder.error("unrecognized_vm_option", match.group(1))
         
         if self.log.is_seedqueue_log and not self.log.java_arguments is None:
             temp = False
