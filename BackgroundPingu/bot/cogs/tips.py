@@ -81,7 +81,7 @@ If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR 
 
     @commands.slash_command(name="onedrive", description="Explains that OneDrive is bad.")
     async def onedrive(self, ctx: discord.ApplicationContext):
-        text = """"OneDrive can mess with your game files to save space, and this can lead to issues. If your launcher folder is located in OneDrive, you should move it out to a different folder, for example to "C:/MultiMC/".
+        text = """OneDrive can mess with your game files to save space, and this can lead to issues. If your launcher folder is located in OneDrive, you should move it out to a different folder, for example to "C:/MultiMC/".
 If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
         return await ctx.respond(text)
 
