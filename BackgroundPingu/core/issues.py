@@ -790,6 +790,10 @@ class IssueChecker:
             else:
                 builder.error("openal_crash", experimental=True)
         
+        if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
+            builder.error("gl_framebuffer", experimental=True)
+            found_crash_cause = True
+        
         if found_crash_cause or not self.log.stacktrace is None: pass
 
         elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")

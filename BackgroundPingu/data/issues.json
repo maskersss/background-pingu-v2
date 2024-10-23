@@ -120,6 +120,7 @@
     "error.requires_fabric_api": "You're using a mod that requires `Fabric API`. It is an illegal for speedrun.com mod that is separate to `Fabric Loader`. You can download it [**here**](https://modrinth.com/mod/fabric-api).",
     "error.requires_mod": "A mod you're using is requiring a mod `{}`, but it is not present. Download it and add it to your mods folder.",
     "error.rong_modloader": "You seem to be using `{}` mods, but you have `{}` installed.",
+    "error.gl_framebuffer": "This crash is caused by resizing the window to a height that's too large. If you're using a macro to do that, try reducing the height.",
     "error.send_full_log": "If you got a crash, please send the full log from `Edit{} > Minecraft Log`.",
     "error.silent_mode": "Your game is running in Silent Mode. To fix this, make sure you don't have any weird characters in the instance path (try moving the launcher folder to `C:/`). You can also try changing your LWJGL version in `Edit{} > Version`.",
     "error.snowman_crash": "This could be a rare issue often referred to as a snowman crash. It should happen really rarely; there aren't any known solutions to it.",
