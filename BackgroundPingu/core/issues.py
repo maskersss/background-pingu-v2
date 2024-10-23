@@ -1316,38 +1316,33 @@ class IssueChecker:
 
         if (not found_crash_cause
             and self.log.stacktrace is None
-            and self.log.exitcode == -1073741819
         ):
-            builder.error("exitcode", "-1073741819", experimental=True)
-            builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-            builder.add("exitcode_1073741819_2")
-            if self.log.lines < 500:
-                if (self.log.has_mod("sodium")
-                    and not self.log.has_mod("sodiummac")
-                    and self.log.minecraft_version in ["1.16.1", None]
-                ): builder.add(f"exitcode_1073741819_3")
-                builder.add(f"exitcode_1073741819_4")
-            builder.add("exitcode_1073741819_5").add("exitcode_1073741819_1")
-
-        if (not found_crash_cause
-            and self.log.stacktrace is None
-            and self.log.exitcode == -1073740791
-        ):
-            builder.error("exitcode", "-1073740791", experimental=True)
-            builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-            builder.add("exitcode_1073741819_2")
-            if self.log.lines < 500: builder.add("exitcode_1073741819_4")
-            builder.add("exitcode_1073741819_5")
-
-        if (not found_crash_cause
-            and self.log.stacktrace is None
-            and self.log.exitcode == -1073740771
-        ):
-            builder.error("exitcode", "-1073740771", experimental=True)
-            builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-            builder.add("exitcode_1073741819_2")
-            if self.log.lines < 500: builder.add("exitcode_1073741819_4")
-            builder.add("exitcode_1073741819_5")
+            if self.log.exitcode == -1073741819:
+                builder.error("exitcode", "-1073741819", experimental=True)
+                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
+                builder.add("exitcode_1073741819_2")
+                if self.log.lines < 500:
+                    if (self.log.has_mod("sodium")
+                        and not self.log.has_mod("sodiummac")
+                        and self.log.minecraft_version in ["1.16.1", None]
+                    ): builder.add(f"exitcode_1073741819_3")
+                    builder.add(f"exitcode_1073741819_4")
+                builder.add("exitcode_1073741819_5").add("exitcode_1073741819_1")
+            elif self.log.exitcode == -1073740791:
+                builder.error("exitcode", "-1073740791", experimental=True)
+                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
+                builder.add("exitcode_1073741819_2")
+                if self.log.lines < 500: builder.add("exitcode_1073741819_4")
+                builder.add("exitcode_1073741819_5")
+            elif self.log.exitcode == -1073740771:
+                builder.error("exitcode", "-1073740771", experimental=True)
+                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
+                builder.add("exitcode_1073741819_2")
+                if self.log.lines < 500: builder.add("exitcode_1073741819_4")
+                builder.add("exitcode_1073741819_5")
+            elif self.log.exitcode == -805306369:
+                builder.error("exitcode", "-805306369", experimental=True)
+                builder.add("idk")
 
         if (not found_crash_cause
             and self.log.is_multimc_or_fork

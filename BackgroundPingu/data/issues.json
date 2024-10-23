@@ -16,6 +16,7 @@
     "add.exitcode_1073741819_5": "- Update/downgrade your graphics drivers.",
     "add.fabric_guide_mmc": "You can {} Fabric by doing `Edit Instance > Version > Install Fabric` in `MultiMC`.",
     "add.fabric_guide_prism": "You can {} Fabric by doing `Edit > Version > Install Loader > Fabric` in `Prism`.",
+    "add.idk": "We don't know what causes this crash. Let us know if you figure it out.",
     "add.intell_hd2000_info": "For more information about this issue and possible solutions, please refer to [**this page**](https://prismlauncher.org/wiki/getting-started/installing-java/#a-note-about-intel-hd-20003000-on-windows-10).",
     "add.java_guide": "See [**this guide**](https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d) or do `/recommend_settings` for a guide on how to fix it.",
     "add.java_guide_javacord": "See [**this guide**](https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d) or DM `/recommend_settings` to me for a guide on how to fix it.",
