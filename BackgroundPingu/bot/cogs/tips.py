@@ -73,10 +73,16 @@ When you open your Minecraft launcher now it will show Fabric as an option. With
     async def mmclog(self, ctx: discord.ApplicationContext):
         return await self.log(ctx, "MultiMC / Prism")
 
-    @commands.slash_command(name="mcsr", description="Gives an explanation that MCSR != Ranked.")
+    @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
     async def mcsr(self, ctx: discord.ApplicationContext):
         text = """"MCSR" is short for "minecraft speedrunning", and is usually used to refer to the minecraft speedrunning community.
 If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR Ranked" or "Ranked" for short <:Okayge:796454436427005984>"""
+        return await ctx.respond(text)
+
+    @commands.slash_command(name="onedrive", description="Explains that OneDrive is bad.")
+    async def onedrive(self, ctx: discord.ApplicationContext):
+        text = """"OneDrive can mess with your game files to save space, and this can lead to issues. If your launcher folder is located in OneDrive, you should move it out to a different folder, for example to "C:/MultiMC/".
+If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="rankedfaq", description="Sends a link to the MCSR Ranked Tech Support FAQ document.")
