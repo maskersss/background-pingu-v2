@@ -532,7 +532,7 @@ class IssueChecker:
                 builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
                 if self.log.is_prism: builder.add("prism_java_compat_check")
             else:
-                builder.error("unrecognized_vm_option", match.group(1))
+                builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
             found_crash_cause = True
         
         if self.log.has_content("mcwrap.py"):
@@ -781,7 +781,7 @@ class IssueChecker:
             pattern = r"Could not find or load main class (.*)\n"
             match = re.search(pattern, self.log._content)
             if not match is None:
-                builder.error("wrong_java_arg", match.group(1))
+                builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("[libopenal.so"):
