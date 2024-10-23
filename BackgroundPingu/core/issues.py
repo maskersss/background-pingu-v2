@@ -1496,6 +1496,8 @@ class IssueChecker:
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
+                elif not self.log.mod_loader == ModLoader.FABRIC:
+                    output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
                 else:
                     output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure you have the latest SeedQueue version and make sure to wait until the game opens before uploading the log."
             elif not self.log.type is None:
