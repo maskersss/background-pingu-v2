@@ -1050,7 +1050,7 @@ class IssueChecker:
         ):
             builder.error("old_mod_version", "PeepoPractice", "https://github.com/faluhub/peepoPractice/releases/latest/")
 
-        if self.log.has_pattern(r"^Prism Launcher version: [2-7]"):
+        if self.log.has_pattern(r"^Prism Launcher version: [2-8]"):
             if self.log.has_pattern(r"^Prism Launcher version: [8-8]"):
                 builder.note("semi_old_prism_version")
             else:
