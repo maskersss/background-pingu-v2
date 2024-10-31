@@ -753,7 +753,10 @@ class IssueChecker:
                 builder.error("softmaxheap_over_xmx")
             found_crash_cause = True
         
-        if self.log.is_seedqueue_log and not self.log.java_arguments is None:
+        if (self.log.is_seedqueue_log
+            and not self.log.java_arguments is None
+            and (self.log.pc_ram is None or self.log.pc_ram > 5000)
+        ):
             temp = False
             if not self.log.has_java_argument("UseZGC"):
                 builder.note("use_zgc")
@@ -1516,9 +1519,6 @@ class IssueChecker:
         if self.log.operating_system == OperatingSystem.LINUX: free_ram -= 1500
         else: free_ram -= 3200
         free_ram -= 2000 # for other programs i.e. obs, very rough estimate
-        
-        if free_ram < 1800:
-            notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
 
         max_queued = int((free_ram - 2000) // 250)
         if max_queued < 1: max_queued = 1
@@ -1548,12 +1548,21 @@ class IssueChecker:
         max_allocated = 2000 + max_queued * 250
         max_allocated = int(round(max_allocated, -2))
 
-        java_args = "-XX:+UseZGC"
-        if not self.log.major_java_version is None and self.log.major_java_version >= 23:
-            java_args += " -XX:-ZGenerational"
+        java_args = ""
+        
+        if free_ram < 1800:
+            notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
+        else:
+            java_args += " -XX:UseZGC"
+            if not self.log.major_java_version is None and self.log.major_java_version >= 23:
+                java_args += " -XX:-ZGenerational"
+        
         java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
+        
         if max_allocated > 3000:
             java_args += f" -XX:SoftMaxHeapSize={int(round(max_allocated * 0.8, -2))}m"
+        
+        java_args = java_args.strip()
         
         if self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, see [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
@@ -1575,7 +1584,8 @@ class IssueChecker:
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
-        output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
+        if free_ram >= 2000:
+            output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
         output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n"
         output += f"## Recommended Edit{self.log.edit_instance} > Settings:\n"
         output += f"**Max Memory Allocation:** {max_allocated} MB\n"
