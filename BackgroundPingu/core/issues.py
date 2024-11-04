@@ -793,12 +793,20 @@ class IssueChecker:
                 builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content("[libopenal.so"):
-            if self.log.operating_system == OperatingSystem.LINUX:
+        if (not found_crash_cause
+            and self.log.operating_system in [None, OperatingSystem.LINUX]
+        ):
+            if self.log.has_content("BadWindow (invalid Window parameter)"):
+                builder.error("linux_update_lwjgl")
+                found_crash_cause = True
+            
+            elif self.log.has_content("[libnvidia-glcore.so"):
+                builder.error("linux_nvidia_crash")
+                found_crash_cause = True
+        
+            elif self.log.has_content("[libopenal.so"):
                 builder.error("openal_crash")
                 found_crash_cause = True
-            else:
-                builder.error("openal_crash", experimental=True)
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             builder.error("gl_framebuffer", experimental=True)
