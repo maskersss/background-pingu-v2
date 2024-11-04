@@ -1303,22 +1303,27 @@ class IssueChecker:
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
-                builder.add("eav_crash_1", bold=True)
-                builder.add("eav_crash_1.1", bold=True)
-                builder.add("eav_crash_1.2", bold=True)
-                builder.add("eav_crash_1.3", bold=True)
-                builder.add("eav_crash_2")
-                builder.add("eav_crash_3")
+                builder.add("eav_crash_obs", bold=True)
+                builder.add("eav_crash_obs_1", bold=True)
+                builder.add("eav_crash_obs_2", bold=True)
+                builder.add("eav_crash_obs_3", bold=True)
+                builder.add("eav_crash_drivers")
+                builder.add("eav_crash_hardware")
+                builder.add("eav_crash_reboot")
             else:
-                builder.add("eav_crash_1")
-                builder.add("eav_crash_1.1")
-                builder.add("eav_crash_1.2")
-                builder.add("eav_crash_1.3")
-                builder.add("eav_crash_2")
-                builder.add("eav_crash_3")
+                builder.add("eav_crash_obs")
+                builder.add("eav_crash_obs_1")
+                builder.add("eav_crash_obs_2")
+                builder.add("eav_crash_obs_3")
+                builder.add("eav_crash_drivers")
+                builder.add("eav_crash_hardware")
+                builder.add("eav_crash_reboot")
                 if ((len(self.log.whatever_mods) == 0 or self.log.is_ranked_log or self.log.has_mod("speedrunigt"))
                     and self.log.operating_system != OperatingSystem.MACOS
                 ): builder.add("eav_crash_srigt")
+            if (self.log.lines < 500
+                and (self.log.mods is None or len(self.log.mods) > 0)
+            ): builder.add("eav_crash_mods")
             builder.add("eav_crash_disclaimer")
             found_crash_cause = True
 
@@ -1327,30 +1332,34 @@ class IssueChecker:
         ):
             if self.log.exitcode == -1073741819:
                 builder.error("exitcode", "-1073741819", experimental=True)
-                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-                builder.add("exitcode_1073741819_2")
+                builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
+                builder.add("eav_crash_reboot")
                 if self.log.lines < 500:
                     if (self.log.has_mod("sodium")
                         and not self.log.has_mod("sodiummac")
                         and self.log.minecraft_version in ["1.16.1", None]
-                    ): builder.add(f"exitcode_1073741819_3")
-                    builder.add(f"exitcode_1073741819_4")
-                builder.add("exitcode_1073741819_5").add("exitcode_1073741819_1")
+                    ): builder.add(f"eav_crash_sodium")
+                    if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
+                builder.add("eav_crash_drivers").add("eav_crash_hardware").add("eav_crash_controller")
             elif self.log.exitcode == -1073740791:
                 builder.error("exitcode", "-1073740791", experimental=True)
-                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-                builder.add("exitcode_1073741819_2")
-                if self.log.lines < 500: builder.add("exitcode_1073741819_4")
-                builder.add("exitcode_1073741819_5")
+                builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
+                builder.add("eav_crash_reboot")
+                if (self.log.lines < 500
+                    and (self.log.mods is None or len(self.log.mods) > 0)
+                ): builder.add("eav_crash_mods")
+                builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740771:
                 builder.error("exitcode", "-1073740771", experimental=True)
-                builder.add("eav_crash_1").add("eav_crash_1.1").add("eav_crash_1.2").add("eav_crash_1.3")
-                builder.add("exitcode_1073741819_2")
-                if self.log.lines < 500: builder.add("exitcode_1073741819_4")
-                builder.add("exitcode_1073741819_5")
+                builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
+                builder.add("eav_crash_reboot")
+                if (self.log.lines < 500
+                    and (self.log.mods is None or len(self.log.mods) > 0)
+                ): builder.add("eav_crash_mods")
+                builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -805306369:
                 builder.error("exitcode", "-805306369", experimental=True)
-                builder.add("idk")
+                builder.add("eav_crash_idk")
 
         if (not found_crash_cause
             and self.log.is_multimc_or_fork
