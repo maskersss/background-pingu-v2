@@ -363,6 +363,9 @@ class IssueChecker:
         if is_mcsr_log and self.log.launcher == Launcher.MODRINTH:
             builder.note("modrinth_app_illegal").add(self.log.setup_guide)
         
+        if is_mcsr_log and self.log.launcher == Launcher.ATLAUNCHER:
+            builder.note("atlauncher_illegal").add(self.log.setup_guide)
+        
         if self.log.launcher == Launcher.TL:
             builder.error("tl_malware").add(self.log.setup_guide)
         
@@ -799,47 +802,6 @@ class IssueChecker:
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             builder.error("gl_framebuffer", experimental=True)
-            found_crash_cause = True
-        
-        if found_crash_cause or not self.log.stacktrace is None: pass
-
-        elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
-            and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
-        ):
-            builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
-            found_crash_cause = True
-        
-        elif (not self.log.is_newer_than("1.17")
-            and self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
-        ):
-            builder.error("unsupported_intel_gpu", experimental=True)
-        
-        elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
-            wrong_mods = [mod for mod in self.log.whatever_mods if "xaero" in mod.lower()]
-            if len(wrong_mods) == 1: wrong_mods == ["xaero"]
-            builder.error("mods_crash", "; ".join(wrong_mods))
-            found_crash_cause = True
-        
-        elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
-            or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
-        ):
-            builder.error("eav_crash", experimental=True)
-            if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
-                builder.add("eav_crash_1", bold=True)
-                builder.add("eav_crash_1.1", bold=True)
-                builder.add("eav_crash_1.2", bold=True)
-                builder.add("eav_crash_1.3", bold=True)
-            else:
-                builder.add("eav_crash_1")
-                builder.add("eav_crash_1.1")
-                builder.add("eav_crash_1.2")
-                builder.add("eav_crash_1.3")
-            builder.add("eav_crash_2")
-            builder.add("eav_crash_3")
-            if ((len(self.log.whatever_mods) == 0 or self.log.has_mod("speedrunigt") or self.log.is_ranked_log)
-                and self.log.operating_system != OperatingSystem.MACOS
-            ): builder.add("eav_crash_srigt")
-            builder.add("eav_crash_disclaimer")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
@@ -1316,6 +1278,49 @@ class IssueChecker:
                 builder.note("program_files")
             if "Rar$" in self.log.minecraft_folder:
                 builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
+        
+        if found_crash_cause or not self.log.stacktrace is None: pass
+
+        elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+            and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
+        ):
+            builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
+            found_crash_cause = True
+        
+        elif (not self.log.is_newer_than("1.17")
+            and self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+        ):
+            builder.error("unsupported_intel_gpu", experimental=True)
+        
+        elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
+            wrong_mods = [mod for mod in self.log.whatever_mods if "xaero" in mod.lower()]
+            if len(wrong_mods) == 1: wrong_mods == ["xaero"]
+            builder.error("mods_crash", "; ".join(wrong_mods))
+            found_crash_cause = True
+        
+        elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
+            or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
+        ):
+            builder.error("eav_crash", experimental=True)
+            if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
+                builder.add("eav_crash_1", bold=True)
+                builder.add("eav_crash_1.1", bold=True)
+                builder.add("eav_crash_1.2", bold=True)
+                builder.add("eav_crash_1.3", bold=True)
+                builder.add("eav_crash_2")
+                builder.add("eav_crash_3")
+            else:
+                builder.add("eav_crash_1")
+                builder.add("eav_crash_1.1")
+                builder.add("eav_crash_1.2")
+                builder.add("eav_crash_1.3")
+                builder.add("eav_crash_2")
+                builder.add("eav_crash_3")
+                if ((len(self.log.whatever_mods) == 0 or self.log.is_ranked_log or self.log.has_mod("speedrunigt"))
+                    and self.log.operating_system != OperatingSystem.MACOS
+                ): builder.add("eav_crash_srigt")
+            builder.add("eav_crash_disclaimer")
+            found_crash_cause = True
 
         if (not found_crash_cause
             and self.log.stacktrace is None

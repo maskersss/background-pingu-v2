@@ -20,6 +20,7 @@ class Launcher(enum.Enum):
     MULTIMC = "MultiMC"
     PRISM = "Prism"
     MODRINTH = "Modrinth App"
+    ATLAUNCHER = "AtLauncher"
     TL = "TL"
 
 class ModLoader(enum.Enum):
@@ -314,6 +315,11 @@ class Log:
             or self.has_pattern(r"-Xmx(\d+)G")
         ):
             return Launcher.OFFICIAL_LAUNCHER
+    
+        if any(self.has_content(atlauncher) for atlauncher in [
+            "Made By Bob*",
+        ]):
+            return Launcher.ATLAUNCHER
         
         if self.max_allocated == 1024:
             return Launcher.MULTIMC
