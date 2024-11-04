@@ -1575,7 +1575,7 @@ class IssueChecker:
         if free_ram < 1800:
             notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
         else:
-            java_args += " -XX:UseZGC"
+            java_args += " -XX:+UseZGC"
             if not self.log.major_java_version is None and self.log.major_java_version >= 23:
                 java_args += " -XX:-ZGenerational"
         
