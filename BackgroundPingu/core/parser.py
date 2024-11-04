@@ -20,7 +20,7 @@ class Launcher(enum.Enum):
     MULTIMC = "MultiMC"
     PRISM = "Prism"
     MODRINTH = "Modrinth App"
-    ATLAUNCHER = "AtLauncher"
+    ATLAUNCHER = "ATLauncher"
     TL = "TL"
 
 class ModLoader(enum.Enum):
