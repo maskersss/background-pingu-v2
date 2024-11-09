@@ -782,7 +782,7 @@ class IssueChecker:
                     temp = True
             if temp:
                 if self.server_id == 83066801105145856:
-                    builder.add("java_guide_javacord")
+                    builder.add("java_guide_javacord").add("javacord_slash_cmds")
                 else:
                     builder.add("java_guide")
         
