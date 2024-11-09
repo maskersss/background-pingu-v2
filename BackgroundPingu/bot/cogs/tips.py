@@ -369,6 +369,7 @@ If you want a custom modpack, go [here](<https://mods.tildejustin.dev/?type=modp
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):
         text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
+[MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map>)
 [Bastions](<https://github.com/LlamaPag/bastion>)
 [Blaze](<https://github.com/Semperzz/Blaze-Practice>)
 [Buried treasure](<https://github.com/Mescht/BTPractice>)
