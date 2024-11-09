@@ -733,13 +733,15 @@ class IssueChecker:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
         
         if not found_crash_cause and self.log.has_content("Failed to download the assets index"):
-            builder.error("assets_index_fail")
+            builder.error("assets_index_fail", experimental=True)
         
         if not found_crash_cause and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
             builder.error("mac_too_new_java")
+            found_crash_cause = True
         
         if not self.log.is_newer_than("1.17") and self.log.has_content_in_stacktrace("Pixel format not accelerated"):
             builder.error("unsupported_intel_gpu")
+            found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("Tried to play a broken sound file from a SeedQueue customization pack"):
             builder.error("sq_empty_sound_file")
