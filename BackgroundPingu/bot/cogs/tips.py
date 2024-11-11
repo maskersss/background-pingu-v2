@@ -521,9 +521,10 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 
     @commands.slash_command(name="zerocycle", description="Gives links to zero cycle resources.")
     async def zerocycle(self, ctx: discord.ApplicationContext):
-        text = """[Zero Cycle Common Setups](https://youtu.be/ytXFMLdiOe8)
+        text = """[Zero Cycle tutorial](https://www.youtube.com/watch?v=PB5UQB13VHc)
+[More common setups](<https://youtu.be/ytXFMLdiOe8>)
 [Zero practice maps + more videos](<https://web.archive.org/web/20230325094650/https://zerocycle.repl.co/>)
-Additionally. [practice setting up your inventory for zero cycle](https://github.com/Semperzz/Zero-Sorting-Practice>)
+Additionally, [practice setting up your inventory for zero cycle](https://github.com/Semperzz/Zero-Sorting-Practice>)
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await ctx.respond(text)
