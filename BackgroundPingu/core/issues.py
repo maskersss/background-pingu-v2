@@ -1326,9 +1326,12 @@ class IssueChecker:
                 if ((len(self.log.whatever_mods) == 0 or self.log.is_ranked_log or self.log.has_mod("speedrunigt"))
                     and self.log.operating_system != OperatingSystem.MACOS
                 ): builder.add("eav_crash_srigt")
-            if (self.log.lines < 500
-                and (self.log.mods is None or len(self.log.mods) > 0)
-            ): builder.add("eav_crash_mods")
+            if self.log.lines < 500:
+                if (self.log.has_mod("sodium")
+                    and not self.log.has_mod("sodiummac")
+                    and self.log.minecraft_version in ["1.16.1", None]
+                ): builder.add(f"eav_crash_sodium")
+                if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
             builder.add("eav_crash_disclaimer")
             found_crash_cause = True
 
