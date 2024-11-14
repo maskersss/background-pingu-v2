@@ -1272,11 +1272,6 @@ class IssueChecker:
             elif self.log.has_mod("fsg-wrapper-mod"):
                 builder.error("old_mod_crash", "fsg wrapper", "https://modrinth.com/mod/fsg-mod/versions/")
                 found_crash_cause = True
-            elif self.log.has_content_in_stacktrace("java.lang.ClassNotFoundException: me.voidxwalker.autoreset.Atum"):
-                builder.error(
-                    "downgrade_atum",
-                    experimental=True,
-                )
 
         if not self.log.minecraft_folder is None:
             if "!" in self.log.minecraft_folder:
