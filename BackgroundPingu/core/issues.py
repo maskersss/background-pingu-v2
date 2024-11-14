@@ -811,7 +811,7 @@ class IssueChecker:
                 found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
-            builder.error("gl_framebuffer", experimental=True)
+            builder.error("gl_framebuffer")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
