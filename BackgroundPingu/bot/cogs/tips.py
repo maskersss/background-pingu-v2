@@ -141,28 +141,32 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
         launcher_name = "Prism" if os == "macOS" else "MultiMC"
+        text = ""
 
         if launcher == "Official Launcher":
-            text = f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning."
+            text += f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning.\n"
+        elif launcher == "Prism":
+            text += "On Prism, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/2a20554d-11f3-4dcf-8cd8-481ad93e17c4) <https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>.\n"
         else:
+            if launcher == "All":
+                text += "* If you're using Prism: use [**this guide**](<https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>) to update your Java version.\n"
             if os == "Linux":
-                text = f"You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>)."
+                text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
             else:
                 if os == "macOS": query_string = "?os=mac&package=jdk"
                 else: query_string = "?os=windows&arch=x64&package=jdk"
-                text = f"* You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
+                text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
                 if os == "Windows":
-                    text += " Download and run the `.msi` file if you're on Windows."
-                    text += "\n  * If prompted, it is recommended you install Java **for all users**."
+                    text += " Download and run the `.msi` file if you're on Windows.\n"
+                    text += "    * If prompted, it is recommended you install Java **for all users**.\n"
                 else:
-                    text += " Download and run the `.pkg` file if you're on macOS."
+                    text += " Download and run the `.pkg` file if you're on macOS.\n"
 
-            text += """\n* After installing Java, follow the steps in the image below (assuming you're using MultiMC or Prism Launcher)[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)
-  * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu."""
-            if launcher in ["Prism", "All"]: text += "\n  * On Prism, also make sure to enable the \"Skip Java compatibility checks\" option in Settings > Java."
-            if launcher == "All": text += f"\n* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning."
+            text += "  * After installing Java, follow the steps in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)\n"
+            text += "    * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu.\n"
+            if launcher == "All": text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning.\n"
         
-        return await ctx.respond(text)
+        return await ctx.respond(text.strip())
 
     @commands.slash_command(name="ninjabrainbot", description="Gives a guide to using Ninjabrain Bot.")
     async def ninjabrainbot(self, ctx: discord.ApplicationContext):

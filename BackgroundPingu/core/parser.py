@@ -614,6 +614,9 @@ class Log:
     def java_update_guide(self) -> str:
         if self.launcher == Launcher.OFFICIAL_LAUNCHER:
             return self.setup_guide
+        
+        if self.launcher == Launcher.PRISM:
+            return "java_update_guide_prism"
 
         if self.operating_system == OperatingSystem.LINUX:
             return "java_update_guide_linux"
