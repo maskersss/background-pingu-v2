@@ -62,16 +62,17 @@ When you open your Minecraft launcher now it will show Fabric as an option. With
     async def log(
         self,
         ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MultiMC / Prism", "Other"], required=False, default="MultiMC / Prism"),
+        launcher: discord.Option(str, choices=["MultiMC", "Prism", "Other"], required=False, default="MultiMC"),
     ):
-        if launcher == "MultiMC / Prism": link = "https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png"
+        if launcher == "MultiMC": link = "https://i.imgur.com/MfrJwcM.png"
+        elif launcher == "Prism": link = "https://i.imgur.com/wNlSlcn.png"
         else: link = "https://media.discordapp.net/attachments/433058639956410383/1061333462826614844/image.png"
         text = f"Please follow this image in order to send a log[:]({link})"
         return await ctx.respond(text)
 
     @commands.slash_command(name="mmclog", description="Shows how to send a log on MultiMC/Prism Launcher.")
     async def mmclog(self, ctx: discord.ApplicationContext):
-        return await self.log(ctx, "MultiMC / Prism")
+        return await self.log(ctx, "MultiMC")
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
     async def mcsr(self, ctx: discord.ApplicationContext):
