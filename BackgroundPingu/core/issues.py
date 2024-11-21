@@ -1137,6 +1137,14 @@ class IssueChecker:
                 if self.log.has_content_in_stacktrace("java.lang.StackOverflowError"):
                     found_crash_cause = True
         
+        elif (not found_crash_cause
+            and self.log.has_content_in_stacktrace("PeepoPractice")
+            and self.log.has_content_in_stacktrace("fast-reset")
+        ):
+            builder.error("incompatible_mod", "PeepoPractice", "fast-reset")
+            if self.log.has_content_in_stacktrace("java.lang.StackOverflowError"):
+                found_crash_cause = True
+        
         if self.log.is_seedqueue_log:
             for incompatible_mod in [
                 "PogLoot",
