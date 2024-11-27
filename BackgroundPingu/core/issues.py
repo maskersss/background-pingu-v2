@@ -1532,6 +1532,8 @@ class IssueChecker:
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
+                elif self.log.exitcode:
+                    output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
                 else:
                     output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure you have the latest SeedQueue version and make sure to wait until the game opens before uploading the log."
             elif not self.log.type is None:
