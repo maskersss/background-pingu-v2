@@ -641,13 +641,11 @@ class IssueChecker:
             if any(self.log.has_library(loader) for loader in ["forge", "fabric", "quilt"]):
                 builder.error("broken_loader", self.log.edit_instance)
             else:
-                builder.error("no_loader")
-                if self.log.is_newer_than("1.14"): builder.add(self.log.fabric_guide, "install")
+                builder.error("no_loader").add(self.log.fabric_guide, "install")
         
         if not self.log.mod_loader in [None, ModLoader.FABRIC, ModLoader.VANILLA]:
             if is_mcsr_log:
-                builder.error("using_other_loader_mcsr", self.log.mod_loader.value)
-                if self.log.is_newer_than("1.14"): builder.add(self.log.fabric_guide, "install")
+                builder.error("using_other_loader_mcsr", self.log.mod_loader.value).add(self.log.fabric_guide, "install")
                 found_crash_cause = True
             else:
                 builder.note("using_other_loader", self.log.mod_loader.value)
