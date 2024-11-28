@@ -730,6 +730,14 @@ class IssueChecker:
                 if not latest_version is None:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
         
+        if self.log.has_mod("motiono"):
+            builder.note("motiono")
+            metadata = self.get_mod_metadata("extraoptions")
+            if not metadata is None:
+                latest_version = self.get_latest_version(metadata)
+                if not latest_version is None:
+                    builder.add("mod_download", metadata["name"], latest_version["page"])
+        
         if not found_crash_cause and self.log.has_content("Failed to download the assets index"):
             builder.error("assets_index_fail", experimental=True)
         

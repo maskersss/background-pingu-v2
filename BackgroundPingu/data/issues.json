@@ -165,6 +165,7 @@
     "note.mac_use_arm_java": "If you use an `M`-series chip, it is recommended to use `ARM Java` instead of `amd64 Java` for better performance since it will run natively on `ARM` chips.",
     "note.mac_use_prism": "If you use an `M`-series chip, it is recommended to use `Prism Launcher` with `ARM Java` instead of `MultiMC` for better performance since `Prism` has native `ARM` support.",
     "note.modrinth_app_illegal": "You are using `Modrinth App`, which is illegal for speedrun.com. Only the official launcher, `MultiMC` and `Prism Launcher` are allowed.",
+    "note.motiono": "You're using `MotiNO`, which is illegal for speedrun.com, and `ExtraOptions` is a whitelisted version of it.",
     "note.not_using_java_17": "You're using `Java {}`. It is recommended to use `Java 17-22` instead for better performance.",
     "note.old_fabric": "You're using a somewhat old version of `Fabric Loader`, you might want to update it.",
     "note.old_prism_version": "You're using an outdated `PrismLauncher` version. You should update it, you can download the latest version [**here**](https://prismlauncher.org/download/).",
