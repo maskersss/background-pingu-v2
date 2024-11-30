@@ -395,7 +395,7 @@ Practice mods:
     @commands.slash_command(name="boateye", description="Gives links to boat measurement guides.")
     async def boateye(self, ctx: discord.ApplicationContext):
         text = """**Boat measurements with Ninjabrain Bot**
-[How to setup boat eye (video)](https://youtu.be/dIQ-SoNKSb0)
+[How to setup boat eye (video)](https://youtu.be/HcrrfsHrR_c)
 [Full boat eye guide](https://docs.google.com/document/d/e/2PACX-1vTEq9UsoVef5Ed4OWCpw2xsvc7jZhWgK6gceCvhjz-i7DlsGj3p9SelEBclgvlsZ12tOQEYn4UC5X5n/pub) 
 [Examples](<https://youtu.be/T2Wmhf4tNj4>)
 Requires [Eye Zoom Macro](https://discord.com/channels/83066801105145856/405839885509984256/1143858381266894918) **OR** [Jingle](https://github.com/DuncanRuns/Jingle)/[Julti](https://github.com/DuncanRuns/Julti) Eye Measuring Script"""
