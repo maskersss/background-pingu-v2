@@ -1547,6 +1547,7 @@ class IssueChecker:
             else:
                 return ("", False)
             
+            if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in a help channel._"
             return (output, True)
         
         output = ""
