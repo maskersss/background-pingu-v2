@@ -212,11 +212,8 @@ Speedrunning on Mac setup tutorial: https://www.youtube.com/watch?v=GomIeW5xdBM"
 
     @commands.slash_command(name="mapless", description="Gives links to mapless tutorials.")
     async def mapless(self, ctx: discord.ApplicationContext):
-        text = """Penney's tutorial (beginner-friendly): <https://youtu.be/_dyD8ZwagDg>
-TalkingMime's tutorial (more in-depth): <https://youtu.be/mes_PPlOJao>
-MoleyG's tutorial (more updated): <https://youtu.be/ho1rwmooHRg>
-pncake's tutorial (advanced): <https://youtu.be/ujZJw95h0nk>
-Watch the 1st video for a rough overview, the 2nd and 3rd for more information and the 4th for a more advanced tutorial"""
+        text = """meebie's tutorial: https://youtu.be/o0LDg3fe2iI
+older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="divine", description="Gives an infographic for nether fossil divine.")
