@@ -1386,6 +1386,7 @@ class IssueChecker:
         if (not found_crash_cause
             and self.log.is_multimc_or_fork
             and not self.log.type in [LogType.FULL_LOG, LogType.THREAD_DUMP, LogType.LAUNCHER_LOG]
+            and not self.log.launcher is None
         ):
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         

@@ -124,7 +124,7 @@ You may remap keys using external programs, but:
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
-In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLxjqy7mY2UwGvzbhjJt5vHw_ZtUFPsxlx>) and a [more comprehensive document](<https://docs.google.com/document/d/1zDC0n38EhvcMaXVFVeZwONszmdXonXlFO1rBXqvhxE4/edit?usp=sharing>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
+In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>), but since it covers a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="jarfix", description="Gives a link to Jarfix.")
