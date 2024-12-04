@@ -80,7 +80,7 @@
     "error.legacyjavafixer": "This issue is caused by using older `Forge` versions on recent `Java` versions. MinecraftForge provides a mod to fix it; download it [**here**](https://dist.creeper.host/FTB2/maven/net/minecraftforge/lex/legacyjavafixer/1.0/legacyjavafixer-1.0.jar).",
     "error.linux_nvidia_crash": "This seems to be a crash caused by NVIDIA drivers version > 525. To fix it, set the `__GL_THREADED_OPTIMIZATIONS` environment variable to `0`. In Prism, you can do this in `Settings > Enviromental Variables`.",
     "error.linux_update_lwjgl": "This is a Linux crash in old `GLFW` versions. If you're using Prism, to fix it, do `Edit > Version > select LWJGL 3.3.3`.",
-    "error.lithium_crash": "This seems to be a very rare crash caused by `Lithium`. Adding a `mixin.ai.nearby_entity_tracking=false` line into `.minecraft/config/lithium.properties` is believed to fix it.",
+    "error.lithium_crash": "This seems to be a very rare crash caused by `Lithium` that should be fixed in the latest 1.16.1 version. Alternatively, adding a `mixin.ai.nearby_entity_tracking=false` line into `.minecraft/config/lithium.properties` is believed to fix it.",
     "error.locked_libs": "Another process appears to be locking your native library JARs. To solve this, restart your PC.",
     "error.m1_multimc_hack": "You seem to be using `M1 MultiMC hack`. It can often cause issues. You should use [**Prism Launcher**](https://prismlauncher.org/) instead.",
     "error.mac_too_new_java": "You are using too new of a `Java` version. Please follow the steps on [**this wiki page**](https://prismlauncher.org/wiki/getting-started/installing-java/#older-minecraft-on-macos) to install 8u241.",
