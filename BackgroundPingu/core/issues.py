@@ -1247,7 +1247,7 @@ class IssueChecker:
                 builder.error("exitcode_805306369")
                 found_crash_cause = True
 
-        if self.log.lines == 25000:
+        if 25000 <= self.log.lines and self.log.lines <= 25002:
             builder.error("mclogs_cutoff")
         
         try:
