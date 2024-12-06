@@ -608,7 +608,7 @@ class Log:
     def fabric_guide(self) -> str:
         if self.launcher in [Launcher.OFFICIAL_LAUNCHER, Launcher.MODRINTH]: return None
         if self.is_newer_than("1.0") and not self.is_newer_than("1.14"): return "legacy_fabric_guide"
-        if self.launcher == Launcher.PRISM: return "fabric_guide_prism"
+        if self.is_prism: return "fabric_guide_prism"
         return "fabric_guide_mmc"
 
     @cached_property
@@ -616,7 +616,7 @@ class Log:
         if self.launcher == Launcher.OFFICIAL_LAUNCHER:
             return self.setup_guide
         
-        if self.launcher == Launcher.PRISM:
+        if self.is_prism:
             return "java_update_guide_prism"
 
         if self.operating_system == OperatingSystem.LINUX:
