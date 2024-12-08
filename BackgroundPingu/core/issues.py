@@ -407,7 +407,7 @@ class IssueChecker:
                     "s" if len(wrong_mods) == 1 else "",
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
                 found_crash_cause = True
             elif len(wrong_outdated_mods) > 0:
                 builder.error(
@@ -417,7 +417,7 @@ class IssueChecker:
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                     "it" if len(wrong_outdated_mods) == 1 else "them"
                 ).add(self.log.java_update_guide)
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
                 found_crash_cause = True
         
         if not found_crash_cause:
@@ -458,7 +458,7 @@ class IssueChecker:
                     needed_java_version,
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
                 found_crash_cause = True
             elif self.log.has_content("java.lang.UnsupportedClassVersionError: net/minecraft/class_310"):
                 builder.error(
@@ -504,7 +504,7 @@ class IssueChecker:
             r"Invalid (maximum|initial) heap size",
         ]):
             builder.error("32_bit_java_crash").add(self.log.java_update_guide)
-            if self.log.is_prism: builder.add("read_pls")
+            if self.log.is_multimc_or_fork: builder.add("read_pls")
             found_crash_cause = True
         
         if not found_crash_cause and (any(self.log.has_content(broken_java) for broken_java in [
@@ -513,16 +513,16 @@ class IssueChecker:
             "Assertion `version->filename == NULL || ! _dl_name_match_p (version->filename, map)' failed"
         ]) or self.log.has_pattern(r"The java binary \"(.+)\" couldn't be found.")):
             builder.error("broken_java").add("java_update_guide")
-            if self.log.is_prism: builder.add("read_pls")
+            if self.log.is_multimc_or_fork: builder.add("read_pls")
             found_crash_cause = True
         
         if self.log.has_content("The java binary \"\" couldn't be found."):
             if self.log.has_content("Please set up java in the settings."): # java isn't selected globally & no override
                 builder.error("no_java").add("java_update_guide")
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
             else: # java isn't selected in instance settings
                 builder.error("no_java").add("java_update_guide")
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
                 else: builder.add("java_override_warning")
             found_crash_cause = True
         
@@ -535,7 +535,7 @@ class IssueChecker:
         if not match is None:
             if "UseZGC" in match.group(1):
                 builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
             else:
                 builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
             found_crash_cause = True
@@ -552,7 +552,7 @@ class IssueChecker:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
             else:
                 builder.error("32_bit_java").add("java_update_guide")
-                if self.log.is_prism: builder.add("read_pls")
+                if self.log.is_multimc_or_fork: builder.add("read_pls")
         
         elif (not found_crash_cause
             and is_mcsr_log
@@ -560,7 +560,7 @@ class IssueChecker:
             and self.log.major_java_version < 17
         ):
             builder.note("not_using_java_17", self.log.major_java_version).add(self.log.java_update_guide)
-            if self.log.is_prism: builder.add("read_pls")
+            if self.log.is_multimc_or_fork: builder.add("read_pls")
 
         if (self.log.operating_system == OperatingSystem.MACOS
             and not self.log.is_intel_mac
@@ -1198,7 +1198,7 @@ class IssueChecker:
                 17,
                 f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
             ).add(self.log.java_update_guide)
-            if self.log.is_prism: builder.add("read_pls")
+            if self.log.is_multimc_or_fork: builder.add("read_pls")
             found_crash_cause = True
         
         if self.log.has_mod("beachfilter"):
