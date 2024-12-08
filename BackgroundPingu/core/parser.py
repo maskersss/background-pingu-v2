@@ -318,6 +318,7 @@ class Log:
     
         if any(self.has_content(atlauncher) for atlauncher in [
             "Made By Bob*",
+            "/ATLauncher/",
         ]):
             return Launcher.ATLAUNCHER
         
