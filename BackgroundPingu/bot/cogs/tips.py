@@ -304,7 +304,7 @@ Don't forget to check the info in the readme!"""
         text = """PeepoPractice is a versatile Fabric 1.16.1 mod to practice splits of Minecraft speedruns. It includes mapless, bastion, fortress, postblind, stronghold, end, AA splits and more.
 Don't forget to check the FAQ in the readme! 
 <https://github.com/faluhub/peepoPractice>
-*PeepoPractice is incompatible with FastReset and requires Java 17+. Do `/java` if you need help with updating your Java version.*"""
+:warning: *PeepoPractice is incompatible with FastReset and requires Java 17+. Do `/java` if you need help with updating your Java version.*"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
