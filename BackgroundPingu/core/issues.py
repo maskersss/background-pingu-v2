@@ -1188,6 +1188,19 @@ class IssueChecker:
             builder.error("old_wp_with_stateoutput")
             found_crash_cause = True
         
+        if (not found_crash_cause
+            and len(self.log.mods) == 0
+            and self.log.minecraft_version in [None, "1.16.1"]
+            and self.log.has_content_in_stacktrace("Non [a-z0-9_.-] character in namespace of location")
+        ):
+            builder.error(
+                "need_new_java",
+                17,
+                f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
+            ).add(self.log.java_update_guide)
+            if self.log.is_prism: builder.add("read_pls")
+            found_crash_cause = True
+        
         if self.log.has_mod("beachfilter"):
             builder.error("beachfilter_unsupported")
             if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):
