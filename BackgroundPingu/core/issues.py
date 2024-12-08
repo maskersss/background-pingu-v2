@@ -1155,7 +1155,7 @@ class IssueChecker:
         
         if self.log.is_seedqueue_log:
             for incompatible_mod in [
-                "PogLoot",
+                "pogloot",
                 "mcsrranked",
                 "beachfilter",
                 "fsg-mod",
@@ -1165,6 +1165,10 @@ class IssueChecker:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "SeedQueue", incompatible_mod)
                     found_crash_cause = True
+        
+        if self.log.has_mod("pogloot") and self.log.has_mod("worldpreview-6"):
+            builder.error("incompatible_mod", "PogLoot", "WorldPreview")
+            found_crash_cause = True
         
         if self.log.has_mod("speedrunigt") and self.log.has_mod("stronghold-trainer"):
             builder.error("incompatible_mod", "SpeedRunIGT", "Stronghold Trainer")
