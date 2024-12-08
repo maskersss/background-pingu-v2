@@ -321,6 +321,9 @@ class Log:
         ]):
             return Launcher.ATLAUNCHER
         
+        if self.exitcode and self.has_content("Please note that usually neither the exit code"):
+            return Launcher.MULTIMC
+        
         if self.max_allocated == 1024:
             return Launcher.MULTIMC
 
