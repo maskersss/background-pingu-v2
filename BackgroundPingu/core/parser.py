@@ -1,6 +1,7 @@
 import re, requests, enum
 from packaging import version
 from cached_property import cached_property
+from BackgroundPingu.config import *
 
 class OperatingSystem(enum.IntEnum):
     WINDOWS = enum.auto()
@@ -52,14 +53,14 @@ class Log:
         # for instance, if it's "Alex", it could also replace it in the mod "Alex Caves", which would leak it
         
         self.lines = content.count("\n") + 1
-        if self.lines > 16000:
+        if self.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
             lines = content.splitlines()
             content = (
-                "\n".join(lines[:6000])
+                "\n".join(lines[:MAX_STARTING_LOG_LINES])
                 + "\n" * 10
                 + "--- Log truncated: Middle portion omitted ---"
                 + "\n" * 10
-                + "\n".join(lines[-10000:])
+                + "\n".join(lines[-MAX_ENDING_LOG_LINES:])
             )
 
         pattern = r"Session ID is token:.{50,}?\n"

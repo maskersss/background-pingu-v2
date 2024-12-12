@@ -5,6 +5,7 @@ from datetime import datetime
 from BackgroundPingu.bot.main import BackgroundPingu
 from BackgroundPingu.core import parser, issues
 from BackgroundPingu.bot.ui import views
+from BackgroundPingu.config import *
 
 class Core(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
@@ -12,7 +13,7 @@ class Core(Cog):
         self.bot = bot
     
     async def get_logs_from_message(self, msg: discord.Message, include_content=False):
-        link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
+        link_pattern = LINK_PATTERN
         matches = re.findall(link_pattern, msg.content)
         if len(msg.attachments) > 0:
             for attachment in msg.attachments:

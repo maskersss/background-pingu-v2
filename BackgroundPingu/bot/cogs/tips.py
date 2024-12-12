@@ -3,6 +3,7 @@ from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
 from BackgroundPingu.core import parser, issues
+from BackgroundPingu.config import *
 
 class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
@@ -19,7 +20,7 @@ class Tips(Cog):
             text = "Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             return await ctx.respond(text)
 
-        link_pattern = r"https:\/\/(?:api\.)?paste\.ee\/.\/\w+|https:\/\/mclo\.gs\/\w+|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:txt|log|tdump)"
+        link_pattern = LINK_PATTERN
         match = re.search(link_pattern, log)
         if match is None:
             text = "No paste.ee or mclo.gs link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"

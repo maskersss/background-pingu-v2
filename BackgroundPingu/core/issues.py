@@ -3,6 +3,7 @@ from packaging import version
 from math import sqrt
 from BackgroundPingu.bot.main import BackgroundPingu
 from BackgroundPingu.core.parser import Log, ModLoader, OperatingSystem, LogType, Launcher
+from BackgroundPingu.config import *
 
 class IssueBuilder:
     def __init__(self, bot: BackgroundPingu, log: Log) -> None:
@@ -249,7 +250,8 @@ class IssueChecker:
         
         if self.log.leaked_pc_username:
             builder.info("leaked_username").add("upload_log_leaked_username")
-            if self.log.lines > 16000: builder.add("upload_log_too_large")
+            if self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
+                builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
         
         if is_mcsr_log:
             for mod in self.log.mods:
@@ -1412,7 +1414,7 @@ class IssueChecker:
         if (not found_crash_cause
             and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
-            and not self.log.lines > 16000
+            and not self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES
             and self.log.has_content("minecraft")
         ):
             builder.info("upload_log_attachment")
