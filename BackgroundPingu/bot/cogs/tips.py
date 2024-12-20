@@ -516,7 +516,8 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
 
     @commands.slash_command(name="preemptive", description="Gives links to preemptive resources.")
     async def preemptive(self, ctx: discord.ApplicationContext):
-        text = """Video explanation/tutorial by addlama: https://youtu.be/2dWq2wXy43M
+        text = """Video tutorial by meebie: https://youtu.be/yF4kcBk3lKo
+Original video explanation/tutorial by addlama: <https://youtu.be/2dWq2wXy43M>
 Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv1b3VJLpiDWfNixgKW3zQowmpsYo/edit>"""
         return await ctx.respond(text)
 
