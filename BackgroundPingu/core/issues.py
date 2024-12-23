@@ -360,7 +360,6 @@ class IssueChecker:
                     "amount_illegal_mods",
                     len(illegal_mods),
                     temp,
-                    experimental = (self.log.minecraft_version != "1.16.1")
                 )
         
         if is_mcsr_log and self.log.launcher == Launcher.MODRINTH:
