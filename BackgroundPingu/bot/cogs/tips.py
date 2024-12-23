@@ -338,9 +338,9 @@ All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.
 
     @commands.slash_command(name="standardsettings", description="Explains what StandardSettings is.")
     async def standardsettings(self, ctx: discord.ApplicationContext):
-        text = """If your settings reset whenever you create a world, you are probably using [StandardSettings](<https://github.com/KingContaria/StandardSettings/>).
-If you want to change what do the settings reset to, go to `Options > Book and Quill > StandardSettings` and configure them.
-If you don't want your settings to reset, set "Toggle StandardSettings" there to "OFF"."""
+        text = """If your settings reset whenever you create a world, you are probably using StandardSettings.
+If you want to change which settings reset and what do they reset to, go to Options > Book and Quill > StandardSettings and configure them.
+If you don't want your settings to reset, set "Use StandardSettings" there to "OFF"."""
         return await ctx.respond(text)
 
     # remove the spaces          (here) when uncommenting, also for `/modpack`
@@ -455,6 +455,14 @@ Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>
 Fortress binoculars (find fortress if a treasure spawner exists): https://discord.com/channels/83066801105145856/861092932832198687/1247271210409136168"""
         return await ctx.respond(text)
     
+    @commands.slash_command(name="fsg", description="Gives a link to the FSG mod and discord server.")
+    async def fsg(self, ctx: discord.ApplicationContext):
+        text = """FSG Mod: <https://modrinth.com/mod/fsg-mod>
+This mod requires Atum, which should be obtained from <https://mods.tildejustin.dev/>.
+
+Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
+        return await ctx.respond(text)
+    
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext):
         text = """[Overview of Language Crafting for Minecraft Speedruns](https://docs.google.com/document/d/1jSeciLoEgSwWWCdNk0dKignzxJskxJ5_zeCQmcdGmTg) *(contains: Vietnamese, Ukrainian, Korean, Bosnian, English)*
@@ -519,11 +527,6 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
         text = """Video tutorial by meebie: https://youtu.be/yF4kcBk3lKo
 Original video explanation/tutorial by addlama: <https://youtu.be/2dWq2wXy43M>
 Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv1b3VJLpiDWfNixgKW3zQowmpsYo/edit>"""
-        return await ctx.respond(text)
-
-    @commands.slash_command(name="resizemacro", description="Gives a link to resize macro.")
-    async def resizemacro(self, ctx: discord.ApplicationContext):
-        text = "https://discord.com/channels/83066801105145856/405839885509984256/1200806271230681178"
         return await ctx.respond(text)
 
     @commands.slash_command(name="zerocycle", description="Gives links to zero cycle resources.")
