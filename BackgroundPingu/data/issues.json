@@ -194,6 +194,5 @@
     "warning.outdated_mods": "You are using `{}` outdated mods (`{}`)!",
     "warning.relatively_old_fabric": "You're using an old version of `Fabric Loader`. You should update it.",
     "warning.too_little_ram": "You have too little RAM allocated, which can cause crashes and lag spikes.",
-    "warning.too_much_ram": "You have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce).",
-    "warning.using_fabric_api": "You're using `Fabric API`, which is not allowed for speedrunning. Remove it from your `.minecraft/mods` folder."
+    "warning.too_much_ram": "You have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce)."
 }
