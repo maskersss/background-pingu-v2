@@ -1419,11 +1419,14 @@ class IssueChecker:
             builder.info("upload_log_attachment")
         
         if not found_crash_cause and is_mcsr_log:
-            for server_id, channel_ids in [
-                (83066801105145856, [727673359860760627]), # javacord
+            for server_id, bot_cid, support_cid in [
+                # (server_id, bot_cmds_channel_id, support_channel_id)
+                (83066801105145856, 433058639956410383, 727673359860760627), # javacord
+                (1056779246728658984, 1074343944822992966, 1074385256070791269), # rankedcord
+                (1262887973154848828, 1271835972912545904, 1262901524619595887), # sqcord
             ]:
-                if self.server_id == server_id and not self.channel_id in channel_ids:
-                    builder.info("ask_in_support_channel", server_id, channel_ids[0])
+                if self.server_id == server_id and self.channel_id == bot_cid:
+                    builder.info("ask_in_support_channel", server_id, support_cid)
         
         if not found_crash_cause:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
