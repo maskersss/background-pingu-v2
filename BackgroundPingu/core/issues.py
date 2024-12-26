@@ -1607,6 +1607,7 @@ class IssueChecker:
 
         # discussion from seedqueue discord: https://discord.com/channels/1262887973154848828/1272158999298707488/1279137330690654290
         max_generating = int(self.log.processors // 5)
+        if max_generating > max_queued: max_generating = max_queued
 
         max_allocated = 2000 + max_queued * 250
         max_allocated = int(round(max_allocated, -2))
