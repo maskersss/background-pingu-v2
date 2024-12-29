@@ -688,7 +688,7 @@ class IssueChecker:
         elif not self.log.max_allocated is None:
             if not any(temp is None for temp in self.log.recommended_min_allocated):
                 min_limit_0, min_limit_1, min_limit_2 = self.log.recommended_min_allocated
-                if self.log.max_allocated < min_limit_1 and self.log.exitcode == -805306369 and self.log.stacktrace is None:
+                if self.log.max_allocated < min_limit_2 and self.log.exitcode == -805306369 and self.log.stacktrace is None:
                     builder.error("too_little_ram_crash", experimental=True).add(*self.log.ram_guide)
                 elif self.log.max_allocated < min_limit_0 and self.log.exitcode == -805306369 and self.log.stacktrace is None:
                     builder.note("too_little_ram_crash", experimental=True).add(*self.log.ram_guide)

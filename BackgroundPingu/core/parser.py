@@ -491,6 +491,11 @@ class Log:
             min_limit_1 *= 1.3
             min_limit_2 *= 1.3
         
+        if self.is_ranked_log:
+            min_limit_0 += 2000
+            min_limit_1 += 1000
+            min_limit_2 += 500
+        
         return (min_limit_0, min_limit_1, min_limit_2)
     
     @cached_property
@@ -534,6 +539,11 @@ class Log:
             max_limit_0 *= 1.3
             max_limit_1 *= 1.3
             max_limit_2 *= 1.3
+        
+        if self.is_ranked_log:
+            max_limit_0 += 10000
+            max_limit_1 += 7000
+            max_limit_2 += 4000
         
         if self.is_seedqueue_log:
             max_limit_0, max_limit_1 = None, None
