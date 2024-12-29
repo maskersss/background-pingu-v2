@@ -1318,6 +1318,13 @@ class IssueChecker:
             if "Rar$" in self.log.minecraft_folder:
                 builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
         
+        if (self.log.type in [None, LogType.LATEST_LOG, LogType.FULL_LOG]
+            and not found_crash_cause
+            and (self.log.stacktrace or self.log.exitcode)
+            and self.log.has_content("\nHookApp::")
+        ):
+            builder.warning("medal", experimental=True)
+        
         if found_crash_cause or not self.log.stacktrace is None: pass
 
         elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")

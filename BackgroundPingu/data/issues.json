@@ -186,6 +186,7 @@
     "note.using_other_loader": "Note that using `{} Loader` is not allowed for speedrunning.",
     "top_info.uploaded_log": "The log has been uploaded to {}.",
     "top_info.uploaded_log_2": "The log has been uploaded to {}. (Note that `mclo.gs` censors sensitive information)",
+    "warning.medal": "You seem to be using a recording app like `Medal`, which can cause issues. Make sure this isn't the cause of the crash.",
     "warning.missing_and_outdated_mods": "You are missing `{}` mod{} (`{}`) and are using `{}` outdated mod{} (`{}`)!",
     "warning.missing_mods": "You seem to be missing `{}` recommended mods (`{}`).",
     "warning.missing_mods_linked": "You seem to be missing `{}` recommended mod{}. You can download {} here: {}.",
