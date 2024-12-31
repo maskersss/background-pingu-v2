@@ -1652,7 +1652,11 @@ class IssueChecker:
             notes.append(f"You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
 
         if self.log.processors >= 8:
-            notes.append("You might experience lag after changing render distance. For a solution, please read this entire message: https://discord.com/channels/1262887973154848828/1285688006145212457/1320960832187797596.")
+            if self.server_id != 1262887973154848828:
+                temp = " (link from the [SeedQueue server](<https://discord.gg/9P6PJkHCdU>))"
+            else:
+                temp = ""
+            notes.append("You might experience lag after changing render distance. For a solution, please read this entire message: https://discord.com/channels/1262887973154848828/1285688006145212457/1320960832187797596." + temp)
 
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
