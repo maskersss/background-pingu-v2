@@ -611,6 +611,12 @@ class IssueChecker:
             builder.error("old_fabric_crash").add(self.log.fabric_guide, "update")
             found_crash_cause = True
         
+        elif any(self.log.has_content(crash) for crash in [
+            " or later of mod 'Fabric Loader' (fabricloader), but only the wrong version is present: ",
+        ]):
+            builder.error("old_fabric_crash").add(self.log.fabric_guide, "update")
+            found_crash_cause = True
+        
         elif not self.log.fabric_version is None:
             highest_srigt_ver = None
             for mod in self.log.mods:
