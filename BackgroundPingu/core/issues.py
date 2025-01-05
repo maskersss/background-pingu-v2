@@ -427,7 +427,7 @@ class IssueChecker:
                     "need_new_java_mc",
                     17,
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
-                ).add("java_update_guide")
+                ).add(self.log.java_update_guide)
                 found_crash_cause = True
             if (self.log.is_newer_than("1.20.5")
                 and not self.log.major_java_version is None
@@ -437,7 +437,7 @@ class IssueChecker:
                     "need_new_java_mc",
                     21,
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
-                ).add("java_update_guide")
+                ).add(self.log.java_update_guide)
                 found_crash_cause = True
         
         if not found_crash_cause and len(wrong_not_needed_mods) == 0:
@@ -513,16 +513,16 @@ class IssueChecker:
             "Incompatible magic value 0 in class file sun/security/provider/SunEntries",
             "Assertion `version->filename == NULL || ! _dl_name_match_p (version->filename, map)' failed"
         ]) or self.log.has_pattern(r"The java binary \"(.+)\" couldn't be found.")):
-            builder.error("broken_java").add("java_update_guide")
+            builder.error("broken_java").add(self.log.java_update_guide)
             if self.log.is_multimc_or_fork: builder.add("read_pls")
             found_crash_cause = True
         
         if self.log.has_content("The java binary \"\" couldn't be found."):
             if self.log.has_content("Please set up java in the settings."): # java isn't selected globally & no override
-                builder.error("no_java").add("java_update_guide")
+                builder.error("no_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
             else: # java isn't selected in instance settings
-                builder.error("no_java").add("java_update_guide")
+                builder.error("no_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
                 else: builder.add("java_override_warning")
             found_crash_cause = True
@@ -552,7 +552,7 @@ class IssueChecker:
             if self.log.operating_system == OperatingSystem.MACOS and not self.log.is_prism:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
             else:
-                builder.error("32_bit_java").add("java_update_guide")
+                builder.error("32_bit_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
         
         elif (not found_crash_cause
@@ -803,6 +803,20 @@ class IssueChecker:
             if not match is None:
                 builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
+
+        if self.log.has_content("(missing)\n") and self.log.has_content("Launched instance in offline mode"):
+            builder.error("online_launch_required", self.log.edit_instance)
+            found_crash_cause = True
+        
+        elif self.log.has_content("Couldn't extract native jar"):
+            builder.error("locked_libs")
+            found_crash_cause = True
+        
+        if (self.log.mod_loader in [ModLoader.FORGE, None]
+            and self.log.has_content("ClassLoaders$AppClassLoader cannot be cast to class java.net.URLClassLoader")
+        ):
+            builder.error("forge_too_new_java")
+            found_crash_cause = True
         
         if (not found_crash_cause
             and self.log.operating_system in [None, OperatingSystem.LINUX]
@@ -958,18 +972,6 @@ class IssueChecker:
                 if not latest_version is None:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
             found_crash_cause = True
-
-        if self.log.has_content("(missing)\n") and self.log.has_content("Launched instance in offline mode"):
-            builder.error("online_launch_required", self.log.edit_instance)
-            found_crash_cause = True
-        
-        elif self.log.has_content("Couldn't extract native jar"):
-            builder.error("locked_libs")
-            found_crash_cause = True
-        
-        if self.log.has_content("ClassLoaders$AppClassLoader cannot be cast to class java.net.URLClassLoader"):
-            builder.error("forge_too_new_java")
-            found_crash_cause = True
         
         if not found_crash_cause and any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
             "RivaTuner Statistics Server (RTSS) is not compatible with Sodium",
@@ -1052,7 +1054,7 @@ class IssueChecker:
             and any(self.log.has_content(delete_launcher_cache_crash) for delete_launcher_cache_crash in [
                 "Caused by: java.lang.NoSuchMethodError: 'boolean net.minecraftforge.",
                 "Unable to detect the forge installer!",
-                "Reason:\nOne or more subtasks failed"
+                "Reason:\nOne or more subtasks failed",
         ])):
             builder.error("delete_launcher_cache", experimental=True)
 
@@ -1211,7 +1213,7 @@ class IssueChecker:
             and self.log.has_content_in_stacktrace("java.lang.StackOverflowError")
             and self.log.has_content("$atum$createDesiredWorld")
         ):
-            builder.error("stack_overflow_crash")
+            builder.error("stack_overflow_crash", experimental=True)
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("Mappings not present!"):
@@ -1281,7 +1283,9 @@ class IssueChecker:
         ]):
             builder.error("midnight_bug") # for the second log part
 
-        if self.log.has_content("Missing or unsupported mandatory dependencies"):
+        if (self.log.mod_loader in [ModLoader.FORGE, None]
+            and self.log.has_content("Missing or unsupported mandatory dependencies")
+        ):
             builder.error("forge_missing_dependencies")
             found_crash_cause = True
 
@@ -1301,7 +1305,7 @@ class IssueChecker:
 
         if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):
             if self.log.has_mod("autoresetter"):
-                builder.error("downgrade_atum")
+                builder.error("downgrade_atum", experimental=True)
                 found_crash_cause = True
             elif self.log.has_mod("fsg-wrapper-mod"):
                 builder.error("old_mod_crash", "fsg wrapper", "https://modrinth.com/mod/fsg-mod/versions/")
@@ -1310,7 +1314,6 @@ class IssueChecker:
         if not self.log.minecraft_folder is None:
             if "!" in self.log.minecraft_folder:
                 builder.error("exclamation_mark_in_path")
-                found_crash_cause = True
             if not found_crash_cause and "OneDrive" in self.log.minecraft_folder:
                 builder.note("onedrive")
             if "C:/Program Files" in self.log.minecraft_folder:
