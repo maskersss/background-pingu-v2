@@ -1578,7 +1578,19 @@ class IssueChecker:
             # when updating it, also update upload_button.disabled in views.py
             match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__", self.log._content)
             if not match is None:
-                output += f"Failed to download the log (`{match.group(1)}`). Try sending it in a different way (`mclo.gs` link; `paste.ee` link; attached file to a message > right click the message > `Apps` > `Recommend Settings`)."
+                output += f"""
+Failed to download the log (`{match.group(1)}`). Please try the following steps:
+
+1. **Copy** your log using the `Copy` button.
+2. Upload it to either <https://mclo.gs/> or <https://paste.ee/>, then provide the new link.
+   - If one service doesn’t work, try the other.
+3. Alternatively, paste the log directly into Discord as a message, then:
+   - Right-click the message.
+   - Select `Apps`.
+   - Choose `Recommend Settings`.
+
+_Note: Simply changing the link’s domain won’t work – you need to re-upload the log._
+""".strip()
                 if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
                 return (output, True)
         
