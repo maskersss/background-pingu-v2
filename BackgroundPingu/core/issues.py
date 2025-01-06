@@ -1578,7 +1578,8 @@ class IssueChecker:
             # when updating it, also update upload_button.disabled in views.py
             match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__", self.log._content)
             if not match is None:
-                output += f"Failed to download the log (`{match.group(1)}`). Try sending it in a different way (`mclo.gs` link, `paste.ee` link, attached file)."
+                output += f"Failed to download the log (`{match.group(1)}`). Try sending it in a different way (`mclo.gs` link; `paste.ee` link; attached file to a message > right click the message > `Apps` > `Recommend Settings`)."
+                if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
                 return (output, True)
         
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
@@ -1596,7 +1597,7 @@ class IssueChecker:
             else:
                 return ("", False)
             
-            if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in a help channel._"
+            if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
             return (output, True)
         
         free_ram = self.log.pc_ram
