@@ -1570,6 +1570,17 @@ class IssueChecker:
         return builder
 
     def seedqueue_settings(self) -> tuple[str, bool]:
+        output = ""
+        missing_mods = []
+        notes = ["These settings are likely not optimal and are just rough suggestions."]
+
+        if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__"):
+            # when updating it, also update upload_button.disabled in views.py
+            match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__", self.log._content)
+            if not match is None:
+                output += f"Failed to download the log (`{match.group(1)}`). Try sending it in a different way (`mclo.gs` link, `paste.ee` link, attached file)."
+                return (output, True)
+        
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if not self.log.has_mod("seedqueue"):
@@ -1587,10 +1598,6 @@ class IssueChecker:
             
             if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in a help channel._"
             return (output, True)
-        
-        output = ""
-        missing_mods = []
-        notes = ["These settings are likely not optimal and are just rough suggestions."]
         
         free_ram = self.log.pc_ram
         if self.log.operating_system == OperatingSystem.LINUX: free_ram -= 1500
