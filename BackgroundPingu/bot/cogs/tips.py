@@ -497,11 +497,6 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
         text = "Ghost buckets occur if your crosshair moves from one block to another as you right click with a bucket. Keep your mouse still while you right click to prevent them from occurring."
         return await ctx.respond(text)
 
-    @commands.slash_command(name="jultifaq", description="Gives a link to Julti FAQ document.")
-    async def jultifaq(self, ctx: discord.ApplicationContext):
-        text = "https://tinyurl.com/JultiFAQ"
-        return await ctx.respond(text)
-
     @commands.slash_command(name="lazychunks", description="Gives an explanation of lazy chunks for pie-ray.")
     async def lazychunks(self, ctx: discord.ApplicationContext):
         text = """Spawners up to 3 chunks outside your render distance remain loaded and will still show up on the pie chart. This is why just dropping your render distance by 1 won't unload the spawner. You have to drop it by at least 4 to unload it.
