@@ -236,7 +236,9 @@ Julti discord: <https://discord.gg/cXf86mXAWR>"""
 
     @commands.slash_command(name="jingle", description="Gives a link to Jingle's GitHub page.")
     async def jingle(self, ctx: discord.ApplicationContext):
-        text = "Application that provides a lot of useful utilities for speedrunning: <https://github.com/DuncanRuns/Jingle>"
+        text = """Speedrunning utility application by DuncanRuns
+Download: <https://github.com/DuncanRuns/Jingle/releases>
+Support discord: <https://discord.gg/cXf86mXAWR>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="worldbopper", description="Gives links to plugins for auto-deleting worlds.")
