@@ -527,22 +527,29 @@ class IssueChecker:
                 else: builder.add("java_override_warning")
             found_crash_cause = True
         
-        if self.log.has_content("java.awt.AWTError: Assistive Technology not found: org.GNOME.Accessibility.AtkWrapper"):
+        if not found_crash_cause and self.log.has_content("java.awt.AWTError: Assistive Technology not found: org.GNOME.Accessibility.AtkWrapper"):
             builder.error("headless_java")
             found_crash_cause = True
         
-        pattern = r"Unrecognized VM option '(.*)'"
-        match = re.search(pattern, self.log._content)
-        if not match is None:
-            if "UseZGC" in match.group(1):
-                builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
-                if self.log.is_multimc_or_fork: builder.add("read_pls")
-            else:
-                builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
-            found_crash_cause = True
+        if self.log.type in [None, LogType.FULL_LOG] and self.log.has_content("VM option '"):
+            pattern = r" VM option '(.*)\n\s*'"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                builder.error("newline_in_java_args", self.log.get_java_arg(match.group(1)))
+                found_crash_cause = True
+            
+            pattern = r" VM option '(.*)'"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                if "UseZGC" in match.group(1):
+                    builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
+                    if self.log.is_multimc_or_fork: builder.add("read_pls")
+                else:
+                    builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
+                found_crash_cause = True
         
         if self.log.has_content("mcwrap.py"):
-            if self.log.launcher is None or self.log.launcher == Launcher.MULTIMC or not self.log.has_content("mac-lwjgl-fix"):
+            if self.log.launcher in [None, Launcher.MULTIMC] or not self.log.has_content("mac-lwjgl-fix"):
                 builder.error("m1_multimc_hack").add("mac_setup_guide")
         
         elif not found_crash_cause and any(self.log.has_pattern(using_32_bit_java) for using_32_bit_java in [
@@ -932,8 +939,10 @@ class IssueChecker:
                 and not self.log.has_mod("voyager")
             ):
                 builder.error("no_voyager_crash")
+                found_crash_cause = True
             elif self.log.has_content("[SEVERE] [ForgeModLoader] Unable to launch") and not self.log.has_mod("legacyjavafixer"):
                 builder.error("legacyjavafixer")
+                found_crash_cause = True
         
         if not found_crash_cause and all(self.log.has_content_in_stacktrace(lithium_crash) for lithium_crash in [
             "java.lang.IllegalStateException: Adding Entity listener a second time",

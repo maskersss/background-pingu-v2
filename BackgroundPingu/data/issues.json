@@ -102,6 +102,7 @@
     "error.need_new_java_mc": "You are playing on a Minecraft version that requires using `Java {}+`{}.",
     "error.need_to_extract_from_zip": "You didn't extract `{}` when downloading it, which can cause it to be deleted by your operating system. Close the launcher and extract it.",
     "error.new_java_old_fabric_crash": "This crash seems to be caused by using an old version of `{} loader` with a new version of `Java`. Update your `{} loader`.",
+    "error.newline_in_java_args": "You have a newline after `{}` in your Java arguments, which shouldn't exist. You need to remove it.",
     "error.no_fabric": "You don't have `Fabric` installed, while all MCSR mods require it.",
     "error.no_java": "You don't have `Java` selected.",
     "error.no_loader": "You are using mods, but you haven't installed a mod loader.",
