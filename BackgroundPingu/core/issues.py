@@ -321,7 +321,7 @@ class IssueChecker:
                     len(outdated_mods),
                     "s" if len(outdated_mods) > 1 else "",
                     "s" if len(outdated_mods) > 1 else "",
-                    "`, `".join(f"[**{name}**]({link})" for name, link in outdated_mods.items()),
+                    ", ".join(f"[**{name}**]({link})" for name, link in outdated_mods.items()),
                 )
             if len(missing_mods) > 0:
                 builder.warning(
@@ -329,7 +329,7 @@ class IssueChecker:
                     len(missing_mods),
                     "s" if len(missing_mods) > 1 else "",
                     "them" if len(missing_mods) > 1 else "it",
-                    "`, `".join(f"[**{name}**]({link})" for name, link in missing_mods),
+                    ", ".join(f"[**{name}**]({link})" for name, link in missing_mods),
                 )
             builder.add("update_mods").add(self.log.modcheck_v1_warning)
 
@@ -517,7 +517,7 @@ class IssueChecker:
             if self.log.is_multimc_or_fork: builder.add("read_pls")
             found_crash_cause = True
         
-        if self.log.has_content("The java binary \"\" couldn't be found."):
+        if not found_crash_cause and self.log.has_content("The java binary \"\" couldn't be found."):
             if self.log.has_content("Please set up java in the settings."): # java isn't selected globally & no override
                 builder.error("no_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
@@ -531,7 +531,7 @@ class IssueChecker:
             builder.error("headless_java")
             found_crash_cause = True
         
-        if self.log.type in [None, LogType.FULL_LOG] and self.log.has_content("VM option '"):
+        if not found_crash_cause and self.log.type in [None, LogType.FULL_LOG] and self.log.has_content("VM option '"):
             pattern = r" VM option '(.*)\n\s*'"
             match = re.search(pattern, self.log._content)
             if not match is None:
