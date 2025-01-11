@@ -800,6 +800,20 @@ class IssueChecker:
                 else:
                     builder.add("java_guide")
         
+        if self.log.is_seedqueue_log and not self.log.java_arguments is None:
+            args = [
+                "SoftMaxHeapSize",
+                "ActiveProcessorCount",
+                "ConcGCThreads",
+            ]
+            args = [self.log.get_java_arg(arg) for arg in args if self.log.has_java_argument(arg)]
+            if len(args) > 0:
+                builder.warning(
+                    "dont_use_java_arg",
+                    "`, `".join(args),
+                    "s" if len(args) > 1 else "",
+                )
+        
         if not found_crash_cause and self.log.has_content("Could not find or load main class"):
             pattern = r"Could not find or load main class (.*)\n"
             match = re.search(pattern, self.log._content)
