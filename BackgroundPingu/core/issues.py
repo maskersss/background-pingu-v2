@@ -558,6 +558,7 @@ class IssueChecker:
         ]):
             if self.log.operating_system == OperatingSystem.MACOS and not self.log.is_prism:
                 builder.error("arm_java_multimc").add("mac_setup_guide")
+                if self.log.has_content("Failed to locate library"): found_crash_cause = True
             else:
                 builder.error("32_bit_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
@@ -772,10 +773,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("SoftMaxHeapSize must be less than or equal to the maximum heap size"):
-            if self.log.max_allocated is None or self.log.max_allocated < 5000:
-                builder.error("wrong_java_arg", self.log.get_java_arg("-XX:SoftMaxHeapSize"))
-            else:
-                builder.error("softmaxheap_over_xmx")
+            builder.error("wrong_java_arg", self.log.get_java_arg("-XX:SoftMaxHeapSize"))
             found_crash_cause = True
         
         if (self.log.is_seedqueue_log
@@ -787,12 +785,6 @@ class IssueChecker:
                 builder.note("use_zgc")
                 temp = True
             else:
-                if (not self.log.max_allocated is None
-                    and self.log.max_allocated > 5000
-                    and not self.log.has_java_argument("-XX:SoftMaxHeapSize")
-                ):
-                    builder.note("use_softmaxheapsize")
-                    temp = True
                 if (not self.log.major_java_version is None
                     and self.log.major_java_version >= 23
                     and not self.log.has_java_argument("-XX:-ZGenerational")          
@@ -1666,9 +1658,6 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         
         java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         
-        if max_allocated > 3000:
-            java_args += f" -XX:SoftMaxHeapSize={int(round(max_allocated * 0.8, -2))}m"
-        
         java_args = java_args.strip()
         
         if not self.log.major_java_version is None and self.log.major_java_version < 17:
@@ -1686,13 +1675,6 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
                     missing_mods.append(recommended_mod)
         if len(missing_mods) > 0:
             notes.append(f"You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
-
-        if self.log.processors >= 8:
-            if self.server_id != 1262887973154848828:
-                temp = " (link from the [SeedQueue server](<https://discord.gg/9P6PJkHCdU>))"
-            else:
-                temp = ""
-            notes.append("You might experience lag after changing render distance. For a solution, please read this entire message: https://discord.com/channels/1262887973154848828/1285688006145212457/1320960832187797596." + temp)
 
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
