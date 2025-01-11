@@ -175,7 +175,8 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
 
     @commands.slash_command(name="ninjabrainbot", description="Gives a guide to using Ninjabrain Bot.")
     async def ninjabrainbot(self, ctx: discord.ApplicationContext):
-        text = "https://youtu.be/8Z0tk_Z24WA"
+        text = """Download: <https://github.com/Ninjabrain1/Ninjabrain-Bot/releases/latest>
+Tutorial: https://youtu.be/Gp6EnDs24NI"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
