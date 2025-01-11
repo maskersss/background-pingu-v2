@@ -321,7 +321,7 @@ class IssueChecker:
                     len(outdated_mods),
                     "s" if len(outdated_mods) > 1 else "",
                     "s" if len(outdated_mods) > 1 else "",
-                    ", ".join(f"[**{name}**]({link})" for name, link in outdated_mods.items()),
+                    "`, `".join(f"[**{name}**]({link})" for name, link in outdated_mods.items()),
                 )
             if len(missing_mods) > 0:
                 builder.warning(
@@ -329,7 +329,7 @@ class IssueChecker:
                     len(missing_mods),
                     "s" if len(missing_mods) > 1 else "",
                     "them" if len(missing_mods) > 1 else "it",
-                    ", ".join(f"[**{name}**]({link})" for name, link in missing_mods),
+                    "`, `".join(f"[**{name}**]({link})" for name, link in missing_mods),
                 )
             builder.add("update_mods").add(self.log.modcheck_v1_warning)
 
@@ -339,11 +339,11 @@ class IssueChecker:
                     builder.error("incompatible_mod", key, incompatible_mod)
         
         if len(duplicate_mods) > 0:
-            builder.note("duplicate_mods", ", ".join(set(duplicate_mods)))
+            builder.note("duplicate_mods", "`, `".join(set(duplicate_mods)))
         
         if len(illegal_mods) > 0:
             if len(illegal_mods) > 6: temp = "s"
-            elif len(illegal_mods) > 1: temp = f"s (`{', '.join(illegal_mods)}`)"
+            elif len(illegal_mods) > 1: temp = f"s (`{'`, `'.join(illegal_mods)}`)"
             else: temp = f" (`{illegal_mods[0]}`)"
             builder.note("amount_illegal_mods", len(illegal_mods), temp)
 
@@ -354,7 +354,7 @@ class IssueChecker:
                 if metadata is None: illegal_mods.append(mod)
             if len(illegal_mods) > 0:
                 if len(illegal_mods) > 6: temp = "s"
-                elif len(illegal_mods) > 1: temp = f"s (`{', '.join(illegal_mods)}`)"
+                elif len(illegal_mods) > 1: temp = f"s (`{'`, `'.join(illegal_mods)}`)"
                 else: temp = f" (`{illegal_mods[0]}`)"
                 builder.note(
                     "amount_illegal_mods",
