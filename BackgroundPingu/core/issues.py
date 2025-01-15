@@ -800,7 +800,7 @@ class IssueChecker:
                 else:
                     builder.add("java_guide")
         
-        if self.log.is_seedqueue_log and not self.log.java_arguments is None:
+        if is_mcsr_log and not self.log.java_arguments is None:
             args = [
                 "SoftMaxHeapSize",
                 "ActiveProcessorCount",
@@ -1363,7 +1363,7 @@ class IssueChecker:
         elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
             wrong_mods = [mod for mod in self.log.whatever_mods if "xaero" in mod.lower()]
             if len(wrong_mods) == 1: wrong_mods == ["xaero"]
-            builder.error("mods_crash", "; ".join(wrong_mods))
+            builder.error("mods_crash", "`; `".join(wrong_mods))
             found_crash_cause = True
         
         elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
@@ -1518,7 +1518,7 @@ class IssueChecker:
                 elif len(wrong_mods) > 1:
                     builder.error(
                         "corrupted_mods_config",
-                        "; ".join(wrong_mods[:12]),
+                        "`; `".join(wrong_mods[:12]),
                     )
                 elif len(wrong_mods) > 0:
                     builder.error("corrupted_mod_config", wrong_mods[0])
@@ -1528,7 +1528,7 @@ class IssueChecker:
                 builder.error(
                     "ranked_mod_crash",
                     "s" if len(wrong_mods) > 1 else "",
-                    "; ".join(wrong_mods[:12]),
+                    "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
             elif any(mayasmod in " ".join(wrong_mods) for mayasmod in [
@@ -1538,7 +1538,7 @@ class IssueChecker:
                 builder.error(
                     "mayas_mod_crash",
                     "s" if len(wrong_mods) > 1 else "",
-                    "; ".join(wrong_mods[:12]),
+                    "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
             elif len(wrong_mods) == 1:
@@ -1548,9 +1548,9 @@ class IssueChecker:
                     builder.error("mod_crash_disable", wrong_mods[0])
             elif len(wrong_mods) > 0 and len(wrong_mods) < 10:
                 if is_mcsr_log:
-                    builder.error("mods_crash", "; ".join(wrong_mods))
+                    builder.error("mods_crash", "`; `".join(wrong_mods))
                 else:
-                    builder.error("mods_crash_disable", "; ".join(wrong_mods))
+                    builder.error("mods_crash_disable", "`; `".join(wrong_mods))
         
         
         if self.link == "message":
@@ -1559,7 +1559,7 @@ class IssueChecker:
                     "entit": 2,
                     "F3": 1,
                     r"\be\b": 1,
-                    "counter": 1
+                    "counter": 1,
                 }
                 total = 0
                 for pattern, value in entity_culling_indicators.items():

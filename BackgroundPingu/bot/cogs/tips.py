@@ -284,7 +284,8 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
     async def graalvm(self, ctx: discord.ApplicationContext):
         text = """GraalVM is a Java compiler that performs worse than other compilers at the start of sessions, but speeds up as the session goes on.
-See [this](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d#graalvm>) for a guide."""
+[Download (Windows)](https://download.oracle.com/graalvm/21/latest/graalvm-jdk-21_windows-x64_bin.zip)
+[Guide](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d#graalvm>)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="modcheck", description="Gives a link to ModCheck.")
