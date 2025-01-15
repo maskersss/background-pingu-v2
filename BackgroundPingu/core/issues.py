@@ -576,9 +576,15 @@ class IssueChecker:
             and not self.log.has_content("32-bit architecture")
         ):
             if self.log.launcher == Launcher.MULTIMC:
-                builder.note("mac_use_prism").add("mac_setup_guide")
+                if self.log.is_arm_mac:
+                    builder.warning("mac_use_prism").add("mac_setup_guide")
+                else:
+                    builder.note("mac_use_prism").add("mac_setup_guide")
             elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
-                builder.note("mac_use_arm_java")
+                if self.log.is_arm_mac:
+                    builder.warning("mac_use_arm_java")
+                else:
+                    builder.note("mac_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
 
         if (not found_crash_cause
@@ -588,7 +594,7 @@ class IssueChecker:
             if self.log.launcher == Launcher.MULTIMC:
                 builder.error("update_mmc")
                 found_crash_cause = True
-            else:
+            elif self.log.launcher is None:
                 builder.error("update_mmc", experimental=True)
         
         if not found_crash_cause and self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):

@@ -212,6 +212,16 @@ class Log:
         ]): return True
 
         return False
+
+    @cached_property
+    def is_arm_mac(self) -> bool:
+        if not self.operating_system in [OperatingSystem.MACOS, None]: return False
+
+        if any(self.has_content(arm) for arm in [
+            "Mac OS X (aarch64)",
+        ]): return True
+
+        return False
     
     @cached_property
     def minecraft_version(self) -> str:
@@ -845,6 +855,8 @@ java_version={self.java_version}
 major_java_version={self.major_java_version}
 minecraft_folder={self.minecraft_folder}
 operating_system={self.operating_system}
+is_intel_mac={self.is_intel_mac}
+is_arm_mac={self.is_arm_mac}
 minecraft_version={self.minecraft_version}
 parsed_mc_version={self.parsed_mc_version}
 loader_mc_version={self.loader_mc_version}
