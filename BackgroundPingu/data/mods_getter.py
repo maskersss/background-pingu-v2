@@ -7,7 +7,7 @@ def get_mods(start: bool=True):
 
     def format_version(version: str) -> str:
         if version.count(".") == 1: version += ".0"
-        if version.count(".") != 2:
+        if version.count(".") != 2 and (len(version) <= 2 or version[2] != "w"):
             print(f"[mods_getter] potentially invalid version while downloading mod metadata: {version}")
         return version
     
