@@ -228,11 +228,11 @@ class Log:
         if self.type == LogType.LAUNCHER_LOG: return None
 
         for pattern in [
+            r"/com/mojang/minecraft/(\S+?)/",
             r"Loading Minecraft (\S+) with Fabric Loader",
             r"Minecraft Version ID: (\S+)",
             r"Minecraft Version: (\S+)",
             r"\n\t- minecraft (\S+)\n",
-            r"/com/mojang/minecraft/(\S+?)/",
             r"/net/minecraftforge/forge/(\S+?)-",
             r"--version, (\S+),",
             r"minecraft server version (\S+)\n",
