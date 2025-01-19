@@ -1186,7 +1186,6 @@ class IssueChecker:
                 "pogloot",
                 "mcsrranked",
                 "beachfilter",
-                "fsg-mod",
                 "worldpreview-1.16.1-rev.988b7ab-dirty",
                 "autoresetter-0.0.3",
             ]:
