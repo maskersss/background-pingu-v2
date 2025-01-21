@@ -1,4 +1,4 @@
-import discord, re, traceback
+import discord, json, re, requests, traceback
 from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
@@ -548,6 +548,19 @@ Link **(read the above warning)**:
 This mod allows you to adjust FOV and distortion effects through accessibility settings.
 <:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
         return await ctx.respond(text)
+
+    @commands.slash_command(name="seedwave", description="Gives the current Seedwave level.")
+    async def seedwave(self, ctx: discord.ApplicationContext):
+        url = "https://seedwave.vercel.app/api/seedwave"
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            data = json.loads(response.text)
+            text = f"{data['seedwave']}"
+        except Exception as e:
+            error = "".join(traceback.format_exception(e))
+            text = f"```\n{error}\n```\n<@695658634436411404> :bug:"
+        return await ctx.respond(text.strip())
     
     @commands.slash_command(name="help", description="Gives a guide to using the bot.")
     async def help(self, ctx: discord.ApplicationContext):
