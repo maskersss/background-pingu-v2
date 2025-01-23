@@ -586,22 +586,6 @@ class IssueChecker:
                 else:
                     builder.note("mac_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
-
-        if (not found_crash_cause
-            and (self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1")) # so it works on snapshots too
-            and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:")
-        ):
-            if self.log.launcher == Launcher.MULTIMC:
-                builder.error("update_mmc")
-                found_crash_cause = True
-            elif self.log.launcher is None:
-                builder.error("update_mmc", experimental=True)
-        
-        if not found_crash_cause and self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
-            builder.error("try_changing_lwjgl_version", self.log.edit_instance)
-        
-        if not found_crash_cause and not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
-            builder.error("silent_mode", self.log.edit_instance, experimental=True)
         
         if not found_crash_cause and any(self.log.has_content(new_java_old_fabric) for new_java_old_fabric in [
             "java.lang.IllegalArgumentException: Unsupported class file major version ",
@@ -898,6 +882,22 @@ class IssueChecker:
                     self.log.launcher.value if self.log.launcher is not None else "your launcher",
                     " > Tweaks" if self.log.is_prism else ""
                 )
+
+        if (not found_crash_cause
+            and (self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1")) # so it works on snapshots too
+            and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:")
+        ):
+            if self.log.launcher == Launcher.MULTIMC:
+                builder.error("update_mmc")
+                found_crash_cause = True
+            elif self.log.launcher is None:
+                builder.error("update_mmc", experimental=True)
+        
+        if not found_crash_cause and self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
+            builder.error("try_changing_lwjgl_version", self.log.edit_instance)
+        
+        if not found_crash_cause and not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
+            builder.error("silent_mode", self.log.edit_instance, experimental=True)
 
         if not found_crash_cause:
             match = re.findall(r"requires (.*?) of (\w+),", self.log._lower_content)
