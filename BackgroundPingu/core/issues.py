@@ -1185,7 +1185,6 @@ class IssueChecker:
             for incompatible_mod in [
                 "pogloot",
                 "mcsrranked",
-                "beachfilter",
                 "worldpreview-1.16.1-rev.988b7ab-dirty",
                 "autoresetter-0.0.3",
             ]:
@@ -1226,7 +1225,7 @@ class IssueChecker:
                 f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
             ).add(self.log.java_update_guide)
             if self.log.is_multimc_or_fork: builder.add("read_pls")
-            found_crash_cause = True
+            if self.log.minecraft_version == "1.16.1": found_crash_cause = True
         
         if self.log.has_mod("beachfilter"):
             builder.error("beachfilter_unsupported")
@@ -1259,7 +1258,7 @@ class IssueChecker:
             if not found_crash_cause and self.log.has_content("Mapping source name conflicts detected:"): found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed"):
-            builder.error("delete_dot_fabric")
+            builder.error("delete_dot_fabric", experimental=True)
         
         if not found_crash_cause:
             pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip END header not found"
@@ -1403,9 +1402,7 @@ class IssueChecker:
             builder.add("eav_crash_disclaimer")
             found_crash_cause = True
 
-        if (not found_crash_cause
-            and self.log.stacktrace is None
-        ):
+        if not found_crash_cause and self.log.stacktrace is None:
             if self.log.exitcode == -1073741819:
                 builder.error("exitcode", "-1073741819", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
@@ -1455,9 +1452,9 @@ class IssueChecker:
         if not found_crash_cause and is_mcsr_log:
             for server_id, bot_cid, support_cid in [
                 # (server_id, bot_cmds_channel_id, support_channel_id)
-                (83066801105145856, 433058639956410383, 727673359860760627), # javacord
+                (83066801105145856, 433058639956410383, 727673359860760627),     # javacord
                 (1056779246728658984, 1074343944822992966, 1074385256070791269), # rankedcord
-                (1262887973154848828, 1271835972912545904, 1262901524619595887), # sqcord
+                (1262887973154848828, 1271835972912545904, 1262901524619595887), # seedqueuecord
             ]:
                 if self.server_id == server_id and self.channel_id == bot_cid:
                     builder.info("ask_in_support_channel", server_id, support_cid)
