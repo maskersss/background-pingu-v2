@@ -755,7 +755,8 @@ class IssueChecker:
             found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("Tried to play a broken sound file from a SeedQueue customization pack"):
-            builder.error("sq_empty_sound_file")
+            if self.server_id == 1262887973154848828: builder.error("sq_empty_sound_file")
+            else: builder.error("sq_empty_sound_file_invite")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("Z garbage collector is not supported by Graal"):
