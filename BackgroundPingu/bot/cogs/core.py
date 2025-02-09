@@ -28,6 +28,13 @@ class Core(Cog):
         return logs
     
     async def check_log(self, msg: discord.Message, include_content=False):
+        if not include_content and msg.channel.id in [
+            727673359860760627,    # javacord #public-help
+            1074385256070791269,   # rankedcord #tech-help
+            1262901524619595887,   # seedqueuecord #questions
+        ]:
+            include_content = True
+
         found_result = False
         result = {
             "text": None,
