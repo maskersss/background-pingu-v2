@@ -1570,11 +1570,7 @@ class IssueChecker:
                         total += value
                 if total >= 2: builder.error("entity_culling")
             
-            if not found_crash_cause and any(self.log.has_content(crash) for crash in [
-                "Process exited with code ",
-                "Process crashed with exitcode ",
-                "Process crashed with exit code ",
-            ]):
+            if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
                 builder.error("send_full_log", self.log.edit_instance)
             
             pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
