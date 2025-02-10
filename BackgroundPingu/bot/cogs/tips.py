@@ -197,6 +197,11 @@ For other other categories/versions, follow [this video](<https://youtu.be/VL8Sy
         
         return await ctx.respond(text)
 
+    @commands.slash_command(name="sodium", description="Explains that the Sodium settings GUI is no longer a thing.")
+    async def sodium(self, ctx: discord.ApplicationContext):
+        text = """"Video settings" uses **vanilla UI** if you access it from the options menu. You can access all Sodium settings from Options > Book and Quill > Sodium. __You can't get the Sodium UI anymore. This is intended.__"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
     async def mac(self, ctx: discord.ApplicationContext):
         text = """[**Mac speedrunning discord**](https://discord.gg/sczfsdE39W)
