@@ -32,6 +32,7 @@ class Core(Cog):
             727673359860760627,    # javacord #public-help
             1074385256070791269,   # rankedcord #tech-help
             1262901524619595887,   # seedqueuecord #questions
+            1071138999604891729,   # for testing
         ]:
             include_content = True
 

@@ -1563,6 +1563,7 @@ class IssueChecker:
                     "F3": 1,
                     r"\be\b": 1,
                     "counter": 1,
+                    "entity culling": -100,
                 }
                 total = 0
                 for pattern, value in entity_culling_indicators.items():
