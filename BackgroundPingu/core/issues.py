@@ -153,6 +153,7 @@ class IssueChecker:
             "mcsrranked",
             "speedrunapi",
             "seedqueue",
+            "glacier",
         ]
         self.general_mods = [
             "atum",
