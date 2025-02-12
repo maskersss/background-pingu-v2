@@ -1099,7 +1099,6 @@ class IssueChecker:
             if len(ranked_anticheat_split) > 1:
                 ranked_anticheat, ranked_anticheat_split = ranked_anticheat_split[0], ranked_anticheat_split[1].split("\n")
                 for mod in ranked_anticheat_split:
-                    if "seedqueue" in mod.lower(): continue
                     match = re.search(r"\[(.*?)\]", mod)
                     if match:
                         ranked_rong_versions.append(match.group(1))
@@ -1185,7 +1184,6 @@ class IssueChecker:
         if self.log.is_seedqueue_log:
             for incompatible_mod in [
                 "pogloot",
-                "mcsrranked",
                 "worldpreview-1.16.1-rev.988b7ab-dirty",
                 "autoresetter-0.0.3",
             ]:
