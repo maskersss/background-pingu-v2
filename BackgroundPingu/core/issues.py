@@ -1608,7 +1608,7 @@ class IssueChecker:
                 "control": 10,
                 "keybind": 10,
                 "sens": 2,
-                # r"standard? setting": -100,
+                r"standard ?setting": -100,
             }
             settings_total = 0
             for pattern, value in settings_indicators.items():
