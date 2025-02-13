@@ -525,7 +525,7 @@ class IssueChecker:
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
             else: # java isn't selected in instance settings
                 builder.error("no_java").add(self.log.java_update_guide)
-                if self.log.is_multimc_or_fork: builder.add("read_pls")
+                if self.log.is_prism: builder.add("read_pls")
                 else: builder.add("java_override_warning")
             found_crash_cause = True
         
