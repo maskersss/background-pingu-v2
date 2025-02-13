@@ -1559,7 +1559,7 @@ class IssueChecker:
                     builder.error("mods_crash_disable", "`; `".join(wrong_mods))
         
         
-        if self.link == "message":
+        if not found_crash_cause and self.link == "message":
             if self.log.has_pattern(r"-\s*1"):
                 entity_culling_indicators = {
                     "entit": 2,
