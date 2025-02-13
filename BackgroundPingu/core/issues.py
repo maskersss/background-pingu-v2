@@ -242,6 +242,7 @@ class IssueChecker:
             footer += " latest.log"
             if self.log.stacktrace or self.log.exitcode: footer += " crash"
         elif self.log.stacktrace or self.log.exitcode: footer += " crash"
+        elif footer == "" and self.link == "message": footer += " message"
         else: footer += " log"
         
         builder.set_footer(footer.strip())
