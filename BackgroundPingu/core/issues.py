@@ -1438,6 +1438,7 @@ class IssueChecker:
             and self.log.is_multimc_or_fork
             and not self.log.type in [LogType.FULL_LOG, LogType.THREAD_DUMP, LogType.LAUNCHER_LOG]
             and not self.log.launcher is None
+            and not self.link == "message"
         ):
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
@@ -1449,7 +1450,7 @@ class IssueChecker:
         ):
             builder.info("upload_log_attachment")
         
-        if not found_crash_cause and is_mcsr_log:
+        if not found_crash_cause and is_mcsr_log and not self.link == "message":
             for server_id, bot_cid, support_cid in [
                 # (server_id, bot_cmds_channel_id, support_channel_id)
                 (83066801105145856, 433058639956410383, 727673359860760627),     # javacord
@@ -1570,6 +1571,49 @@ class IssueChecker:
                     if self.log.has_pattern(pattern):
                         total += value
                 if total >= 2: builder.error("entity_culling")
+            
+            asking_for_help_indicators = {
+                "why": 10,
+                "how": 10,
+                "help": 10,
+                "anyone": 2,
+            }
+            asking_for_help_total = 0
+            for pattern, value in asking_for_help_indicators.items():
+                if self.log.has_pattern(pattern):
+                    asking_for_help_total += value
+            
+            new_world_indicators = {
+                "new world": 10,
+                "new seed": 10,
+                r"gold.*boots": 10,
+                "start": 1,
+                "spawn": 1,
+                "seed": 1,
+                "new": 1,
+                "world": 1,
+                "reset": 1,
+            }
+            new_world_total = 0
+            for pattern, value in new_world_indicators.items():
+                if self.log.has_pattern(pattern):
+                    new_world_total += value
+            
+            settings_indicators = {
+                "setting": 10,
+                "option": 10,
+                "control": 10,
+                "keybind": 10,
+                "sens": 2,
+                # r"standard? setting": -100,
+            }
+            settings_total = 0
+            for pattern, value in settings_indicators.items():
+                if self.log.has_pattern(pattern):
+                    settings_total += value
+            
+            if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
+                builder.error("settings_reset")
             
             if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
                 builder.error("send_full_log", self.log.edit_instance)
