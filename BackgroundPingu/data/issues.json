@@ -177,6 +177,7 @@
     "note.program_files": "Your game files are in `Program Files`. It is generally not recommended, and could cause some issues. Consider moving it to a different location.",
     "note.semi_old_mmc_version": "You're using an outdated `MultiMC` version. To update, simply press the `Update` button in `MultiMC`.",
     "note.semi_old_prism_version": "You're using an outdated `PrismLauncher` version. To update, simply press the `Update` button in `Prism`.",
+    "note.sq_debug_menu_illegal": "You have `Show Debug Menu` enabled in `SeedQueue` settings, which is illegal for speedrun.com.",
     "note.starlight_better": "You're using `Phosphor`. `Starlight` is much better than `Phosphor`, you should use it instead.",
     "note.too_little_ram": "You may have too little RAM allocated.",
     "note.too_little_ram_crash": "This crash may be caused by not having enough RAM allocated.",

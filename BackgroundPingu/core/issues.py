@@ -1192,6 +1192,8 @@ class IssueChecker:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "SeedQueue", incompatible_mod)
                     found_crash_cause = True
+            if self.log.has_content("\"showDebugMenu\":true"):
+                builder.note("sq_debug_menu_illegal")
         
         if self.log.has_mod("pogloot") and self.log.has_mod("worldpreview-6"):
             builder.error("incompatible_mod", "PogLoot", "WorldPreview")
