@@ -684,7 +684,7 @@ class Log:
         for crash_pattern in crash_patterns:
             match = re.search(crash_pattern, log, re.DOTALL)
             if not match is None:
-                return match.group().lower().replace("fast_reset", "fastreset")
+                return match.group().lower().replace("fast_reset", "fastreset").replace("knot//", "")
         
         return None
     
