@@ -1121,6 +1121,7 @@ class IssueChecker:
                     match = re.search(r"\[(.*?)\]", mod)
                     if match:
                         match = match.group(1)
+                        if "extra-options" in match: continue
                         ranked_rong_mods.append("Fabric API" if match == "fabric" else match)
 
             if len(ranked_rong_versions) > 5:
@@ -1147,6 +1148,9 @@ class IssueChecker:
             if len(ranked_rong_files + ranked_rong_mods + ranked_rong_versions) > 0:
                 builder.add("ranked_mods_disclaimer")
         
+            if self.log.is_ranked_log and self.log.has_mod("extra-options"):
+                builder.error("ranked_extraoptions")
+
         if self.log.has_mod("optifine"):
             for incompatible_mod in ["Starlight"]:
                 if self.log.has_mod(incompatible_mod):
@@ -1561,75 +1565,81 @@ class IssueChecker:
         
         
         if not found_crash_cause and self.link == "message":
-            if self.log.has_pattern(r"-\s*1"):
-                entity_culling_indicators = {
-                    "entit": 2,
-                    "F3": 1,
-                    r"\be\b": 1,
-                    "counter": 1,
-                    "entity culling": -100,
-                    "[#]": -100,
+            try:
+                if self.log.has_pattern(r"-\s*1"):
+                    entity_culling_indicators = {
+                        "entit": 2,
+                        "F3": 1,
+                        r"\be\b": 1,
+                        "counter": 1,
+                        "entity culling": -100,
+                        "[#]": -100,
+                    }
+                    total = 0
+                    for pattern, value in entity_culling_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            total += value
+                    if total >= 2: builder.error("entity_culling")
+                
+                asking_for_help_indicators = {
+                    "why": 10,
+                    "how": 10,
+                    "help": 10,
+                    "anyone": 2,
+                    "please": 2,
+                    r"\?": 2,
+                    "is there": 2,
                 }
-                total = 0
-                for pattern, value in entity_culling_indicators.items():
+                asking_for_help_total = 0
+                for pattern, value in asking_for_help_indicators.items():
                     if self.log.has_pattern(pattern):
-                        total += value
-                if total >= 2: builder.error("entity_culling")
-            
-            asking_for_help_indicators = {
-                "why": 10,
-                "how": 10,
-                "help": 10,
-                "anyone": 2,
-            }
-            asking_for_help_total = 0
-            for pattern, value in asking_for_help_indicators.items():
-                if self.log.has_pattern(pattern):
-                    asking_for_help_total += value
-            
-            new_world_indicators = {
-                "new world": 10,
-                "new seed": 10,
-                r"gold.*boots": 10,
-                "start": 1,
-                "spawn": 1,
-                "seed": 1,
-                "new": 1,
-                "world": 1,
-                "reset": 1,
-            }
-            new_world_total = 0
-            for pattern, value in new_world_indicators.items():
-                if self.log.has_pattern(pattern):
-                    new_world_total += value
-            
-            settings_indicators = {
-                "setting": 10,
-                "option": 10,
-                "control": 10,
-                "keybind": 10,
-                "sens": 2,
-                r"standard ?setting": -100,
-                "we're assuming": -100,
-            }
-            settings_total = 0
-            for pattern, value in settings_indicators.items():
-                if self.log.has_pattern(pattern):
-                    settings_total += value
-            
-            if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
-                builder.error("settings_reset")
-            
-            if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
-                builder.error("send_full_log", self.log.edit_instance)
-            
-            pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
-            for match in re.findall(pattern, self.log._content):
-                if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
-                builder.note("fandom_wiki", match)
+                        asking_for_help_total += value
+                
+                new_world_indicators = {
+                    "new world": 10,
+                    "new seed": 10,
+                    r"gold.*boots": 10,
+                    "start": 1,
+                    "spawn": 1,
+                    "seed": 1,
+                    "new": 1,
+                    "world": 1,
+                    "reset": 1,
+                }
+                new_world_total = 0
+                for pattern, value in new_world_indicators.items():
+                    if self.log.has_pattern(pattern):
+                        new_world_total += value
+                
+                settings_indicators = {
+                    "setting": 10,
+                    "option": 10,
+                    "control": 10,
+                    "keybind": 10,
+                    "sens": 2,
+                    r"standard ?setting": -100,
+                    "we're assuming": -100,
+                }
+                settings_total = 0
+                for pattern, value in settings_indicators.items():
+                    if self.log.has_pattern(pattern):
+                        settings_total += value
+                
+                if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
+                    builder.error("settings_reset")
+                
+                if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
+                    builder.error("send_full_log", self.log.edit_instance)
+                
+                pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
+                for match in re.findall(pattern, self.log._content):
+                    if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
+                    builder.note("fandom_wiki", match)
 
-            if self.log.has_content("water") and self.log.has_content("invisible"):
-                builder.error("chunk_multidraw", experimental=True)
+                if self.log.has_content("water") and self.log.has_content("invisible"):
+                    builder.error("chunk_multidraw", experimental=True)
+            
+            except: pass
         
         return builder
 
