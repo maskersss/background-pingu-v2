@@ -1581,52 +1581,53 @@ class IssueChecker:
                             total += value
                     if total >= 2: builder.error("entity_culling")
                 
-                asking_for_help_indicators = {
-                    "why": 10,
-                    "how": 10,
-                    "help": 10,
-                    "anyone": 2,
-                    "please": 2,
-                    r"\?": 2,
-                    "is there": 2,
-                }
-                asking_for_help_total = 0
-                for pattern, value in asking_for_help_indicators.items():
-                    if self.log.has_pattern(pattern):
-                        asking_for_help_total += value
-                
-                new_world_indicators = {
-                    "new world": 10,
-                    "new seed": 10,
-                    r"gold.*boots": 10,
-                    "start": 1,
-                    "spawn": 1,
-                    "seed": 1,
-                    "new": 1,
-                    "world": 1,
-                    "reset": 1,
-                }
-                new_world_total = 0
-                for pattern, value in new_world_indicators.items():
-                    if self.log.has_pattern(pattern):
-                        new_world_total += value
-                
-                settings_indicators = {
-                    "setting": 10,
-                    "option": 10,
-                    "control": 10,
-                    "keybind": 10,
-                    "sens": 2,
-                    r"standard ?setting": -100,
-                    "we're assuming": -100,
-                }
-                settings_total = 0
-                for pattern, value in settings_indicators.items():
-                    if self.log.has_pattern(pattern):
-                        settings_total += value
-                
-                if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
-                    builder.error("settings_reset")
+                if len(self.log._content) < 150:
+                    asking_for_help_indicators = {
+                        "why": 10,
+                        "how": 10,
+                        "help": 10,
+                        "anyone": 2,
+                        "please": 2,
+                        r"\?": 2,
+                        "is there": 2,
+                    }
+                    asking_for_help_total = 0
+                    for pattern, value in asking_for_help_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            asking_for_help_total += value
+                    
+                    new_world_indicators = {
+                        "new world": 10,
+                        "new seed": 10,
+                        r"gold.*boots": 10,
+                        "start": 1,
+                        "spawn": 1,
+                        "seed": 1,
+                        "new": 1,
+                        "world": 1,
+                        "reset": 1,
+                    }
+                    new_world_total = 0
+                    for pattern, value in new_world_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            new_world_total += value
+                    
+                    settings_indicators = {
+                        "setting": 10,
+                        "option": 10,
+                        "control": 10,
+                        "keybind": 10,
+                        "sens": 2,
+                        r"standard ?setting": -100,
+                        "we're assuming": -100,
+                    }
+                    settings_total = 0
+                    for pattern, value in settings_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            settings_total += value
+                    
+                    if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
+                        builder.error("settings_reset")
                 
                 if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
                     builder.error("send_full_log", self.log.edit_instance)
