@@ -200,7 +200,7 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         if os == "macOS": text = "https://www.youtube.com/watch?v=GomIeW5xdBM"
         elif os == "Linux": text = "https://sathya-pramodh.github.io/linux-mcsr/"
         else: text = """1.16.1 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
-For other other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
+For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)
 
