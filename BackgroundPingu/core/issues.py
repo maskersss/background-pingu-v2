@@ -968,8 +968,11 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and any(self.log.has_content_in_stacktrace(f"at net.minecraft.class_{i}") for i in ["507", "513"]):
-            builder.error("recipe_book_crash", experimental=True)
-            # found_crash_cause = True
+            if self.log.minecraft_version == "1.16.1":
+                builder.error("recipe_book_crash")
+                found_crash_cause = True
+            else:
+                builder.error("recipe_book_crash", experimental=True)
         
         if not found_crash_cause and is_mcsr_log and any(self.log.has_content_in_stacktrace(snowman_crash) for snowman_crash in [
             "Cannot invoke \"net.minecraft.class_1657.method_7325()\"",
