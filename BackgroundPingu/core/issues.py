@@ -555,7 +555,7 @@ class IssueChecker:
                 builder.error("m1_multimc_hack").add("mac_setup_guide")
         
         elif not found_crash_cause and any(self.log.has_pattern(using_32_bit_java) for using_32_bit_java in [
-            r"You might want to install a 64bit Java version",
+            r"is not matching your system architecture. You might want to ",
             r", using 32 \((.+)\) architecture, from"
         ]):
             if self.log.operating_system == OperatingSystem.MACOS and not self.log.is_prism:
@@ -576,6 +576,7 @@ class IssueChecker:
         if (self.log.operating_system == OperatingSystem.MACOS
             and not self.log.is_intel_mac
             and not self.log.has_content("32-bit architecture")
+            and not self.log.has_content("aarch64")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 if self.log.is_arm_mac:
