@@ -1671,7 +1671,9 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
-                if not self.log.has_mod("seedqueue"):
+                if self.log.is_ranked_log:
+                    output = "You sent a MCSR Ranked log. This command is for recommending settings for SeedQueue, not for Ranked (which is an illegal mod for regular runs)."
+                elif not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
