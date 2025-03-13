@@ -327,7 +327,7 @@ Don't forget to check the FAQ in the readme!
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
     async def allowedmods(self, ctx: discord.ApplicationContext):
-        text = """If you use Optifine (allowed only in pre-1.15), please read the [detailed mod rules](<http://bombch.us/DOOK>).
+        text = """If you use Optifine (allowed only before 1.15), please read section A.8 of the [detailed rules](<https://www.minecraftspeedrunning.com/public-resources/rules>).
 All allowed mods can be downloaded from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.png)"""
         return await ctx.respond(text)
