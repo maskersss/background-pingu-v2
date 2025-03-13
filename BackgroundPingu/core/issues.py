@@ -771,6 +771,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if (self.log.is_seedqueue_log
+            and not self.log.is_ranked_log
             and not self.log.java_arguments is None
             and (self.log.pc_ram is None or self.log.pc_ram > 5000)
         ):
