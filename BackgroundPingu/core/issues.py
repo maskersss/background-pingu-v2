@@ -782,9 +782,11 @@ class IssueChecker:
             else:
                 if (not self.log.major_java_version is None
                     and self.log.major_java_version >= 23
-                    and not self.log.has_java_argument("-XX:-ZGenerational")          
+                    and (self.log.major_java_version >= 24
+                         or not self.log.has_java_argument("-XX:-ZGenerational")
+                    )
                 ):
-                    builder.note("use_anti_zgenerational")
+                    builder.note("dont_use_java_23_plus")
                     temp = True
                 if self.log.has_java_argument("-XX:+ZGenerational"):
                     builder.note("use_zgenerational_is_bad")
@@ -1734,7 +1736,7 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
             notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
         else:
             java_args += " -XX:+UseZGC"
-            if not self.log.major_java_version is None and self.log.major_java_version >= 23:
+            if not self.log.major_java_version is None and self.log.major_java_version == 23:
                 java_args += " -XX:-ZGenerational"
         
         java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
@@ -1743,6 +1745,8 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         
         if not self.log.major_java_version is None and self.log.major_java_version < 17:
             notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+        elif not self.log.major_java_version is None and self.log.major_java_version >= 24:
+            notes.append(f"You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
         elif self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, though not necessary. See [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
 
