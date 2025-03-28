@@ -211,12 +211,12 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
 
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
     async def mac(self, ctx: discord.ApplicationContext):
-        text = """[**Mac speedrunning discord**](https://discord.gg/sczfsdE39W)
+        text = """Mac speedrunning discord: <https://discord.gg/sczfsdE39W>
 
 Mac eye measuring tutorial: https://discord.com/channels/83066801105145856/405839885509984256/1173097881985617920
-To run several instances, use [**SeedQueue**](<https://youtu.be/mOkLwOWgE7w>).
+To run several instances, use **SeedQueue** (`/seedqueue`).
 
-Speedrunning on Mac setup tutorial: https://www.youtube.com/watch?v=GomIeW5xdBM"""
+Speedrunning on Mac setup tutorial: <https://www.youtube.com/watch?v=GomIeW5xdBM>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="1_16_1", description="Explains why using 1.16.1 is standard for Minecraft speedrunning.")
