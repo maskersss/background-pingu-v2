@@ -135,6 +135,11 @@ The most important things to learn when starting out are bastion routes and one-
 In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>), but since it covers a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="tutorials", description="Gives a link to Osh's speedrunning tutorials playlist.")
+    async def tutorials(self, ctx: discord.ApplicationContext):
+        text = """https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="jarfix", description="Gives a link to Jarfix.")
     async def jarfix(self, ctx: discord.ApplicationContext):
         text = "Jarfix fixes the jar file association on Windows: https://johann.loefflmann.net/en/software/jarfix/index.html"
