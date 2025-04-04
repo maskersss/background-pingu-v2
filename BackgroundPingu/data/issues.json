@@ -116,7 +116,7 @@
     "error.online_launch_required": "Either launch your instance **not** in `offline mode` or do `Edit{} > Version > Download All` so that your launcher can download assets.",
     "error.openal_crash": "This seems to be a crash caused by `OpenAL`. See [**here**](https://www.reddit.com/r/linux_gaming/comments/18qjnwk/minecraft_crashing_from_openal/) for more details.",
     "error.out_of_disk_space": "It looks like you ran out of disk space. If that's the case, you should free up some space on it.",
-    "error.out_of_memory_pc": "It looks like you ran out of memory on your PC. If that's the case, you can try rebooting your PC, closing all other applications, and allocating less RAM. You should also enable paging if it's disabled.",
+    "error.out_of_memory_pc": "It looks like you ran out of memory on your PC. If that's the case, you can try rebooting your PC, closing all other applications, and allocating less RAM.",
     "error.outdated_nvidia_flatpack_driver": "Update the Nvidia driver for flatpak by running `flatpak update`. If the issue persists, wait for the driver to be added to Flathub and try again.",
     "error.ranked_extraoptions": "`ExtraOptions` is already bundled with `Ranked`, and is therefore not allowed as a separate mod. You should remove `ExtraOptions` from your mods folder.",
     "error.ranked_fabric_0_15_x": "You seem to be using a version of `MCSR Ranked` that is incompatible with `Fabric Loader 0.15+`. Update `MCSR Ranked`.",
