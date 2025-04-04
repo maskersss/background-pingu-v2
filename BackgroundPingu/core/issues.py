@@ -1644,7 +1644,10 @@ class IssueChecker:
                     if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
                     builder.note("fandom_wiki", match)
 
-                if self.log.has_content("water") and self.log.has_content("invisible"):
+                if (self.log.has_content("water")
+                    and self.log.has_content("invisible")
+                    and not self.log.has_content("multidraw")
+                ):
                     builder.error("chunk_multidraw", experimental=True)
             
             except: pass
