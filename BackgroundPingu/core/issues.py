@@ -1736,7 +1736,7 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         java_args = ""
         
         if free_ram < 1800:
-            notes.append("You have very little RAM available on your PC. At least, try closing as many programs as possible.")
+            notes.append(":warning: You have very little RAM available on your PC. At least, try closing as many programs as possible.")
         else:
             java_args += " -XX:+UseZGC"
             if not self.log.major_java_version is None and self.log.major_java_version == 23:
@@ -1749,7 +1749,7 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         if not self.log.major_java_version is None and self.log.major_java_version < 17:
             notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
         elif not self.log.major_java_version is None and self.log.major_java_version >= 24:
-            notes.append(f"You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
         elif self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, though not necessary. See [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
 
@@ -1762,7 +1762,7 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
                     if latest_version is None: continue
                     missing_mods.append(recommended_mod)
         if len(missing_mods) > 0:
-            notes.append(f"You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
+            notes.append(f":warning: You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
 
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
