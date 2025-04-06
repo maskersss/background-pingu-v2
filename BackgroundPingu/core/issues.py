@@ -830,7 +830,7 @@ class IssueChecker:
             and not is_mcsr_log
             and self.log.has_content("ClassLoaders$AppClassLoader cannot be cast to class java.net.URLClassLoader")
         ):
-            builder.error("forge_too_new_java")
+            builder.error("forge_too_new_java").add(self.log.java_update_guide)
             found_crash_cause = True
         
         if (not found_crash_cause
