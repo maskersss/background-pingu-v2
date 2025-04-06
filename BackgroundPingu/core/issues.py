@@ -63,7 +63,7 @@ class IssueBuilder:
         text = self.bot.strings.get(f"add.{key}", key).format(*args)
         if bold: text = f"**{text}**"
         if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to(self._last_added, "<:reply:1121924702756143234>*" + text + "*", add=True)
+        return self._add_to(self._last_added, "<:reply:1122083632727724083>*" + text + "*", add=True)
 
     def has(self, type: str, key: str) -> bool:
         key = self.bot.strings.get(f"{type}.{key}", key).replace("*", "")
@@ -946,6 +946,13 @@ class IssueChecker:
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("me.voidxwalker.options.extra.ExtraOptions.lambda$load"):
             builder.error("corrupted_mod_config", "extra-options")
+            found_crash_cause = True
+        
+        if not found_crash_cause and any(self.log.has_content(corrupted_instance) for corrupted_instance in [
+            "mmc-pack.json is probably corrupted",   # multimc
+            "Null jar is specified in the metadata", # prism
+        ]):
+            builder.error("corrupted_instance")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("Tried to stop SeedQueue off-thread!"):
