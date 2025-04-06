@@ -33,6 +33,7 @@ class Core(Cog):
             1074385256070791269,   # rankedcord #tech-help
             1262901524619595887,   # seedqueuecord #questions
             1062467804877561878,   # jinglecord #help-and-support
+            933914673437368380,    # fsgcord #help
             1071138999604891729,   # for testing
         ]:
             include_content = True
