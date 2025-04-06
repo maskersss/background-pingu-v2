@@ -1744,18 +1744,22 @@ _Note: Simply changing the link’s domain won’t work – you need to re-uploa
         
         if free_ram < 1800:
             notes.append(":warning: You have very little RAM available on your PC. At least, try closing as many programs as possible.")
+            using_zgc = False
         else:
             java_args += " -XX:+UseZGC"
             if not self.log.major_java_version is None and self.log.major_java_version == 23:
                 java_args += " -XX:-ZGenerational"
+            using_zgc = True
         
         java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         
         java_args = java_args.strip()
         
-        if not self.log.major_java_version is None and self.log.major_java_version < 17:
+        if using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17:
             notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
-        elif not self.log.major_java_version is None and self.log.major_java_version >= 24:
+        elif (using_zgc and not self.log.major_java_version is None and self.log.major_java_version >= 24
+            or not using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17
+        ):
             notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
         elif self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, though not necessary. See [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
