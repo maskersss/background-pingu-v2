@@ -950,7 +950,8 @@ class IssueChecker:
         
         if not found_crash_cause and any(self.log.has_content(corrupted_instance) for corrupted_instance in [
             "mmc-pack.json is probably corrupted",   # multimc
-            "Null jar is specified in the metadata", # prism
+            "Null jar is specified in the metadata", # prism 9.2-
+            "mmc-pack.json as json: illegal value",  # prism 9.3+
         ]):
             builder.error("corrupted_instance")
             found_crash_cause = True
