@@ -446,10 +446,11 @@ Requires [Eye Zoom Macro](https://discord.com/channels/83066801105145856/4058398
 
     @commands.slash_command(name="eyezoom", description="Gives a link to a tutorial for Eye Zoom Macro.")
     async def eyezoom(self, ctx: discord.ApplicationContext):
-        text = """Tutorial for Eye Zoom Macro (also called Tall Macro): <https://youtu.be/HfQKsRd0fl8> 
-Link to macro: https://discord.com/channels/83066801105145856/405839885509984256/1143858381266894918 
-Get AHK **version 1.1** here if you don't have it yet: <https://www.autohotkey.com/> 
-### The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)"""
+        text = """Link to Jingle (Download the .jar file): ⁠<https://github.com/DuncanRuns/Jingle/releases>
+Open Jingle and add a hotkey for **Eye Measuring** under the **Hotkeys** tab.
+
+**Eye Line-up:**
+The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1325558188044587038/image.png)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="ram", description="Gives a guide to change the amount of allocated RAM.")
