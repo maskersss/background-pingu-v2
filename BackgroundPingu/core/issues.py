@@ -1366,7 +1366,13 @@ class IssueChecker:
                 builder.note("program_files")
             if "Rar$" in self.log.minecraft_folder:
                 builder.error("need_to_extract_from_zip", self.log.launcher.value if not self.log.launcher is None else "the launcher")
-        
+            
+            if (self.log.operating_system == OperatingSystem.WINDOWS
+                and len(self.log.minecraft_folder) > 0
+                and self.log.minecraft_folder[0].lower() != "c"
+            ):
+                builder.note("dont_hdd", self.log.minecraft_folder[0])
+
         if (self.log.type in [None, LogType.LATEST_LOG, LogType.FULL_LOG]
             and not found_crash_cause
             and (self.log.stacktrace or self.log.exitcode)

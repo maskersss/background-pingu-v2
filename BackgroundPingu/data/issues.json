@@ -164,6 +164,7 @@
     "info.upload_log_attachment": "You sent your log as a file. Please press the `Re-Upload Log` button so the log will be re-uploaded to mclo.gs so people can see it without having to download it.",
     "note.amount_illegal_mods": "You are using `{}` illegal mod{}!",
     "note.atlauncher_illegal": "You are using `ATLauncher`, which is illegal for speedrun.com. Only the official launcher, `MultiMC` and `Prism Launcher` are allowed.",
+    "note.dont_hdd": "Your launcher folder is located on the `{}:/` drive, which is often an HDD. If so, consider moving it to `C:/` for better performance.",
     "note.dont_use_java_23_plus": "You're using `Java 23+`, which has been found to reduce performance. You should use `Java 17-22` instead.",
     "note.duplicate_mods": "You have several versions of `{}` installed. You should delete the older ones.",
     "note.fandom_wiki": "The Minecraft Wiki [**has recently moved**](https://minecraft.wiki/w/Minecraft_Wiki:Moving_from_Fandom) from `Fandom` to `minecraft.wiki`. Please use this link instead: **https://minecraft.wiki/w/{}**.",
