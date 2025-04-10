@@ -99,8 +99,7 @@ If you want to unlink OneDrive, follow [this link](<https://support.microsoft.co
 
     @commands.slash_command(name="rankedfaq", description="Sends a link to the MCSR Ranked Tech Support FAQ document.")
     async def rankedfaq(self, ctx: discord.ApplicationContext):
-        text = """You can find MCSR Ranked Tech Support FAQ document here: https://bit.ly/rankedfaq.
-*Note that it may contain outdated information.*"""
+        text = """You can find MCSR Ranked Tech Support FAQ document here: <https://wiki.mcsrranked.com/install/faq>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="ahk", description="Gives a guide to rebind keys using AutoHotkey.")
