@@ -697,7 +697,7 @@ class Log:
             except ValueError: pass
         
         for exit_code in [-1073741819, -1073740791, -805306369, -1073740771]:
-            if self.has_content(f" {exit_code}"): return exit_code
+            if self.has_content(f"{exit_code}"): return exit_code
 
         return None
 
