@@ -1602,7 +1602,7 @@ class IssueChecker:
                             total += value
                     if total >= 2: builder.error("entity_culling")
                 
-                if len(self.log._content) < 150:
+                if len(self.log._content) < 110:
                     asking_for_help_indicators = {
                         "why": 10,
                         "how": 10,
