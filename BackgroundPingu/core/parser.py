@@ -780,8 +780,9 @@ class Log:
                 "antiresourcereload",
                 "fast-reset",
                 "atum",
-                "state-output",
             ]
+            if self.operating_system != OperatingSystem.MACOS:
+                mods.append("state-output")
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
                 "fsg",
                 "beachfilter",
