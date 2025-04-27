@@ -317,7 +317,7 @@ All other mods are banned[.](https://i.imgur.com/hGFNA6c.png)"""
 
     @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
     async def areessgee(self, ctx: discord.ApplicationContext):
-        text = """AreEssGee is a configurable artificial seed generator. <https://github.com/faluhub/AreEssGee>
+        text = """AreEssGee is a configurable artificial seed generator mod. <https://github.com/faluhub/AreEssGee>
 Join <https://discord.gg/s9m8gf6pju> if you have any questions about / issues with this mod. 
 You can submit to the [AreEssGee leaderboard](<https://docs.google.com/spreadsheets/d/1n5Z3qsWbQX_uImx-HvzGacRpa6FjT5USRBnDKcsQbQ0/edit#gid=0>) in that server.
 ⚠️ *AreEssGee requires Java 17+. Type `/java` if you need help with updating your Java version.*"""
