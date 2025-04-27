@@ -207,6 +207,10 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)
+    
+    @commands.slash_command(name="linux", description="Gives a link to a Linux tutorial for MCSR.")
+    async def linux(self, ctx: discord.ApplicationContext):
+        return await self.setup(ctx, os="Linux")
 
     @commands.slash_command(name="sodium", description="Explains that the Sodium settings GUI is no longer a thing.")
     async def sodium(self, ctx: discord.ApplicationContext):
