@@ -1656,6 +1656,7 @@ class IssueChecker:
                 pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
                 for match in re.findall(pattern, self.log._content):
                     if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
+                    if "bartering" in match.lower(): continue
                     builder.note("fandom_wiki", match)
 
                 if (self.log.has_content("water")
