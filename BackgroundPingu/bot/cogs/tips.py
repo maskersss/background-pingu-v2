@@ -71,7 +71,7 @@ When you open your Minecraft launcher now it will show Fabric as an option. With
         if launcher == "MultiMC": link = "https://i.imgur.com/MfrJwcM.png"
         elif launcher == "Prism": link = "https://i.imgur.com/wNlSlcn.png"
         else: link = "https://media.discordapp.net/attachments/433058639956410383/1061333462826614844/image.png"
-        text = f"Please follow this image in order to send a log[:]({link})"
+        text = f"Please send a log by following this image[:]({link})"
         return await ctx.respond(text)
 
     @commands.slash_command(name="mmclog", description="Shows how to send a log on MultiMC/Prism Launcher.")
