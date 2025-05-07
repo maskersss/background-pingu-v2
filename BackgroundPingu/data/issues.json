@@ -43,6 +43,7 @@
     "error.32_bit_java_crash": "This crash is caused by using a 32-bit installation of `Java`.",
     "error.arm_java_multimc": "`MultiMC` doesn't support `ARM Java`. You should use [**Prism Launcher**](https://prismlauncher.org/) instead.",
     "error.assets_index_fail": "Try restarting your PC and then launching the instance again.",
+    "error.authlib_injector_crash": "This crash is caused by using a launcher that isn't legal for speedrunning.",
     "error.beachfilter_unsupported": "`BeachFilter Mod` is no longer supported. You should use [**FSG Mod**](https://modrinth.com/mod/fsg-mod) with the beach filter instead.",
     "error.broken_fabric": "You're using a broken version of `Fabric Loader`. You should update it.",
     "error.broken_java": "Your `Java` installation seems to be broken.",
