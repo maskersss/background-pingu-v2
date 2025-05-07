@@ -80,9 +80,9 @@ When you open your Minecraft launcher now it will show Fabric as an option. With
 
     @commands.slash_command(name="borderless", description="Explains how to run Minecraft as a borderless window.")
     async def borderless(self, ctx: discord.ApplicationContext):
-        text = """Application to run Minecraft as a borderless window: <https://github.com/Mr-Technician/BorderlessMinecraft/releases>
-If you use Julti, go to Options -> Window -> Use Borderless
-If you use Jingle, simply click \"Go Borderless\""""
+        text = """If you use [Jingle](<https://github.com/DuncanRuns/Jingle/releases>), simply click \"Go Borderless\".
+If you use Julti, go to Options ⟶ Window ⟶ Use Borderless.
+Otherwise, [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases>)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
