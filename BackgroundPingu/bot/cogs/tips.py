@@ -540,9 +540,14 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
         text = "https://youtu.be/JaVyuTyDxxs"
         return await ctx.respond(text)
 
-    @commands.slash_command(name="portals", description="Gives a link to portals spreadsheet.")
+    @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
     async def portals(self, ctx: discord.ApplicationContext):
         text = "https://bit.ly/portalspreadsheet"
+        return await ctx.respond(text)
+
+    @commands.slash_command(name="portalheight", description="Links the 2nd portal y height distribution graph.")
+    async def portals(self, ctx: discord.ApplicationContext):
+        text = "https://cdn.discordapp.com/attachments/727673359860760627/1110309490324164658/image.png"
         return await ctx.respond(text)
 
     @commands.slash_command(name="preemptive", description="Gives links to preemptive resources.")
