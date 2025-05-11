@@ -190,6 +190,13 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
 Tutorial: https://youtu.be/Gp6EnDs24NI"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="nbbdebug", description="Gives a guide to debugging Ninjabrain Bot.")
+    async def nbbdebug(self, ctx: discord.ApplicationContext):
+        text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
+- Screenshots of Ninjabrain Bot options > Basic, Advanced, Optional features > Angle adjustment & Boat measurement
+- The file located at `.minecraft/config/mcsr/standardsettings.json` if it exists - otherwise, send `.minecraft/options.txt`"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
     async def prism(self, ctx: discord.ApplicationContext):
         text = """Prism Launcher is a more updated fork of MultiMC. You can download it here: https://prismlauncher.org/"""
