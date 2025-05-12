@@ -50,7 +50,7 @@
     "error.broken_loader": "Your modloader doesn't seem to be installed correctly. Try removing and installing it back in `Edit{} > Version`.",
     "error.builtin_lib_crash": "Your instance is using your system's {}, which is causing the crash. Disable it either in {}'s global settings in `Settings > Minecraft{}` or in instance settings in `Settings > Workarounds`.",
     "error.builtin_lib_prob_crash": "Your instance is using your system's {}, which may be causing the crash. Try disabling it either in {}'s global settings in `Settings > Minecraft{}` or in instance settings in `Settings > Workarounds`.",
-    "error.chunk_multidraw": "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Video Settings` from the main screen.",
+    "error.chunk_multidraw": "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Options > Book and Quill > Sodium`.",
     "error.corrupted_file": "The file `{}` seems to be corrupted.",
     "error.corrupted_instance": "Your instance appears to be corrupted. Make a new instance and copy over your data between `.minecraft` folders. To prevent this in the future, ensure your system has sufficient disk space and avoid forcefully shutting down your PC.",
     "error.corrupted_mod_config": "The config file of the mod `{}` seems to be corrupted. Try deleting it from `.minecraft/config`.",
