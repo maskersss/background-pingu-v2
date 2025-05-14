@@ -478,8 +478,7 @@ The right edge of the crosshair should line up with the left edge of the eye's m
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
         text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
-[Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
-[Advanced routes](<https://bit.ly/2ZwM3lI>)"""
+[Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)"""
         return await ctx.respond(text)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
