@@ -571,8 +571,7 @@ class IssueChecker:
             and self.log.major_java_version < 17
         ):
             builder.note("not_using_java_17", self.log.major_java_version).add(self.log.java_update_guide)
-            if self.log.is_multimc_or_fork: builder.add("read_pls")
-
+        
         if (self.log.operating_system == OperatingSystem.MACOS
             and not self.log.is_intel_mac
             and not self.log.has_content("32-bit architecture")
