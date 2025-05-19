@@ -5,7 +5,7 @@
     "add.eav_crash_disclaimer": "Please note that the options listed above are not inherently bad things.",
     "add.eav_crash_drivers": "- Driver issues: update / downgrade graphics drivers.",
     "add.eav_crash_hardware": "- Hardware issues: don't overclock and run a stress test.",
-    "add.eav_crash_idk": "We don't know what causes this crash. Let us know if you figure it out.",
+    "add.eav_crash_kill": "Killing Minecraft when it's frozen.",
     "add.eav_crash_mods": "- Disable all mods to see if one of them is causing the crash.",
     "add.eav_crash_obs": "- Concurrently running programs, such as `OBS` and `Discord`, that use the same graphics card as the game:",
     "add.eav_crash_obs_1": "a) Having `Hardware Acceleration` enabled in `Discord`.",

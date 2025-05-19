@@ -1458,7 +1458,7 @@ class IssueChecker:
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -805306369:
                 builder.error("exitcode", "-805306369", experimental=True)
-                builder.add("eav_crash_idk")
+                builder.add("eav_crash_kill")
 
         if (not found_crash_cause
             and self.log.is_multimc_or_fork
