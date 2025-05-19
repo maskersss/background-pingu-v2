@@ -364,12 +364,6 @@ class IssueChecker:
                     temp,
                 )
         
-        if is_mcsr_log and self.log.launcher == Launcher.MODRINTH:
-            builder.note("modrinth_app_illegal").add(self.log.setup_guide)
-        
-        if is_mcsr_log and self.log.launcher == Launcher.ATLAUNCHER:
-            builder.note("atlauncher_illegal").add(self.log.setup_guide)
-        
         if self.log.launcher == Launcher.TL:
             builder.error("tl_malware").add(self.log.setup_guide)
         
