@@ -1456,8 +1456,8 @@ class IssueChecker:
                     and (self.log.mods is None or len(self.log.mods) > 0)
                 ): builder.add("eav_crash_mods")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
-            elif self.log.exitcode == -805306369:
-                builder.error("exitcode", "-805306369", experimental=True)
+            elif self.log.exitcode in [-805306369, 143]:
+                builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_kill")
 
         if (not found_crash_cause
