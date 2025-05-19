@@ -75,6 +75,7 @@
     "error.intel_hd2000": "Your issue stems from using `Intel HD2000 integrated graphics`, which only supports up to `OpenGL 3.1`. Unfortunately, there are no dedicated `Windows 10` drivers available for this graphics card. As a result, you will not be easily able to run `Minecraft 1.17+`, as `21w10a and later` require improved graphics capabilities beyond `OpenGL 3.1`. You should still be able to play Minecraft versions `1.16 and earlier`.",
     "error.java_8_zgc": "You are using `ZGC`, which requires using `Java 17+`, but you're using `Java {}`.",
     "error.java_comp_check": "Enable the `Skip Java compatibility checks` option in `Edit > Settings > Java`.",
+    "error.k4_setup_video_outdated": "k4yfour's setup video is outdated. For setting up 1.16.1, use [**osh's guide**](https://youtu.be/OEpZlv6cQsI) instead.",
     "error.leaked_session_id_token": "**Your log has your session ID in it. Fully log out and relog back into the launcher right now.**",
     "error.legacy_crash_fix": "This seems to be a rare crash that is fixed in the `legacy-crash-fix` mod. You should install it.",
     "error.legacy_fabric_modpack": "You likely imported a `Legacy Fabric` modpack. This doesn't work, you'll need to get a `Legacy Fabric` instance from [**here**](https://github.com/Minecraft-Java-Edition-Speedrunning/legacy-fabric-instance-generator/releases) and add the mods to it.",

@@ -1655,6 +1655,9 @@ class IssueChecker:
                     if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
                     if "bartering" in match.lower(): continue
                     builder.note("fandom_wiki", match)
+                
+                if self.log.has_content("19.0.1"):
+                    builder.error("k4_setup_video_outdated")
 
                 if (self.log.has_content("water")
                     and self.log.has_content("invisible")
