@@ -208,8 +208,14 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
-        if os == "macOS": text = "https://www.youtube.com/watch?v=GomIeW5xdBM"
-        elif os == "Linux": text = "https://its-saanvi.github.io/linux-mcsr/"
+        if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=OEpZlv6cQsI&t=167s>) to download and configure mods.
+
+SlackowWall (used for resizing Minecraft): <https://github.com/Slackow/SlackowWall/releases/latest>
+To run several instances, use **SeedQueue** (`/seedqueue`).
+
+Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
+        elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
+Fedora 41 uses Wayland by default - ensure you're using X11 to follow this guide."""
         else: text = """1.16.1 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
@@ -226,13 +232,7 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
 
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
     async def mac(self, ctx: discord.ApplicationContext):
-        text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=OEpZlv6cQsI&t=167s>) to download and configure mods.
-
-SlackowWall (used for resizing Minecraft): <https://github.com/Slackow/SlackowWall/releases/latest>
-To run several instances, use **SeedQueue** (`/seedqueue`).
-
-Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
-        return await ctx.respond(text)
+        return await self.setup(ctx, os="macOS")
 
     @commands.slash_command(name="1_16_1", description="Explains why using 1.16.1 is standard for Minecraft speedrunning.")
     async def one_sixteen_one(self, ctx: discord.ApplicationContext):
