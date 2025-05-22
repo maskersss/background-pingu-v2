@@ -475,6 +475,11 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
+    async def rules(self, ctx: discord.ApplicationContext):
+        text = "<https://www.minecraftspeedrunning.com/public-resources/rules>"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
         text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
