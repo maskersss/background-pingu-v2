@@ -1293,7 +1293,7 @@ class IssueChecker:
             builder.error("starlight_crash")
             found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content("\"com.mojang.authlib.GameProfile.getId()\" is null"):
+        if not found_crash_cause and self.log.has_content_in_stacktrace("\"com.mojang.authlib.GameProfile.getId()\" is null"):
             builder.error("authlib_injector_crash")
             found_crash_cause = True
         
