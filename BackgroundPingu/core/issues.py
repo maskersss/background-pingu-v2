@@ -1297,6 +1297,9 @@ class IssueChecker:
             builder.error("authlib_injector_crash")
             found_crash_cause = True
         
+        elif self.log.has_content("[authlib-injector]"):
+            builder.note("illegal_launcher")
+        
         if not found_crash_cause:
             total = 0
             maxfps_0_indicators = [

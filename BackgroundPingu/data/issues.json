@@ -169,6 +169,7 @@
     "note.dont_use_java_23_plus": "You're using `Java 23+`, which has been found to reduce performance. You should use `Java 17-22` instead.",
     "note.duplicate_mods": "You have several versions of `{}` installed. You should delete the older ones.",
     "note.fandom_wiki": "The Minecraft Wiki [**has recently moved**](https://minecraft.wiki/w/Minecraft_Wiki:Moving_from_Fandom) from `Fandom` to `minecraft.wiki`. Please use this link instead: **https://minecraft.wiki/w/{}**.",
+    "note.illegal_launcher": "You're using a launcher that is not legal for [speedrun.com](https://www.speedrun.com/mc).",
     "note.mac_use_arm_java": "If you use an `M`-series chip, it is recommended to use `ARM Java` instead of `amd64 Java` for better performance since it will run natively on `ARM` chips.",
     "note.mac_use_prism": "If you use an `M`-series chip, it is recommended to use [Prism Launcher](https://prismlauncher.org/) with `ARM Java` instead of `MultiMC` for better performance since `Prism` has native `ARM` support.",
     "note.motiono": "You're using `MotiNO`, which is illegal for speedrun.com, and `ExtraOptions` is a whitelisted version of it.",
