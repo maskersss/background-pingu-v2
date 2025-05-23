@@ -497,6 +497,24 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         text = "https://www.youtube.com/watch?v=ZXPM1f00wmY"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="thinbt", description="Gives a guide to set up the ThinBT macro.")
+    async def thinbt(self, ctx: discord.ApplicationContext):
+        text = """### With Jingle 
+* Download [Jingle](https://github.com/DuncanRuns/Jingle/releases). Choose the latest **.jar** file.
+* Set a hotkey in **Hotkeys > Add > Resizing - Thin BT (Script)**
+* You can change your resolution in **Scripts > Resizing - Customize > Enter your thin bt size**
+### With Julti or Autohotkey (not recommended)
+- See this message: https://discord.com/channels/83066801105145856/433058639956410383/1364609888126242816 
+
+How to use thin resolution effectively: <https://www.youtube.com/watch?v=OwKqLv2MJrg>"""
+
+    @commands.slash_command(name="fnlock", description="Explains that you need to turn off FnLock.")
+    async def fnlock(self, ctx: discord.ApplicationContext):
+        text = """If you need to press Fn-F3 to use F3, and/or some F3 hotkeys (such as F3-B) don't work, toggle Fn-lock on your pc <https://www.thewindowsclub.com/how-to-lock-and-unlock-function-fn-key-in-windows>. If you're on a Lenovo, the setting is in Lenovo Vantage > Device > Input & Accessories > Select F1-F12 function.
+
+If you don't have an F3 key at all, which means you need to press Fn-3 to use F3, type `/rebind` for a tutorial on how to rebind a key to F3."""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
         text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
