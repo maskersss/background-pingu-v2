@@ -1,4 +1,4 @@
-import semver, re, requests
+import semver, json, re
 from packaging import version
 from math import sqrt
 from BackgroundPingu.bot.main import BackgroundPingu
@@ -201,6 +201,16 @@ class IssueChecker:
                     except ValueError: continue
         return latest_match
 
+    def is_boateye_sens(self, sens: float) -> bool:
+        tolerance = 0.0002 * sens  # 0.02% of given sens
+
+        with open("./BackgroundPingu/data/boatEyeSensitivitiesv1_16.txt", 'r') as file:
+            for line in file:
+                val = float(line.strip())
+                if abs(val - sens) <= tolerance:
+                    return True
+        return False
+
     def check(self) -> IssueBuilder:
         builder = IssueBuilder(self.bot, self.log)
 
@@ -243,6 +253,8 @@ class IssueChecker:
             if self.log.stacktrace or self.log.exitcode: footer += " crash"
         elif self.log.stacktrace or self.log.exitcode: footer += " crash"
         elif footer == "" and self.link == "message": footer += " message"
+        elif self.link.endswith("standardsettings.json"): footer += " standardsettings.json"
+        elif self.link.endswith("options.txt"): footer += " options.txt"
         else: footer += " log"
         
         builder.set_footer(footer.strip())
@@ -255,6 +267,28 @@ class IssueChecker:
             if self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
                 builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
         
+        if self.link.endswith("standardsettings.json"):
+            try:
+                data = json.loads(self.log._content)
+                sens = data["mouseSensitivity"]["value"]
+                if not self.is_boateye_sens(float(sens)):
+                    builder.error("wrong_sens", sens, "standardsettings.json")
+            except: pass
+            
+            found_crash_cause = True
+        
+        if self.link.endswith("options.txt"):
+            match = re.search(r"mouseSensitivity:([0-9]*\.?[0-9]+)", self.log._content)
+            if not match is None:            
+                sens = match.group(1)
+                try:
+                    if not self.is_boateye_sens(float(sens)):
+                        builder.error("wrong_sens", sens, "options.txt")
+                except ValueError:
+                    pass
+            
+            found_crash_cause = True
+
         if is_mcsr_log:
             for mod in self.log.mods:
                 metadata = self.get_mod_metadata(mod)
