@@ -480,6 +480,11 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         text = "<https://www.minecraftspeedrunning.com/public-resources/rules>"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
+    async def thinmag(self, ctx: discord.ApplicationContext):
+        text = "https://www.youtube.com/watch?v=ZXPM1f00wmY"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
         text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
