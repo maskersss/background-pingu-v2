@@ -199,8 +199,19 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
-    async def prism(self, ctx: discord.ApplicationContext):
-        text = """Prism Launcher is a more updated fork of MultiMC. You can download it here: https://prismlauncher.org/"""
+    async def prism(
+        self,
+        ctx: discord.ApplicationContext,
+        nightly: discord.Option(bool, choices=[True, False], required=False, default=False),
+    ):
+        text = "Prism Launcher is a more updated fork of MultiMC. "
+        if not nightly:
+            text += """You can download it here: https://prismlauncher.org/"""
+        else:
+            text += """You can download the latest development builds of it here: https://nightly.link/PrismLauncher/PrismLauncher/workflows/trigger_builds/develop.
+
+> :warning: Warning :warning:
+> Development builds have been less tested and are therefore more likely to have bugs! For this reason, it's recommended to use Portable builds – for Windows, that would be the second lowest option on the above page."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="setup", description="Gives a link to a tutorial to setup Minecraft Speedrunning.")
