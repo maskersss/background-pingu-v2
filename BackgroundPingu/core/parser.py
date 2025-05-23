@@ -647,6 +647,9 @@ class Log:
         if self.operating_system == OperatingSystem.LINUX:
             return "java_update_guide_linux"
 
+        if self.launcher in [Launcher.MODRINTH, Launcher.ATLAUNCHER]:
+            return None
+
         return "java_update_guide"
     
     @cached_property
