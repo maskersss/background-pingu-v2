@@ -1629,6 +1629,7 @@ class IssueChecker:
                         "counter": 1,
                         "entity culling": -100,
                         "[#]": -100,
+                        "ender_dragon": -100,
                     }
                     total = 0
                     for pattern, value in entity_culling_indicators.items():
