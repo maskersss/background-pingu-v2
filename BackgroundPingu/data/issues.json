@@ -94,6 +94,7 @@
     "error.minecraft_version_mismatch": "It looks like you might have `{}` installed for the wrong Minecraft version. Try changing it to the right version in `Edit{} > Version`.",
     "error.missing_dependency": "The mod `{}` requires having the mod `{}` installed. Please install it.",
     "error.missing_dependency_2": "A mod you're using requires having the mod `{}` installed. Please install it.",
+    "error.missing_xrandr": "This crash is caused by not having `xrandr` installed on Linux on Minecraft versions using `LWJGL 2`.",
     "error.mod_crash": "Mod `{}` seems to be causing this crash.",
     "error.mod_crash_disable": "Mod `{}` seems to be causing this crash. Removing it could stop this crash from happening.",
     "error.mods_crash": "Mods `{}` seem to be causing this crash.",
