@@ -290,10 +290,10 @@ WorldBopper plugin for [Julti](<https://github.com/DuncanRuns/Julti>): <https://
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
     async def seedqueue(self, ctx: discord.ApplicationContext):
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
-Download: <https://github.com/KingContaria/seedqueue/releases>
+Download: <https://github.com/contariaa/seedqueue/releases>
 Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
 Tutorial: <https://www.youtube.com/watch?v=OEpZlv6cQsI>
-Wiki: <https://github.com/KingContaria/seedqueue/wiki>
+Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
         return await ctx.respond(text)
 
