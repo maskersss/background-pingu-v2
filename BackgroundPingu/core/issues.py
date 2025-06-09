@@ -1531,6 +1531,7 @@ class IssueChecker:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
                 "com.google.gson.stream.MalformedJsonException",
                 "Cannot invoke \"com.google.gson.JsonObject.entrySet()\"",
+                "class com.google.gson.JsonPrimitive",
             ]):
                 corrupted_config = True
             else:
