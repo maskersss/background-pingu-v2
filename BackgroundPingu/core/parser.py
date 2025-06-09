@@ -502,9 +502,9 @@ class Log:
             min_limit_2 *= 1.3
         
         if self.is_ranked_log:
-            min_limit_0 += 2000
-            min_limit_1 += 1000
-            min_limit_2 += 500
+            min_limit_0 += 1500
+            min_limit_1 += 700
+            min_limit_2 += 300
         
         return (min_limit_0, min_limit_1, min_limit_2)
     
