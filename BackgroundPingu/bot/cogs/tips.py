@@ -222,8 +222,9 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
     ):
         if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=OEpZlv6cQsI&t=167s>) to download and configure mods.
 
-SlackowWall (used for resizing Minecraft): <https://github.com/Slackow/SlackowWall/releases/latest>
-To run several instances, use **SeedQueue** (`/seedqueue`).
+To run several instances, use **SeedQueue** (`!!seedqueue`).
+[SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
+Boateye guide: <https://youtu.be/Mj42HbnPUZ4>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
