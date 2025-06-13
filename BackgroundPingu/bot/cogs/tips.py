@@ -508,6 +508,7 @@ The right edge of the crosshair should line up with the left edge of the eye's m
 - See this message: https://discord.com/channels/83066801105145856/433058639956410383/1364609888126242816 
 
 How to use thin resolution effectively: <https://www.youtube.com/watch?v=OwKqLv2MJrg>"""
+        return await ctx.respond(text)
 
     @commands.slash_command(name="fnlock", description="Explains that you need to turn off FnLock.")
     async def fnlock(self, ctx: discord.ApplicationContext):
