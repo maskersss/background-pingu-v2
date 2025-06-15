@@ -61,6 +61,14 @@ Open the installer, select the Minecraft version you are playing and finish the 
 Note: You do **NOT** need Fabric API, that is banned and you won't need it!
 When you open your Minecraft launcher now it will show Fabric as an option. With that your mods will work."""
         return await ctx.respond(text)
+
+    @commands.slash_command(name="fastloot", description="Gives links to fastloot guides.")
+    async def fastloot(self, ctx: discord.ApplicationContext):
+        text = """### Guides on different types of fastlooting:
+
+* RSG Fastlooting: <https://www.youtube.com/watch?v=ebd3q3HNnQA>
+* SSG Fastlooting: <https://www.youtube.com/watch?v=uZC_XE1t5yQ>"""
+        return await ctx.respond(text)
     
     @commands.slash_command(name="log", description="Shows how to send a log.")
     async def log(
