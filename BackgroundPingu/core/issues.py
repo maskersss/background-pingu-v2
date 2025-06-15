@@ -880,7 +880,11 @@ class IssueChecker:
                 found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
-            builder.error("gl_framebuffer")
+            if self.log.operating_system == OperatingSystem.MACOS:
+                builder.error("gl_framebuffer_macos")
+                if not self.log.has_mod("retino"): builder.add("update_mods")
+            else:
+                builder.error("gl_framebuffer")
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
