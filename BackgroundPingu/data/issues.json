@@ -123,7 +123,6 @@
     "error.out_of_disk_space": "It looks like you ran out of disk space. If that's the case, you should free up some space on it.",
     "error.out_of_memory_pc": "It looks like you ran out of memory on your PC. If that's the case, you can try rebooting your PC, closing all other applications, and allocating less RAM.",
     "error.outdated_nvidia_flatpack_driver": "Update drivers for flatpak by running `flatpak update`. If the crash persists, try [not using flatpak](https://prismlauncher.org/download).",
-    "error.ranked_extraoptions": "`ExtraOptions` is already bundled with `Ranked`, and is therefore not allowed as a separate mod. You should remove `ExtraOptions` from your mods folder.",
     "error.ranked_fabric_0_15_x": "You seem to be using a version of `MCSR Ranked` that is incompatible with `Fabric Loader 0.15+`. Update `MCSR Ranked`.",
     "error.ranked_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Ranked**](https://discord.com/invite/nnjUSyDErj) server.",
     "error.ranked_rong_files": "You're using {} to be fine, but the files don't match. Try redownloading/updating {}.",

@@ -1197,9 +1197,6 @@ class IssueChecker:
             
             if len(ranked_rong_files + ranked_rong_mods + ranked_rong_versions) > 0:
                 builder.add("ranked_mods_disclaimer")
-        
-            if self.log.is_ranked_log and self.log.has_mod("extra-options"):
-                builder.error("ranked_extraoptions")
 
         if self.log.has_mod("optifine"):
             for incompatible_mod in ["Starlight"]:
