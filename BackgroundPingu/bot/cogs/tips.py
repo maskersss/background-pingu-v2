@@ -266,6 +266,11 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
 older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="discords", description="Gives a link to the MCSR discords spreadsheet.")
+    async def discords(self, ctx: discord.ApplicationContext):
+        text = "https://docs.google.com/spreadsheets/d/1Gry6LCYV3VPYNekp1LE0KfuGPnAboa3zXvj545mshJU/edit#gid=0"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="divine", description="Gives an infographic for nether fossil divine.")
     async def divine(self, ctx: discord.ApplicationContext):
         text = "https://cdn.discordapp.com/attachments/433058639956410383/897752137507946496/Screenshot_25.png"
