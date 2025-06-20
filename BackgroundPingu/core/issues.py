@@ -214,9 +214,9 @@ class IssueChecker:
     def check(self) -> IssueBuilder:
         builder = IssueBuilder(self.bot, self.log)
 
-        if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__"):
+        if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
-            match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__", self.log._content)
+            match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__", self.log._content)
             if not match is None: builder.error("failed_to_download_log", match.group(1))
             return builder
 
@@ -1718,9 +1718,9 @@ class IssueChecker:
         missing_mods = []
         notes = ["These settings are likely not optimal and are just rough suggestions."]
 
-        if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__"):
+        if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
-            match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+)__", self.log._content)
+            match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__", self.log._content)
             if not match is None:
                 output += f"""
 Failed to download the log (`{match.group(1)}`). Please try the following steps:
