@@ -636,10 +636,11 @@ Additionally, [practice setting up your inventory for zero cycle](https://github
     @commands.slash_command(name="extraoptions", description="Gives a link to Extra Options mod and an explanation of SRC rules regarding it.")
     async def extraoptions(self, ctx: discord.ApplicationContext):
         text = """⚠️ **__Warning!__** ⚠️ 
-This mod may result in your run being __**rejected**__ if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> 
+This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
+This mod may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> 
 Link **(read the above warning)**: 
 ||<https://github.com/tildejustin/extra-options/releases/latest>||
-This mod allows you to adjust FOV and distortion effects through accessibility settings.
+This mod allows you to adjust FOV and distortion effects.
 <:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
         return await ctx.respond(text)
 
