@@ -1136,6 +1136,10 @@ class IssueChecker:
                 "Reason:\nOne or more subtasks failed",
         ])):
             builder.error("delete_launcher_cache", experimental=True)
+        
+        if self.log.has_content("java.lang.ClassNotFoundException: org.mcsr.speedrunapi"):
+            builder.error("outdated_mods_crash").add("update_mods")
+            found_crash_cause = True
 
         match = re.search(r"Incompatible mod set found! READ THE BELOW LINES!(.*?$)", self.log._content, re.DOTALL)
         if not match is None:
