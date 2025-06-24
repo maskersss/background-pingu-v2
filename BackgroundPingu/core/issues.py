@@ -632,7 +632,6 @@ class IssueChecker:
         elif any(self.log.has_content_in_stacktrace(crash) for crash in [
             "java.lang.ClassNotFoundException: can't find class com.llamalad7.mixinextras",
             "java.lang.ClassNotFoundException: com.llamalad7.mixinextras",
-            "java.lang.NoClassDefFoundError: com/redlimerl/speedrunigt",
             "$zmm000$setspawnmod$failOnNonRandomSpawns",
             "Type 'java/lang/String' (current frame, stack[1]) is not assignable to 'net/minecraft/class_2248'", # ranked: https://discord.com/channels/1056779246728658984/1293645786395054190
         ]):
@@ -1137,8 +1136,17 @@ class IssueChecker:
         ])):
             builder.error("delete_launcher_cache", experimental=True)
         
-        if self.log.has_content("java.lang.ClassNotFoundException: org.mcsr.speedrunapi"):
+        if any(self.log.has_content(srapi_2_crash) for srapi_2_crash in [
+            "java.lang.ClassNotFoundException: org.mcsr.speedrunapi",
+            "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt.option.SpeedRunOption",
+            "java.lang.NoClassDefFoundError: com/redlimerl/speedrunigt",
+        ]):
             builder.error("outdated_mods_crash").add("update_mods")
+            found_crash_cause = True
+        
+        if self.log.has_content("No config found for mod id standardsettings"):
+            builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
+            if self.log.is_prism: builder.add("update_mods_prism")
             found_crash_cause = True
 
         match = re.search(r"Incompatible mod set found! READ THE BELOW LINES!(.*?$)", self.log._content, re.DOTALL)
