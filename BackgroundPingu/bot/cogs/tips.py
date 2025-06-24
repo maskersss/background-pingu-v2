@@ -111,6 +111,11 @@ If you want to unlink OneDrive, follow [this link](<https://support.microsoft.co
         text = """You can find MCSR Ranked Tech Support FAQ document here: <https://wiki.mcsrranked.com/install/faq>"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="regions", description="Gives an infographic about structure regions.")
+    async def regions(self, ctx: discord.ApplicationContext):
+        text = """https://cdn.discordapp.com/attachments/83066801105145856/1033984974614962286/1.16.1_Regions.png"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="ahk", description="Gives a guide to rebind keys using AutoHotkey.")
     async def ahk(self, ctx: discord.ApplicationContext):
         text = """To rebind keys, you can download AutoHotkey (<https://www.autohotkey.com/>, **make sure to get version 1.1**) and create a file with your desired key bindings. For instance, if you want to swap the keys "F3" and "r", you can create a file and name it *something*.ahk with the following content:
