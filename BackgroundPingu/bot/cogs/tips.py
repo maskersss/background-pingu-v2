@@ -392,7 +392,7 @@ All other mods, including Fabric API, are banned[.](https://i.imgur.com/WDkWzwd.
         if directory in ["Village / Fortress", "All"]:
             text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
         
-        text += "\nIf you're using the StandardSettings mod, you paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
+        text += "\nIf you're using the StandardSettings mod, you can paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
 
         return await ctx.respond(text)
 

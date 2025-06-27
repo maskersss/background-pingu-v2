@@ -1138,10 +1138,13 @@ class IssueChecker:
         
         if any(self.log.has_content(srapi_2_crash) for srapi_2_crash in [
             "java.lang.ClassNotFoundException: org.mcsr.speedrunapi",
-            "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt.option.SpeedRunOption",
-            "java.lang.NoClassDefFoundError: com/redlimerl/speedrunigt",
+            "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt",
         ]):
             builder.error("outdated_mods_crash").add("update_mods")
+            found_crash_cause = True
+        
+        if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
+            builder.error("old_mod_crash", "SpeedrunAPI", "https://mods.tildejustin.dev/")
             found_crash_cause = True
         
         if self.log.has_content("No config found for mod id standardsettings"):
@@ -1328,7 +1331,7 @@ class IssueChecker:
             builder.error("delete_dot_fabric", experimental=True)
         
         if not found_crash_cause:
-            pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip END header not found"
+            pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip (END header not found|file is empty)"
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("corrupted_file", match.group(1))
