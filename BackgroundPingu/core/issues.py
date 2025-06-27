@@ -1331,7 +1331,7 @@ class IssueChecker:
             builder.error("delete_dot_fabric", experimental=True)
         
         if not found_crash_cause:
-            pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: zip (END header not found|file is empty)"
+            pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: "
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("corrupted_file", match.group(1))
