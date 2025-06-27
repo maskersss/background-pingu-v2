@@ -1059,7 +1059,7 @@ class IssueChecker:
             found_crash_cause = True
         
         ranked_mod = None
-        for mod in self.log.whatever_mods:
+        for mod in self.log.whatever_mods[::-1]:
             if "mcsrranked" in mod.lower():
                 ranked_mod = mod
                 break
