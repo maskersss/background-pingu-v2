@@ -30,6 +30,7 @@
     "add.mod_download": "You can download `{}` [**here**]({}).",
     "add.modcheck_v1_warning": "The previous versions (v1/v2) of `ModCheck` are no longer supported. Please ensure that your `ModCheck` is up-to-date.",
     "add.optifine_alternatives": "See [**this page**](https://prismlauncher.org/wiki/getting-started/install-of-alternatives/) for more information.",
+    "add.outdated_mods_crash_arsg": "`AreEssGee` hasn't been updated to work with a new `SpeedrunAPI` version, you can instead find a zip with older mods [**here**](https://discord.com/channels/1056779246728658984/1074385256070791269/1386927513963466823).",
     "add.ranked_mods_disclaimer": "If you're still confused, it's possible the latest versions of mods aren't whitelisted. In this case, you should ask for help in https://discord.com/channels/1056779246728658984/1074385256070791269 in [**MCSR Ranked Discord**](https://mcsrranked.com/discord).",
     "add.read_pls": "Please actually follow the above guide closely.",
     "add.too_new_java": "If you have the latest version of `Fabric Loader`, use a lower `Java` version instead, for example `Java 21`.",
