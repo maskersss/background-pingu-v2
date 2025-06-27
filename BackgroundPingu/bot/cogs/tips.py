@@ -506,6 +506,15 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="rawaccel", description="Links the RawAccel guide.")
+    async def rawaccel(self, ctx: discord.ApplicationContext):
+        text = """## RawAccel
+### [Installation guide](<https://www.youtube.com/watch?v=QR9wo-G4ilU>)
+If you do not have software for your mouse, or you are limited to certain DPI options, then you can use alternative software like RawAccel to change your desktop sensitivity.
+
+Use the [sensitivity calculator](<https://priffin.github.io/Pixel-Perfect-Tools/calc.html>) as normal, but instead of entering your DPI, enter 1. The value of “New DPI” is what you put in the “Sens Multiplier” box in RawAccel."""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
     async def rules(self, ctx: discord.ApplicationContext):
         text = "<https://www.minecraftspeedrunning.com/public-resources/rules>"
