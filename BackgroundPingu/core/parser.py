@@ -686,6 +686,7 @@ class Log:
             r"Unreported exception thrown!\n.*",
             r"Encountered an unexpected exception\n.*",
             r"Unhandled game exception\n.*",
+            r"Failed to create window: \n.*",
         ]
         for crash_pattern in crash_patterns:
             match = re.search(crash_pattern, log, re.DOTALL)
