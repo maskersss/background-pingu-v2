@@ -1710,6 +1710,9 @@ class IssueChecker:
                 if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
                     builder.error("send_full_log", self.log.edit_instance)
                 
+                if not found_crash_cause and self.log.has_content("Host api.paste.ee not found"):
+                    builder.error("pasteee_down")
+                
                 pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
                 for match in re.findall(pattern, self.log._content):
                     if match.endswith("_"): match = match[:-1] # if someone uses an _ to make it cursive idk
