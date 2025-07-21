@@ -1706,6 +1706,30 @@ class IssueChecker:
                     
                     if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
                         builder.error("settings_reset")
+                    
+                    wall_indicators = {
+                        "the wall": 10,
+                        r"seed ?queue": 10,
+                    }
+                    wall_total = 0
+                    for pattern, value in wall_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            wall_total += value
+                    
+                    leave_indicators = {
+                        "exit": 10,
+                        "go back": 10,
+                        "quit": 10,
+                        "leave": 10,
+                        "return to": 10,
+                    }
+                    leave_total = 0
+                    for pattern, value in leave_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            leave_total += value
+                    
+                    if asking_for_help_total >= 2 and leave_total >= 10 and wall_total >= 10:
+                        builder.error("exit_wall")
                 
                 if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
                     builder.error("send_full_log", self.log.edit_instance)
