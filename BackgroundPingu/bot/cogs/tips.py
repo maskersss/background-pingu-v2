@@ -23,7 +23,7 @@ class Tips(Cog):
         link_pattern = LINK_PATTERN
         match = re.search(link_pattern, log)
         if match is None:
-            text = "No paste.ee or mclo.gs link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+            text = "No pastee.dev or mclo.gs link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
             return await ctx.respond(text)
 
@@ -669,7 +669,7 @@ This mod allows you to adjust FOV and distortion effects.
     
     @commands.slash_command(name="help", description="Gives a guide to using the bot.")
     async def help(self, ctx: discord.ApplicationContext):
-        text = """- **Log Analysis**: Send a message containing a Minecraft log link from paste.ee or mclo.gs, or upload a log file directly in the chat. The bot will analyze the log and provide feedback automatically.
+        text = """- **Log Analysis**: Send a message containing a Minecraft log link from pastee.dev or mclo.gs, or upload a log file directly in the chat. The bot will analyze the log and provide feedback automatically.
 - **/tags**: Use this command to get a list of all available tags related to MCSR strategies, guides, and more.
 - **Need Help?**: If you're still unsure after the bot's response, please ask in the appropriate help channel.
 

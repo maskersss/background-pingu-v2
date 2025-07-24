@@ -1769,7 +1769,7 @@ class IssueChecker:
 Failed to download the log (`{match.group(1)}`). Please try the following steps:
 
 1. **Copy** your log using the `Copy` button.
-2. Upload it to either <https://mclo.gs/> or <https://paste.ee/>, then provide the new link.
+2. Upload it to either <https://mclo.gs/> or <https://pastee.dev/>, then provide the new link.
    - If one service doesn't work, try the other.
 3. Alternatively, paste the log directly into Discord as a message, then:
    - Right-click the message.
