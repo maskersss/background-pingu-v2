@@ -128,7 +128,7 @@ class IssueChecker:
         return False
 
     def check(self) -> IssueBuilder:
-        builder = IssueBuilder(self.mode)
+        builder = IssueBuilder(self.log, self.mode)
 
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py

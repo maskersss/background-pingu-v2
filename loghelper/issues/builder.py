@@ -3,6 +3,7 @@ from packaging import version
 from math import sqrt
 from typing import Any, Dict, Optional
 from ..data_loader import load_issues_json
+from ..parser import Log
 
 
 # Simple presentation presets. You can override by passing `style=` at init.
@@ -49,9 +50,11 @@ class IssueBuilder:
 
     def __init__(
         self,
+        log: Log,
         mode: str = "web",
         style: Optional[Dict[str, Any]] = None,
     ) -> None:
+        self.log = log
         self._messages: Dict[str, list[str]] = {
             "top_info": [],
             "error": [],
