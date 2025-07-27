@@ -46,11 +46,11 @@ class LogCLI:
         for link, log in logs:
             try:
                 reply, success = IssueChecker(
-                    self.bot,
                     log,
                     link,
                     None,  # No guild ID
                     None,  # No channel ID
+                    "web",
                 ).seedqueue_settings()
                 if success:
                     return reply
