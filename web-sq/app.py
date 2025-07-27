@@ -36,7 +36,7 @@ def get_settings(log_link, include_content=False):
     return None
 
 
-app = FastAPI()
+app = FastAPI(root_path="/sq-settings")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)

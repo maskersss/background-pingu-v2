@@ -46,7 +46,7 @@ def check_log(log_link, include_content=False):
     return result
 
 
-app = FastAPI()
+app = FastAPI(root_path="/log-analysis")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
