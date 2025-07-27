@@ -2,8 +2,10 @@ import discord, json, re, requests, traceback
 from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.core import parser, issues
-from BackgroundPingu.config import *
+from loghelper.issues.builder import IssueBuilder
+from loghelper.issues.checker import IssueChecker
+from loghelper import parser
+from loghelper.config import *
 
 class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
@@ -34,12 +36,12 @@ class Tips(Cog):
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
             return await ctx.respond(text)
 
-        text, success = issues.IssueChecker(
-            self.bot,
+        text, success = IssueChecker(
             log,
             link,
             ctx.guild_id,
             ctx.channel_id,
+            "discord",
         ).seedqueue_settings()
         
         if not success:

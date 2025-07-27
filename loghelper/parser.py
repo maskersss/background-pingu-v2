@@ -1,7 +1,7 @@
 import re, requests, enum
 from packaging import version
 from cached_property import cached_property
-from BackgroundPingu.config import *
+from .config import *
 
 class OperatingSystem(enum.IntEnum):
     WINDOWS = enum.auto()

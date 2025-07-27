@@ -1,105 +1,21 @@
 import semver, json, re
 from packaging import version
 from math import sqrt
-from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.core.parser import Log, ModLoader, OperatingSystem, LogType, Launcher
-from BackgroundPingu.config import *
-
-class IssueBuilder:
-    def __init__(self, bot: BackgroundPingu, log: Log) -> None:
-        self.bot = bot
-        self._messages = {
-            "top_info": [],
-            "error": [],
-            "warning": [],
-            "note": [],
-            "info": []
-        }
-        self.log = log
-        self.amount = 0
-        self._last_added = None
-        self.footer = ""
-    
-    def _add_to(self, type: str, value: str, add: bool=False):
-        self._messages[type].append(value)
-        if not add:
-            self.amount += 1
-            self._last_added = type
-        return self
-
-    def top_info(self, key: str, *args):
-        return self._add_to("top_info", "‼️ **" + self.bot.strings.get(f"top_info.{key}", key).format(*args) + "**")
-
-    def error(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"error.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("error", "<:dangerkekw:1123554236626636880> " + text)
-    
-    def warning(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"warning.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("warning", "<:warningkekw:1123563914454634546> " + text)
-    
-    def note(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"note.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("note", "<:kekw:1123554521738657842> " + text)
-
-    def info(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"info.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("info", "<:infokekw:1123567743355060344> " + text)
-
-    def add(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"add.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to(self._last_added, "<:reply:1122083632727724083>*" + text + "*", add=True)
-
-    def has(self, type: str, key: str) -> bool:
-        key = self.bot.strings.get(f"{type}.{key}", key).replace("*", "")
-        for string in self._messages[type]:
-            string = str(string).split(" ", 1)[1].replace("*", "")
-            pattern = re.escape(key).replace(r"\{\}", r".*")
-            if re.match(pattern, string):
-                return True
-        return False
-
-    def has_values(self) -> bool:
-        return self.amount > 0
-
-    def set_footer(self, s: str):
-        self.footer = s
-        return self
-
-    def build(self) -> list[str]:
-        messages = []
-        index = 0
-        for i in self._messages:
-            for j in self._messages[i]:
-                if "Re-Upload Log" in j and self.has("top_info", "uploaded_log"): continue
-                add = j + "\n" + ("\n" if i == "top_info" and index == len(self._messages[i]) - 1 else "")
-                if len(messages) == 0 or index % 9 == 0: messages.append(add)
-                else: messages[len(messages) - 1] += add
-                index += 1
-        return messages
+from pathlib import Path
+from ..data_loader import load_mods_json, load_issues_json
+from ..parser import Log
+from .builder import IssueBuilder
+from ..parser import Log, ModLoader, OperatingSystem, LogType, Launcher
+from ..config import *
 
 class IssueChecker:
-    def __init__(self, bot: BackgroundPingu, log: Log, link: str, server_id: int, channel_id: int) -> None:
-        self.bot = bot
+    def __init__(self, log: Log, link: str, server_id: int, channel_id: int, mode="web") -> None:
+        self.legal_mods = load_mods_json()
         self.log = log
         self.link = link
         self.server_id = server_id
         self.channel_id = channel_id
+        self.mode = mode
         self.not_mods = [
             "Julti",
             "Jingle",
@@ -172,7 +88,7 @@ class IssueChecker:
     def get_mod_metadata(self, mod_filename: str) -> dict:
         mod_filename = mod_filename.lower().replace("optifine", "optifabric")
         filename = mod_filename.replace(" ", "").replace("-", "").replace("+", "").replace("_", "")
-        for mod in self.bot.mods:
+        for mod in self.legal_mods:
             original_name = mod["name"].lower()
             mod_name = original_name.replace(" ", "").replace("-", "").replace("_", "")
             mod_name = "zbufferfog" if mod_name == "legacyplanarfog" else mod_name
@@ -204,7 +120,7 @@ class IssueChecker:
     def is_boateye_sens(self, sens: float) -> bool:
         tolerance = 0.0002 * sens  # 0.02% of given sens
 
-        with open("./BackgroundPingu/data/boatEyeSensitivitiesv1_16.txt", 'r') as file:
+        with open(Path(__file__).parent.parent / "data"/ "boatEyeSensitivitiesv1_16.txt", 'r') as file:
             for line in file:
                 val = float(line.strip())
                 if abs(val - sens) <= tolerance:
@@ -212,7 +128,7 @@ class IssueChecker:
         return False
 
     def check(self) -> IssueBuilder:
-        builder = IssueBuilder(self.bot, self.log)
+        builder = IssueBuilder(self.mode)
 
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
@@ -651,7 +567,7 @@ class IssueChecker:
                     match = re.compile(r"-(\d+(?:\.\d+)?)\+").search(mod)
                     if not match is None:
                         try: ver = version.parse(match.group(1))
-                        except: pass
+                        except: continue
                         if highest_srigt_ver is None or ver > highest_srigt_ver:
                             highest_srigt_ver = ver
             if not highest_srigt_ver is None and highest_srigt_ver < version.parse("13.3") and self.log.fabric_version > version.parse("0.14.14"):

@@ -3,9 +3,11 @@ from discord import commands
 from discord.ext.commands import Cog
 from datetime import datetime
 from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.core import parser, issues
+from loghelper.issues.builder import IssueBuilder
+from loghelper.issues.checker import IssueChecker
+from loghelper import parser
+from loghelper.config import *
 from BackgroundPingu.bot.ui import views
-from BackgroundPingu.config import *
 
 class Core(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
@@ -54,12 +56,12 @@ class Core(Cog):
         
         for link, log in logs:
             try:
-                results = issues.IssueChecker(
-                    self.bot,
+                results = IssueChecker(
                     log,
                     link,
                     msg.guild.id if not msg.guild is None else None,
                     msg.channel.id if not msg.channel is None else None,
+                    "discord",
                 ).check()
                 if results.has_values():
                     messages = results.build()
@@ -81,12 +83,13 @@ class Core(Cog):
 
         for link, log in logs:
             try:
-                reply, success = issues.IssueChecker(
+                reply, success = IssueChecker(
                     self.bot,
                     log,
                     link,
                     msg.guild.id if not msg.guild is None else None,
                     msg.channel.id if not msg.channel is None else None,
+                    "discord",
                 ).seedqueue_settings()
                 if success:
                     result = reply
@@ -99,11 +102,11 @@ class Core(Cog):
         
         return (result, found_result)
 
-    async def build_embed(self, results: issues.IssueBuilder, messages: list[str], msg: discord.Message):
+    async def build_embed(self, results: IssueBuilder, messages: list[str], msg: discord.Message):
         embed = discord.Embed(
             title=f"{results.amount} Issue{'s' if results.amount > 1 else ''} Found:",
             description=messages[0],
-            color=self.bot.color,
+            color=0xFFFFFF,
             timestamp=datetime.now()
         )
         embed.set_author(name=msg.author.name, icon_url=msg.author.avatar.url if msg.author.avatar is not None else "")

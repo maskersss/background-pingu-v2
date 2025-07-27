@@ -1,5 +1,6 @@
 .env
 *__pycache__/
+*.egg-info/
 .vscode/
 mods.json
 test.py
