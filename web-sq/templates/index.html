@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Seedqueue Settings</title>
+  <!-- PrismJS -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-none.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+    <style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: sans-serif;
+        padding: 2rem;
+    }
+
+    a {
+      color: #4ea8ff;
+      text-decoration: underline;
+    }
+
+    input, textarea, button {
+        font-family: inherit;
+        background: #1e1e1e;
+        color: #e0e0e0;
+        border: 1px solid #444;
+        padding: 0.5rem;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    textarea {
+        height: 12rem;
+        resize: vertical;
+    }
+
+    button {
+        background: #333;
+        border: 1px solid #666;
+        cursor: pointer;
+        margin-top: 0.5rem;
+    }
+
+    button:hover {
+        background: #444;
+    }
+
+    #result {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: #1e1e1e;
+        border-radius: 6px;
+        border: 1px solid #333;
+        line-height: 1.4;
+    }
+    #result p,
+    #result ul,
+    #result ol,
+    #result li,
+    #result pre,
+    #result blockquote,
+    #result h1, #result h2, #result h3 {
+        margin-top: 0.3em;
+        margin-bottom: 0.3em;
+    }
+    </style>
+
+</head>
+
+<body>
+  <h1>Recommend Seedqueue Settings</h1>
+
+  <form hx-post="/analyse" hx-target="#result" hx-swap="innerHTML">
+    <label for="loglink">Paste your log or a link to it here:</label><br>
+    <textarea name="loglink" required></textarea>
+    <button type="submit">Recommend settings</button>
+  </form>
+
+  <div id="result"></div>
+</body>
+</html>
