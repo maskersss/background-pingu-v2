@@ -6,7 +6,7 @@ from ..data_loader import load_issues_json
 from ..parser import Log
 
 
-# Simple presentation presets. You can override by passing `style=` at init.
+# Simple presentation presets. Can override by passing `style=` at init.
 DEFAULT_STYLES: Dict[str, Dict[str, Any]] = {
     "web": {
         "prefix": {
@@ -17,21 +17,19 @@ DEFAULT_STYLES: Dict[str, Dict[str, Any]] = {
             "info":     "🟢 ",
             "add":      " ↳ ",
         },
-        # Bold rendered with simple **…**; switch to <b>…</b> if you prefer HTML.
         "bold_open": "**",
         "bold_close": "**",
-        "experimental_prefix": "[experimental] ",
-        "chunk_size": 9,   # how many lines per page in build()
+        "experimental_prefix": "[⚠️ experimental] ",
+        "chunk_size": 9, # how many lines per page in build()
     },
     "discord": {
         "prefix": {
             "top_info": "‼️ ",
-            # If you want the old custom emojis, put them here:
             "error":    "<:dangerkekw:1123554236626636880> ",
             "warning":  "<:warningkekw:1123563914454634546> ",
             "note":     "<:kekw:1123554521738657842> ",
             "info":     "<:infokekw:1123567743355060344> ",
-            "add":      "<:reply:1122083632727724083>*",   # we’ll append closing '*' automatically
+            "add":      "<:reply:1122083632727724083>*",
         },
         "bold_open": "**",
         "bold_close": "**",
@@ -41,13 +39,6 @@ DEFAULT_STYLES: Dict[str, Dict[str, Any]] = {
 }
 
 class IssueBuilder:
-    """
-    Discord‑agnostic builder.
-    - Loads strings from issues.json by default.
-    - Formatting is controlled by a small 'style' dict; choose 'web' or 'discord'.
-    - Supports both nested ("error": {"key": "..."}) and flat ("error.key": "...") JSON.
-    """
-
     def __init__(
         self,
         log: Log,
@@ -55,6 +46,7 @@ class IssueBuilder:
         style: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.log = log
+        self.mode = mode
         self._messages: Dict[str, list[str]] = {
             "top_info": [],
             "error": [],
@@ -78,18 +70,15 @@ class IssueBuilder:
     # --------------- utilities ---------------
 
     def _lookup(self, typ: str, key: str, fallback: Optional[str] = None) -> str:
-        """
-        Look up message text by type + key in either nested or flat JSON.
-        1) nested: strings[typ][key]
-        2) flat:   strings[f"{typ}.{key}"]
-        else fallback (or key)
-        """
         s = self._strings
         if isinstance(s, dict):
-            # flat
-            flat_key = f"{typ}.{key}"
-            if flat_key in s:
-                return str(s[flat_key])
+            raw_key = f"{typ}.{key}"
+            if raw_key in s:
+                return str(s[raw_key])
+            
+            mode_key = f"{typ}.{key}.{self.mode}"
+            if mode_key in s:
+                return str(s[mode_key])
         return fallback if fallback is not None else key
 
     def _bold(self, text: str, want: bool) -> str:
@@ -154,17 +143,13 @@ class IssueBuilder:
         text = self._lookup("add", key, key).format(*args)
         text = self._experimental_wrap(self._bold(text, bold), experimental)
 
-        # For discord preset we opened with "*"; close it to preserve italics.
+        # for discord preset we opened with "*"; close it to preserve italics.
         if self.prefix.get("add", "").endswith("*"):
             return self._add_to(self._last_added, f"{self.prefix['add']}{text}*", add=True)
         else:
             return self._add_to(self._last_added, f"{self.prefix['add']}{text}", add=True)
 
     def has(self, typ: str, key: str) -> bool:
-        """
-        Check if a message matching the key exists (supports {} wildcards).
-        Strips simple bold markers '*' and HTML <b></b>.
-        """
         wanted = self._lookup(typ, key, key)
         wanted = wanted.replace("*", "")
         # convert '{}' wildcards to '.*'
@@ -188,10 +173,6 @@ class IssueBuilder:
         return self
 
     def build(self, chunk_size: Optional[int] = None) -> list[str]:
-        """
-        Collapse messages into pages of up to chunk_size lines.
-        Preserves your original '9 lines per message' behaviour by default.
-        """
         size = chunk_size or int(self.style.get("chunk_size", 9))
         messages: list[str] = []
         index = 0
@@ -200,12 +181,11 @@ class IssueBuilder:
         for typ in ["top_info", "error", "warning", "note", "info"]:
             items = self._messages.get(typ, [])
             for j_idx, entry in enumerate(items):
-                # original special-case:
                 if "Re-Upload Log" in entry and self.has("top_info", "uploaded_log"):
                     continue
 
                 add = entry + "\n"
-                # extra blank line after top_info block (match old behaviour)
+                # extra blank line after top_info block
                 if typ == "top_info" and j_idx == len(items) - 1:
                     add += "\n"
 
