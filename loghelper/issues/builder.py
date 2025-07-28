@@ -12,8 +12,8 @@ DEFAULT_STYLES: Dict[str, Dict[str, Any]] = {
         "prefix": {
             "top_info": "‼️ ",
             "error":    "🔴 ",
-            "warning":  "🟡 ",
-            "note":     "🟠 ",
+            "warning":  "🟠 ",
+            "note":     "🟡 ",
             "info":     "🟢 ",
             "add":      " ↳ ",
         },
