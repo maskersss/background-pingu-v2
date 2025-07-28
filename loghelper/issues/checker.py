@@ -16,6 +16,8 @@ class IssueChecker:
         self.server_id = server_id
         self.channel_id = channel_id
         self.mode = mode
+        self.is_discord = (mode == "discord")
+        self.is_web = (mode == "web")
         self.not_mods = [
             "Julti",
             "Jingle",
@@ -175,10 +177,10 @@ class IssueChecker:
         
         builder.set_footer(footer.strip())
 
-        if self.log.leaked_session_id:
+        if self.is_discord and self.log.leaked_session_id:
             builder.error("leaked_session_id_token")
         
-        if self.log.leaked_pc_username:
+        if self.is_discord and self.log.leaked_pc_username:
             builder.info("leaked_username").add("upload_log_leaked_username")
             if self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
                 builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
@@ -1265,8 +1267,11 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("\"com.mojang.authlib.GameProfile.getId()\" is null"):
-            builder.error("authlib_injector_crash")
-            found_crash_cause = True
+            if self.log.has_content("[authlib-injector]"):
+                builder.error("authlib_injector_crash")
+                found_crash_cause = True
+            else:
+                builder.error("authlib_injector_crash", experimental=True)
         
         elif self.log.has_content("[authlib-injector]"):
             builder.note("illegal_launcher")
@@ -1443,6 +1448,7 @@ class IssueChecker:
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
         if (not found_crash_cause
+            and self.is_discord
             and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
             and not self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES
@@ -1450,7 +1456,11 @@ class IssueChecker:
         ):
             builder.info("upload_log_attachment")
         
-        if not found_crash_cause and is_mcsr_log and not self.link == "message":
+        if (not found_crash_cause
+            and self.is_discord
+            and is_mcsr_log
+            and not self.link == "message"
+        ):
             for server_id, bot_cid, support_cid in [
                 # (server_id, bot_cmds_channel_id, support_channel_id)
                 (83066801105145856, 433058639956410383, 727673359860760627),     # javacord
