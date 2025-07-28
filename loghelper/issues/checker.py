@@ -601,8 +601,6 @@ class IssueChecker:
             if is_mcsr_log:
                 builder.error("using_other_loader_mcsr", self.log.mod_loader.value).add(self.log.fabric_guide, "install")
                 found_crash_cause = True
-            else:
-                builder.note("using_other_loader", self.log.mod_loader.value)
         
         if not found_crash_cause:
             has_fabric_mod = any(self.log.has_mod(mcsr_mod) for mcsr_mod in self.mcsr_mods) or self.log.has_mod("fabric")
