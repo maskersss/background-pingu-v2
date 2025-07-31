@@ -33,6 +33,8 @@ class Core(Cog):
         if (not include_content
             and not msg.author.id in [
                 473868086773153793,    # zeppelin
+                1110166332059697222,   # pingu
+                834848683697635328,    # test
             ]
             and msg.channel.id in [
                 727673359860760627,    # javacord #public-help
