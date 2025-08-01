@@ -1778,13 +1778,13 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         java_args = java_args.strip()
         
         if using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17:
-            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which will crash with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732) or `/graalvm` for a guide."
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which will crash with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732>) or `/graalvm` for a guide."
             if self.mode == "web": note = note.replace(" or `/graalvm`", "")
             notes.append(note)
         elif (using_zgc and not self.log.major_java_version is None and self.log.major_java_version >= 24
             or not using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17
         ):
-            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732) or `/graalvm` for a guide."
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732>) or `/graalvm` for a guide."
             if self.log.major_java_version < 17:
                 note += " After updating Java, you should get settings from a new log for better Java arguments."
             if self.mode == "web": note = note.replace(" or `/graalvm`", "")
