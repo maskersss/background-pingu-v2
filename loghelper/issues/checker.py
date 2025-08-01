@@ -320,6 +320,7 @@ class IssueChecker:
             builder.error("tl_malware").add(self.log.setup_guide)
         
         if (self.log.operating_system == OperatingSystem.MACOS
+            and is_mcsr_log
             and self.log.has_mod("sodium") and not self.log.has_mod("sodiummac")
         ):
             if self.log.minecraft_version is None:

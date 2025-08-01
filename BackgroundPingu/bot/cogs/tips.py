@@ -244,7 +244,7 @@ Boateye guide: <https://youtu.be/Mj42HbnPUZ4>
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
 Fedora 41 uses Wayland by default - ensure you're using X11 to follow this guide."""
-        else: text = """1.16.1 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
+        else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)

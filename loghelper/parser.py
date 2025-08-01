@@ -796,7 +796,7 @@ class Log:
                 "pogloot",
             ]):
                 mods.append("seedqueue")
-            if not self.minecraft_version == "1.16.1":
+            if not self.minecraft_version in ["1.16.1", "1.15.2"]:
                 mods.append("sleepbackground")
         
         return mods
