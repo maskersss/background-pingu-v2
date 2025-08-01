@@ -862,7 +862,8 @@ class IssueChecker:
             required_mods = set([required_mod[1] for required_mod in match])
             for mod_name in required_mods:
                 if mod_name == "fabric":
-                    builder.error("requires_fabric_api")
+                    if is_mcsr_log: builder.error("requires_fabric_api_mcsr")
+                    else: builder.error("requires_fabric_api")
                 else:
                     builder.error("requires_mod", mod_name)
                 found_crash_cause = True
