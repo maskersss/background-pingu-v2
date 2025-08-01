@@ -1715,6 +1715,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
+                    if self.mode == "web": output = output.replace(" (`/fabric`)", "")
                 elif self.log.exitcode:
                     output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
                 else:
@@ -1763,10 +1764,10 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
 
         java_args = ""
         
+        using_zgc = False
         if free_ram < 1800:
             notes.append("⚠️ You have very little RAM available on your PC. At least, try closing as many programs as possible.")
-            using_zgc = False
-        else:
+        elif self.log.major_java_version >= 17:
             java_args += " -XX:+UseZGC"
             if not self.log.major_java_version is None and self.log.major_java_version == 23:
                 java_args += " -XX:-ZGenerational"
@@ -1777,14 +1778,18 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         java_args = java_args.strip()
         
         if using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17:
-            notes.append(f"⚠️ You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732) or `/graalvm` for a guide."
+            if self.mode == "web": note = note.replace(" or `/graalvm`", "")
+            notes.append(note)
         elif (using_zgc and not self.log.major_java_version is None and self.log.major_java_version >= 24
             or not using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17
         ):
-            notes.append(f"⚠️ You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732) or `/graalvm` for a guide."
+            if self.mode == "web": note = note.replace(" or `/graalvm`", "")
+            notes.append(note)
         elif self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, though not necessary. See [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
-
+            
         if len(self.log.whatever_mods) > 0:
             for recommended_mod in self.log.recommended_mods:
                 if not self.log.has_mod(recommended_mod):
@@ -1795,6 +1800,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                     missing_mods.append(recommended_mod)
         if len(missing_mods) > 0:
             notes.append(f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
+        
 
         output = "## Recommended SeedQueue settings:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
