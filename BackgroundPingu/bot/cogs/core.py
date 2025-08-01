@@ -86,7 +86,6 @@ class Core(Cog):
         for link, log in logs:
             try:
                 reply, success = IssueChecker(
-                    self.bot,
                     log,
                     link,
                     msg.guild.id if not msg.guild is None else None,
