@@ -1711,17 +1711,23 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if self.log.is_ranked_log:
                     output = "You sent a MCSR Ranked log. This command is for recommending settings for SeedQueue, not for Ranked (which is an illegal mod for regular runs)."
+                    if self.type == "web": output = output.replace("command", "website")
                 elif not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
                     if self.mode == "web": output = output.replace(" (`/fabric`)", "")
                 elif self.log.exitcode:
-                    output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
+                    if self.mode == "web":
+                        output = "Your game crashed. This website is for recommending settings and requires a log where the game launched, paste the log to https://maskers.xyz/log-analysis/ for potential solutions to the crash."
+                    else:
+                        output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
                 else:
-                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure you have the latest SeedQueue version and make sure to wait until the game opens before uploading the log."
+                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure to wait until the game opens before uploading the log."
             elif not self.log.type is None:
-                output = f"You sent a {self.log.type.value}. Send the full Minecraft log instead[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+                output = f"You sent a {self.log.type.value}. Send the full Minecraft log instead"
+                if self.mode == "web": output += ": https://i.imgur.com/qDJ6VuI.png"
+                else: output += "[:](https://i.imgur.com/qDJ6VuI.png)"
             else:
                 return ("", False)
             
