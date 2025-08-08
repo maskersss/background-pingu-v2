@@ -210,7 +210,9 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
     async def nbbdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-- These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`"""
+- These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
+Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384`.
+-# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
