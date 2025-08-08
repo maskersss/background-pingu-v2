@@ -1065,11 +1065,6 @@ class IssueChecker:
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
             builder.error("old_mod_crash", "SpeedrunAPI", "https://mods.tildejustin.dev/")
             found_crash_cause = True
-        
-        if self.log.has_content("No config found for mod id standardsettings"):
-            builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
-            if self.log.is_prism: builder.add("update_mods_prism")
-            found_crash_cause = True
 
         match = re.search(r"Incompatible mod set found! READ THE BELOW LINES!(.*?$)", self.log._content, re.DOTALL)
         if not match is None:
