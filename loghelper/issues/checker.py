@@ -1652,7 +1652,10 @@ class IssueChecker:
                     if asking_for_help_total >= 2 and leave_total >= 10 and wall_total >= 10:
                         builder.error("exit_wall")
                 
-                if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
+                if (not found_crash_cause
+                    and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP]
+                    and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
+                ):
                     builder.error("send_full_log", self.log.edit_instance)
                 
                 if not found_crash_cause and self.log.has_content("Host api.paste.ee not found"):
