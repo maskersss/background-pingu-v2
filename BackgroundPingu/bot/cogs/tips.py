@@ -292,7 +292,7 @@ older tutorials: https://discord.com/channels/83066801105145856/4330586399564103
 
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
     async def julti(self, ctx: discord.ApplicationContext):
-        text = """**Julti is no longer recommended for 1.16.1, you should use [SeedQueue](<https://www.youtube.com/watch?v=OEpZlv6cQsI>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
+        text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=OEpZlv6cQsI>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
 Julti tutorial: <https://youtu.be/_8gQkgZcTKo>
 Julti discord: <https://discord.gg/cXf86mXAWR>"""
         return await ctx.respond(text)
