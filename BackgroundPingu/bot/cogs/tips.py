@@ -415,7 +415,7 @@ If you don't want your settings to reset, set "Use StandardSettings" there to "O
     # remove the spaces          (here) when uncommenting, also for `/modpack`
     '''@commands.slash_command(name = "modpack_list", description="Gives a list of MCSR modpacks.")
     async def modpack_list(self, ctx: discord.ApplicationContext):
-        text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/download/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)
+        text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)
 Do `/modpack` for a tutorial on how to import them.
 If the game crashes when it starts up, do `/java`.
 If you're wondering why your settings keep resetting, do `/standardsettings`.

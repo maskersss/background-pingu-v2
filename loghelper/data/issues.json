@@ -185,7 +185,7 @@
     "note.motiono": "You're using `MotiNO`, which is illegal for speedrun.com, and `ExtraOptions` is a whitelisted version of it.",
     "note.not_using_java_17": "You're using `Java {}`. It is recommended to use `Java 17-22` instead for better performance.",
     "note.old_fabric": "You're using a somewhat old version of `Fabric Loader`, you might want to update it.",
-    "note.old_prism_version": "You're using an outdated `Prism Launcher` version. You should update it, you can download the latest version [**here**](https://prismlauncher.org/download/).",
+    "note.old_prism_version": "You're using an outdated `Prism Launcher` version. You should update it, you can download the latest version [**here**](https://prismlauncher.org/).",
     "note.onedrive": "Your launcher folder is located in `OneDrive`. `OneDrive` can mess with your game files to save space, and this can lead to crashes. You should move it to a different folder.",
     "note.out_of_disk_space": "Make sure you didn't run out of disk space.",
     "note.outdated_mods_linked": "You are using `{}` outdated mod{}. Download the latest legal version{} here: {}.",
