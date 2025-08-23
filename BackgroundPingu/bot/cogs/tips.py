@@ -41,6 +41,7 @@ class Tips(Cog):
             link,
             ctx.guild_id,
             ctx.channel_id,
+            ctx.author.id,
             "discord",
         ).seedqueue_settings()
         

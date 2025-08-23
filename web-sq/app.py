@@ -26,7 +26,7 @@ def get_settings(log_link, include_content=False):
     for link, log in logs:
         try:
             reply, success = IssueChecker(
-                log, link, None, None, "web"
+                log, link, None, None, None, "web"
             ).seedqueue_settings()
             if success:
                 return reply

@@ -32,6 +32,7 @@ def check_log(log_link, include_content=False):
                 link,
                 None,  # No guild ID
                 None,  # No channel ID
+                None,  # No user ID
                 "web",
             ).check()
             

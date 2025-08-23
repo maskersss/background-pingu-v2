@@ -28,6 +28,7 @@ class LogCLI:
                     link,
                     None,  # No guild ID
                     None,  # No channel ID
+                    None,  # No user ID
                     "web",
                 ).check()
                 
@@ -50,6 +51,7 @@ class LogCLI:
                     link,
                     None,  # No guild ID
                     None,  # No channel ID
+                    None,  # No user ID
                     "web",
                 ).seedqueue_settings()
                 if success:

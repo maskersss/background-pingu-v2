@@ -9,12 +9,20 @@ from ..parser import Log, ModLoader, OperatingSystem, LogType, Launcher
 from ..config import *
 
 class IssueChecker:
-    def __init__(self, log: Log, link: str, server_id: int, channel_id: int, mode="web") -> None:
+    def __init__(self,
+                 log: Log,
+                 link: str,
+                 server_id: int,
+                 channel_id: int,
+                 user_id: int,
+                 mode="web",
+    ) -> None:
         self.legal_mods = load_mods_json()
         self.log = log
         self.link = link
         self.server_id = server_id
         self.channel_id = channel_id
+        self.user_id = user_id
         self.mode = mode
         self.is_discord = (mode == "discord")
         self.is_web = (mode == "web")
@@ -1807,8 +1815,8 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         if len(missing_mods) > 0:
             notes.append(f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
         
-
-        output = "## Recommended SeedQueue settings:\n"
+        ping = f" for <@{self.user_id}>" if True else ""
+        output = f"## Recommended SeedQueue settings{ping}:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
         if free_ram >= 2000:

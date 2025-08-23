@@ -63,6 +63,7 @@ class Core(Cog):
                     link,
                     msg.guild.id if not msg.guild is None else None,
                     msg.channel.id if not msg.channel is None else None,
+                    msg.author.id if not msg.author is None else None,
                     "discord",
                 ).check()
                 if results.has_values():
@@ -90,6 +91,7 @@ class Core(Cog):
                     link,
                     msg.guild.id if not msg.guild is None else None,
                     msg.channel.id if not msg.channel is None else None,
+                    msg.author.id if not msg.author is None else None,
                     "discord",
                 ).seedqueue_settings()
                 if success:
