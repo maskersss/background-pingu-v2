@@ -246,7 +246,11 @@ Boateye guide: <https://youtu.be/Mj42HbnPUZ4>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
-Fedora 41 uses Wayland by default - ensure you're using X11 to follow this guide."""
+
+resetti (for window resizing on X11, and multi-instancing on versions without SeedQueue): <https://github.com/tesselslate/resetti>
+waywall (for window resizing on Wayland + many useful features): <https://tesselslate.github.io/waywall>
+
+MCSR Linux Discord server: https://discord.gg/CVxuagAXMt"""
         else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
