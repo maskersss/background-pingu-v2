@@ -1815,7 +1815,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         if len(missing_mods) > 0:
             notes.append(f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
         
-        ping = f" for <@{self.user_id}>" if True else ""
+        ping = f" for <@{self.user_id}>" if self.user_id else ""
         output = f"## Recommended SeedQueue settings{ping}:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
