@@ -1,6 +1,6 @@
 from BackgroundPingu.bot import main
 from BackgroundPingu import secrets
-from BackgroundPingu.data import issues_sorter, mods_getter
+from loghelper.data import issues_sorter, mods_getter
 from discord.errors import HTTPException
 from time import sleep
 

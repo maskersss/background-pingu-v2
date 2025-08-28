@@ -1,105 +1,31 @@
 import semver, json, re
 from packaging import version
 from math import sqrt
-from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.core.parser import Log, ModLoader, OperatingSystem, LogType, Launcher
-from BackgroundPingu.config import *
-
-class IssueBuilder:
-    def __init__(self, bot: BackgroundPingu, log: Log) -> None:
-        self.bot = bot
-        self._messages = {
-            "top_info": [],
-            "error": [],
-            "warning": [],
-            "note": [],
-            "info": []
-        }
-        self.log = log
-        self.amount = 0
-        self._last_added = None
-        self.footer = ""
-    
-    def _add_to(self, type: str, value: str, add: bool=False):
-        self._messages[type].append(value)
-        if not add:
-            self.amount += 1
-            self._last_added = type
-        return self
-
-    def top_info(self, key: str, *args):
-        return self._add_to("top_info", "‼️ **" + self.bot.strings.get(f"top_info.{key}", key).format(*args) + "**")
-
-    def error(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"error.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("error", "<:dangerkekw:1123554236626636880> " + text)
-    
-    def warning(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"warning.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("warning", "<:warningkekw:1123563914454634546> " + text)
-    
-    def note(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"note.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("note", "<:kekw:1123554521738657842> " + text)
-
-    def info(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"info.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to("info", "<:infokekw:1123567743355060344> " + text)
-
-    def add(self, key: str | None, *args, experimental: bool=False, bold: bool=False):
-        if key is None: return
-        text = self.bot.strings.get(f"add.{key}", key).format(*args)
-        if bold: text = f"**{text}**"
-        if experimental: text = f"**[warning: experimental]** {text}"
-        return self._add_to(self._last_added, "<:reply:1122083632727724083>*" + text + "*", add=True)
-
-    def has(self, type: str, key: str) -> bool:
-        key = self.bot.strings.get(f"{type}.{key}", key).replace("*", "")
-        for string in self._messages[type]:
-            string = str(string).split(" ", 1)[1].replace("*", "")
-            pattern = re.escape(key).replace(r"\{\}", r".*")
-            if re.match(pattern, string):
-                return True
-        return False
-
-    def has_values(self) -> bool:
-        return self.amount > 0
-
-    def set_footer(self, s: str):
-        self.footer = s
-        return self
-
-    def build(self) -> list[str]:
-        messages = []
-        index = 0
-        for i in self._messages:
-            for j in self._messages[i]:
-                if "Re-Upload Log" in j and self.has("top_info", "uploaded_log"): continue
-                add = j + "\n" + ("\n" if i == "top_info" and index == len(self._messages[i]) - 1 else "")
-                if len(messages) == 0 or index % 9 == 0: messages.append(add)
-                else: messages[len(messages) - 1] += add
-                index += 1
-        return messages
+from pathlib import Path
+from ..data_loader import load_mods_json, load_issues_json
+from ..parser import Log
+from .builder import IssueBuilder
+from ..parser import Log, ModLoader, OperatingSystem, LogType, Launcher
+from ..config import *
 
 class IssueChecker:
-    def __init__(self, bot: BackgroundPingu, log: Log, link: str, server_id: int, channel_id: int) -> None:
-        self.bot = bot
+    def __init__(self,
+                 log: Log,
+                 link: str,
+                 server_id: int,
+                 channel_id: int,
+                 user_id: int,
+                 mode="web",
+    ) -> None:
+        self.legal_mods = load_mods_json()
         self.log = log
         self.link = link
         self.server_id = server_id
         self.channel_id = channel_id
+        self.user_id = user_id
+        self.mode = mode
+        self.is_discord = (mode == "discord")
+        self.is_web = (mode == "web")
         self.not_mods = [
             "Julti",
             "Jingle",
@@ -172,7 +98,7 @@ class IssueChecker:
     def get_mod_metadata(self, mod_filename: str) -> dict:
         mod_filename = mod_filename.lower().replace("optifine", "optifabric")
         filename = mod_filename.replace(" ", "").replace("-", "").replace("+", "").replace("_", "")
-        for mod in self.bot.mods:
+        for mod in self.legal_mods:
             original_name = mod["name"].lower()
             mod_name = original_name.replace(" ", "").replace("-", "").replace("_", "")
             mod_name = "zbufferfog" if mod_name == "legacyplanarfog" else mod_name
@@ -204,7 +130,7 @@ class IssueChecker:
     def is_boateye_sens(self, sens: float) -> bool:
         tolerance = 0.0002 * sens  # 0.02% of given sens
 
-        with open("./BackgroundPingu/data/boatEyeSensitivitiesv1_16.txt", 'r') as file:
+        with open(Path(__file__).parent.parent / "data"/ "boatEyeSensitivitiesv1_16.txt", 'r') as file:
             for line in file:
                 val = float(line.strip())
                 if abs(val - sens) <= tolerance:
@@ -212,7 +138,7 @@ class IssueChecker:
         return False
 
     def check(self) -> IssueBuilder:
-        builder = IssueBuilder(self.bot, self.log)
+        builder = IssueBuilder(self.log, self.mode)
 
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
@@ -259,10 +185,10 @@ class IssueChecker:
         
         builder.set_footer(footer.strip())
 
-        if self.log.leaked_session_id:
+        if self.is_discord and self.log.leaked_session_id:
             builder.error("leaked_session_id_token")
         
-        if self.log.leaked_pc_username:
+        if self.is_discord and self.log.leaked_pc_username:
             builder.info("leaked_username").add("upload_log_leaked_username")
             if self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
                 builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
@@ -402,6 +328,7 @@ class IssueChecker:
             builder.error("tl_malware").add(self.log.setup_guide)
         
         if (self.log.operating_system == OperatingSystem.MACOS
+            and is_mcsr_log
             and self.log.has_mod("sodium") and not self.log.has_mod("sodiummac")
         ):
             if self.log.minecraft_version is None:
@@ -651,7 +578,7 @@ class IssueChecker:
                     match = re.compile(r"-(\d+(?:\.\d+)?)\+").search(mod)
                     if not match is None:
                         try: ver = version.parse(match.group(1))
-                        except: pass
+                        except: continue
                         if highest_srigt_ver is None or ver > highest_srigt_ver:
                             highest_srigt_ver = ver
             if not highest_srigt_ver is None and highest_srigt_ver < version.parse("13.3") and self.log.fabric_version > version.parse("0.14.14"):
@@ -683,8 +610,6 @@ class IssueChecker:
             if is_mcsr_log:
                 builder.error("using_other_loader_mcsr", self.log.mod_loader.value).add(self.log.fabric_guide, "install")
                 found_crash_cause = True
-            else:
-                builder.note("using_other_loader", self.log.mod_loader.value)
         
         if not found_crash_cause:
             has_fabric_mod = any(self.log.has_mod(mcsr_mod) for mcsr_mod in self.mcsr_mods) or self.log.has_mod("fabric")
@@ -946,7 +871,8 @@ class IssueChecker:
             required_mods = set([required_mod[1] for required_mod in match])
             for mod_name in required_mods:
                 if mod_name == "fabric":
-                    builder.error("requires_fabric_api")
+                    if is_mcsr_log: builder.error("requires_fabric_api_mcsr")
+                    else: builder.error("requires_fabric_api")
                 else:
                     builder.error("requires_mod", mod_name)
                 found_crash_cause = True
@@ -1147,11 +1073,6 @@ class IssueChecker:
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
             builder.error("old_mod_crash", "SpeedrunAPI", "https://mods.tildejustin.dev/")
             found_crash_cause = True
-        
-        if self.log.has_content("No config found for mod id standardsettings"):
-            builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
-            if self.log.is_prism: builder.add("update_mods_prism")
-            found_crash_cause = True
 
         match = re.search(r"Incompatible mod set found! READ THE BELOW LINES!(.*?$)", self.log._content, re.DOTALL)
         if not match is None:
@@ -1349,8 +1270,11 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("\"com.mojang.authlib.GameProfile.getId()\" is null"):
-            builder.error("authlib_injector_crash")
-            found_crash_cause = True
+            if self.log.has_content("[authlib-injector]"):
+                builder.error("authlib_injector_crash")
+                found_crash_cause = True
+            else:
+                builder.error("authlib_injector_crash", experimental=True)
         
         elif self.log.has_content("[authlib-injector]"):
             builder.note("illegal_launcher")
@@ -1527,6 +1451,7 @@ class IssueChecker:
             builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
         
         if (not found_crash_cause
+            and self.is_discord
             and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
             and not self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES
@@ -1534,7 +1459,11 @@ class IssueChecker:
         ):
             builder.info("upload_log_attachment")
         
-        if not found_crash_cause and is_mcsr_log and not self.link == "message":
+        if (not found_crash_cause
+            and self.is_discord
+            and is_mcsr_log
+            and not self.link == "message"
+        ):
             for server_id, bot_cid, support_cid in [
                 # (server_id, bot_cmds_channel_id, support_channel_id)
                 (83066801105145856, 433058639956410383, 727673359860760627),     # javacord
@@ -1731,7 +1660,10 @@ class IssueChecker:
                     if asking_for_help_total >= 2 and leave_total >= 10 and wall_total >= 10:
                         builder.error("exit_wall")
                 
-                if not found_crash_cause and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)"):
+                if (not found_crash_cause
+                    and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP]
+                    and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
+                ):
                     builder.error("send_full_log", self.log.edit_instance)
                 
                 if not found_crash_cause and self.log.has_content("Host api.paste.ee not found"):
@@ -1785,16 +1717,23 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if self.log.is_ranked_log:
                     output = "You sent a MCSR Ranked log. This command is for recommending settings for SeedQueue, not for Ranked (which is an illegal mod for regular runs)."
+                    if self.mode == "web": output = output.replace("command", "website")
                 elif not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
+                    if self.mode == "web": output = output.replace(" (`/fabric`)", "")
                 elif self.log.exitcode:
-                    output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
+                    if self.mode == "web":
+                        output = "Your game crashed. This website is for recommending settings and requires a log where the game launched, paste the log to https://maskers.xyz/log-analysis/ for potential solutions to the crash."
+                    else:
+                        output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
                 else:
-                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure you have the latest SeedQueue version and make sure to wait until the game opens before uploading the log."
+                    output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure to wait until the game opens before uploading the log."
             elif not self.log.type is None:
-                output = f"You sent a {self.log.type.value}. Send the full Minecraft log instead[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
+                output = f"You sent a {self.log.type.value}. Send the full Minecraft log instead"
+                if self.mode == "web": output += ": https://i.imgur.com/qDJ6VuI.png"
+                else: output += "[:](https://i.imgur.com/qDJ6VuI.png)"
             else:
                 return ("", False)
             
@@ -1837,10 +1776,10 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
 
         java_args = ""
         
+        using_zgc = False
         if free_ram < 1800:
-            notes.append(":warning: You have very little RAM available on your PC. At least, try closing as many programs as possible.")
-            using_zgc = False
-        else:
+            notes.append("⚠️ You have very little RAM available on your PC. At least, try closing as many programs as possible.")
+        elif self.log.major_java_version >= 17:
             java_args += " -XX:+UseZGC"
             if not self.log.major_java_version is None and self.log.major_java_version == 23:
                 java_args += " -XX:-ZGenerational"
@@ -1851,14 +1790,20 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         java_args = java_args.strip()
         
         if using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17:
-            notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which doesn't work with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which will crash with recommended Java arguments. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732>) or `/graalvm` for a guide."
+            if self.mode == "web": note = note.replace(" or `/graalvm`", "")
+            notes.append(note)
         elif (using_zgc and not self.log.major_java_version is None and self.log.major_java_version >= 24
             or not using_zgc and not self.log.major_java_version is None and self.log.major_java_version < 17
         ):
-            notes.append(f":warning: You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See `/java` or `/graalvm` for a guide.")
+            note = f"⚠️ You're using `Java {self.log.major_java_version}`, which was found to reduce performance. It is recommended to use `Java 17-22` instead for better performance. See [**this guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732>) or `/graalvm` for a guide."
+            if self.log.major_java_version < 17:
+                note += " After updating Java, you should get settings from a new log for better Java arguments."
+            if self.mode == "web": note = note.replace(" or `/graalvm`", "")
+            notes.append(note)
         elif self.log.has_pattern(r"Java path is:\n(?!.*graalvm).*"):
             notes.append("You are not using GraalVM. It's generally recommended, though not necessary. See [**here**](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d>) for more info.")
-
+            
         if len(self.log.whatever_mods) > 0:
             for recommended_mod in self.log.recommended_mods:
                 if not self.log.has_mod(recommended_mod):
@@ -1868,9 +1813,10 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                     if latest_version is None: continue
                     missing_mods.append(recommended_mod)
         if len(missing_mods) > 0:
-            notes.append(f":warning: You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
-
-        output = "## Recommended SeedQueue settings:\n"
+            notes.append(f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
+        
+        ping = f" for <@{self.user_id}>" if self.user_id else ""
+        output = f"## Recommended SeedQueue settings{ping}:\n"
         output += f"- **Max Queued Seeds:** {max_queued}\n"
         output += f"- **Max Generating Seeds:** {max_generating}\n"
         if free_ram >= 2000:

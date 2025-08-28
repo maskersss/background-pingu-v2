@@ -1,24 +1,10 @@
 import argparse, json, random, re, traceback
-from BackgroundPingu.core import parser, issues
-from BackgroundPingu.config import *
-
-class MockBackgroundPingu:
-    def __init__(self):
-        # Mock the necessary attributes
-        with open("./BackgroundPingu/data/issues.json", "r") as f:
-            self.strings = json.load(f)
-        with open("./BackgroundPingu/data/mods.json", "r") as f:
-            self.mods = json.load(f)
-
-        self.cog_blacklist = []
-        self.cog_folder_blacklist = ["__pycache__"]
-        self.cogs_path = "./BackgroundPingu/bot/cogs"
-
+from loghelper.issues.builder import IssueBuilder
+from loghelper.issues.checker import IssueChecker
+from loghelper import parser
+from loghelper.config import *
 
 class LogCLI:
-    def __init__(self):
-        self.bot = MockBackgroundPingu()  # Use the mocked bot object
-
     def get_logs_from_link(self, link, include_content=False):
         link_pattern = LINK_PATTERN
         matches = re.findall(link_pattern, link)
@@ -37,12 +23,13 @@ class LogCLI:
         
         for link, log in logs:
             try:
-                results = issues.IssueChecker(
-                    self.bot,
+                results = IssueChecker(
                     log,
                     link,
                     None,  # No guild ID
                     None,  # No channel ID
+                    None,  # No user ID
+                    "web",
                 ).check()
                 
                 if results.has_values():
@@ -59,12 +46,13 @@ class LogCLI:
         logs = self.get_logs_from_link(log_link, include_content=False)
         for link, log in logs:
             try:
-                reply, success = issues.IssueChecker(
-                    self.bot,
+                reply, success = IssueChecker(
                     log,
                     link,
                     None,  # No guild ID
                     None,  # No channel ID
+                    None,  # No user ID
+                    "web",
                 ).seedqueue_settings()
                 if success:
                     return reply

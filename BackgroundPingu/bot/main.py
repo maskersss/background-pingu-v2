@@ -8,11 +8,6 @@ class BackgroundPingu(asb):
 
         self.start_time = datetime.utcnow()
 
-        with open("./BackgroundPingu/data/issues.json", "r") as f:
-            self.strings = json.load(f)
-        with open("./BackgroundPingu/data/mods.json", "r") as f:
-            self.mods = json.load(f)
-
         self.cog_blacklist = []
         self.cog_folder_blacklist = ["__pycache__"]
         self.cogs_path = "./BackgroundPingu/bot/cogs"

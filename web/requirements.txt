@@ -1,0 +1,6 @@
+fastapi
+jinja2
+uvicorn
+python-multipart
+markdown
+-e ../loghelper

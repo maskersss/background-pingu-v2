@@ -2,8 +2,10 @@ import discord, json, re, requests, traceback
 from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.core import parser, issues
-from BackgroundPingu.config import *
+from loghelper.issues.builder import IssueBuilder
+from loghelper.issues.checker import IssueChecker
+from loghelper import parser
+from loghelper.config import *
 
 class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
@@ -34,12 +36,13 @@ class Tips(Cog):
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
             return await ctx.respond(text)
 
-        text, success = issues.IssueChecker(
-            self.bot,
+        text, success = IssueChecker(
             log,
             link,
             ctx.guild_id,
             ctx.channel_id,
+            ctx.author.id,
+            "discord",
         ).seedqueue_settings()
         
         if not success:
@@ -141,7 +144,7 @@ You may remap keys using external programs, but:
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 any% random seed glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/OEpZlv6cQsI>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
@@ -208,7 +211,9 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
     async def nbbdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-- These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`"""
+- These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
+Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384`.
+-# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
@@ -233,7 +238,7 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
-        if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=OEpZlv6cQsI&t=167s>) to download and configure mods.
+        if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=RSLv7FfQZKY&t=167s>) to download and configure mods.
 
 To run several instances, use **SeedQueue** (`/seedqueue`).
 [SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
@@ -241,8 +246,12 @@ Boateye guide: <https://youtu.be/Mj42HbnPUZ4>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
-Fedora 41 uses Wayland by default - ensure you're using X11 to follow this guide."""
-        else: text = """1.16.1 setup video tutorial, including SeedQueue: https://youtu.be/OEpZlv6cQsI
+
+resetti (for window resizing on X11, and multi-instancing on versions without SeedQueue): <https://github.com/tesselslate/resetti>
+waywall (for window resizing on Wayland + many useful features): <https://tesselslate.github.io/waywall>
+
+MCSR Linux Discord server: https://discord.gg/CVxuagAXMt"""
+        else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/RSLv7FfQZKY
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)
@@ -288,7 +297,7 @@ older tutorials: https://discord.com/channels/83066801105145856/4330586399564103
 
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
     async def julti(self, ctx: discord.ApplicationContext):
-        text = """**Julti is no longer recommended for 1.16.1, you should use [SeedQueue](<https://www.youtube.com/watch?v=OEpZlv6cQsI>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
+        text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=RSLv7FfQZKY>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
 Julti tutorial: <https://youtu.be/_8gQkgZcTKo>
 Julti discord: <https://discord.gg/cXf86mXAWR>"""
         return await ctx.respond(text)
@@ -311,7 +320,7 @@ WorldBopper plugin for [Julti](<https://github.com/DuncanRuns/Julti>): <https://
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
 Download: <https://github.com/contariaa/seedqueue/releases>
 Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
-Tutorial: <https://www.youtube.com/watch?v=OEpZlv6cQsI>
+Tutorial: <https://www.youtube.com/watch?v=RSLv7FfQZKY>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
         return await ctx.respond(text)
@@ -411,7 +420,7 @@ If you don't want your settings to reset, set "Use StandardSettings" there to "O
     # remove the spaces          (here) when uncommenting, also for `/modpack`
     '''@commands.slash_command(name = "modpack_list", description="Gives a list of MCSR modpacks.")
     async def modpack_list(self, ctx: discord.ApplicationContext):
-        text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/download/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)
+        text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)
 Do `/modpack` for a tutorial on how to import them.
 If the game crashes when it starts up, do `/java`.
 If you're wondering why your settings keep resetting, do `/standardsettings`.
@@ -423,19 +432,14 @@ If you're wondering why your settings keep resetting, do `/standardsettings`.
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1.mrpack)**
 - **Full Ranked Pack (Requires __Java 17+__ (`/java`))**
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1-Pro.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1-Pro.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1-Pro.mrpack)**"""
-        return await ctx.respond(text)
-
-    @commands.slash_command(name = "modpack", description="Gives instructions for setting up an RSG modpack instance.")
-    async def modpack(self, ctx: discord.ApplicationContext):
-        text = """Download [**MultiMC**](<https://multimc.org/>), extract it and launch `MultiMC.exe`. Click `Add instance > Import from zip`. Copy the link below that corresponds to your operating system, and paste it into the text field below `Import from zip`:
-- Windows or Linux: <https://mods.tildejustin.dev/modpacks/v4/MCSR-1.16.1-Windows-RSG.mrpack>
-- macOS: <https://mods.tildejustin.dev/modpacks/v4/MCSR-1.16.1-OSX-RSG.mrpack>
-Click `OK` and the instance should be ready.
-Demo: https://discord.com/channels/83066801105145856/405839885509984256/1127597457530945596
-If this is your first time using MultiMC, go to `Settings > Java` and set the `Max memory allocation` to 2048 MB.
-If the game crashes when it starts up, do `/java`. 
-If you want a custom modpack, go [here](<https://mods.tildejustin.dev/?type=modpack>)"""
         return await ctx.respond(text)'''
+
+    @commands.slash_command(name="modpack", description="Links a speedrunning Modrinth modpack.")
+    async def modpack(self, ctx: discord.ApplicationContext):
+        text = """!!tag speedrunpack Contains all mods that are verifiable on speedrun.com for modern versions of Minecraft.
+To import it into MultiMC/Prism, go to Add Instance > Modrinth, search for "SpeedrunPack", select it and press OK.
+https://modrinth.com/modpack/speedrun"""
+        return await ctx.respond(text)
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):

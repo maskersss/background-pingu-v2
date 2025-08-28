@@ -1,6 +1,6 @@
 import discord, re
 from discord.ui import View, Button
-from BackgroundPingu.core.issues import IssueBuilder
+from loghelper.issues.builder import IssueBuilder
 
 class Paginator(View):
     def __init__(self, messages: list[str], builder: IssueBuilder, post: discord.Message):

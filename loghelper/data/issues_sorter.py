@@ -1,8 +1,9 @@
 import json
+from pathlib import Path
 
 def sort():
     print("Sorting issues...")
-    path = "./BackgroundPingu/data/issues.json"
+    path = Path(__file__).parent / "issues.json"
     added_periods = 0
     with open(path, "r") as f:
         strings = json.load(f)

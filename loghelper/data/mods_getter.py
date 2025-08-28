@@ -1,4 +1,5 @@
 import json, requests
+from pathlib import Path
 
 ignored = []
 
@@ -12,7 +13,7 @@ def get_mods(start: bool=True):
         return version
     
     if start: print("Getting mods...")
-    path = "./BackgroundPingu/data/mods.json"
+    path = Path(__file__).parent / "mods.json"
     mods = []
     link = "https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-6/mods.json"
     headers = {'Cache-Control': 'no-cache'}

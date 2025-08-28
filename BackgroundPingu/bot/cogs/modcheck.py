@@ -1,7 +1,7 @@
 from discord.ext import tasks
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
-from BackgroundPingu.data import mods_getter
+from loghelper.data import mods_getter
 
 class ModCheck(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
