@@ -432,19 +432,14 @@ If you're wondering why your settings keep resetting, do `/standardsettings`.
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1.mrpack)**
 - **Full Ranked Pack (Requires __Java 17+__ (`/java`))**
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1-Pro.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1-Pro.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1-Pro.mrpack)**"""
-        return await ctx.respond(text)
-
-    @commands.slash_command(name = "modpack", description="Gives instructions for setting up an RSG modpack instance.")
-    async def modpack(self, ctx: discord.ApplicationContext):
-        text = """Download [**MultiMC**](<https://multimc.org/>), extract it and launch `MultiMC.exe`. Click `Add instance > Import from zip`. Copy the link below that corresponds to your operating system, and paste it into the text field below `Import from zip`:
-- Windows or Linux: <https://mods.tildejustin.dev/modpacks/v4/MCSR-1.16.1-Windows-RSG.mrpack>
-- macOS: <https://mods.tildejustin.dev/modpacks/v4/MCSR-1.16.1-OSX-RSG.mrpack>
-Click `OK` and the instance should be ready.
-Demo: https://discord.com/channels/83066801105145856/405839885509984256/1127597457530945596
-If this is your first time using MultiMC, go to `Settings > Java` and set the `Max memory allocation` to 2048 MB.
-If the game crashes when it starts up, do `/java`. 
-If you want a custom modpack, go [here](<https://mods.tildejustin.dev/?type=modpack>)"""
         return await ctx.respond(text)'''
+
+    @commands.slash_command(name="modpack", description="Links a speedrunning Modrinth modpack.")
+    async def modpack(self, ctx: discord.ApplicationContext):
+        text = """!!tag speedrunpack Contains all mods that are verifiable on speedrun.com for modern versions of Minecraft.
+To import it into MultiMC/Prism, go to Add Instance > Modrinth, search for "SpeedrunPack", select it and press OK.
+https://modrinth.com/modpack/speedrun"""
+        return await ctx.respond(text)
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):
