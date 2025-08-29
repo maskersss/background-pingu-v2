@@ -1,12 +1,12 @@
 # Background Pingu Discord Bot
 
-Background Pingu is a Discord bot designed for automatic parsing of Minecraft logs, primarily for the MCSR (Minecraft Speedrunning) community. It provides insights and identifies common issues within Minecraft logs.
+Background Pingu has originally been a Discord bot designed for automatic parsing of Minecraft logs, primarily for the MCSR (Minecraft Speedrunning) community. Now it's also available as a website.
 
 ## Features
 
-- Supports paste.ee and mclo.gs links, as well as attached files.
-- Uploads logs to mclo.gs for easier viewing.
-- Automatically detects common issues, providing efficient analysis for quick troubleshooting.
+- Supports paste.ee and mclo.gs links, as well as Discord attached files.
+- Uploads logs to mclo.gs.
+- Automatically detects lots of common issues.
 
 ## Contributing
 
