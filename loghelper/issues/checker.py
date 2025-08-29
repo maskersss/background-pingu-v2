@@ -1785,7 +1785,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                 java_args += " -XX:-ZGenerational"
             using_zgc = True
         
-        java_args += " -XX:+AlwaysPreTouch -Dgraal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
+        java_args += " -XX:+AlwaysPreTouch -Djdk.graal.TuneInlinerExploration=1 -XX:NmethodSweepActivity=1"
         
         java_args = java_args.strip()
         
