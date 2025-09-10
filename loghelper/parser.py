@@ -788,12 +788,9 @@ class Log:
                 "atum",
                 "state-output",
             ]
-            if not self.has_mod("pogloot"):
-                mods.append("worldpreview")
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
                 "fsg",
                 "beachfilter",
-                "pogloot",
             ]):
                 mods.append("seedqueue")
             if not self.minecraft_version in ["1.16.1", "1.15.2"]:
