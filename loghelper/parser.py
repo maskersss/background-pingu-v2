@@ -17,6 +17,7 @@ class LogType(enum.Enum):
     LAUNCHER_LOG = "launcher log"
 
 class Launcher(enum.Enum):
+    JINGLE = "Jingle"
     OFFICIAL_LAUNCHER = "Official Launcher"
     MULTIMC = "MultiMC"
     PRISM = "Prism"
@@ -287,6 +288,12 @@ class Log:
     
     @cached_property
     def launcher(self) -> Launcher:
+        for jingle_indicator in [
+            "You are running Jingle",
+        ]:
+            if self.has_content(jingle_indicator):
+                return Launcher.JINGLE
+        
         for multimc_name in [
             "multimc",
             "ultimmc",
@@ -634,7 +641,12 @@ class Log:
 
     @cached_property
     def fabric_guide(self) -> str:
-        if self.launcher in [Launcher.OFFICIAL_LAUNCHER, Launcher.MODRINTH]: return None
+        if self.launcher in [
+            Launcher.OFFICIAL_LAUNCHER,
+            Launcher.MODRINTH,
+            Launcher.ATLAUNCHER,
+            Launcher.JINGLE,
+        ]: return None
         if self.is_newer_than("1.0") and not self.is_newer_than("1.14"): return "legacy_fabric_guide"
         if self.is_prism: return "fabric_guide_prism"
         return "fabric_guide_mmc"
@@ -650,7 +662,7 @@ class Log:
         if self.operating_system == OperatingSystem.LINUX:
             return "java_update_guide_linux"
 
-        if self.launcher in [Launcher.MODRINTH, Launcher.ATLAUNCHER]:
+        if self.launcher in [Launcher.MODRINTH, Launcher.ATLAUNCHER, Launcher.JINGLE]:
             return None
 
         return "java_update_guide"
