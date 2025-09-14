@@ -436,7 +436,7 @@ If you're wondering why your settings keep resetting, do `/standardsettings`.
 
     @commands.slash_command(name="modpack", description="Links a speedrunning Modrinth modpack.")
     async def modpack(self, ctx: discord.ApplicationContext):
-        text = """!!tag speedrunpack Contains all mods that are verifiable on speedrun.com for modern versions of Minecraft.
+        text = """Contains all mods that are verifiable on speedrun.com for modern versions of Minecraft.
 To import it into MultiMC/Prism, go to Add Instance > Modrinth, search for "SpeedrunPack", select it and press OK.
 https://modrinth.com/modpack/speedrun"""
         return await ctx.respond(text)
