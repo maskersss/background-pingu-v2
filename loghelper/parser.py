@@ -23,6 +23,7 @@ class Launcher(enum.Enum):
     PRISM = "Prism"
     MODRINTH = "Modrinth App"
     ATLAUNCHER = "ATLauncher"
+    MCSRLAUNCHER = "MCSR Launcher"
     TL = "TL"
 
 class ModLoader(enum.Enum):
@@ -321,6 +322,13 @@ class Log:
             ]):
                 return Launcher.PRISM
         
+        if any(self.has_content(mcsrlauncher) for mcsrlauncher in [
+            "com.redlimerl.mcsrlauncher",
+            "/MCSRLauncher",
+            "\\MCSRLauncher",
+        ]):
+            return Launcher.MCSRLAUNCHER
+        
         if any(self.has_content(modrinth) for modrinth in [
             r"com.modrinth.theseus",
             r"ModrinthApp",
@@ -389,6 +397,10 @@ class Log:
     @cached_property
     def is_prism(self) -> bool:
         return self.launcher == Launcher.PRISM
+    
+    @cached_property
+    def is_mcsrlauncher(self) -> bool:
+        return self.launcher == Launcher.MCSRLAUNCHER
 
     @cached_property
     def edit_instance(self) -> str:
@@ -623,13 +635,15 @@ class Log:
             min_recomm = str(int(round(min_recomm + diff / 7, -2)))
             max_recomm = str(int(round(max_recomm - diff / 7, -2)))
 
-        if self.is_multimc_or_fork:
+        if self.is_multimc_or_fork or self.is_mcsrlauncher:
+            if self.is_mcsrlauncher: launcher = "MCSR Launcher"
+            else: launcher = "Prism" if self.is_prism else "MultiMC"
             return (
                 "allocate_ram_guide_mmc",
                 min_recomm,
                 max_recomm,
                 seedqueue,
-                "Prism" if self.is_prism else "MultiMC",
+                launcher,
             )
         else:
             return ("allocate_ram_guide", min_recomm, max_recomm, seedqueue)
@@ -648,6 +662,7 @@ class Log:
             Launcher.JINGLE,
         ]: return None
         if self.is_newer_than("1.0") and not self.is_newer_than("1.14"): return "legacy_fabric_guide"
+        if self.is_mcsrlauncher: return "fabric_guide_mcsrlauncher"
         if self.is_prism: return "fabric_guide_prism"
         return "fabric_guide_mmc"
 
@@ -658,6 +673,9 @@ class Log:
         
         if self.is_prism:
             return "java_update_guide_prism"
+
+        if self.is_mcsrlauncher:
+            return "java_update_guide_mcsrlauncher"
 
         if self.operating_system == OperatingSystem.LINUX:
             return "java_update_guide_linux"
@@ -883,6 +901,7 @@ launcher={self.launcher}
 type={self.type}
 is_multimc_or_fork={self.is_multimc_or_fork}
 is_prism={self.is_prism}
+is_mcsrlauncher={self.is_mcsrlauncher}
 edit_instance={self.edit_instance}
 mod_loader={self.mod_loader}
 java_arguments={self.java_arguments}

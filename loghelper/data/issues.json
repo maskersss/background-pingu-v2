@@ -1,5 +1,5 @@
 {
-    "add.allocate_ram_guide": "You should allocate `{}-{}` MB{}. Check out [**this document**](https://docs.google.com/document/d/1aPF1lyBAfPWyeHIH80F8JJw8rvvy6lRm0WJ2xxSrRh8/edit#heading=h.owelqvpsehpw) for a guide on how to fix it.",
+    "add.allocate_ram_guide": "You should allocate `{}-{}` MB{}.",
     "add.allocate_ram_guide_mmc": "You should allocate `{}-{}` MB{} by going to `Settings > Java` in `{}`.",
     "add.eav_crash_controller": "- If you have a controller plugged in, unplug it.",
     "add.eav_crash_disclaimer": "Please note that the options listed above are not inherently bad things.",
@@ -14,6 +14,7 @@
     "add.eav_crash_reboot": "- Reboot your PC.",
     "add.eav_crash_sodium": "- `Sodium` may cause this crash. If Minecraft doesn't crash with `Sodium` disabled, using `Sodium Mac` instead (from [this website](https://mods.tildejustin.dev/?version=1.16.1&os=osx) or select `Mac` in [ModCheck](https://github.com/tildejustin/modcheck/releases/latest)) should fix the crash.",
     "add.eav_crash_srigt": "- A compatibility issue between `SpeedRunIGT`, `Intel Graphics` and `OpenGL`: enable `Safe Font Mode` in `SpeedRunIGT`'s options.",
+    "add.fabric_guide_mcsrlauncher": "You can {} Fabric by right clicking your instance and doing `Edit Instance > Version > Change Version` in `MCSR Launcher`.",
     "add.fabric_guide_mmc": "You can {} Fabric by doing `Edit Instance > Version > Install Fabric` in `MultiMC`.",
     "add.fabric_guide_prism": "You can {} Fabric by doing `Edit > Version > Install Loader > Fabric` in `Prism`.",
     "add.intell_hd2000_info": "For more information about this issue and possible solutions, please refer to [**this page**](https://prismlauncher.org/wiki/getting-started/installing-java/#a-note-about-intel-hd-20003000-on-windows-10).",
@@ -23,6 +24,8 @@
     "add.java_update_guide.discord": "Use :point_right: [**this guide**](https://docs.google.com/document/d/1PIjyPMulI3r5aZpfywt5OQR_12qEzX5UTfU8DQHtNp8/edit) :point_left: to update your Java version. It is recommended you install Java **for all users**.",
     "add.java_update_guide.web": "Use [**this guide**](https://docs.google.com/document/d/1PIjyPMulI3r5aZpfywt5OQR_12qEzX5UTfU8DQHtNp8/edit) to update your Java version. It is recommended you install Java **for all users**.",
     "add.java_update_guide_linux": "Use [**this guide**](https://prismlauncher.org/wiki/getting-started/installing-java/#manually-installing-java) to update your Java version.",
+    "add.java_update_guide_mcsrlauncher.discord": "Use :point_right: [**this guide**](https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6/) :point_left: to update your Java version.",
+    "add.java_update_guide_mcsrlauncher.web": "Use [**this guide**](https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6/) to update your Java version.",
     "add.java_update_guide_prism.discord": "Use :point_right: [**this guide**](https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4/) :point_left: to update your Java version.",
     "add.java_update_guide_prism.web": "Use [**this guide**](https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4/) to update your Java version.",
     "add.javacord_slash_cmds": "Note that you're in a server with slash commands disabled.",

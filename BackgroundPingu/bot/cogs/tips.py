@@ -55,14 +55,12 @@ class Tips(Cog):
     async def fabric(
         self,
         ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher", "All"], required=False, default="All"),
+        launcher: discord.Option(str, choices=["MultiMC / Prism", "MCSR Launcher", "Official Launcher", "All"], required=False, default="All"),
     ):
         text = "For your mods to work, you need to install Fabric Loader."
         if launcher in ["MultiMC / Prism", "All"]: text += "\n- For MultiMC and Prism Launcher, see the image how to do that[.](https://media.discordapp.net/attachments/433058639956410383/1099537217409531985/image.png)"
-        if launcher in ["Official Launcher", "All"]: text += """\n- For official Minecraft Launcher, get the installer here: <https://fabricmc.net/use/installer/>
-  Open the installer, select the Minecraft version you are playing and finish the installation.
-  Note: You do **NOT** need Fabric API, that is banned and you won't need it!
-  When you open your Minecraft launcher now it will show Fabric as an option. With that your mods will work."""
+        if launcher in ["MCSR Launcher", "All"]: text += "\n- For MCSR Launcher, you can install Fabric by right clicking your instance and doing `Edit Instance > Version > Change Version`."
+        if launcher in ["Official Launcher", "All"]: text += """\n- For official Minecraft Launcher, follow the instructions [**here**](<https://wiki.fabricmc.net/player:tutorials:install_mcl:windows>), up to step 3. Do **NOT** install Fabric API."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="fastloot", description="Gives links to fastloot guides.")
@@ -170,18 +168,20 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
     async def java(
         self,
         ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MultiMC", "Prism", "Official Launcher", "All"], required=False, default="All"),
+        launcher: discord.Option(str, choices=["MCSR Launcher", "Prism", "MultiMC", "Official Launcher", "All"], required=False, default="All"),
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
-        launcher_name = "Prism" if os == "macOS" else "MultiMC"
         text = ""
 
         if launcher == "Official Launcher":
-            text += f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning.\n"
+            text += f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
+        elif launcher == "MCSR Launcher":
+            text += "On MCSR Launcher, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/60d308c6-5782-469a-a532-a2c57993881b) <https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>.\n"
         elif launcher == "Prism":
             text += "On Prism, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/2a20554d-11f3-4dcf-8cd8-481ad93e17c4) <https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>.\n"
         else:
             if launcher == "All":
+                text += "* If you're using MCSR Launcher: use [**this guide**](<https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>) to update your Java version.\n"
                 text += "* If you're using Prism: use [**this guide**](<https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>) to update your Java version.\n"
             if os == "Linux":
                 text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
@@ -197,7 +197,7 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
 
             text += "  * After installing Java, follow the steps in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)\n"
             text += "    * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu.\n"
-            if launcher == "All": text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up {launcher_name} for speedrunning.\n"
+            if launcher == "All": text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
         
         return await ctx.respond(text.strip())
 
