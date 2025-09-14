@@ -1583,7 +1583,7 @@ class IssueChecker:
                             total += value
                     if total >= 2: builder.error("entity_culling")
                 
-                if len(self.log._content) < 110:
+                if len(self.log._content) < 1010:
                     asking_for_help_indicators = {
                         "why": 10,
                         "how": 10,
@@ -1615,7 +1615,7 @@ class IssueChecker:
                             new_world_total += value
                     
                     settings_indicators = {
-                        "setting": 10,
+                        r"\bsetting": 10,
                         "option": 10,
                         "control": 10,
                         "keybind": 10,
