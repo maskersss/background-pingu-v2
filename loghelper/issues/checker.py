@@ -1297,7 +1297,7 @@ class IssueChecker:
                 builder.error("midnight_bug") # for the first log part
         except IndexError: pass
         
-        if not found_crash_cause and self.log.has_pattern(r"^\[00:") and not any(self.log.has_content(starting_mc) for starting_mc in [
+        if not found_crash_cause and self.log.has_pattern(r"^\[00:0") and not any(self.log.has_content(starting_mc) for starting_mc in [
             "Setting user:",
             "Loading Minecraft",
         ]):
