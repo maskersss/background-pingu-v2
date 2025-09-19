@@ -595,7 +595,7 @@ class IssueChecker:
                 builder.note("old_fabric").add(self.log.fabric_guide, "update")
         
         if (not found_crash_cause
-            and len(self.log.mods) == 0
+            and all(mod.endswith(".mrpack") or mod.endswith(".mrpack.jar") for mod in self.log.mods)
             and self.log.has_content(".mrpack\n")
         ):
             builder.error("using_modpack_as_mod", self.log.launcher.value if self.log.launcher is not None else "your launcher")
