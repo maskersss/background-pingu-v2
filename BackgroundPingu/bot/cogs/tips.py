@@ -619,6 +619,24 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
         text = "https://youtu.be/JaVyuTyDxxs"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="overlay", description="Gives a guide to changing your eye measuring overlay.")
+    async def overlay(self, ctx: discord.ApplicationContext):
+        text = """# Changing measuring overlay
+* Use [this website](https://priffin.github.io/Pixel-Perfect-Tools/overlayGen.html) to generate your own overlay.
+* OBS canvas width/height are usually the same as your monitors width/height
+* Download the image
+
+*Do one of the following parts depending on which type of projector you use:*
+### For OBS
+* Drag the image into your Jingle Mag scene
+* Ctrl + F to maximize it, alternatively drag the corners
+* Drag it below the Jingle Mag Cover
+* Delete the old overlay
+### For Jingle (EyeSee plugin)
+* Open Jingle ➔ Open Jingle Folder ➔ Delete "eyesee_overlay.png"
+* Drag your new overlay into the folder and rename it to "eyesee_overlay.png" """
+        return await ctx.respond(text)
+
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
     async def portals(self, ctx: discord.ApplicationContext):
         text = "https://bit.ly/portalspreadsheet"
