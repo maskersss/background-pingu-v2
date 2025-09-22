@@ -89,6 +89,7 @@
     "error.legacy_crash_fix": "This seems to be a rare crash that is fixed in the `legacy-crash-fix` mod. You should install it.",
     "error.legacy_fabric_modpack": "You likely imported a `Legacy Fabric` modpack. This doesn't work, you'll need to get a `Legacy Fabric` instance from [**here**](https://github.com/Minecraft-Java-Edition-Speedrunning/legacy-fabric-instance-generator/releases) and add the mods to it.",
     "error.legacyjavafixer": "This issue is caused by using older `Forge` versions on recent `Java` versions. MinecraftForge provides a mod to fix it; download it [**here**](https://dist.creeper.host/FTB2/maven/net/minecraftforge/lex/legacyjavafixer/1.0/legacyjavafixer-1.0.jar).",
+    "error.linux_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Linux**](https://discord.gg/CVxuagAXMt) server.",
     "error.linux_nvidia_crash": "This seems to be a crash caused by NVIDIA drivers version > 525. To fix it, set the `__GL_THREADED_OPTIMIZATIONS` enviroment variable to `0`. In Prism, you can do this in `Settings > Enviroment Variables`.",
     "error.linux_update_lwjgl": "This is a Linux crash in old `GLFW` versions. If you're using Prism, to fix it, do `Edit > Version > select LWJGL 3.3.3`.",
     "error.lithium_crash": "This seems to be a very rare crash caused by `Lithium` that should be fixed in the latest 1.16.1 version. Alternatively, adding a `mixin.ai.nearby_entity_tracking=false` line into `.minecraft/config/lithium.properties` is believed to fix it.",

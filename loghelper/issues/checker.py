@@ -1569,6 +1569,17 @@ class IssueChecker:
                     "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
+            elif ((self.log.stacktrace or self.log.exitcode)
+                  and self.server_id != 83066801105145856
+                  and self.server_id != 1095808506239651942
+                  and self.log.has_content("Wrapper command is:\nwaywall")
+            ):
+                builder.error(
+                    "linux_crash",
+                    "s" if len(wrong_mods) > 1 else "",
+                    "`; `".join(wrong_mods[:12]) if len(wrong_mods) > 0 else "?",
+                    "" if len(wrong_mods) > 1 else "s",
+                )
             elif len(wrong_mods) == 1:
                 if is_mcsr_log:
                     builder.error("mod_crash", wrong_mods[0])
