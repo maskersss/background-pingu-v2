@@ -818,7 +818,19 @@ class IssueChecker:
             and (self.log.has_content("org.lwjgl.LWJGLException: Could not choose GLX13 config")
                  or self.log.has_content("GLFW error 65545: GLX: Failed to find a suitable GLXFBConfig"))
         ):
-            builder.error("outdated_nvidia_flatpack_driver", experimental=True)
+            experimental = not self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
+            builder.error("outdated_nvidia_flatpak_driver", experimental=experimental)
+            found_crash_cause = True
+        
+        elif (not found_crash_cause
+              and is_mcsr_log
+              and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
+        ):
+            if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
+                builder.error("flatpak_sandboxing")
+                found_crash_cause = True
+            else:
+                builder.warning("dont_use_flatpak")
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V"):
             builder.error("forge_java_bug")
@@ -1251,7 +1263,11 @@ class IssueChecker:
             pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: "
             match = re.search(pattern, self.log._content)
             if not match is None:
-                builder.error("corrupted_file", match.group(1))
+                name = match.group(1).replace("\\", "/")
+                builder.error("corrupted_file", name)
+                if "/mods/mcsrranked-" in name:
+                    builder.add("mod_download", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked")
+                found_crash_cause = True
         
         if self.log.has_mod("serversiderng"):
             builder.error("using_ssrng").add("modcheck_v1_warning")
