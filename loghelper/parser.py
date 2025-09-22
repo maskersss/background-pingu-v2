@@ -94,7 +94,7 @@ class Log:
 
     @cached_property
     def mods(self) -> list[str]:
-        pattern = re.compile(r"\[✔️\]\s+([^\[\]]+\.jar)")
+        pattern = re.compile(r"\[(?:✔️|✅)\]\s+([^\[\]]+\.jar)")
         mods = pattern.findall(self._content)
         if len(mods) > 0: return mods
 
@@ -139,7 +139,7 @@ class Log:
 
     @cached_property
     def java_version(self) -> str:
-        version_match = re.compile(r"\nJava is version (\S+),").search(self._content) # mmc/prism logs
+        version_match = re.compile(r"\nJava is version:? (\S+)").search(self._content) # mmc/prism logs
         if not version_match is None:
             return version_match.group(1)
         
