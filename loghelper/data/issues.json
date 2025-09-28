@@ -96,6 +96,7 @@
     "error.locked_libs": "Another process appears to be locking your native library JARs. To solve this, restart your PC.",
     "error.m1_multimc_hack": "You seem to be using `M1 MultiMC hack`. It can often cause issues. You should use [**Prism Launcher**](https://prismlauncher.org/) instead.",
     "error.mac_too_new_java": "You are using too new of a `Java` version. Please follow the steps on [**this wiki page**](https://prismlauncher.org/wiki/getting-started/installing-java/#older-minecraft-on-macos) to install 8u241.",
+    "error.macos_armorstand_crash": "This is a crash caused by `Sodium Mac` on `MacOS`. To fix it, add `mixin.features.gui.font=false` to the bottom of `.minecraft/config/sodium-mixins.properties`.",
     "error.maxfps_0_crash": "This crash is likely caused by the line `maxFps:0` in your `.minecraft/options.txt` file. If you find it, change `0` to the value you want and save the file.",
     "error.mayas_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**Maya's Mods**](https://discord.gg/s9m8gf6pju) server.",
     "error.mclogs_cutoff.discord": "Your log seems to be too large, which caused it to get cut off at `25000` lines by `mclo.gs`. You should `Copy` it and paste directly into Discord.",

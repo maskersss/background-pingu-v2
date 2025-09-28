@@ -811,6 +811,15 @@ class IssueChecker:
                 builder.error("gl_framebuffer")
             found_crash_cause = True
         
+        if (not found_crash_cause
+            and (self.log.operating_system == OperatingSystem.MACOS
+                 or self.log.has_mod("sodiummac"))
+            and self.log.has_content_in_stacktrace("java.lang.IndexOutOfBoundsException")
+            and self.log.has_content("Entity Type: minecraft:armor_stand")
+        ):
+            builder.error("macos_armorstand_crash")
+            found_crash_cause = True
+        
         if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
             builder.error("intel_hd2000").add("intell_hd2000_info")
 
