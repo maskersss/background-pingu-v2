@@ -188,7 +188,7 @@ class IssueChecker:
         if self.is_discord and self.log.leaked_session_id:
             builder.error("leaked_session_id_token")
         
-        if self.is_discord and self.log.leaked_pc_username:
+        if self.is_discord and not self.link == "message" and self.log.leaked_pc_username:
             builder.info("leaked_username").add("upload_log_leaked_username")
             if self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
                 builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
