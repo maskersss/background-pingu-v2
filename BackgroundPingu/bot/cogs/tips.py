@@ -142,7 +142,7 @@ You may remap keys using external programs, but:
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 any% random seed glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up MultiMC to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up the launcher to installing mods and practice maps, so it's highly recommended to watch this first.
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
@@ -550,8 +550,12 @@ If you don't have an F3 key at all, which means you need to press Fn-3 to use F3
 
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
     async def bastions(self, ctx: discord.ApplicationContext):
-        text = """[k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
-[Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)"""
+        text = """Old general guides:
+- [k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
+- [Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
+More updated guides:
+- [Modern bridge routes](<https://docs.google.com/spreadsheets/d/1TYV8RBFb4sV2VRQRZGKPjN-hTPS6bx9UllXKChZyIa0/edit?pli=1&gid=0#gid=0>)
+- [Stables triple to gap](<https://www.youtube.com/watch?v=T6VBpOCevs8>)"""
         return await ctx.respond(text)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
