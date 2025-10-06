@@ -675,6 +675,10 @@ class IssueChecker:
             r"memory allocation (.*) failed",
         ]):
             builder.error("out_of_memory_pc", experimental=True)
+            if self.log.operating_system in [OperatingSystem.WINDOWS, None]:
+                builder.add("oompc_paging").add("oompc_idk")
+            else:
+                builder.add("oompc_paging_nonwindows").add("oompc_idk")
             found_crash_cause = True
 
         if (self.log.has_mod("phosphor")
