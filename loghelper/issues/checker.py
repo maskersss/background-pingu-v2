@@ -534,9 +534,10 @@ class IssueChecker:
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 if self.log.is_arm_mac:
-                    builder.warning("mac_use_prism").add("mac_setup_guide")
+                    builder.warning("mac_use_prism")
                 else:
-                    builder.note("mac_use_prism").add("mac_setup_guide")
+                    builder.note("mac_use_prism")
+                builder.add("mac_setup_guide").add("prism_mmc_migrate")
             elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
                 if self.log.is_arm_mac:
                     builder.warning("mac_use_arm_java")
