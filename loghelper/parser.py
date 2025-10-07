@@ -367,6 +367,7 @@ class Log:
             "prism",
             "polymc",
             "pollymc",
+            "mcsr launcher",
         ]]):
             return LogType.FULL_LOG
 
