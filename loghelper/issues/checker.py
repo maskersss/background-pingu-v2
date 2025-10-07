@@ -514,7 +514,7 @@ class IssueChecker:
             r", using 32 \((.+)\) architecture, from"
         ]):
             if self.log.operating_system == OperatingSystem.MACOS and not self.log.is_prism:
-                builder.error("arm_java_multimc").add("mac_setup_guide")
+                builder.error("arm_java_multimc").add("mac_setup_guide").add("prism_mmc_migrate")
                 if self.log.has_content("Failed to locate library"): found_crash_cause = True
             else:
                 builder.error("32_bit_java").add(self.log.java_update_guide)
