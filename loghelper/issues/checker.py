@@ -1586,7 +1586,7 @@ class IssueChecker:
             elif ((self.log.stacktrace or self.log.exitcode)
                   and self.server_id != 83066801105145856
                   and self.server_id != 1095808506239651942
-                  and self.log.has_content("Wrapper command is:\nwaywall")
+                  and self.log.has_pattern(r"Wrapper command is:\n.*waywall")
             ):
                 builder.error(
                     "linux_crash",
