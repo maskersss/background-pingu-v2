@@ -139,7 +139,7 @@ class Log:
 
     @cached_property
     def java_version(self) -> str:
-        version_match = re.compile(r"\nJava is version:? (\S+)").search(self._content) # mmc/prism logs
+        version_match = re.compile(r"\nJava is version:? (\S+?)(?:,|\s)").search(self._content) # mmc/prism logs
         if not version_match is None:
             return version_match.group(1)
         
