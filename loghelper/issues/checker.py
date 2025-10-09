@@ -709,9 +709,6 @@ class IssueChecker:
                 if not latest_version is None:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
         
-        if not found_crash_cause and self.log.has_content("Failed to download the assets index"):
-            builder.error("assets_index_fail", experimental=True)
-        
         if not found_crash_cause and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
             builder.error("mac_too_new_java")
             found_crash_cause = True
@@ -1094,6 +1091,9 @@ class IssueChecker:
                 "Reason:\nOne or more subtasks failed",
         ])):
             builder.error("delete_launcher_cache", experimental=True)
+        
+        elif not found_crash_cause and self.log.has_content("Failed to download the assets index"):
+            builder.error("assets_index_fail", experimental=True)
         
         if any(self.log.has_content(srapi_2_crash) for srapi_2_crash in [
             "java.lang.ClassNotFoundException: org.mcsr.speedrunapi",
