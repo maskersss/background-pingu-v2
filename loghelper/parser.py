@@ -291,8 +291,9 @@ class Log:
     def launcher(self) -> Launcher:
         for jingle_indicator in [
             "You are running Jingle",
+            r"^SlackowWall",
         ]:
-            if self.has_content(jingle_indicator):
+            if self.has_pattern(jingle_indicator):
                 return Launcher.JINGLE
         
         for multimc_name in [
