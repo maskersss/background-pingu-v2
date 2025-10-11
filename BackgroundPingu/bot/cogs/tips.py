@@ -186,8 +186,9 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
             if os == "Linux":
                 text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
             else:
-                if os == "macOS": query_string = "?os=mac&package=jdk"
-                else: query_string = "?os=windows&arch=x64&package=jdk"
+                if os == "macOS": query_string = "?os=mac"
+                else: query_string = "?os=windows&arch=x64"
+                query_string += "&package=jdk&version=21&mode=filter"
                 text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
                 if os == "Windows":
                     text += " Download and run the `.msi` file if you're on Windows.\n"
