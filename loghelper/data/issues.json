@@ -152,6 +152,7 @@
     "error.requires_fabric_api_mcsr": "You're using a mod that requires `Fabric API`. It is an illegal for speedrun.com mod that is separate to `Fabric Loader`. You can download it [**here**](https://modrinth.com/mod/fabric-api).",
     "error.requires_mod": "A mod you're using is requiring a mod `{}`, but it is not present. Download it and add it to your mods folder.",
     "error.rong_modloader": "You seem to be using `{}` mods, but you have `{}` installed.",
+    "error.run_jingle_as_admin": "You are likely running `Minecraft`, but not `Jingle` as administrator. Either do not run `Minecraft` as administrator, or run `Jingle` as administrator by using [**Jingle Launcher**](https://github.com/DuncanRuns/Jingle?tab=readme-ov-file#jingle-launcher).",
     "error.send_full_log": "If you got a crash, please send the full log from `Edit{} > Minecraft Log`.",
     "error.settings_reset": "If your settings reset whenever you create a world, you are probably using StandardSettings.\nIf you want to change which settings reset and what do they reset to, go to `Options > Book and Quill > StandardSettings` and configure them.\nIf you don't want your settings to reset, set `Use StandardSettings` there to `OFF`.",
     "error.silent_mode": "Your game is running in Silent Mode. To fix this, make sure you don't have any weird characters in the instance path (try moving the launcher folder to `C:/`). You can also try changing your LWJGL version in `Edit{} > Version`.",

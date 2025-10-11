@@ -912,6 +912,13 @@ class IssueChecker:
         if not found_crash_cause and self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
             builder.error("try_admin_launch")
         
+        if (not found_crash_cause
+            and self.log.launcher == Launcher.JINGLE
+            and self.log.has_pattern(r"java\.lang\.IllegalStateException: Failed to open process (\d+): 5")
+        ):
+            builder.error("run_jingle_as_admin", experimental=True)
+            found_crash_cause = True
+        
         for not_a_mod in self.not_mods:
             if self.log.has_mod(not_a_mod):
                 builder.error("not_a_mod", not_a_mod)
