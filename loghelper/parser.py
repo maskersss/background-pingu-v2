@@ -94,7 +94,7 @@ class Log:
 
     @cached_property
     def mods(self) -> list[str]:
-        pattern = re.compile(r"\[(?:✔️|✅)\]\s+([^\[\]]+\.jar)")
+        pattern = re.compile(r"\[(?:✔️|✅)\]\s+([^\[\]]+?\.jar)")
         mods = pattern.findall(self._content)
         if len(mods) > 0: return mods
 
