@@ -1661,20 +1661,21 @@ class IssueChecker:
                         "spawn": 1,
                         "seed": 1,
                         "new": 1,
-                        "world": 1,
-                        "reset": 1,
+                        r"\bworld": 1,
+                        r"\breset": 1,
                     }
                     new_world_total = 0
                     for pattern, value in new_world_indicators.items():
                         if self.log.has_pattern(pattern):
                             new_world_total += value
+                            print(f"# found {pattern} for new_world ({value})")
                     
                     settings_indicators = {
                         r"\bsetting": 10,
-                        "option": 10,
+                        r"\boption": 10,
                         "control": 10,
                         "keybind": 10,
-                        "sens": 2,
+                        r"\bsens": 2,
                         r"standard ?setting": -100,
                         "we're assuming": -100,
                     }
@@ -1682,6 +1683,7 @@ class IssueChecker:
                     for pattern, value in settings_indicators.items():
                         if self.log.has_pattern(pattern):
                             settings_total += value
+                            print(f"# found {pattern} for settings ({value})")
                     
                     if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
                         builder.error("settings_reset")
