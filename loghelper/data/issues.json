@@ -186,7 +186,7 @@
     "info.send_full_log": "Please send the full {} log from `Edit{} > Minecraft Log`.",
     "info.send_watchdog_report": "Please send `{}` as it would have more info about this crash.",
     "info.upload_log_attachment.discord": "You sent your log as a file. Please press the `Re-Upload Log` button so the log will be re-uploaded to mclo.gs so people can see it without having to download it.",
-    "note.amount_illegal_mods": "You are using `{}` illegal mod{}!",
+    "note.amount_illegal_mods": "You are using `{}` illegal for speedrunning mod{}!",
     "note.dont_hdd": "Your launcher folder is located on the `{}:/` drive, which is often an HDD. If so, consider moving it to `C:/` for better performance.",
     "note.dont_use_java_23_plus": "You're using `Java 23+`, which has been found to reduce performance. You should use `Java 17-22` instead.",
     "note.duplicate_mods": "You have several versions of `{}` installed. You should delete the older ones.",

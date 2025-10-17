@@ -444,7 +444,7 @@ https://modrinth.com/modpack/speedrun"""
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):
-        text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
+        text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check>) to download multiple maps at once.*
 [MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map>)
 [Bastions](<https://github.com/LlamaPag/bastion>)
 [Blaze](<https://github.com/Semperzz/Blaze-Practice>)
@@ -455,7 +455,7 @@ https://modrinth.com/modpack/speedrun"""
 [Portals](<https://github.com/Semperzz/Portal-Practice>)
 [Zero cycle](<https://github.com/Mescht/Zero-Practice>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
-[PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>)"""
+[PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (‼️ needs java 17+ and is incompatible with fastreset)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="mapcheck", description="Gives a link to MapCheck.")
@@ -519,7 +519,12 @@ Use the [sensitivity calculator](<https://priffin.github.io/Pixel-Perfect-Tools/
 
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
     async def rules(self, ctx: discord.ApplicationContext):
-        text = "<https://www.minecraftspeedrunning.com/public-resources/rules>"
+        text = "<https://rules.minecraftspeedrunning.com/latest>"
+        return await ctx.respond(text)
+
+    @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
+    async def rules(self, ctx: discord.ApplicationContext):
+        text = "Read section A.4 for resource pack rules: <https://rules.minecraftspeedrunning.com/latest>"
         return await ctx.respond(text)
 
     @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
