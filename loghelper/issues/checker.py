@@ -314,7 +314,7 @@ class IssueChecker:
                 if any(weird_mod in mod.lower() for weird_mod in self.assume_as_legal): continue
                 metadata = self.get_mod_metadata(mod)
                 if metadata is None: illegal_mods.append(mod)
-            if len(illegal_mods) > 0:
+            if is_mcsr_log and len(illegal_mods) > 0:
                 if len(illegal_mods) > 6: temp = "s"
                 elif len(illegal_mods) > 1: temp = f"s (`{'`, `'.join(illegal_mods)}`)"
                 else: temp = f" (`{illegal_mods[0]}`)"
@@ -1668,7 +1668,6 @@ class IssueChecker:
                     for pattern, value in new_world_indicators.items():
                         if self.log.has_pattern(pattern):
                             new_world_total += value
-                            print(f"# found {pattern} for new_world ({value})")
                     
                     settings_indicators = {
                         r"\bsetting": 10,
@@ -1683,7 +1682,6 @@ class IssueChecker:
                     for pattern, value in settings_indicators.items():
                         if self.log.has_pattern(pattern):
                             settings_total += value
-                            print(f"# found {pattern} for settings ({value})")
                     
                     if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
                         builder.error("settings_reset")
