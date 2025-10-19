@@ -629,7 +629,7 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
     @commands.slash_command(name="overlay", description="Gives a guide to changing your eye measuring overlay.")
     async def overlay(self, ctx: discord.ApplicationContext):
         text = """# Changing measuring overlay
-* Use [this website](https://priffin.github.io/Pixel-Perfect-Tools/overlayGen.html) to generate your own overlay.
+* Use [this website](https://priffin.github.io/Pixel-Perfect-Tools/overlayGen.html) to generate your own overlay. ([alternative website with more options](https://isqqcle.github.io/overlay-gen/ ))
 * OBS canvas width/height are usually the same as your monitors width/height
 * Download the image
 
