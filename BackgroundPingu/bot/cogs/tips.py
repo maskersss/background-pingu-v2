@@ -523,7 +523,7 @@ Use the [sensitivity calculator](<https://priffin.github.io/Pixel-Perfect-Tools/
         return await ctx.respond(text)
 
     @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
-    async def rules(self, ctx: discord.ApplicationContext):
+    async def packs(self, ctx: discord.ApplicationContext):
         text = "Read section A.4 for resource pack rules: <https://rules.minecraftspeedrunning.com/latest>"
         return await ctx.respond(text)
 
