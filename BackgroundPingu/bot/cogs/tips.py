@@ -629,7 +629,7 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
     @commands.slash_command(name="overlay", description="Gives a guide to changing your eye measuring overlay.")
     async def overlay(self, ctx: discord.ApplicationContext):
         text = """# Changing measuring overlay
-* Use [this website](https://priffin.github.io/Pixel-Perfect-Tools/overlayGen.html) to generate your own overlay. ([alternative website with more options](https://isqqcle.github.io/overlay-gen/ ))
+* Use [this website](https://qmaxxen.github.io/overlay-gen/) to generate your own overlay.
 * OBS canvas width/height are usually the same as your monitors width/height
 * Download the image
 
@@ -646,11 +646,15 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
 
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
     async def portals(self, ctx: discord.ApplicationContext):
-        text = "https://bit.ly/portalspreadsheet"
+        text = """Common magma ravine portals:
+<https://www.youtube.com/watch?v=mLuxNQZshy0>
+
+Other portals:
+https://docs.google.com/spreadsheets/d/1VU6IZpyhr-3tMXC5GG4ryuqrbmQkvCKE_1nJm2eym4c"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="portalheight", description="Links the 2nd portal y height distribution graph.")
-    async def portals(self, ctx: discord.ApplicationContext):
+    async def portalheight(self, ctx: discord.ApplicationContext):
         text = "https://cdn.discordapp.com/attachments/727673359860760627/1110309490324164658/image.png"
         return await ctx.respond(text)
 
