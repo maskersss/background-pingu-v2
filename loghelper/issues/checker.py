@@ -1620,7 +1620,7 @@ class IssueChecker:
                     builder.error("mods_crash_disable", "`; `".join(wrong_mods))
         
         
-        if not found_crash_cause and self.link == "message":
+        if not found_crash_cause and self.is_discord and self.link == "message":
             try:
                 if self.log.has_pattern(r"-\s*1"):
                     entity_culling_indicators = {
