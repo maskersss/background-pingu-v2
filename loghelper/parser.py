@@ -224,6 +224,7 @@ class Log:
 
         if any(self.has_content(arm) for arm in [
             "Mac OS X (aarch64)",
+            "GPU: Apple M",
         ]): return True
 
         return False
