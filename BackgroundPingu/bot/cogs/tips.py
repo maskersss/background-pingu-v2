@@ -639,9 +639,11 @@ https://discord.com/channels/83066801105145856/405839885509984256/11463024230953
 * Ctrl + F to maximize it, alternatively drag the corners
 * Drag it below the Jingle Mag Cover
 * Delete the old overlay
+* Restart Jingle
 ### For Jingle (EyeSee plugin)
 * Open Jingle ➔ Open Jingle Folder ➔ Delete "eyesee_overlay.png"
-* Drag your new overlay into the folder and rename it to "eyesee_overlay.png" """
+* Drag your new overlay into the folder and rename it to "eyesee_overlay.png"
+* Restart Jingle"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
