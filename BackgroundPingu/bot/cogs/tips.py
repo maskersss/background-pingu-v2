@@ -469,7 +469,7 @@ Practice mods:
 Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384`."""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="entity_culling", description="Explains how to turn off Entity Culling.")
+    @commands.slash_command(name="entity_culling", description="Explains how to turn off Entity Culling to fix e-1.")
     async def entity_culling(self, ctx: discord.ApplicationContext):
         text = "If your entity counter on F3 is `-1` or there isn't a `blockEntities` slice on the piechart in `root.gameRenderer.level.entities`, turn off `Entity Culling` in `Video Settings`."
         return await ctx.respond(text)
