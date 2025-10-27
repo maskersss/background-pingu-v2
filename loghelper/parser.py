@@ -820,6 +820,7 @@ class Log:
                 "fast-reset",
                 "atum",
                 "state-output",
+                "mcsrfairplay",
             ]
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
                 "fsg",
