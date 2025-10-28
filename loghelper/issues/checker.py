@@ -1744,6 +1744,10 @@ class IssueChecker:
                     if "bartering" in match.lower(): continue
                     builder.note("fandom_wiki", match)
                 
+                if self.log.has_pattern(r"60 ?(percent|%) ?keyboard"):
+                    builder.error("rebind_f3",
+                                  "!!" if self.server_id == "83066801105145856" else "/")
+                
                 if self.log.has_content("19.0.1"):
                     builder.error("k4_setup_video_outdated")
 

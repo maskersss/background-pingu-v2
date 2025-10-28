@@ -147,6 +147,7 @@
     "error.ranked_rong_mods": "You're using {}n't whitelisted for `MCSR Ranked`. Remove {} from your `mods` folder.",
     "error.ranked_rong_versions": "You're using {} outdated and therefore not allowed for `MCSR Ranked`. You should update {}.",
     "error.really_old_fabric": "You're using a really old version of `Fabric Loader`. You should update it.",
+    "error.rebind_f3": "If you're using a `60% keyboard`, which means you don't have a `F3` key, type `{}rebind` for a tutorial on how to rebind a key to F3.",
     "error.recipe_book_crash": "This seems to be a rare recipe book crash. It should happen really rarely; there aren't any known solutions to it.",
     "error.requires_fabric_api": "You're using a mod that requires `Fabric API`. It is a mod that is separate to `Fabric Loader`. You can download it [**here**](https://modrinth.com/mod/fabric-api).",
     "error.requires_fabric_api_mcsr": "You're using a mod that requires `Fabric API`. It is an illegal for speedrun.com mod that is separate to `Fabric Loader`. You can download it [**here**](https://modrinth.com/mod/fabric-api).",
