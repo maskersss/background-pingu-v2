@@ -179,7 +179,7 @@
     "error.using_other_loader_mcsr": "You seem to be using MCSR mods, but you have `{}` installed, which is not allowed for speedrunning and is likely to cause issues.",
     "error.using_ssrng": "You're using `ServerSideRNG`, which is now illegal and can cause issues. The server for it is down, so the mod is useless regardless and you should delete it.",
     "error.waywall_missing_glfw": "`Waywall` requires using a custom `GLFW` version, but you don't seem to be using it. See [**this page**](https://tesselslate.github.io/waywall/00_setup.html) for more information.",
-    "error.waywall_wrong_config": "You seem to have an error in your `waywall` config in `{}` at line `{}`: `{}`.",
+    "error.waywall_wrong_config": "You seem to have an error in your `waywall` config: `{}`.",
     "error.wp_3_plus_crash": "This seems to be a rare crash caused by `WorldPreview 3.0.0 - 4.0.1`. It should be fixed in `WorldPreview 4.0.2+`.",
     "error.wrong_java_arg": "You have `{}` in your Java arguments, which is not a valid argument. Either fix it or remove it.",
     "error.wrong_sens": "Your mouseSensitivity value (`{}`) in `{}` is incorrect for boateye.",
