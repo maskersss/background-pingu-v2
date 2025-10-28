@@ -729,7 +729,7 @@ class Log:
         return None
     
     @cached_property
-    def exitcode(self) -> int:
+    def exitcode(self) -> int | None:
         pattern = r"Process (crashed|exited) with (exit)? ?code (-?\d+)"
         match = re.search(pattern, self._content, re.DOTALL)
         if not match is None:
@@ -740,6 +740,12 @@ class Log:
             if self.has_content(f"{exit_code}"): return exit_code
 
         return None
+
+    @cached_property
+    def is_waywall_log(self) -> bool:
+        if not self.operating_system == OperatingSystem.LINUX: return False
+        if self.has_pattern(r"Wrapper command is:\n.*waywall"): return True
+        return False
 
     @cached_property
     def is_ssg_log(self) -> bool:

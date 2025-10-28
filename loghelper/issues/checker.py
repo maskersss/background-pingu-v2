@@ -811,6 +811,25 @@ class IssueChecker:
             elif self.log.has_content("at org.lwjgl.opengl.LinuxDisplay.getAvailableDisplayModes"):
                 builder.error("missing_xrandr")
                 found_crash_cause = True
+                
+            elif is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
+                builder.note("linux_update_lwjgl")
+            
+            if (self.log.is_waywall_log
+                and self.log.java_arguments
+                and not self.log.has_java_argument("-Dorg.lwjgl.glfw.libname=")
+            ):
+                builder.error("waywall_missing_glfw")
+                found_crash_cause = True
+                
+            pattern = r"\[ERR\] \[(?P<file>waywall/config/.*?\.c):(?P<line>\d+)\] ?(?:failed to start action:)?(?P<error>.*)"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                builder.error("waywall_wrong_config",
+                              match.group("file"),
+                              match.group("line"),
+                              match.group("error").strip())
+                found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
@@ -1600,7 +1619,7 @@ class IssueChecker:
             elif ((self.log.stacktrace or self.log.exitcode)
                   and self.server_id != 83066801105145856
                   and self.server_id != 1095808506239651942
-                  and self.log.has_pattern(r"Wrapper command is:\n.*waywall")
+                  and self.log.is_waywall_log
             ):
                 builder.error(
                     "linux_crash",
