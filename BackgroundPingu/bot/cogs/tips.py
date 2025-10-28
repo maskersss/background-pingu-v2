@@ -154,9 +154,9 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         text = """https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="jarfix", description="Gives a link to Jarfix.")
+    @commands.slash_command(name="jarfix", description="Explains how to fix jar files not opening.")
     async def jarfix(self, ctx: discord.ApplicationContext):
-        text = "Jarfix fixes the jar file association on Windows: https://johann.loefflmann.net/en/software/jarfix/index.html"
+        text = "If you can't open .jar files on Windows, download and run this Java installer: https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi ."
         return await ctx.respond(text)
 
     @commands.slash_command(name="folderinafolder", description="Explains the correct practice map folder structure.")
@@ -178,7 +178,7 @@ In general, it's a good idea to watch top runs and top runners' streams to get a
         elif launcher == "MCSR Launcher":
             text += "On MCSR Launcher, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/60d308c6-5782-469a-a532-a2c57993881b) <https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>.\n"
         elif launcher == "Prism":
-            text += "On Prism, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/2a20554d-11f3-4dcf-8cd8-481ad93e17c4) <https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>.\n"
+            text += "On Prism, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/2cb8c15b-caf1-40ef-8e8e-3f8b736df254) <https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>.\n"
         else:
             if launcher == "All":
                 text += "* If you're using MCSR Launcher: use [**this guide**](<https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>) to update your Java version.\n"
@@ -310,10 +310,10 @@ Download: <https://github.com/DuncanRuns/Jingle/releases>
 Support discord: <https://discord.gg/cXf86mXAWR>"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="worldbopper", description="Gives links to plugins for auto-deleting worlds.")
+    @commands.slash_command(name="worldbopper", description="Gives links to programs for auto-deleting worlds.")
     async def worldbopper(self, ctx: discord.ApplicationContext):
-        text = """WorldBopper plugin for [Jingle](<https://github.com/DuncanRuns/Jingle>): <https://github.com/marin774/Jingle-WorldBopper-Plugin>
-WorldBopper plugin for [Julti](<https://github.com/DuncanRuns/Julti>): <https://github.com/marin774/Julti-WorldBopper-Plugin>"""
+        text = """To delete worlds, you can use the **Clear Worlds** button in [**Jingle**](<https://github.com/DuncanRuns/Jingle>).
+If you want worlds to be deleted automatically, you can use the [**Jingle WorldBopper plugin**](<https://github.com/marin774/Jingle-WorldBopper-Plugin>)."""
         return await ctx.respond(text)
     
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
