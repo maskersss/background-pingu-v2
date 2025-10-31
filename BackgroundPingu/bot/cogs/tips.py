@@ -213,7 +213,7 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
 - These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
-Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384`.
+Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
@@ -681,9 +681,9 @@ Additionally, [practice setting up your inventory for zero cycle](https://github
     async def extraoptions(self, ctx: discord.ApplicationContext):
         text = """⚠️ **__Warning!__** ⚠️ 
 This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
-This mod may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> 
-Link **(read the above warning)**: 
-||<https://github.com/tildejustin/extra-options/releases/latest>||
+This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> .
+Download **(read the above warning)**: 
+||<https://mods.tildejustin.dev/>||
 This mod allows you to adjust FOV and distortion effects.
 <:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
         return await ctx.respond(text)
