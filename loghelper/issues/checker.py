@@ -843,7 +843,9 @@ class IssueChecker:
                 builder.error("gl_framebuffer_macos")
                 if not self.log.has_mod("retino"): builder.add("update_mods")
             else:
-                builder.error("gl_framebuffer")
+                builder.error("gl_framebuffer",
+                              "!!" if self.server_id == "83066801105145856" else "/",
+                              "!!" if self.server_id == "83066801105145856" else "/")
             found_crash_cause = True
         
         if (not found_crash_cause
