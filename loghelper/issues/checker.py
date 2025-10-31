@@ -839,7 +839,7 @@ class IssueChecker:
                 builder.error("waywall_missing_glfw")
                 found_crash_cause = True
                 
-            pattern = r"\[ERR\] \[(waywall/config/.*?\.c):(\d+)\] ?(?:failed to start action:)?(?P<error>.*)"
+            pattern = r"\[ERR\] \[(waywall/config/.*?\.c):(\d+)\] ?(?:failed to start action:|failed to load config:)?\s?(?P<error>[\s\S]*?)(?:\n\[|$)"
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("waywall_wrong_config",
