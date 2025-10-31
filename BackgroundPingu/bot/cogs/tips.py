@@ -217,6 +217,13 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
+    async def mpkdebug(self, ctx: discord.ApplicationContext):
+        text = """To troubleshoot MiniPracticeKit not working, please verify the following:
+- A 20-100 KB file named **exactly** "hotbar" or "hotbar.nbt", __not__ "hotbar (1).nbt" or similar, exists in your .minecraft folder.
+- You are pressing your **Hotbar slot 1** hotkey while holding your **Load hotbar** hotkey, and both of these aren't conflicting with other hotkeys."""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
     async def prism(
         self,
