@@ -823,6 +823,14 @@ class IssueChecker:
                 
             elif is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
                 builder.note("linux_update_lwjgl")
+                
+            elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
+                builder.error("linux_lwjgl_3_3_6")
+                if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+            
+            if self.log.has_content("The wrapper command \"waywall\" couldn't be found."):
+                builder.error("waywall_not_on_path")
+                found_crash_cause = True
             
             if (self.log.is_waywall_log
                 and self.log.java_arguments
@@ -837,6 +845,10 @@ class IssueChecker:
                 builder.error("waywall_wrong_config",
                               match.group("error").strip())
                 found_crash_cause = True
+            
+        if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):
+            builder.error("linux_ranked_musl", experimental=True)
+            found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
