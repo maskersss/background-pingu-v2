@@ -505,6 +505,15 @@ class IssueChecker:
                     builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
         
+        if (not found_crash_cause
+            and not self.log.major_java_version is None
+            and self.log.major_java_version < 17 
+            and self.log.has_java_argument("UseZGC")
+        ):
+            builder.error("java_8_zgc", self.log.major_java_version).add(self.log.java_update_guide)
+            if self.log.is_multimc_or_fork: builder.add("read_pls")
+            found_crash_cause = True
+        
         if self.log.has_content("mcwrap.py"):
             if self.log.launcher in [None, Launcher.MULTIMC] or not self.log.has_content("mac-lwjgl-fix"):
                 builder.error("m1_multimc_hack").add("mac_setup_guide")
