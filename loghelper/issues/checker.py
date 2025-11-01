@@ -843,7 +843,7 @@ class IssueChecker:
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("waywall_wrong_config",
-                              match.group("error").strip().replace("\n", " ")[:600],)
+                              match.group("error").strip().replace("\n", " ")[:600])
                 found_crash_cause = True
             
         if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):

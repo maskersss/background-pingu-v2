@@ -89,8 +89,7 @@ class Tips(Cog):
 
     @commands.slash_command(name="borderless", description="Explains how to run Minecraft as a borderless window.")
     async def borderless(self, ctx: discord.ApplicationContext):
-        text = """If you use [Jingle](<https://github.com/DuncanRuns/Jingle/releases>), simply click "Go Borderless".
-If you use Julti, go to Options ⟶ Window ⟶ Use Borderless.
+        text = """If you use [Jingle](<https://github.com/DuncanRuns/Jingle/releases>) (recommended), simply click "Go Borderless".
 Otherwise, [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases>)
 ℹ️ Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings."""
         return await ctx.respond(text)
@@ -624,8 +623,12 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
 
     @commands.slash_command(name="mpk", description="Gives a link to MiniPracticeKit.")
     async def mpk(self, ctx: discord.ApplicationContext):
-        text = """<https://github.com/Knawk/mc-MiniPracticeKit>
-https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915"""
+        text = """MiniPracticeKit:
+<https://github.com/Knawk/mc-MiniPracticeKit>
+https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915
+
+MiniPracticeKit Editor (for customizing setup):
+https://qmaxxen.github.io/MiniPracticeKit-Editor/"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
