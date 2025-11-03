@@ -859,7 +859,7 @@ class Log:
     
     def has_content_in_stacktrace(self, content: str) -> bool:
         if self.stacktrace is None: return False
-        return content.lower().replace("_","") in self.stacktrace.lower().replace("_","")
+        return content.lower().replace("_","") in self.stacktrace.lower()
 
     def has_pattern(self, pattern: str) -> bool:
         return bool(re.compile(pattern, re.IGNORECASE).search(self._lower_content))

@@ -1591,7 +1591,7 @@ class IssueChecker:
                         for part in mod_name_parts:
                             part0 = part
                             for c in [
-                                "fabric", "forge", "quilt",
+                                "fabric", "neoforge", "forge", "quilt",
                                 "mod", "backport", "snapshot",
                                 "build", "prism", "minecraft",
                                 ".", "v", "mc",
