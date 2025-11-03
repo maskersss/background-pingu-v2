@@ -729,6 +729,7 @@ class Log:
                 stacktrace = match.group().lower()
                 stacktrace = stacktrace.replace("_", "").replace("knot//", "")
                 stacktrace = re.sub(r"\{[^{}]*\}", "", stacktrace)
+                stacktrace = re.sub(r"(?m)^// .*?$", "", stacktrace)
                 return stacktrace
         
         return None
