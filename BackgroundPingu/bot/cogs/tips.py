@@ -139,18 +139,21 @@ You may remap keys using external programs, but:
 
     @commands.slash_command(name="new", description="Provides a comprehensive guide to start learning speedrunning.")
     async def new(self, ctx: discord.ApplicationContext):
-        text = """The most popular category/version to run is 1.16.1 any% random seed glitchless, so we're assuming you're planning to run this category.
+        text = """The most popular category/version to run is 1.16.1 Any% Random Seed Glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up the launcher to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
-In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>), but since it covers a lot of strategies it may seem overwhelming at first, so take it easy."""
+In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>) and a [full comprehensive guide](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="tutorials", description="Gives a link to Osh's speedrunning tutorials playlist.")
     async def tutorials(self, ctx: discord.ApplicationContext):
-        text = """https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp"""
+        text = """Couriway's Metafy guide: <https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>
+-# (it is free, you just need to create an account)
+
+Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="jarfix", description="Explains how to fix jar files not opening.")
