@@ -122,7 +122,6 @@ class Log:
         ]
 
         pattern = re.compile(r"\t- ([^\n]+)", re.DOTALL)
-
         fabric_mods = []
         for mod in pattern.findall(self._content):
             mod = mod.replace("_", "-")
@@ -727,7 +726,10 @@ class Log:
         for crash_pattern in crash_patterns:
             match = re.search(crash_pattern, log, re.DOTALL)
             if not match is None:
-                return match.group().lower().replace("fast_reset", "fastreset").replace("knot//", "")
+                stacktrace = match.group().lower()
+                stacktrace = stacktrace.replace("_", "").replace("knot//", "")
+                stacktrace = re.sub(r"\{[^{}]*\}", "", stacktrace)
+                return stacktrace
         
         return None
     
