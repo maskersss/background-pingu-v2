@@ -94,6 +94,7 @@ class IssueChecker:
             "retino",
             "ferritecore",
         ]
+        self.cmd_prefix = "!!" if self.server_id == 83066801105145856 else "/"
     
     def get_mod_metadata(self, mod_filename: str) -> dict:
         mod_filename = mod_filename.lower().replace("optifine", "optifabric")
@@ -855,9 +856,7 @@ class IssueChecker:
                 builder.error("gl_framebuffer_macos")
                 if not self.log.has_mod("retino"): builder.add("update_mods")
             else:
-                builder.error("gl_framebuffer",
-                              "!!" if self.server_id == "83066801105145856" else "/",
-                              "!!" if self.server_id == "83066801105145856" else "/")
+                builder.error("gl_framebuffer", self.cmd_prefix, self.cmd_prefix)
             found_crash_cause = True
         
         if (not found_crash_cause
@@ -1766,8 +1765,7 @@ class IssueChecker:
                     builder.note("fandom_wiki", match)
                 
                 if self.log.has_pattern(r"60 ?(percent|%) ?keyboard"):
-                    builder.error("rebind_f3",
-                                  "!!" if self.server_id == "83066801105145856" else "/")
+                    builder.error("rebind_f3", self.cmd_prefix)
                 
                 if self.log.has_content("19.0.1"):
                     builder.error("k4_setup_video_outdated")
