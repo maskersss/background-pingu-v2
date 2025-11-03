@@ -1562,6 +1562,14 @@ class IssueChecker:
             else:
                 corrupted_config = False
             
+            if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
+                ".config",
+            ]):
+                corrupted_config = True
+                experimental = True
+            else:
+                experimental = False
+            
             wrong_mods = []
             for pattern in [
                 r"ERROR]: Mixin apply for mod ([\w\-+]+) failed",
@@ -1617,7 +1625,7 @@ class IssueChecker:
                         "`; `".join(wrong_mods[:12]),
                     )
                 elif len(wrong_mods) > 0:
-                    builder.error("corrupted_mod_config", wrong_mods[0])
+                    builder.error("corrupted_mod_config", wrong_mods[0], experimental=experimental)
                 else:
                     builder.error("unknown_corrupted_mod_config", experimental=True)
             elif (not self.log.is_waywall_log
