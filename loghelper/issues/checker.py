@@ -1556,6 +1556,7 @@ class IssueChecker:
                 "com.google.gson.stream.MalformedJsonException",
                 "Cannot invoke \"com.google.gson.JsonObject.entrySet()\"",
                 "class com.google.gson.JsonPrimitive",
+                "com.electronwill.nightconfig.core.io.ParsingException",
             ]):
                 corrupted_config = True
             else:
