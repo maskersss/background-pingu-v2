@@ -1619,7 +1619,10 @@ class IssueChecker:
                     builder.error("corrupted_mod_config", wrong_mods[0])
                 else:
                     builder.error("unknown_corrupted_mod_config", experimental=True)
-            elif "ranked" in " ".join(wrong_mods) and self.server_id != 1056779246728658984:
+            elif (not self.log.is_waywall_log
+                  and self.server_id != 1056779246728658984
+                  and "ranked" in " ".join(wrong_mods)
+            ):
                 builder.error(
                     "ranked_mod_crash",
                     "s" if len(wrong_mods) > 1 else "",
