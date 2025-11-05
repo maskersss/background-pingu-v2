@@ -1,4 +1,4 @@
-import semver, json, re
+import semver, json, random, re
 from packaging import version
 from math import sqrt
 from pathlib import Path
@@ -863,7 +863,6 @@ class IssueChecker:
             and (self.log.operating_system == OperatingSystem.MACOS
                  or self.log.has_mod("sodiummac"))
             and self.log.has_content_in_stacktrace("java.lang.IndexOutOfBoundsException")
-            and self.log.has_content("Entity Type: minecraft:armor_stand")
         ):
             builder.error("macos_armorstand_crash")
             found_crash_cause = True
@@ -1385,6 +1384,12 @@ class IssueChecker:
             "Loading Minecraft",
         ]):
             builder.error("midnight_bug") # for the second log part
+
+        if (self.log.type == LogType.FULL_LOG
+            and random.random() < 1/3
+            and self.log.has_pattern(r"\n\[04:")
+        ):
+            builder.info("sleep")
 
         if (self.log.mod_loader in [ModLoader.FORGE, None]
             and self.log.has_content("Missing or unsupported mandatory dependencies")
