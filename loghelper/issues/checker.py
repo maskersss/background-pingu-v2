@@ -1569,7 +1569,7 @@ class IssueChecker:
             
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
                 ".config",
-            ]):
+            ]) and not corrupted_config:
                 corrupted_config = True
                 experimental = True
             else:
@@ -1623,11 +1623,12 @@ class IssueChecker:
 
             if corrupted_config:
                 if any("speedrunapi" in mod for mod in wrong_mods):
-                    builder.error("mcsr_corrupted_mods_config")
+                    builder.error("mcsr_corrupted_mods_config", experimental=experimental)
                 elif len(wrong_mods) > 1:
                     builder.error(
                         "corrupted_mods_config",
                         "`; `".join(wrong_mods[:12]),
+                        experimental=experimental,
                     )
                 elif len(wrong_mods) > 0:
                     builder.error("corrupted_mod_config", wrong_mods[0], experimental=experimental)

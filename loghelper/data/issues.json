@@ -191,7 +191,7 @@
     "info.leaked_username": "Your log has your PC username in it. You might want to delete it.",
     "info.send_full_log": "Please send the full {} log from `Edit{} > Minecraft Log`.",
     "info.send_watchdog_report": "Please send `{}` as it would have more info about this crash.",
-    "info.sleep": "It is `4 AM`, but you are playing Minecraft. You [**should sleep**](https://en.wikipedia.org/wiki/Sleep_deprivation) instead.",
+    "info.sleep": "It is `4:00 AM`, but you are playing Minecraft. You [**should sleep**](https://en.wikipedia.org/wiki/Sleep_deprivation) instead.",
     "info.upload_log_attachment.discord": "You sent your log as a file. Please press the `Re-Upload Log` button so the log will be re-uploaded to mclo.gs so people can see it without having to download it.",
     "note.amount_illegal_mods": "You are using `{}` illegal for speedrunning mod{}!",
     "note.dont_hdd": "Your launcher folder is located on the `{}:/` drive, which is often an HDD. If so, consider moving it to `C:/` for better performance.",
