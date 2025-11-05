@@ -84,7 +84,7 @@ class IssueBuilder:
     def _bold(self, text: str, want: bool) -> str:
         if not want:
             return text
-        return f"{self.style['bold_open']}{text}{self.style['bold_close']}"
+        return f"{self.style['bold_open']}{text.replace('**', '')}{self.style['bold_close']}"
 
     def _experimental_wrap(self, text: str, experimental: bool) -> str:
         if not experimental:

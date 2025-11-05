@@ -1145,7 +1145,7 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt",
         ]):
             builder.error("outdated_mods_crash").add("update_mods")
-            if self.log.has_mod("areessgee"): builder.add("outdated_mods_crash_arsg")
+            if self.log.has_mod("areessgee"): builder.add("outdated_mods_crash_arsg", bold=True)
             found_crash_cause = True
         
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
