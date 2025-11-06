@@ -1110,11 +1110,20 @@ class IssueChecker:
 
         if (self.log.has_mod("peepopractice")
             and (self.log.has_mod("peepopractice-1")
-                 or self.log.has_mod("peepopractice-2.0")
-                 or self.log.has_mod("peepopractice-2.1"))
+              or self.log.has_mod("peepopractice-2.0")
+              or self.log.has_mod("peepopractice-2.1"))
         ):
             builder.error("old_mod_version", "PeepoPractice", "https://github.com/faluhub/peepoPractice/releases/latest/")
 
+        if (self.log.has_mod("areessgee")
+            and (self.log.has_mod("areessgee-2.0")
+              or self.log.has_mod("areessgee-2.1")
+              or self.log.has_mod("areessgee-2.2")
+              or self.log.has_mod("areessgee-2.3"))
+        ):
+            builder.error("old_mod_version", "AreEssGee", "https://github.com/faluhub/AreEssGee/releases/latest/")
+
+        
         if self.log.has_pattern(r"^Prism Launcher version: [2-8]"):
             if self.log.has_pattern(r"^Prism Launcher version: [8-8]"):
                 builder.note("semi_old_prism_version")
@@ -1145,7 +1154,6 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt",
         ]):
             builder.error("outdated_mods_crash").add("update_mods")
-            if self.log.has_mod("areessgee"): builder.add("outdated_mods_crash_arsg", bold=True)
             found_crash_cause = True
         
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
