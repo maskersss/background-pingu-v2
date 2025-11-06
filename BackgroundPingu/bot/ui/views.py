@@ -73,4 +73,4 @@ class Paginator(View):
         except (TypeError, discord.errors.NotFound):
             try:
                 return await interaction.response.send_message("Something went wrong while re-uploading this log. Try again.", ephemeral=True)
-            except discord.errors.NotFound: pass
+            except (discord.errors.NotFound, discord.errors.InteractionResponded): pass
