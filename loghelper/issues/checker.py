@@ -1624,6 +1624,7 @@ class IssueChecker:
                             if part == "": break
                             elif len(part) > 1: mod_name += part0
                         
+                        if mod_name == "create": continue
                         if len(mod_name) < 5 and mod_name != "atum": mod_name = f".{mod_name}"
                         if len(mod_name) > 2 and self.log.has_content_in_stacktrace(mod_name):
                             if not mod in wrong_mods: wrong_mods.append(mod)
