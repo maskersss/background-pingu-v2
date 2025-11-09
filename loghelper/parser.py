@@ -678,6 +678,9 @@ class Log:
         
         if self.is_prism:
             return "java_update_guide_prism"
+        
+        if self.is_multimc_or_fork:
+            return "java_update_guide_mmc"
 
         if self.is_mcsrlauncher:
             return "java_update_guide_mcsrlauncher"
