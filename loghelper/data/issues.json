@@ -1,10 +1,10 @@
 {
     "add.allocate_ram_guide": "You should allocate `{}-{}` MB{}.",
     "add.allocate_ram_guide_mmc": "You should allocate `{}-{}` MB{} by going to `Settings > Java` in `{}`.",
-    "add.eav_crash_controller": "- If you have a controller plugged in, unplug it.",
     "add.eav_crash_disclaimer": "Please note that the options listed above are not inherently bad things.",
     "add.eav_crash_drivers": "- Driver issues: update / downgrade graphics drivers.",
     "add.eav_crash_hardware": "- Hardware issues: don't overclock and run a stress test.",
+    "add.eav_crash_java17": "- Using an old `Java` version - use `Java 17-22` instead.",
     "add.eav_crash_kill": "Killing Minecraft when it's frozen.",
     "add.eav_crash_mods": "- Disable all mods to see if one of them is causing the crash.",
     "add.eav_crash_obs": "- Concurrently running programs, such as `OBS` and `Discord`, that use the same graphics card as the game:",
