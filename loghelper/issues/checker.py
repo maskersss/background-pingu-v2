@@ -1122,7 +1122,6 @@ class IssueChecker:
               or self.log.has_mod("areessgee-2.3"))
         ):
             builder.error("old_mod_version", "AreEssGee", "https://github.com/faluhub/AreEssGee/releases/latest/")
-
         
         if self.log.has_pattern(r"^Prism Launcher version: [2-8]"):
             if self.log.has_pattern(r"^Prism Launcher version: [8-8]"):
@@ -1532,6 +1531,9 @@ class IssueChecker:
             elif self.log.exitcode in [-805306369, 143]:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_kill")
+            elif self.log.exitcode == -2147483645:
+                if self.log.has_mod("mcsrfairplay"):
+                    builder.error("mod_crash_disable", "mcsrfairplay", experimental=True)
 
         if (not found_crash_cause
             and self.log.is_multimc_or_fork
