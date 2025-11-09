@@ -1542,11 +1542,14 @@ class IssueChecker:
 
         if (not found_crash_cause
             and self.log.is_multimc_or_fork
-            and not self.log.type in [LogType.FULL_LOG, LogType.THREAD_DUMP, LogType.LAUNCHER_LOG]
+            and self.log.type in [LogType.CRASH_REPORT, LogType.LATEST_LOG, LogType.HS_ERR_PID_LOG, None]
             and not self.log.launcher is None
             and not self.link == "message"
         ):
-            builder.info("send_full_log", self.log.launcher.value, self.log.edit_instance)
+            builder.error("send_full_log",
+                          "?" if self.log.type is None else self.log.type.value,
+                          self.log.launcher.value,
+                          self.log.edit_instance)
         
         if (not found_crash_cause
             and self.is_discord
@@ -1787,7 +1790,7 @@ class IssueChecker:
                     and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
                 ):
-                    builder.error("send_full_log", self.log.edit_instance)
+                    builder.error("send_full_log_2", self.log.edit_instance)
                 
                 if not found_crash_cause and self.log.has_content("Host api.paste.ee not found"):
                     builder.error("pasteee_down")
