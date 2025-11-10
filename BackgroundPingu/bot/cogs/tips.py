@@ -248,7 +248,7 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
-        if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=RSLv7FfQZKY&t=167s>) to download and configure mods.
+        if os == "macOS": text = """To set up speedrunning on Mac, follow [the macOS setup guide](<https://www.youtube.com/watch?v=GomIeW5xdBM>) to install everything and for some additional tips, and then follow [the 2025 setup guide](<https://www.youtube.com/watch?v=RSLv7FfQZKY&t=193s>) to download and configure mods.
 
 To run several instances, use **SeedQueue** (`/seedqueue`).
 [SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
