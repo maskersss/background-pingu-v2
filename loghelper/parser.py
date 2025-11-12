@@ -866,6 +866,9 @@ class Log:
 
     def has_pattern(self, pattern: str) -> bool:
         return bool(re.compile(pattern, re.IGNORECASE).search(self._lower_content))
+
+    def has_pattern_in_stacktrace(self, pattern: str) -> bool:
+        return bool(re.compile(pattern, re.IGNORECASE).search(self.stacktrace))
     
     def has_mod(self, mod_name: str) -> bool:
         mod_name = mod_name.lower().replace(" ", "").replace("-", "").replace("+", "")

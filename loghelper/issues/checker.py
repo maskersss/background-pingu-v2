@@ -1585,8 +1585,8 @@ class IssueChecker:
             else:
                 corrupted_config = False
             
-            if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
-                ".config",
+            if any(self.log.has_pattern_in_stacktrace(corrupted_config) for corrupted_config in [
+                r"\.config[^A-Za-z]",
             ]) and not corrupted_config:
                 corrupted_config = True
                 experimental = True
