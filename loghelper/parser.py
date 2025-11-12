@@ -740,8 +740,9 @@ class Log:
     @cached_property
     def exitcode(self) -> int | None:
         pattern = r"Process (crashed|exited) with (exit)? ?code (-?\d+)"
-        match = re.search(pattern, self._content, re.DOTALL)
-        if not match is None:
+        matches = list(re.finditer(pattern, self._content, re.DOTALL))
+        if matches:
+            match = matches[-1]
             try: return int(match.group(3))
             except ValueError: pass
         
