@@ -865,9 +865,11 @@ class Log:
         return content.lower().replace("_","") in self.stacktrace.lower()
 
     def has_pattern(self, pattern: str) -> bool:
+        if not self._lower_content: return False
         return bool(re.compile(pattern, re.IGNORECASE).search(self._lower_content))
 
     def has_pattern_in_stacktrace(self, pattern: str) -> bool:
+        if not self.stacktrace: return False
         return bool(re.compile(pattern, re.IGNORECASE).search(self.stacktrace))
     
     def has_mod(self, mod_name: str) -> bool:
