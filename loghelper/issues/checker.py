@@ -1549,7 +1549,7 @@ class IssueChecker:
                     builder.error("mod_crash_disable", "mcsrfairplay", experimental=True)
 
         if (not found_crash_cause
-            and self.log.is_multimc_or_fork
+            and (self.log.is_multimc_or_fork or self.log.is_mcsrlauncher)
             and self.log.type in [LogType.CRASH_REPORT, LogType.LATEST_LOG, LogType.HS_ERR_PID_LOG, None]
             and not self.log.launcher is None
             and not self.link == "message"
