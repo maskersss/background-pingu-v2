@@ -453,16 +453,16 @@ https://modrinth.com/modpack/speedrun"""
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):
-        text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check>) to download multiple maps at once.*
-[MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map>)
-[Bastions](<https://github.com/LlamaPag/bastion>)
-[Blaze](<https://github.com/Mescht/Blaze-Practice>)
-[Buried treasure](<https://github.com/Mescht/BTPractice>)
-[Crafting](<https://github.com/Semperzz/Crafting-Practice-v2>) / [Search crafting](<https://github.com/7rowl/Search-Crafting-Practice>)
-[One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice>)
-[Overworld](<https://github.com/7rowl/OWPractice>)
-[Portals](<https://github.com/Semperzz/Portal-Practice>)
-[Zero cycle](<https://github.com/Mescht/Zero-Practice>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
+        text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
+[MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map/releases/latest>)
+[Bastions](<https://github.com/LlamaPag/bastion/releases/latest>)
+[Blaze](<https://github.com/Mescht/Blaze-Practice/releases/latest>)
+[Buried treasure](<https://github.com/Mescht/BTPractice/releases/latest>)
+[Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>) / [Search crafting](<https://github.com/7rowl/Search-Crafting-Practice/releases/latest>)
+[One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice/releases/latest>)
+[Overworld](<https://github.com/7rowl/OWPractice/releases/latest>)
+[Portals](<https://github.com/Semperzz/Portal-Practice/releases/latest>)
+[Zero cycle](<https://github.com/Mescht/Zero-Practice/releases/latest>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
 [PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (‼️ needs java 17+ and is incompatible with fastreset)"""
         return await ctx.respond(text)
