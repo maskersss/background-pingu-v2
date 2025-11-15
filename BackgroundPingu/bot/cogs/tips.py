@@ -456,7 +456,7 @@ https://modrinth.com/modpack/speedrun"""
         text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check>) to download multiple maps at once.*
 [MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map>)
 [Bastions](<https://github.com/LlamaPag/bastion>)
-[Blaze](<https://github.com/Semperzz/Blaze-Practice>)
+[Blaze](<https://github.com/Mescht/Blaze-Practice>)
 [Buried treasure](<https://github.com/Mescht/BTPractice>)
 [Crafting](<https://github.com/Semperzz/Crafting-Practice-v2>) / [Search crafting](<https://github.com/7rowl/Search-Crafting-Practice>)
 [One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice>)
