@@ -197,7 +197,8 @@ class IssueChecker:
         if self.link.endswith("standardsettings.json"):
             try:
                 data = json.loads(self.log._content)
-                sens = data["mouseSensitivity"]["value"]
+                sens = data["mouseSensitivity"]
+                if isinstance(sens, dict): sens = sens["value"]
                 if not self.is_boateye_sens(float(sens)):
                     builder.error("wrong_sens", sens, "standardsettings.json")
             except: pass
@@ -206,7 +207,7 @@ class IssueChecker:
         
         if self.link.endswith("options.txt"):
             match = re.search(r"mouseSensitivity:([0-9]*\.?[0-9]+)", self.log._content)
-            if not match is None:            
+            if not match is None:
                 sens = match.group(1)
                 try:
                     if not self.is_boateye_sens(float(sens)):
