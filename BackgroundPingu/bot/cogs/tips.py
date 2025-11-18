@@ -373,7 +373,7 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
     async def one_sixteen_mods(self, ctx: discord.ApplicationContext):
         text = """Download the mods by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>) or from <https://mods.tildejustin.dev/>
-All other mods are banned[.](https://i.imgur.com/hGFNA6c.png)"""
+All other mods are banned[.](https://i.imgur.com/8k1LyKZ.png)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
