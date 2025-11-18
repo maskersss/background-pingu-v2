@@ -292,6 +292,7 @@ class Log:
         for jingle_indicator in [
             "You are running Jingle",
             r"^SlackowWall",
+            "Instance change detection timer started",
         ]:
             if self.has_pattern(jingle_indicator):
                 return Launcher.JINGLE
