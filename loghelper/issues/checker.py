@@ -1078,7 +1078,9 @@ class IssueChecker:
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
                     if self.log.is_prism: builder.add("update_mods_prism")
-                    found_crash_cause = True
+                    if (self.log.type == LogType.FULL_LOG
+                        or not self.log.is_multimc_or_fork
+                    ): found_crash_cause = True
             except version.InvalidVersion:
                 pass
         
