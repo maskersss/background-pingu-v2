@@ -693,11 +693,15 @@ class IssueChecker:
             r"GL_OUT_OF_MEMORY",
             r"memory allocation (.*) failed",
         ]):
-            builder.error("out_of_memory_pc", experimental=True)
-            if self.log.operating_system in [OperatingSystem.WINDOWS, None]:
-                builder.add("oompc_paging").add("oompc_idk")
-            else:
-                builder.add("oompc_paging_nonwindows").add("oompc_idk")
+            if all(not self.log.has_pattern(using_32_bit_java) for using_32_bit_java in [
+                r"is not matching your system architecture. You might want to ",
+                r", using 32 \((.+)\) architecture, from"
+            ]):
+                builder.error("out_of_memory_pc", experimental=True)
+                if self.log.operating_system in [OperatingSystem.WINDOWS, None]:
+                    builder.add("oompc_paging").add("oompc_idk")
+                else:
+                    builder.add("oompc_paging_nonwindows").add("oompc_idk")
             found_crash_cause = True
 
         if (self.log.has_mod("phosphor")
