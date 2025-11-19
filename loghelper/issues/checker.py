@@ -1173,9 +1173,6 @@ class IssueChecker:
             ranked_rong_mods = []
             ranked_rong_versions = []
             ranked_anticheat = match.group(1).strip().replace("\t","")
-
-            if self.log.has_pattern(r"You should delete these from Minecraft.\s*?Process "):
-                builder.error("ranked_fabric_0_15_x")
             
             ranked_anticheat_split = ranked_anticheat.split("These Fabric Mods are whitelisted but different version! Make sure to update these!")
             if len(ranked_anticheat_split) > 1:
@@ -1227,6 +1224,13 @@ class IssueChecker:
             if len(ranked_rong_files + ranked_rong_mods + ranked_rong_versions) > 0:
                 builder.add("ranked_mods_disclaimer")
 
+        if (self.log.is_ranked_log
+            and self.log.has_mod("atum")
+            and self.log.has_content_in_stacktrace("Cannot invoke \"net.minecraft.class_1928$class_4315.method_20781()\" because the return value of \"net.minecraft.class_1928.method_20746(net.minecraft.class_1928$class_4313)\" is null")
+        ):
+            builder.error("ranked_atum_crash")
+            found_crash_cause = True
+        
         if self.log.has_mod("optifine"):
             for incompatible_mod in ["Starlight"]:
                 if self.log.has_mod(incompatible_mod):

@@ -145,7 +145,7 @@
     "error.outdated_mods_crash": "This crash is caused by using outdated versions of mods. Make sure to update all of them.",
     "error.outdated_nvidia_flatpak_driver": "Update drivers for flatpak by running `flatpak update`. If the crash persists, try [not using flatpak](https://prismlauncher.org/download).",
     "error.pasteee_down": "`paste.ee` seems to be down. Instead, please try the following:\n1. **Copy** your log using the `Copy` button.\n2. Upload it to <https://mclo.gs/>, then provide the link.\n3. Alternatively, paste the log directly into Discord as a message, then:\n   - Right-click the message.\n   - Select `Apps`.\n   - Choose `Recommend Settings`.",
-    "error.ranked_fabric_0_15_x": "You seem to be using a version of `MCSR Ranked` that is incompatible with `Fabric Loader 0.15+`. Update `MCSR Ranked`.",
+    "error.ranked_atum_crash": "If this crash was caused by going to `Book & Quill` > `Atum`, configure `Atum` by shift clicking gold boots instead.",
     "error.ranked_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Ranked**](https://discord.com/invite/nnjUSyDErj) server.",
     "error.ranked_rong_files": "You're using {} to be fine, but the files don't match. Try redownloading/updating {}.",
     "error.ranked_rong_mods": "You're using {}n't whitelisted for `MCSR Ranked`. Remove {} from your `mods` folder.",
