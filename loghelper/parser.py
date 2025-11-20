@@ -28,7 +28,6 @@ class Launcher(enum.Enum):
 
 class ModLoader(enum.Enum):
     FABRIC = "Fabric"
-    QUILT = "Quilt"
     FORGE = "Forge"
     VANILLA = "Vanilla"
 
@@ -105,7 +104,6 @@ class Log:
         pattern = re.compile(r"\[✔️\]\s+([^\[\]\n]+)")
         mods = [mod + ".jar" for mod in pattern.findall(self._content)]
         return mods
-
     
     @cached_property
     def fabric_mods(self) -> list[str]:
@@ -137,7 +135,7 @@ class Log:
         return self.mods if len(self.mods) > 0 else self.fabric_mods
 
     @cached_property
-    def java_version(self) -> str:
+    def java_version(self) -> str | None:
         version_match = re.compile(r"\nJava is version:? (\S+?)(?:,|\s)").search(self._content) # mmc/prism logs
         if not version_match is None:
             return version_match.group(1)
@@ -149,7 +147,7 @@ class Log:
         return None
     
     @cached_property
-    def major_java_version(self) -> int:
+    def major_java_version(self) -> int | None:
         if not self.java_version is None:
             parts = self.java_version.split(".")
             try:
@@ -164,7 +162,7 @@ class Log:
         return None
     
     @cached_property
-    def minecraft_folder(self) -> str:
+    def minecraft_folder(self) -> str | None:
         # mmc/prism logs
         match = re.compile(r"Minecraft folder is:\n(.*)\n").search(self._content)
         if not match is None: return match.group(1).strip()
@@ -178,7 +176,7 @@ class Log:
         return None
     
     @cached_property
-    def operating_system(self) -> OperatingSystem:
+    def operating_system(self) -> OperatingSystem | None:
         if not self.minecraft_folder is None:
             if self.minecraft_folder.startswith("/"):
                 if len(self.minecraft_folder) > 1 and self.minecraft_folder[1].isupper():
@@ -229,7 +227,7 @@ class Log:
         return False
     
     @cached_property
-    def minecraft_version(self) -> str:
+    def minecraft_version(self) -> str | None:
         if self.type == LogType.LAUNCHER_LOG: return None
 
         for pattern in [
@@ -249,7 +247,7 @@ class Log:
         return None
     
     @cached_property
-    def parsed_mc_version(self) -> version.Version:
+    def parsed_mc_version(self) -> version.Version | None:
         if self.minecraft_version is None: return None
         
         try:
@@ -257,7 +255,7 @@ class Log:
         except version.InvalidVersion: return None
     
     @cached_property
-    def loader_mc_version(self) -> str:
+    def loader_mc_version(self) -> str | None:
         for pattern in [
             r"libraries/net/fabricmc/intermediary/(\S+)/intermediary-",
             r"--fml.mcVersion (\S+)",
@@ -269,13 +267,7 @@ class Log:
         return None
     
     @cached_property
-    def short_version(self) -> str:
-        if not self.minecraft_version is None:
-            return self.minecraft_version[:4]
-        return None
-    
-    @cached_property
-    def fabric_version(self) -> version.Version:
+    def fabric_version(self) -> version.Version | None:
         for pattern in [
             r"Loading Minecraft \S+ with Fabric Loader (\S+)",
             r"libraries/net/fabricmc/fabric-loader/\S+/fabric-loader-(\S+).jar",
@@ -288,7 +280,7 @@ class Log:
         return None
     
     @cached_property
-    def launcher(self) -> Launcher:
+    def launcher(self) -> Launcher | None:
         for jingle_indicator in [
             "You are running Jingle",
             r"^SlackowWall",
@@ -362,7 +354,7 @@ class Log:
         return None
 
     @cached_property
-    def type(self) -> LogType:
+    def type(self) -> LogType | None:
         if any([self.has_pattern(rf"^{launcher}") for launcher in [
             "multimc",
             "ultimmc",
@@ -386,7 +378,7 @@ class Log:
             return LogType.HS_ERR_PID_LOG
 
         if any(self.has_content(launcher_log) for launcher_log in [
-            " D | ",                          # multimc
+            " D | ",                          # multimc / prism
             "Starting launcher - Version:",   # mcsr launcher
         ]):
             return LogType.LAUNCHER_LOG
@@ -413,7 +405,7 @@ class Log:
         return "" if self.is_prism else " Instance"
     
     @cached_property
-    def mod_loader(self) -> ModLoader:
+    def mod_loader(self) -> ModLoader | None:
         if self.type == LogType.LAUNCHER_LOG: return None
         
         match = re.compile(r"Main Class:\n(.*)\n").search(self._content)
@@ -450,7 +442,7 @@ class Log:
         return None
     
     @cached_property
-    def java_arguments(self) -> str:
+    def java_arguments(self) -> str | None:
         # multimc/prism logs
         match = re.compile(r"Java Arguments:\n(.*?)\n", re.DOTALL).search(self._content)
         if not match is None:
@@ -469,7 +461,7 @@ class Log:
         return None
 
     @cached_property
-    def max_allocated(self) -> int:
+    def max_allocated(self) -> int | None:
         if not self.java_arguments is None:
             match = re.compile(r"-Xmx(\d+)m").search(self.java_arguments)
             try:
@@ -603,7 +595,7 @@ class Log:
         return (min_ram, max_ram)
 
     @cached_property
-    def processors(self) -> int:
+    def processors(self) -> int | None:
         pattern = re.compile(r"Available Processors: ([0-9]+)\n")
         match = pattern.search(self._content)
         if not match is None:
@@ -611,7 +603,7 @@ class Log:
         return None
 
     @cached_property
-    def pc_ram(self) -> int:
+    def pc_ram(self) -> int | None:
         pattern = re.compile(r"Total Physical Memory \(MB\): ([0-9]+)\n")
         match = pattern.search(self._content)
         if not match is None:
@@ -619,7 +611,7 @@ class Log:
         return None
 
     @cached_property
-    def ram_guide(self) -> tuple[str, str, str, str]:
+    def ram_guide(self) -> tuple[str, str, str, str] | tuple[str, str, str, str, str]:
         if self.is_seedqueue_log:
             sq_min, sq_max = self.seedqueue_ram
             sq_min = int(round(sq_min, -1))
@@ -643,7 +635,8 @@ class Log:
 
         if self.is_multimc_or_fork or self.is_mcsrlauncher:
             if self.is_mcsrlauncher: launcher = "MCSR Launcher"
-            else: launcher = "Prism" if self.is_prism else "MultiMC"
+            elif self.is_prism: launcher = "Prism"
+            else: launcher = "MultiMC"
             return (
                 "allocate_ram_guide_mmc",
                 min_recomm,
@@ -657,10 +650,10 @@ class Log:
     @cached_property
     def setup_guide(self) -> str:
         if self.operating_system == OperatingSystem.MACOS: return "mac_setup_guide"
-        return "k4_setup_guide"
+        return "drx_setup_guide"
 
     @cached_property
-    def fabric_guide(self) -> str:
+    def fabric_guide(self) -> str | None:
         if self.launcher in [
             Launcher.OFFICIAL_LAUNCHER,
             Launcher.MODRINTH,
@@ -673,7 +666,7 @@ class Log:
         return "fabric_guide_mmc"
 
     @cached_property
-    def java_update_guide(self) -> str:
+    def java_update_guide(self) -> str | None:
         if self.launcher == Launcher.OFFICIAL_LAUNCHER:
             return self.setup_guide
         
@@ -695,7 +688,7 @@ class Log:
         return "java_update_guide"
     
     @cached_property
-    def libraries(self) -> str:
+    def libraries(self) -> str | None:
         pattern = r"\nLibraries:\n(.*?)\nNative libraries:\n"
         match = re.search(pattern, self._content, re.DOTALL)
         if not match is None:
@@ -704,7 +697,7 @@ class Log:
         return None
     
     @cached_property
-    def stacktrace(self) -> str:
+    def stacktrace(self) -> str | None:
         log = self._content
         ignored_patterns = [
             r"(?s)---- Minecraft Crash Report ----.*?This is just a prompt for computer specs to be printed",
@@ -762,7 +755,7 @@ class Log:
     def is_ssg_log(self) -> bool:
         for ssg_mod in [
             "setspawn",
-            "chunkcacher"
+            "chunkcacher",
         ]:
             if self.has_mod(ssg_mod): return True
         
@@ -792,7 +785,7 @@ class Log:
         return True
 
     @cached_property
-    def modcheck_v1_warning(self) -> str:
+    def modcheck_v1_warning(self) -> str | None:
         if any(self.has_mod(old_mod) for old_mod in [
             "fast-reset-1",
         ]):
@@ -895,7 +888,7 @@ class Log:
         if self.libraries is None: return False
         return content.lower() in self.libraries.lower()
     
-    def upload(self) -> tuple[bool, str]:
+    def upload(self) -> tuple[bool, str | None]:
         api_url = "https://api.mclo.gs/1/log"
         payload = {
             "content": self._content
@@ -904,9 +897,10 @@ class Log:
         if response.status_code == 200:
             match = re.search(r"/(Users|home)/([^/]+)/", self._content)
             return (
-                match and match.group(2).lower() not in ["user", "admin", "********"],
+                bool(match) and match.group(2).lower() not in ["user", "admin", "********"],
                 response.json().get("url")
             )
+        return (False, None)
     
     def __str__(self) -> str:
         return f"""
@@ -921,7 +915,6 @@ is_arm_mac={self.is_arm_mac}
 minecraft_version={self.minecraft_version}
 parsed_mc_version={self.parsed_mc_version}
 loader_mc_version={self.loader_mc_version}
-short_version={self.short_version}
 fabric_version={self.fabric_version}
 launcher={self.launcher}
 type={self.type}

@@ -490,7 +490,10 @@ class IssueChecker:
             builder.error("headless_java")
             found_crash_cause = True
         
-        if not found_crash_cause and self.log.type in [None, LogType.FULL_LOG] and self.log.has_content("VM option '"):
+        if (not found_crash_cause
+            and self.log.type in [None, LogType.FULL_LOG]
+            and self.log.has_content("VM option '")
+        ):
             pattern = r" VM option '(.*)\n\s*'"
             match = re.search(pattern, self.log._content)
             if not match is None:
@@ -563,10 +566,9 @@ class IssueChecker:
                     builder.note("mac_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
         
-        if not found_crash_cause and any(self.log.has_content(new_java_old_fabric) for new_java_old_fabric in [
-            "java.lang.IllegalArgumentException: Unsupported class file major version ",
-            "java.lang.IllegalArgumentException: Class file major version "
-        ]):
+        if (not found_crash_cause
+            and self.log.has_pattern(r"java\.lang\.IllegalArgumentException: (Unsupported )?Class file major version ")
+        ):
             mod_loader = self.log.mod_loader.value if self.log.mod_loader is not None else "mod"
             builder.error("new_java_old_fabric_crash", mod_loader, mod_loader)
             if not self.log.major_java_version is None and self.log.major_java_version > 25:
@@ -625,33 +627,25 @@ class IssueChecker:
             else:
                 builder.error("no_loader").add(self.log.fabric_guide, "install")
         
-        if not self.log.mod_loader in [None, ModLoader.FABRIC, ModLoader.VANILLA]:
-            if is_mcsr_log:
-                builder.error("using_other_loader_mcsr", self.log.mod_loader.value).add(self.log.fabric_guide, "install")
-                found_crash_cause = True
+        if is_mcsr_log and not self.log.mod_loader in [None, ModLoader.FABRIC, ModLoader.VANILLA]:
+            builder.error("using_other_loader_mcsr", self.log.mod_loader.value).add(self.log.fabric_guide, "install")
+            found_crash_cause = True
         
         if not found_crash_cause:
             has_fabric_mod = any(self.log.has_mod(mcsr_mod) for mcsr_mod in self.mcsr_mods) or self.log.has_mod("fabric")
-            has_quilt_mod = self.log.has_mod("quilt")
             has_forge_mod = self.log.has_mod("forge")
             
-            if has_forge_mod and not has_quilt_mod and not has_fabric_mod:
+            if has_forge_mod and not has_fabric_mod:
                 if self.log.mod_loader == ModLoader.FABRIC:
                     builder.error("rong_modloader", "Forge", "Fabric")
-                    found_crash_cause = True
-                elif self.log.mod_loader == ModLoader.QUILT:
-                    builder.error("rong_modloader", "Forge", "Quilt")
                     found_crash_cause = True
             elif has_fabric_mod and not has_forge_mod and self.log.mod_loader == ModLoader.FORGE:
                 builder.error("rong_modloader", "Fabric", "Forge")
                 found_crash_cause = True
-            elif has_quilt_mod and not has_forge_mod and self.log.mod_loader == ModLoader.FORGE:
-                builder.error("rong_modloader", "Quilt", "Forge")
-                found_crash_cause = True
         
         all_modloaders = [
             "fabric-loader",
-            ModLoader.FORGE.value,
+            "forge",
             "quilt-loader",
         ]
         found_modloaders = [modloader for modloader in all_modloaders if self.log.has_library(modloader)]
@@ -706,8 +700,7 @@ class IssueChecker:
 
         if (self.log.has_mod("phosphor")
             and (self.log.minecraft_version is None
-                 or self.log.is_newer_than("1.14")
-            )
+                 or self.log.is_newer_than("1.14") )
         ):
             builder.note("starlight_better")
             metadata = self.get_mod_metadata("starlight")
@@ -715,16 +708,11 @@ class IssueChecker:
                 latest_version = self.get_latest_version(metadata)
                 if not latest_version is None:
                     builder.add("mod_download", metadata["name"], latest_version["page"])
-        
-        if self.log.has_mod("motiono"):
-            builder.note("motiono")
-            metadata = self.get_mod_metadata("extraoptions")
-            if not metadata is None:
-                latest_version = self.get_latest_version(metadata)
-                if not latest_version is None:
-                    builder.add("mod_download", metadata["name"], latest_version["page"])
-        
-        if not found_crash_cause and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'"):
+                
+        if (not found_crash_cause
+            and self.log.operating_system in [None, OperatingSystem.MACOS]
+            and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'")
+        ):
             builder.error("mac_too_new_java")
             found_crash_cause = True
         
@@ -758,8 +746,7 @@ class IssueChecker:
                 if (not self.log.major_java_version is None
                     and self.log.major_java_version >= 23
                     and (self.log.major_java_version >= 24
-                         or not self.log.has_java_argument("-XX:-ZGenerational")
-                    )
+                         or not self.log.has_java_argument("-XX:-ZGenerational"))
                 ):
                     builder.note("dont_use_java_23_plus")
                     temp = True
@@ -852,9 +839,9 @@ class IssueChecker:
                               match.group("error").strip().replace("\n", " ")[:600])
                 found_crash_cause = True
             
-        if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):
-            builder.error("linux_ranked_musl", experimental=True)
-            found_crash_cause = True
+            if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):
+                builder.error("linux_ranked_musl", experimental=True)
+                found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
@@ -871,9 +858,6 @@ class IssueChecker:
         ):
             builder.error("macos_armorstand_crash")
             found_crash_cause = True
-        
-        if not found_crash_cause and self.log.has_content("WGL_ARB_create_context_profile is unavailable"):
-            builder.error("intel_hd2000").add("intell_hd2000_info")
 
         if (not found_crash_cause
             and (self.log.has_content("org.lwjgl.LWJGLException: Could not choose GLX13 config")
@@ -885,6 +869,7 @@ class IssueChecker:
         
         elif (not found_crash_cause
               and is_mcsr_log
+              and self.log.operating_system in [None, OperatingSystem.LINUX]
               and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
         ):
             if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
@@ -893,48 +878,55 @@ class IssueChecker:
             else:
                 builder.warning("dont_use_flatpak")
         
-        if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V"):
+        if (not found_crash_cause
+            and self.log.mod_loader in [None, ModLoader.FORGE]
+            and self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V")
+        ):
             builder.error("forge_java_bug")
             found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content_in_stacktrace("java.lang.IllegalStateException: GLFW error before init: [0x10008]Cocoa: Failed to find service port for display"):
+        if (not found_crash_cause
+            and self.log.operating_system in [None, OperatingSystem.MACOS]
+            and self.log.has_content_in_stacktrace("java.lang.IllegalStateException: GLFW error before init: [0x10008]Cocoa: Failed to find service port for display")
+        ):
             builder.error("incompatible_forge_mac")
             found_crash_cause = True
         
         if found_crash_cause: system_libs = []
         else: system_libs = [lib for lib in ["GLFW", "OpenAL"] if self.log.has_content("Using system " + lib)]
-        system_arg = None
-        if len(system_libs) == 2: system_arg = f"{system_libs[0]} and {system_libs[1]} installations"
-        elif len(system_libs) == 1: system_arg = f"{system_libs[0]} installation"
-        if not system_arg is None:
+        temp = None
+        if len(system_libs) == 2: temp = f"{system_libs[0]} and {system_libs[1]} installations"
+        elif len(system_libs) == 1: temp = f"{system_libs[0]} installation"
+        if not temp is None:
             if self.log.has_content("Failed to locate library:"):
                 builder.error(
                     "builtin_lib_crash",
-                    system_arg,
+                    temp,
                     self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                    " > Tweaks" if self.log.is_prism else ""
+                    " > Tweaks" if self.log.is_prism else "",
                 )
                 found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
                 builder.error(
                     "builtin_lib_prob_crash",
-                    system_arg,
+                    temp,
                     self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                    " > Tweaks" if self.log.is_prism else ""
+                    " > Tweaks" if self.log.is_prism else "",
                 )
 
         if (not found_crash_cause
+            and self.log.launcher in [None, Launcher.MULTIMC]
             and (self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1")) # so it works on snapshots too
             and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 builder.error("update_mmc")
                 found_crash_cause = True
-            elif self.log.launcher is None:
+            else:
                 builder.error("update_mmc", experimental=True)
         
         if not found_crash_cause and self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
-            builder.error("try_changing_lwjgl_version", self.log.edit_instance)
+            builder.error("try_changing_lwjgl_version", self.log.edit_instance, experimental=True)
         
         if not found_crash_cause and not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
             builder.error("silent_mode", self.log.edit_instance, experimental=True)
@@ -969,24 +961,15 @@ class IssueChecker:
         
         if found_crash_cause: pass
         elif self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
-            builder.error("old_sodium_crash")
-            metadata = self.get_mod_metadata("sodium")
-            if not metadata is None:
-                latest_version = self.get_latest_version(metadata)
-                if not latest_version is None:
-                    builder.add("mod_download", metadata["name"], latest_version["page"])
+            builder.error("old_sodium_crash", experimental=True).add("update_mods")
             found_crash_cause = True
         elif self.log.has_content_in_stacktrace("me.jellysquid.mods.sodium.client.SodiumClientMod.options"):
             if self.log.has_mod("sodiummac"):
-                builder.error("sodiummac_crash")
+                builder.error("sodiummac_crash").add("update_mods")
                 found_crash_cause = True
             elif not self.log.has_mod("speedrunapi"):
                 builder.error("sodium_config_crash_old")
                 found_crash_cause = True
-        
-        if not found_crash_cause and self.log.has_content_in_stacktrace("me.voidxwalker.options.extra.ExtraOptions.lambda$load"):
-            builder.error("corrupted_mod_config", "extra-options")
-            found_crash_cause = True
         
         if not found_crash_cause and any(self.log.has_content(corrupted_instance) for corrupted_instance in [
             "mmc-pack.json is probably corrupted",   # multimc
@@ -997,7 +980,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("Tried to stop SeedQueue off-thread!"):
-            builder.error("mcsr_corrupted_mods_config", experimental=True)
+            builder.error("weird_sq_crash", experimental=True)
             found_crash_cause = True
         
         pattern = r"Uncaught exception in thread \"Thread-\d+\"\njava\.util\.ConcurrentModificationException: null"
@@ -1047,20 +1030,12 @@ class IssueChecker:
             builder.error("legacy_crash_fix").add("update_mods")
             found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_pattern(r"Description: Exception in server tick loop[\s\n]*java\.lang\.IllegalStateException: Lock is no longer valid"):
-            builder.error("wp_3_plus_crash")
-            found_crash_cause = True
-            metadata = self.get_mod_metadata("worldpreview")
-            if not metadata is None:
-                latest_version = self.get_latest_version(metadata)
-                if not latest_version is None:
-                    builder.add("mod_download", metadata["name"], latest_version["page"])
-            found_crash_cause = True
-        
-        if not found_crash_cause and any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
+        if (not found_crash_cause
+            and self.log.has_mod("sodium")
+            and any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
             "RivaTuner Statistics Server (RTSS) is not compatible with Sodium",
             "READ ME! You appear to be using the RivaTuner Statistics Server (RTSS)!"
-        ]):
+        ])):
             builder.error("sodium_rtss")
             found_crash_cause = True
         
@@ -1126,7 +1101,7 @@ class IssueChecker:
             and (self.log.has_mod("areessgee-2.0")
               or self.log.has_mod("areessgee-2.1")
               or self.log.has_mod("areessgee-2.2")
-              or self.log.has_mod("areessgee-2.3"))
+              or self.log.has_mod("areessgee-2.3")) # its a good way to detect old versions
         ):
             builder.error("old_mod_version", "AreEssGee", "https://github.com/faluhub/AreEssGee/releases/latest/")
         
@@ -1139,7 +1114,7 @@ class IssueChecker:
 
         match = re.search(r"^MultiMC version: 0\.7\.0-(.{4})", self.log._content)
         if not match is None and self.log.operating_system == OperatingSystem.WINDOWS:
-            if match.group(1) < "3863" or match.group(1) == "stab":
+            if match.group(1) < "3863" or match.group(1) == "stab": # STABle
                 builder.note("semi_old_mmc_version")
         
         if (self.log.mod_loader in [ModLoader.FORGE, None]
@@ -1291,12 +1266,6 @@ class IssueChecker:
             builder.error("incompatible_mod", "WorldPreview", "carpet")
             found_crash_cause = True
         
-        if (self.log.minecraft_version in [None, "1.16.1"]
-            and self.log.has_content_in_stacktrace("java.lang.ClassNotFoundException: dev.tildejustin.stateoutput.State")
-        ):
-            builder.error("old_wp_with_stateoutput")
-            found_crash_cause = True
-        
         if (not found_crash_cause
             and len(self.log.mods) == 0
             and self.log.minecraft_version in [None, "1.16.1"]
@@ -1316,18 +1285,12 @@ class IssueChecker:
                 found_crash_cause = True
         
         if (not found_crash_cause
-            and self.log.has_content_in_stacktrace("java.lang.StackOverflowError")
-            and self.log.has_content("$atum$createDesiredWorld")
+            and not self.log.is_newer_than("1.14")
+            and self.log.mod_loader == ModLoader.FABRIC
+            and self.log.has_content("Mappings not present!")
         ):
-            builder.error("stack_overflow_crash", experimental=True)
+            builder.error("legacy_fabric_modpack")
             found_crash_cause = True
-        
-        if not found_crash_cause and self.log.has_content("Mappings not present!"):
-            if not self.log.is_newer_than("1.14") and self.log.mod_loader == ModLoader.FABRIC:
-                builder.error("legacy_fabric_modpack")
-                found_crash_cause = True
-            else:
-                builder.warning("no_mappings", self.log.edit_instance, experimental=True)
 
         if (not self.log.loader_mc_version is None
             and not self.log.minecraft_version is None
@@ -1340,7 +1303,10 @@ class IssueChecker:
             )
             if not found_crash_cause and self.log.has_content("Mapping source name conflicts detected:"): found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed"):
+        if (not found_crash_cause
+            and self.log.mod_loader in [None, ModLoader.FABRIC]
+            and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed")
+        ):
             builder.error("delete_dot_fabric", experimental=True)
         
         if not found_crash_cause:
@@ -1574,10 +1540,11 @@ class IssueChecker:
             and self.is_discord
             and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
-            and not self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES
             and self.log.has_content("minecraft")
         ):
             builder.info("upload_log_attachment")
+            if not self.log.leaked_pc_username and self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
+                builder.add("upload_log_too_large", MAX_STARTING_LOG_LINES, MAX_ENDING_LOG_LINES)
         
         if (not found_crash_cause
             and self.is_discord

@@ -64,13 +64,15 @@ class Paginator(View):
             return await interaction.response.send_message("You're not the original poster of this log.", ephemeral=True)
         try:
             includes, self.reupload_url = self.builder.log.upload()
+            if not self.reupload_url:
+                raise RuntimeError("Failed to re-upload log.")
             self.builder.top_info("uploaded_log" + ("_2" if includes else ""), self.reupload_url)
             self._messages = self.builder.build()
             button.disabled = True
             await self.edit_message(interaction)
             try: await self.post.delete(reason="Re-uploaded log.")
             except discord.Forbidden: pass
-        except (TypeError, discord.errors.NotFound):
+        except (discord.errors.NotFound, RuntimeError):
             try:
                 return await interaction.response.send_message("Something went wrong while re-uploading this log. Try again.", ephemeral=True)
             except (discord.errors.NotFound, discord.errors.InteractionResponded): pass
