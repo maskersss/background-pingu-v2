@@ -188,15 +188,13 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
             if os == "Linux":
                 text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
             else:
-                if os == "macOS": query_string = "?os=mac"
-                else: query_string = "?os=windows&arch=x64"
-                query_string += "&package=jdk&version=21&mode=filter"
-                text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
                 if os == "Windows":
-                    text += " Download and run the `.msi` file if you're on Windows.\n"
-                    text += "    * If prompted, it is recommended you install Java **for all users**.\n"
-                else:
-                    text += " Download and run the `.pkg` file if you're on macOS.\n"
+                    text += "* If you're using MultiMC:\n  * On Windows, install the latest version of Java by downloading **and running** the Microsoft Java installer: <https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi>.\n"
+                    text += "    * When prompted, it is recommended you install Java **for all users**.\n"
+                else: # macos
+                    query_string = "?os=mac&package=jdk&version=21&mode=filter"
+                    text += f"* If you're using MultiMC:\n  * On macOS, you can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
+                    text += " Download and run the `.pkg` file.\n"
 
             text += "  * After installing Java, follow the steps in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)\n"
             text += "    * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu.\n"
