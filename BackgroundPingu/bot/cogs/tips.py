@@ -148,7 +148,7 @@ The most important things to learn when starting out are bastion routes and one-
 In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>) and a [full comprehensive guide](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="tutorials", description="Gives a link to Osh's speedrunning tutorials playlist.")
+    @commands.slash_command(name="tutorials", description="Links Couriway's Metafy guide and Osh's tutorials YouTube playlist.")
     async def tutorials(self, ctx: discord.ApplicationContext):
         text = """Couriway's Metafy guide: <https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>
 -# (it is free, you just need to create an account)
