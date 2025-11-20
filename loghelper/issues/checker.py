@@ -960,7 +960,7 @@ class IssueChecker:
                 found_crash_cause = True
         
         if found_crash_cause: pass
-        elif self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
+        elif is_mcsr_log and self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
             builder.error("old_sodium_crash", experimental=True).add("update_mods")
             found_crash_cause = True
         elif self.log.has_content_in_stacktrace("me.jellysquid.mods.sodium.client.SodiumClientMod.options"):
