@@ -1690,7 +1690,7 @@ class IssueChecker:
                         "entit": 2,
                         "F3": 1,
                         r"\be\b": 1,
-                        "counter": 1,
+                        "count": 1,
                         "entity culling": -100,
                         "[#]": -100,
                         "ender_dragon": -100,
