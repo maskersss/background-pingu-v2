@@ -125,6 +125,10 @@ class Core(Cog):
         result = await self.check_log(msg)
         if self.should_reply(result):
             try:
+                # discord has a 2000 character limit
+                if isinstance(result["text"], str) and len(result["text"]) > 1950:
+                    # keep the first and last 900 characters
+                    result["text"] = result["text"][:900] + "\n\n...\n\n" + result["text"][-900:]
                 await msg.reply(content=result["text"], embed=result["embed"], view=result["view"])
             except discord.errors.Forbidden: pass
     
