@@ -110,7 +110,7 @@
     "error.mclogs_cutoff.discord": "Your log seems to be too large, which caused it to get cut off at `25000` lines by `mclo.gs`. You should `Copy` it and paste directly into Discord.",
     "error.mclogs_cutoff.web": "Your log seems to be too large, which caused it to get cut off at `25000` lines by `mclo.gs`. You should `Copy` it and paste directly into here.",
     "error.mcsr_corrupted_mods_config": "One of the config files in the `.minecraft/config/mcsr/` folder seems to be corrupted. You can try deleting / renaming the folder to see if it'll fix the crash.",
-    "error.midnight_bug": "Your log seems to be cut off due to `Minecraft` generating a new log at midnight.",
+    "error.midnight_bug": "Your log seems to be cut off due to `{}` generating a new log at midnight.",
     "error.minecraft_version_mismatch": "It looks like you might have `{}` installed for the wrong Minecraft version. Try changing it to the right version in `Edit{} > Version`.",
     "error.missing_dependency": "The mod `{}` requires having the mod `{}` installed. Please install it.",
     "error.missing_dependency_2": "A mod you're using requires having the mod `{}` installed. Please install it.",

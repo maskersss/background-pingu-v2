@@ -283,6 +283,10 @@ class Log:
     def launcher(self) -> Launcher | None:
         for jingle_indicator in [
             "You are running Jingle",
+            r" \[paceman-tracker/",
+            r"No instances are open\.",
+
+            # slackowwall
             r"^SlackowWall",
             "Instance change detection timer started",
         ]:
