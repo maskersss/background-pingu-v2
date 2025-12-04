@@ -1836,7 +1836,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         if any(item is None for item in [self.log.processors, self.log.pc_ram]):
             if self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if self.log.is_ranked_log:
-                    output = "You sent a MCSR Ranked log. This command is for recommending settings for SeedQueue, not for Ranked (which is an illegal mod for regular runs)."
+                    output = "This command is for recommending settings for SeedQueue, but you sent an MCSR Ranked log, and Ranked is incompatible with SeedQueue and is illegal for regular speedruns. You should make separate instances for SeedQueue and for Ranked, and send the log from the SeedQueue instance without Ranked."
                     if self.mode == "web": output = output.replace("command", "website")
                 elif not self.log.has_mod("seedqueue"):
                     output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
