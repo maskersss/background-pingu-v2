@@ -382,7 +382,8 @@ class Log:
             return LogType.HS_ERR_PID_LOG
 
         if any(self.has_content(launcher_log) for launcher_log in [
-            " D | ",                          # multimc / prism
+            " D | ",                          # prism
+            " D \"MultiMC 5\" ",              # multimc
             "Starting launcher - Version:",   # mcsr launcher
         ]):
             return LogType.LAUNCHER_LOG
