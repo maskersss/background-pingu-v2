@@ -1475,14 +1475,15 @@ class IssueChecker:
                 ): builder.add("eav_crash_srigt")
             if (is_mcsr_log and not self.log.major_java_version is None
                 and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-            builder.add("eav_crash_hardware").add("eav_crash_reboot")
+            if is_mcsr_log: builder.add("eav_crash_jingle_java8")
             if self.log.lines < 500:
                 if (self.log.has_mod("sodium")
                     and not self.log.has_mod("sodiummac")
                     and self.log.minecraft_version in ["1.16.1", None]
                 ): builder.add(f"eav_crash_sodium")
                 if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
-            builder.add("eav_crash_disclaimer")
+            builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
+            builder.add("eav_crash_hardware").add("eav_crash_disclaimer")
             found_crash_cause = True
 
         if not found_crash_cause and self.log.stacktrace is None:
@@ -1491,33 +1492,36 @@ class IssueChecker:
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                builder.add("eav_crash_reboot")
+                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
                 if self.log.lines < 500:
                     if (self.log.has_mod("sodium")
                         and not self.log.has_mod("sodiummac")
                         and self.log.minecraft_version in ["1.16.1", None]
                     ): builder.add(f"eav_crash_sodium")
                     if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
+                builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740791:
                 builder.error("exitcode", "-1073740791", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                builder.add("eav_crash_reboot")
+                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
                 if (self.log.lines < 500
                     and (self.log.mods is None or len(self.log.mods) > 0)
                 ): builder.add("eav_crash_mods")
+                builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740771:
                 builder.error("exitcode", "-1073740771", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                builder.add("eav_crash_reboot")
+                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
                 if (self.log.lines < 500
                     and (self.log.mods is None or len(self.log.mods) > 0)
                 ): builder.add("eav_crash_mods")
+                builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode in [-805306369, 143]:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
