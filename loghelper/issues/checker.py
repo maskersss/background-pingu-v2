@@ -1488,7 +1488,7 @@ class IssueChecker:
             builder.add("eav_crash_hardware").add("eav_crash_disclaimer")
             found_crash_cause = True
 
-        if not found_crash_cause and self.log.stacktrace is None:
+        if not found_crash_cause and self.log.stacktrace is None and self.log.lines > 5:
             if self.log.exitcode == -1073741819:
                 builder.error("exitcode", "-1073741819", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
