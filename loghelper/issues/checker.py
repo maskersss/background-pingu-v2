@@ -607,9 +607,7 @@ class IssueChecker:
                 builder.error("incompatible_srigt")
                 found_crash_cause = True
             
-            if self.log.fabric_version.__str__() in ["0.14.15", "0.14.16"]:
-                builder.error("broken_fabric").add(self.log.fabric_guide, "update")
-            elif self.log.fabric_version < version.parse("0.15.0"):
+            if self.log.fabric_version < version.parse("0.15.0"):
                 builder.error("really_old_fabric").add(self.log.fabric_guide, "update")
             elif self.log.fabric_version < version.parse("0.16.0"):
                 builder.warning("relatively_old_fabric").add(self.log.fabric_guide, "update")

@@ -58,7 +58,6 @@
     "error.assets_index_fail": "Try restarting your PC and then launching the instance again. If this doesn't help, it's likely a network issue.",
     "error.authlib_injector_crash": "This crash is caused by using a launcher that isn't legal for speedrunning.",
     "error.beachfilter_unsupported": "`BeachFilter Mod` is no longer supported. You should use [**FSG Mod**](https://modrinth.com/mod/fsg-mod) with the beach filter instead.",
-    "error.broken_fabric": "You're using a broken version of `Fabric Loader`. You should update it.",
     "error.broken_java": "Your `Java` installation seems to be broken.",
     "error.broken_loader": "Your modloader doesn't seem to be installed correctly. Try removing and installing it back in `Edit{} > Version`.",
     "error.builtin_lib_crash": "Your instance is using your system's {}, which is causing the crash. Disable it either in {}'s global settings in `Settings > Minecraft{}` or in instance settings in `Settings > Workarounds`.",
