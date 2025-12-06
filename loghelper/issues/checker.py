@@ -1437,8 +1437,9 @@ class IssueChecker:
         
         if found_crash_cause or not self.log.stacktrace is None: pass
 
-        elif (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
-            and (self.log.is_ranked_log or self.log.has_content("speedrunigt"))
+        elif ((self.log.is_ranked_log or self.log.has_content("speedrunigt"))
+            and (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
+                 or self.log.has_content("[lwjgl_stb.dll"))
         ):
             builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
             found_crash_cause = True
