@@ -1559,7 +1559,7 @@ class IssueChecker:
             and is_mcsr_log
             and not self.link == "message"
         ):
-            for server_id, bot_cid, support_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
                 if self.server_id == server_id and self.channel_id == bot_cid and not support_cid is None:
                     builder.info("ask_in_support_channel", server_id, support_cid)
                     break
