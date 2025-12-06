@@ -168,6 +168,7 @@
     "error.sodiummac_crash": "This looks like a crash caused by a bug in one of the old mods, which only has a 50% chance of happening. You should update all mods.",
     "error.sq_empty_sound_file": "This crash is caused by using a SeedQueue resourcepack with empty sound files. You should either use short silent ones instead, or add [this resourcepack](https://discord.com/channels/1262887973154848828/1263997861620617407/1337527657662775327) above yours.",
     "error.sq_empty_sound_file_invite": "This crash is caused by using a SeedQueue resourcepack with empty sound files. You should either use short silent ones instead, or add [this resourcepack](https://discord.com/channels/1262887973154848828/1263997861620617407/1337527657662775327) above yours (link from [SeedQueue server](https://discord.gg/9P6PJkHCdU)).",
+    "error.srigt_log_spam": "Your log seems to be spammed by `SpeedRunIGT`. To fix it, either delete the `speedrunigt` folder in your world folder with Minecraft closed, or do `/speedrunigt start` in game.",
     "error.starlight_crash": "This seems to be a rare crash caused by `Starlight` that was fixed in a newer update.",
     "error.tl_malware": "You are using `TLauncher`, which is [**malware**](https://www.reddit.com/r/PiratedGames/comments/xo5rf2/about_tlauncher_spywaremalware_sorry_for_made/). You should at least uninstall it.",
     "error.too_little_ram_crash": "You have too little RAM allocated, which caused this crash.",

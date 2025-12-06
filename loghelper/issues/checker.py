@@ -1428,6 +1428,9 @@ class IssueChecker:
             ):
                 builder.note("dont_hdd", self.log.minecraft_folder[0])
 
+        if self.log.lines > 2000 and self.log.has_content("Not found category with ID \"practice_world\"!"):
+            builder.error("srigt_log_spam")
+
         if (self.log.type in [None, LogType.LATEST_LOG, LogType.FULL_LOG]
             and not found_crash_cause
             and (self.log.stacktrace or self.log.exitcode)
