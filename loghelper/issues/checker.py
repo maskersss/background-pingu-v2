@@ -1437,6 +1437,7 @@ class IssueChecker:
             builder.warning("medal", experimental=True)
         
         if found_crash_cause or not self.log.stacktrace is None: pass
+        elif self.log.operating_system in [OperatingSystem.MACOS, OperatingSystem.LINUX]: pass
 
         elif ((self.log.is_ranked_log or self.log.has_content("speedrunigt"))
             and (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
@@ -1559,8 +1560,9 @@ class IssueChecker:
             and not self.link == "message"
         ):
             for server_id, bot_cid, support_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
-                if self.server_id == server_id and self.channel_id == bot_cid:
+                if self.server_id == server_id and self.channel_id == bot_cid and not support_cid is None:
                     builder.info("ask_in_support_channel", server_id, support_cid)
+                    break
         
         if not found_crash_cause:
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
