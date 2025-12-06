@@ -1558,12 +1558,7 @@ class IssueChecker:
             and is_mcsr_log
             and not self.link == "message"
         ):
-            for server_id, bot_cid, support_cid in [
-                # (server_id, bot_cmds_channel_id, support_channel_id)
-                (83066801105145856, 433058639956410383, 727673359860760627),     # javacord
-                (1056779246728658984, 1074343944822992966, 1074385256070791269), # rankedcord
-                (1262887973154848828, 1271835972912545904, 1262901524619595887), # seedqueuecord
-            ]:
+            for server_id, bot_cid, support_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
                 if self.server_id == server_id and self.channel_id == bot_cid:
                     builder.info("ask_in_support_channel", server_id, support_cid)
         

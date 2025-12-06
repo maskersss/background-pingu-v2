@@ -31,21 +31,8 @@ class Core(Cog):
     
     async def check_log(self, msg: discord.Message, include_content=False):
         if (not include_content
-            and not msg.author.id in [
-                473868086773153793,    # zeppelin
-                1110166332059697222,   # pingu
-                834848683697635328,    # test
-            ]
-            and msg.channel.id in [
-                727673359860760627,    # javacord #public-help
-                1074385256070791269,   # rankedcord #tech-help
-                1262901524619595887,   # seedqueuecord #questions
-                1062467804877561878,   # jinglecord #help-and-support
-                1424239180313264250,   # resetticord #public-help
-                933914673437368380,    # fsgcord #help
-                1033763530798800908,   # srigtcord #support
-                1071138999604891729,   # for testing
-            ]
+            and not msg.author.id in IGNORED_USERS
+            and any(msg.channel.id == t[1] for t in SERVER_SUPPORT_BOT_CHANNEL_IDS)
         ):
             include_content = True
 

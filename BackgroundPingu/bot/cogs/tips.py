@@ -264,6 +264,22 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
         
         return await ctx.respond(text)
     
+    @commands.slash_command(name="dmvc", description="Explains why using DMs/VCs for support is bad.")
+    async def dmvc(self, ctx: discord.ApplicationContext):
+        server_id = ctx.guild_id
+        channel = "a support channel"
+        for sid, cid, _ in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if sid == server_id and not cid is None:
+                channel = f"<#{cid}> "
+                break
+        text = f"""If you have a problem, type your problem in {channel}. Please do not ask to VC or DM, using voice chats or direct messages are a bad way to solve your problem, since:
+
+1) You are making the other person to commit to helping you.
+2) The person might not know how to solve your issue.
+3) Other people can't correct them if they are wrong.
+4) They require the person's schedule and availability to line up with yours."""
+        return await ctx.respond(text)
+    
     @commands.slash_command(name="linux", description="Gives a link to a Linux tutorial for MCSR.")
     async def linux(self, ctx: discord.ApplicationContext):
         return await self.setup(ctx, os="Linux")
