@@ -732,8 +732,7 @@ class IssueChecker:
             builder.error("wrong_java_arg", self.log.get_java_arg("-XX:SoftMaxHeapSize"))
             found_crash_cause = True
         
-        if (self.log.is_seedqueue_log
-            and not self.log.is_ranked_log
+        if (is_mcsr_log
             and not self.log.java_arguments is None
             and (self.log.pc_ram is None or self.log.pc_ram > 5000)
         ):
