@@ -196,7 +196,7 @@
     "info.upload_log_attachment.discord": "You sent your log as a file. Please press the `Re-Upload Log` button so the log will be re-uploaded to mclo.gs so people can see it without having to download it.",
     "note.amount_illegal_mods": "You are using `{}` illegal for speedrunning mod{}!",
     "note.dont_hdd": "Your launcher folder is located on the `{}:/` drive, which is often an HDD. If so, consider moving it to `C:/` for better performance.",
-    "note.dont_use_java_23_plus": "You're using `Java 23+`, which has been found to reduce performance. You should use `Java 17-22` instead.",
+    "note.dont_use_java_arg": "You are using the `{}` Java arg{}, which is no longer needed. You should remove it in `Settings > Java`.",
     "note.duplicate_mods": "You have several versions of `{}` installed. You should delete the older ones.",
     "note.fandom_wiki": "The Minecraft Wiki [**has recently moved**](https://minecraft.wiki/w/Minecraft_Wiki:Moving_from_Fandom) from `Fandom` to `minecraft.wiki`. Please use this link instead: **https://minecraft.wiki/w/{}**.",
     "note.illegal_launcher": "You're using a launcher that is not legal for [speedrun.com](https://www.speedrun.com/mc).",
@@ -218,11 +218,10 @@
     "note.too_little_ram_crash": "This crash may be caused by not having enough RAM allocated.",
     "note.too_much_ram": "You likely have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce).",
     "note.use_zgc": "It's recommended to use `ZGC` for SeedQueue, but you're not using it.",
-    "note.use_zgenerational_is_bad": "You're using `ZGenerational`, which has been found to reduce performance.",
     "top_info.uploaded_log": "The log has been uploaded to {}.",
     "top_info.uploaded_log_2": "The log has been uploaded to {}. (Note that `mclo.gs` censors sensitive information)",
     "warning.dont_use_flatpak": "You are using `Prism` installed from Flatpak, which can cause issues due to Flatpak sandboxing and Flatpak drivers. Consider installing it [**in a different way**](https://prismlauncher.org/download) instead.",
-    "warning.dont_use_java_arg": "You are using the `{}` Java arg{}, which is no longer needed. You should remove it in `Settings > Java`.",
+    "warning.dont_use_java_23_plus": "You're using `Java 23+`, which has been found to reduce performance. You should use `Java 17-22` instead.",
     "warning.mac_use_arm_java": "Since you use an `M`-series chip, it is recommended to use `ARM Java` instead of `amd64 Java` for better performance since it will run natively on `ARM` chips.",
     "warning.mac_use_prism": "Since you use an `M`-series chip, it is recommended to use [**Prism Launcher**](https://prismlauncher.org/) with `ARM Java` instead of `MultiMC` for better performance since `Prism` has native `ARM` support.",
     "warning.medal": "You seem to be using a recording app like `Medal`, which can cause issues. Make sure this isn't the cause of the crash.",
@@ -233,5 +232,6 @@
     "warning.outdated_mods": "You are using `{}` outdated mods (`{}`)!",
     "warning.relatively_old_fabric": "You're using an old version of `Fabric Loader`. You should update it.",
     "warning.too_little_ram": "You have too little RAM allocated, which can cause crashes and lag spikes.",
-    "warning.too_much_ram": "You have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce)."
+    "warning.too_much_ram": "You have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce).",
+    "warning.use_zgenerational_is_bad": "You're using `ZGenerational`, which has been found to reduce performance."
 }

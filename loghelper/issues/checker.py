@@ -462,7 +462,7 @@ class IssueChecker:
         if not found_crash_cause and any(self.log.has_pattern(crash_32_bit_java) for crash_32_bit_java in [
             r"Could not reserve enough space for",
             r"Invalid (maximum|initial) heap size",
-            r"\[OpenAL32\.dll\+0x",
+            r"OpenAL32\.dll",
         ]):
             builder.error("32_bit_java_crash").add(self.log.java_update_guide)
             if self.log.is_multimc_or_fork: builder.add("read_pls")
@@ -534,6 +534,7 @@ class IssueChecker:
             else:
                 builder.error("32_bit_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
+                if not self.log.stacktrace: found_crash_cause = True
         
         elif (not found_crash_cause
             and is_mcsr_log
@@ -582,7 +583,6 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: can't find class com.llamalad7.mixinextras",
             "java.lang.ClassNotFoundException: com.llamalad7.mixinextras",
             "$zmm000$setspawnmod$failOnNonRandomSpawns",
-            "Type 'java/lang/String' (current frame, stack[1]) is not assignable to 'net/minecraft/class_2248'", # ranked: https://discord.com/channels/1056779246728658984/1293645786395054190
         ]):
             builder.error("old_fabric_crash").add(self.log.fabric_guide, "update")
             found_crash_cause = True
@@ -746,10 +746,10 @@ class IssueChecker:
                     and (self.log.major_java_version >= 24
                          or not self.log.has_java_argument("-XX:-ZGenerational"))
                 ):
-                    builder.note("dont_use_java_23_plus")
+                    builder.warning("dont_use_java_23_plus")
                     temp = True
                 if self.log.has_java_argument("-XX:+ZGenerational"):
-                    builder.note("use_zgenerational_is_bad")
+                    builder.warning("use_zgenerational_is_bad")
                     temp = True
             if temp:
                 if self.server_id == 83066801105145856:
@@ -765,7 +765,7 @@ class IssueChecker:
             ]
             args = [self.log.get_java_arg(arg) for arg in args if self.log.has_java_argument(arg)]
             if len(args) > 0:
-                builder.warning(
+                builder.note(
                     "dont_use_java_arg",
                     "`, `".join(args),
                     "s" if len(args) > 1 else "",
