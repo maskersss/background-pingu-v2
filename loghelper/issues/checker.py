@@ -738,8 +738,9 @@ class IssueChecker:
         ):
             temp = False
             if not self.log.has_java_argument("UseZGC"):
-                builder.note("use_zgc")
-                temp = True
+                if self.log.is_seedqueue_log and not self.log.is_ranked_log:
+                    builder.note("use_zgc")
+                    temp = True
             else:
                 if (not self.log.major_java_version is None
                     and self.log.major_java_version >= 23
