@@ -1243,6 +1243,13 @@ class IssueChecker:
             if self.log.has_content_in_stacktrace("java.lang.StackOverflowError"):
                 found_crash_cause = True
         
+        if (not found_crash_cause
+            and self.log.has_content_in_stacktrace("PeepoPractice")
+            and self.log.has_content_in_stacktrace("lazystronghold")
+        ):
+            builder.error("incompatible_mod", "PeepoPractice", "LazyStronghold")
+            found_crash_cause = True
+        
         if self.log.is_seedqueue_log:
             for incompatible_mod in [
                 "worldpreview-1.16.1-rev.988b7ab-dirty",
