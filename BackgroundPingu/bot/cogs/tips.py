@@ -349,6 +349,19 @@ Tutorial: <https://www.youtube.com/watch?v=RSLv7FfQZKY>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
         return await ctx.respond(text)
+    
+    @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
+    async def coaching(self, ctx: discord.ApplicationContext):
+        text = """Coaching in MCSR isn’t something most people have access to. 
+Long-term coaching usually only happens between friends, content creators who stream it, or paid services.
+
+**If you’re looking for help starting out, type `!!new` in <#433058639956410383> for setup information and resources.**
+
+If you want an idea of what coaching looks like, here are some playlists of coaching VODs you can learn from:
+
+Couriway - Midoffs S1 <https://www.youtube.com/watch?v=1h-Uqhc_DtQ&list=PLiNXLWzA7YLYKZ_KYdn3N52we4B3bn4vK>
+Nerdi - Speedrun Bootcamp <https://www.youtube.com/watch?v=pDLufpy11GY&list=PLiNHtofX3klVmUMUxRbi2R8jcVSW9OE9_>"""
+        return await ctx.respond(text)
 
     @commands.slash_command(name="sq", description="Explains what SeedQueue is.")
     async def sq(self, ctx: discord.ApplicationContext):
