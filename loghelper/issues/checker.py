@@ -738,7 +738,7 @@ class IssueChecker:
         ):
             temp = False
             if not self.log.has_java_argument("UseZGC"):
-                if self.log.is_seedqueue_log and not self.log.is_ranked_log:
+                if self.log.is_seedqueue_log:
                     builder.note("use_zgc")
                     temp = True
             else:
@@ -1251,7 +1251,7 @@ class IssueChecker:
             builder.error("incompatible_mod", "PeepoPractice", "LazyStronghold")
             found_crash_cause = True
         
-        if self.log.is_seedqueue_log:
+        if self.log.has_mod("seedqueue"):
             for incompatible_mod in [
                 "worldpreview-1.16.1-rev.988b7ab-dirty",
                 "autoresetter-0.0.3",

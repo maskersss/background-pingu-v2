@@ -779,6 +779,7 @@ class Log:
 
     @cached_property
     def is_seedqueue_log(self) -> bool:
+        if self.is_ranked_log: return False
         if self.has_mod("seedqueue"): return True
         
         return False
