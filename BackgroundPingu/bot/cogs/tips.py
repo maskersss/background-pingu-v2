@@ -636,8 +636,9 @@ More search crafting languages:
 
     @commands.slash_command(name="gamma", description="Gives a guide for increasing brightness past 100%.")
     async def gamma(self, ctx: discord.ApplicationContext):
-        text = """If you're using the latest version of Sodium for 1.16.1, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen.
-Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `/setup` for a guide on setting up mods."""
+        text = """It is legal to set gamma to up to 5.0.
+If you're using Speedrunning Sodium or Planifolia, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen.
+Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `!!setup` for a guide on setting up mods."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="ghostbucket", description="Gives an explanation for ghost buckets.")
