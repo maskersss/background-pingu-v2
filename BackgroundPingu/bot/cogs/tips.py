@@ -58,7 +58,7 @@ class Tips(Cog):
         launcher: discord.Option(str, choices=["MultiMC / Prism", "MCSR Launcher", "Official Launcher", "All"], required=False, default="All"),
     ):
         text = "For your mods to work, you need to install Fabric Loader."
-        if launcher in ["MultiMC / Prism", "All"]: text += "\n- For MultiMC and Prism Launcher, see the image how to do that[.](https://media.discordapp.net/attachments/433058639956410383/1099537217409531985/image.png)"
+        if launcher in ["MultiMC / Prism", "All"]: text += "\n- For MultiMC and Prism Launcher, see the image how to do that[.](https://i.imgur.com/ZR6UJCA.png)"
         if launcher in ["MCSR Launcher", "All"]: text += "\n- For MCSR Launcher, you can install Fabric by right clicking your instance and doing `Edit Instance > Version > Change Version`."
         if launcher in ["Official Launcher", "All"]: text += """\n- For official Minecraft Launcher, follow the instructions [**here**](<https://wiki.fabricmc.net/player:tutorials:install_mcl:windows>), up to step 3. Do **NOT** install Fabric API."""
         return await ctx.respond(text)
