@@ -1541,6 +1541,9 @@ class IssueChecker:
             elif self.log.exitcode == -2147483645:
                 if self.log.has_mod("mcsrfairplay"):
                     builder.error("mod_crash_disable", "mcsrfairplay", experimental=True)
+            elif self.log.exitcode == 126:
+                builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                builder.add("eav_crash_reboot")
 
         if (not found_crash_cause
             and (self.log.is_multimc_or_fork or self.log.is_mcsrlauncher)
