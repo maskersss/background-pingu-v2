@@ -218,6 +218,11 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="nbbfaq", description="Links a Ninjabrain Bot FAQ document.")
+    async def nbbfaq(self, ctx: discord.ApplicationContext):
+        text = """https://docs.google.com/document/d/1aYxL747PI6Lr0rgPSFmO-wvL6P7-YPLpNJewCJU86n0"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
     async def mpkdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot MiniPracticeKit not working, please verify the following:
