@@ -632,6 +632,11 @@ More search crafting languages:
         text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="eyewiggle", description="Links a page explaining eye wiggle.")
+    async def eyewiggle(self, ctx: discord.ApplicationContext):
+        text = """https://frontcage.com/t/what-to-do-about-eye-wiggle/14"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="gamma", description="Gives a guide for increasing brightness past 100%.")
     async def gamma(self, ctx: discord.ApplicationContext):
         text = """It is legal to set gamma to up to 5.0.
