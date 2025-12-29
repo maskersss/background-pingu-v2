@@ -546,6 +546,13 @@ class IssueChecker:
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
                 if not self.log.stacktrace and not self.log.exitcode:
                     found_crash_cause = True
+            elif self.log.has_content("no awt in java.library.path"):
+                builder.error(
+                    "need_new_java",
+                    17,
+                    f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
+                ).add(self.log.java_update_guide)
+                found_crash_cause = True
             else:
                 builder.note("not_using_java_17", self.log.major_java_version).add(self.log.java_update_guide)
                 if self.log.is_prism: builder.add("read_pls")
