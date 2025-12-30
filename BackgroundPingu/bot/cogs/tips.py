@@ -619,12 +619,7 @@ Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
     
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext):
-        text = """[Overview of Language Crafting for Minecraft Speedruns](https://docs.google.com/document/d/1jSeciLoEgSwWWCdNk0dKignzxJskxJ5_zeCQmcdGmTg) *(contains: Vietnamese, Ukrainian, Korean, Bosnian, English)*
-[Search crafting languages comparison](<https://docs.google.com/spreadsheets/d/1NM5U84PjTBA6oMDSyFgveVVWcP7i0aCIFqvQCNUotYE/edit#gid=1472263979>)
-[Remapping keys explanation](<https://docs.google.com/document/d/1V2Uk4wDZknr6U9KbYJEc0JRYO7OWmhtmNIK0swTzXxs>)
-
-More search crafting languages:
-[Norwegian](<https://docs.google.com/document/u/0/d/1p3i64xH4C63d3QO7U6VXXe0JZIj-zHtrv1ZC_BKaCwk>), [Franggian](<https://docs.google.com/document/d/1_GvCg7kQP9Ls6yFX_b3eF4UqlPgSxbPjeQsWMr2QQGA>), [French Canadian](<https://docs.google.com/document/d/e/2PACX-1vRZ6v_jah6lNFUeT3ZOKlDhtooF8HZfJNS0KpeNXwHlFayjYcx_GTOIPSijOhm6BSLxPvCrZfRNq5qt/pub>), [Danish](<https://docs.google.com/spreadsheets/u/0/d/1btQ3Tx8gCvdUD_x71lEm0j7ZUE72GocsE0urh1xdIKU/htmlview#gid=0>), [Maltese](<https://docs.google.com/document/d/1Hm2BE0soChqjv499DElXYM_r30-m5nfr-TIaCWc3vTk>), [Pirate Speak](<https://docs.google.com/document/d/1PTwAu86MCue7KJah6QWNhSdE4pL7r-4cuuO6OdUhbS8>), [Vietnamese V2](<https://docs.google.com/document/d/1AKqzwW1km12fvKfx3niuORhD8RRncRU71pUBZA-apRA>)"""
+        text = """Search crafting resources: https://frontcage.com/t/search-crafting-resource-collection/32"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="endfight", description="Gives a link to the end fight tutorial.")
