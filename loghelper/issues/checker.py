@@ -1209,9 +1209,6 @@ class IssueChecker:
                 builder.error("ranked_rong_mods", f"`{len(ranked_rong_mods)}` mods (`{', '.join(ranked_rong_mods)}`) that are", "them")
             elif len(ranked_rong_mods) > 0:
                 builder.error("ranked_rong_mods", f"a mod `{ranked_rong_mods[0]}` that is", "it")
-            
-            if len(ranked_rong_files + ranked_rong_mods + ranked_rong_versions) > 0:
-                builder.add("ranked_mods_disclaimer")
 
         if (self.log.is_ranked_log
             and self.log.has_mod("atum")
