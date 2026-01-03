@@ -962,6 +962,12 @@ class IssueChecker:
             builder.error("run_jingle_as_admin", experimental=True)
             found_crash_cause = True
         
+        if (self.log.launcher == Launcher.JINGLE
+            and self.log.has_content("Likely running on Java 8 or lower")
+        ):
+            builder.error("jingle_java_8").add("java_update_guide_jingle")
+            found_crash_cause = True
+        
         for not_a_mod in self.not_mods:
             if self.log.has_mod(not_a_mod):
                 builder.error("not_a_mod", not_a_mod)

@@ -159,7 +159,7 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
 
     @commands.slash_command(name="jarfix", description="Explains how to fix jar files not opening.")
     async def jarfix(self, ctx: discord.ApplicationContext):
-        text = "If you're having issues with .jar programs on Windows, download and run this Java installer: https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi ."
+        text = "If you're having issues with .jar programs on Windows, download and run **Jarfix.exe** from <https://github.com/qMaxXen/Jarfix/releases/latest> ."
         return await ctx.respond(text)
 
     @commands.slash_command(name="folderinafolder", description="Explains the correct practice map folder structure.")
