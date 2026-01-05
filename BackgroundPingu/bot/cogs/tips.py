@@ -605,8 +605,7 @@ More updated guides:
     async def fortress(self, ctx: discord.ApplicationContext):
         text = """Basic fortress guide: <https://youtu.be/pmx9LyUvLTk> (find fortress with pieray, blaze bed/tnt, spawnerless and more)
 More tips: <https://youtu.be/9LpyDBPC3u4>
-Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>
-Fortress binoculars (find fortress if a treasure spawner exists): https://discord.com/channels/83066801105145856/861092932832198687/1247271210409136168"""
+Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>"""
         return await ctx.respond(text)
     
     @commands.slash_command(name="fsg", description="Gives a link to the FSG mod and discord server.")
