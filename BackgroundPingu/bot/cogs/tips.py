@@ -138,6 +138,11 @@ You may remap keys using external programs, but:
     async def rebind(self, ctx: discord.ApplicationContext):
         return await self.ahk(ctx)
 
+    @commands.slash_command(name="narrator", description="Gives a guide to disable the narrator on MultiMC/Prism.")
+    async def narrator(self, ctx: discord.ApplicationContext):
+        text = "Guide to disable narrator on MultiMC / Prism Launcher: https://discord.com/channels/83066801105145856/405839885509984256/1412190230655799337"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="new", description="Provides a comprehensive guide to start learning speedrunning.")
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 Any% Random Seed Glitchless, so we're assuming you're planning to run this category.
@@ -209,6 +214,11 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
 Tutorial: https://youtu.be/Gp6EnDs24NI"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="nbbfaq", description="Links a Ninjabrain Bot FAQ document.")
+    async def nbbfaq(self, ctx: discord.ApplicationContext):
+        text = """https://docs.google.com/document/d/1aYxL747PI6Lr0rgPSFmO-wvL6P7-YPLpNJewCJU86n0"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="nbbdebug", description="Gives a guide to debugging Ninjabrain Bot.")
     async def nbbdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
@@ -218,9 +228,12 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="nbbfaq", description="Links a Ninjabrain Bot FAQ document.")
-    async def nbbfaq(self, ctx: discord.ApplicationContext):
-        text = """https://docs.google.com/document/d/1aYxL747PI6Lr0rgPSFmO-wvL6P7-YPLpNJewCJU86n0"""
+    @commands.slash_command(name="waywalldebug", description="Gives a guide to troubleshooting Waywall issues.")
+    async def waywalldebug(self, ctx: discord.ApplicationContext):
+        text = """To troubleshoot issues with Waywall, please send the following information:
+- Screenshots of these Prism Launcher tabs in top toolbar ➔ Settings: `Java`, `Minecraft ➔ Tweaks`, `Minecraft ➔ Custom Commands`, `Minecraft ➔ Environment Variables`
+- Screenshots of these Prism Launcher tabs in instance settings (right-click instance ➔ Edit... ➔ Settings): `Java`, `Tweaks`, `Environment Variables`
+- All `.lua` files in the `~/.config/waywall` folder (init.lua, config.lua, etc)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
@@ -353,6 +366,11 @@ Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
 Tutorial: <https://www.youtube.com/watch?v=RSLv7FfQZKY>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
+        return await ctx.respond(text)
+    
+    @commands.slash_command(name="cape", description="Links a guide for customising your cape.")
+    async def cape(self, ctx: discord.ApplicationContext):
+        text = "https://youtu.be/izyY35w30II"
         return await ctx.respond(text)
     
     @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
@@ -628,7 +646,8 @@ Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
 
     @commands.slash_command(name="eyelineup", description="Gives a guide to lining up the crosshair on the ender eye for measuring.")
     async def eyelineup(self, ctx: discord.ApplicationContext):
-        text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)"""
+        text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[.](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)
+Vertical (up and down) lineup does not matter. The eye always rises to the same height."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="eyewiggle", description="Links a page explaining eye wiggle.")
