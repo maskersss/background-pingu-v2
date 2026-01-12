@@ -534,7 +534,7 @@ class IssueChecker:
             else:
                 builder.error("32_bit_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
-                if not self.log.stacktrace: found_crash_cause = True
+                found_crash_cause = True
         
         elif (not found_crash_cause
             and is_mcsr_log
