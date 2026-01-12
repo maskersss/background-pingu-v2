@@ -907,20 +907,28 @@ class IssueChecker:
         elif len(system_libs) == 1: temp = f"{system_libs[0]} installation"
         if not temp is None:
             if self.log.has_content("Failed to locate library:"):
-                builder.error(
-                    "builtin_lib_crash",
-                    temp,
-                    self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                    " > Tweaks" if self.log.is_prism else "",
-                )
-                found_crash_cause = True
+                if self.log.is_waywall_log:
+                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                else:
+                    builder.error(
+                        "builtin_lib_crash",
+                        temp,
+                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                        " > Tweaks" if self.log.is_prism else "",
+                        "Tweaks" if self.log.is_prism else "Workarounds",
+                    )
+                    found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
-                builder.error(
-                    "builtin_lib_prob_crash",
-                    temp,
-                    self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                    " > Tweaks" if self.log.is_prism else "",
-                )
+                if self.log.is_waywall_log:
+                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                else:
+                    builder.error(
+                        "builtin_lib_prob_crash",
+                        temp,
+                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                        " > Tweaks" if self.log.is_prism else "",
+                        "Tweaks" if self.log.is_prism else "Workarounds",
+                    )
 
         if (not found_crash_cause
             and self.log.launcher in [None, Launcher.MULTIMC]
@@ -1963,7 +1971,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
         if free_ram >= 2000:
             output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
         output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n"
-        output += f"## Recommended Edit{self.log.edit_instance} > Settings:\n"
+        output += f"## Recommended Edit{self.log.edit_instance} > Settings > Java:\n"
         output += f"**Max Memory Allocation:** {max_allocated} MB\n"
         output += f"_You might need slightly more or less depending on the category, i.e. less for SSG and more for AA._\n"
         output += f"### Java Arguments:\n"
