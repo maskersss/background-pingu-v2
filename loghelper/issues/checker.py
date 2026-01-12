@@ -1972,7 +1972,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
             output += "_You can try a higher value, and if you start consistently lagging after tabbing into a world, lower it back._\n"
         output += f"- **Max Generating Seeds (Wall):** {max_generating_wall}\n"
         output += f"## Recommended Edit{self.log.edit_instance} > Settings > Java:\n"
-        output += f"**Max Memory Allocation:** {max_allocated} MB\n"
+        output += f"**Max Memory {'Usage' if self.log.is_prism else 'Allocation'}:** {max_allocated} MB\n"
         output += f"_You might need slightly more or less depending on the category, i.e. less for SSG and more for AA._\n"
         output += f"### Java Arguments:\n"
         output += f"```\n{java_args}\n```\n"
