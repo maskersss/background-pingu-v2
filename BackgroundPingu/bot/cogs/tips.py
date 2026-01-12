@@ -504,7 +504,8 @@ https://modrinth.com/modpack/speedrun"""
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
     async def practicemaps(self, ctx: discord.ApplicationContext):
-        text = """*Consider getting [MapCheck](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
+        text = """*Consider getting [**MapCheck**](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
+*Otherwise, [**see here**](<https://gist.github.com/greenfrogee/b11b285406911fb4f2721e9e47a022c0>) for a guide to download the below practice maps.*
 [MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map/releases/latest>)
 [Bastions](<https://github.com/LlamaPag/bastion/releases/latest>)
 [Blaze](<https://github.com/Mescht/Blaze-Practice/releases/latest>)
