@@ -375,10 +375,18 @@ Discord server: <https://discord.gg/9P6PJkHCdU>"""
     
     @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
     async def coaching(self, ctx: discord.ApplicationContext):
-        text = """Coaching in MCSR isn’t something most people have access to. 
+        cmd_prefix = "!!"
+        channel = "<#433058639956410383>"
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id and not bot_cid is None:
+                channel = f"<#{bot_cid}>"
+                cmd_prefix = "!!" if ctx.guild_id == 83066801105145856 else "/"
+                break
+        
+        text = f"""Coaching in MCSR isn’t something most people have access to. 
 Long-term coaching usually only happens between friends, content creators who stream it, or paid services.
 
-**If you’re looking for help starting out, type `!!new` in <#433058639956410383> for setup information and resources.**
+**If you’re looking for help starting out, type `{cmd_prefix}new` in {channel} for setup information and resources.**
 
 If you want an idea of what coaching looks like, here are some playlists of coaching VODs you can learn from:
 
@@ -617,7 +625,7 @@ If you don't have an F3 key at all, which means you need to press Fn-3 to use F3
 - [Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
 More updated guides:
 - [Modern bridge routes](<https://docs.google.com/spreadsheets/d/1TYV8RBFb4sV2VRQRZGKPjN-hTPS6bx9UllXKChZyIa0/edit?pli=1&gid=0#gid=0>)
-- [Stables triple to gap](<https://www.youtube.com/watch?v=T6VBpOCevs8>)"""
+- [Stables triple to gap](<https://www.youtube.com/watch?v=D4Ulw7VepJc>)"""
         return await ctx.respond(text)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
@@ -647,7 +655,7 @@ Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
 
     @commands.slash_command(name="eyelineup", description="Gives a guide to lining up the crosshair on the ender eye for measuring.")
     async def eyelineup(self, ctx: discord.ApplicationContext):
-        text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[.](https://cdn.discordapp.com/attachments/433058639956410383/1122565681515352154/image.png)
+        text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[.](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)
 Vertical (up and down) lineup does not matter. The eye always rises to the same height."""
         return await ctx.respond(text)
 

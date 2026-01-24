@@ -109,6 +109,12 @@ class Core(Cog):
 
     @Cog.listener()
     async def on_message(self, msg: discord.Message):
+        if msg.content.strip().lower().startswith("/recommend_settings"):
+            reply, found_result = await self.get_settings(msg)
+            if found_result:
+                return await msg.reply(content=reply)
+            return await msg.reply(content=":x: **No log found in this message.**")
+        
         result = await self.check_log(msg)
         if self.should_reply(result):
             try:

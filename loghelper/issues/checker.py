@@ -56,6 +56,7 @@ class IssueChecker:
             "mcsrranked",
             "mangodfps",
             "statsperreset",
+            "ninjabrain-bot",
         ] + self.not_mods
         self.mcsr_mods = [
             "worldpreview",
@@ -688,7 +689,7 @@ class IssueChecker:
             builder.error("out_of_disk_space")
             found_crash_cause = True
         
-        if any(self.log.has_pattern(out_of_memory_on_pc) for out_of_memory_on_pc in [
+        if not found_crash_cause and any(self.log.has_pattern(oom_on_pc) for oom_on_pc in [
             r"There is insufficient memory for the Java Runtime Environment to continue",
             r"GL_OUT_OF_MEMORY",
             r"memory allocation (.*) failed",
@@ -754,8 +755,7 @@ class IssueChecker:
                     and (self.log.major_java_version >= 24
                          or not self.log.has_java_argument("-XX:-ZGenerational"))
                 ):
-                    builder.warning("dont_use_java_23_plus")
-                    temp = True
+                    builder.warning("dont_use_java_23_plus").add(self.log.java_update_guide)
                 if self.log.has_java_argument("-XX:+ZGenerational"):
                     builder.warning("use_zgenerational_is_bad")
                     temp = True
@@ -856,7 +856,13 @@ class IssueChecker:
                 builder.error("gl_framebuffer_macos")
                 if not self.log.has_mod("retino"): builder.add("update_mods")
             else:
-                builder.error("gl_framebuffer", self.cmd_prefix, self.cmd_prefix)
+                temp = ""
+                for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+                    if self.server_id == server_id and not bot_cid is None:
+                        temp = f" in <#{bot_cid}>"
+                        break
+                builder.error("gl_framebuffer", self.cmd_prefix, self.cmd_prefix, temp,
+                                experimental=(self.log.operating_system == OperatingSystem.LINUX))
             found_crash_cause = True
         
         if (not found_crash_cause
