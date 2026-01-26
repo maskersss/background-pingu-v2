@@ -243,6 +243,14 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
 - You are pressing your **Hotbar slot 1** hotkey while holding your **Load hotbar** hotkey, and both of these aren't conflicting with other hotkeys."""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="performance", description="Gives a guide to debugging poor Minecraft performance/lag.")
+    async def performance(self, ctx: discord.ApplicationContext):
+        text = """To troubleshoot performance issues, please provide the following:
+- A screenshot of the F3 screen in Minecraft
+- A screenshot of: Ctrl+Shift+Esc ➔ **Performance** tab
+- A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
     async def prism(
         self,
@@ -415,6 +423,17 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
         else:
             text += "\n- If you're on the official Minecraft launcher: Go to Installations > \"...\" for the installation you're using > Edit > More options and in the JVM arguments text field, find and replace `-XX:+UseG1GC` with `-XX:+UseZGC`."
         
+        return await ctx.respond(text)
+    
+    @commands.slash_command(name="godsens", description="Gives a godsens guide for boateye.")
+    async def godsens(self, ctx: discord.ApplicationContext):
+        text = """360/2560 sensitivities: 
+
+0.02291165
+0.058765005
+0.07446537
+
+Use one of these sensitivities, set to green boat in Ninjabrainbot and update the sens. If you ever do a/d in a boat (like when boating in the ocean) then you need to reset your angle by getting in and out of a boat at some point without doing a/d, this can be done at any point like while waiting for blazes or while boating down something. The third sensitivity is a bit worse, you can't turn past 105 degrees in a boat with your mouse (turning past the max) or you will have to reset your angle again."""
         return await ctx.respond(text)
     
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
