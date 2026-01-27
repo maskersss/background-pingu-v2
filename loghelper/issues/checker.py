@@ -554,6 +554,8 @@ class IssueChecker:
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
                 found_crash_cause = True
+            elif self.log.is_ranked_log:
+                builder.error("java_8_ranked", self.log.major_java_version).add(self.log.java_update_guide)
             else:
                 builder.note("not_using_java_17", self.log.major_java_version).add(self.log.java_update_guide)
                 if self.log.is_prism: builder.add("read_pls")

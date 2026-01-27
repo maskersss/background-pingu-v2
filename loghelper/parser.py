@@ -678,17 +678,17 @@ class Log:
         
         if self.is_prism:
             return "java_update_guide_prism"
-        
         if self.is_multimc_or_fork:
             return "java_update_guide_mmc"
-
         if self.is_mcsrlauncher:
             return "java_update_guide_mcsrlauncher"
+        if self.launcher == Launcher.MODRINTH:
+            return "java_update_guide_modrinth"
 
         if self.operating_system == OperatingSystem.LINUX:
             return "java_update_guide_linux"
 
-        if self.launcher in [Launcher.MODRINTH, Launcher.ATLAUNCHER, Launcher.JINGLE]:
+        if self.launcher in [Launcher.ATLAUNCHER, Launcher.JINGLE]:
             return None
 
         return "java_update_guide"
