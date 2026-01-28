@@ -92,7 +92,6 @@
     "error.incompatible_srigt": "This crash is caused by using an old version of `SpeedRunIGT` that is incompatible with `Fabric Loader 0.14.15+`.",
     "error.incorrect_java_prism": "You're using `Java {}`, while you need to use `Java {}`. You can download `Java {}` from [**this page**](https://adoptium.net/temurin/releases/){}. Then make sure to select `Java {}` either globally or in your instance's settings.",
     "error.java_8_network": "You're using `Java {}`, which is causing network issues. It is recommended to use `Java 17-22` instead for better performance.",
-    "error.java_8_ranked": "You're using `Java {}`, which currently doesn't work with `MCSR Ranked`. You should use `Java 17-22` instead.",
     "error.java_8_zgc": "You are using `ZGC`, which requires `Java 17+`, but you're using `Java {}`.",
     "error.java_comp_check": "Enable the `Skip Java compatibility checks` option in `Edit > Settings > Java`.",
     "error.jingle_java_8": "You are running `Jingle` with `Java 8`, which often causes various issues.",
