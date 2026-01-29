@@ -1299,17 +1299,15 @@ class IssueChecker:
             found_crash_cause = True
         
         if (not found_crash_cause
-            and len(self.log.mods) == 0
-            and self.log.minecraft_version in [None, "1.16.1"]
-            and self.log.has_content_in_stacktrace("Non [a-z0-9_.-] character in namespace of location")
+            and not self.log.is_multimc_or_fork
+            and self.log.has_content_in_stacktrace("Non [a-z0-9/._-] character in path of location")
         ):
+            experimental = not (self.log.is_ranked_log or self.log.has_content("mcsrranked"))
             builder.error(
-                "need_new_java",
-                17,
-                f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
-            ).add(self.log.java_update_guide)
-            if self.log.is_multimc_or_fork: builder.add("read_pls")
-            if self.log.minecraft_version == "1.16.1": found_crash_cause = True
+                "turkish_crash",
+                experimental=experimental,
+            )
+            if not experimental: found_crash_cause = True
         
         if self.log.has_mod("beachfilter"):
             builder.error("beachfilter_unsupported")
