@@ -1347,6 +1347,7 @@ class IssueChecker:
                 builder.error("corrupted_file", name)
                 if "/mods/mcsrranked-" in name:
                     builder.add("mod_download", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked")
+                    if self.log.is_prism: builder.add("download_mods_prism")
                 found_crash_cause = True
         
         if self.log.has_mod("serversiderng"):
