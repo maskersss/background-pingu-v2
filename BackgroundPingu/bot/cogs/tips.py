@@ -176,7 +176,7 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
     async def java(
         self,
         ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MCSR Launcher", "Prism", "MultiMC", "Official Launcher", "All"], required=False, default="All"),
+        launcher: discord.Option(str, choices=["Prism", "MultiMC", "Modrinth App", "Official Launcher", "MCSR Launcher", "All"], required=False, default="All"),
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
     ):
         text = ""
@@ -186,25 +186,28 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
         elif launcher == "MCSR Launcher":
             text += "On MCSR Launcher, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/60d308c6-5782-469a-a532-a2c57993881b) <https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>.\n"
         elif launcher == "Prism":
-            text += "On Prism, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/2cb8c15b-caf1-40ef-8e8e-3f8b736df254) <https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>.\n"
-        else:
-            if launcher == "All":
-                text += "* If you're using MCSR Launcher: use [**this guide**](<https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>) to update your Java version.\n"
-                text += "* If you're using Prism: use [**this guide**](<https://gist.github.com/maskersss/0993754fb91686f78f8c000280699fa4>) to update your Java version.\n"
+            text += "On Prism, use this guide (timestamped) to update your Java version[:](https://gist.github.com/user-attachments/assets/2cb8c15b-caf1-40ef-8e8e-3f8b736df254) <https://youtu.be/aaxASwZUPkQ?t=29>.\n"
+        elif launcher == "Modrinth App":
+            text += "On Modrinth App, use this guide to update your Java version: <https://youtu.be/XeVKnvYEVSg>.\n"
+        elif launcher == "All":
+            text += "* If you're using Prism: use [**this video guide (timestamped)**](<https://youtu.be/aaxASwZUPkQ?t=29>) to update your Java version.\n"
+            text += "* If you're using Modrinth App: use [**this video guide**](<https://youtu.be/XeVKnvYEVSg>) to update your Java version.\n"
+            text += "* If you're using MultiMC: use [**this video guide**](<https://youtu.be/WGFEMkWilK0>) or [**this text guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732#multimc>) to update your Java version.\n"
+            text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
+        else: # multimc
+            text += "* If you're using MultiMC: use [**this video guide**](<https://youtu.be/XeVKnvYEVSg>) or read the instructions below to update your Java version.\n"
             if os == "Linux":
-                text += f"* If you're using MultiMC:\n  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
-            else:
-                if os == "Windows":
-                    text += "* If you're using MultiMC:\n  * On Windows, install the latest version of Java by downloading **and running** the Microsoft Java installer: <https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi>.\n"
+                text += f"  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
+            elif os == "Windows":
+                    text += "  * On Windows, install the latest version of Java by downloading **and running** the Microsoft Java installer: <https://aka.ms/download-jdk/microsoft-jdk-21-windows-x64.msi>.\n"
                     text += "    * When prompted, it is recommended you install Java **for all users**.\n"
-                else: # macos
-                    query_string = "?os=mac&package=jdk&version=21&mode=filter"
-                    text += f"* If you're using MultiMC:\n  * On macOS, you can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
-                    text += " Download and run the `.pkg` file.\n"
+            else: # macos
+                query_string = "?os=mac&package=jdk&version=21&mode=filter"
+                text += f"*  * On macOS, you can install the latest version of Java [**here**](<https://adoptium.net/temurin/releases/{query_string}>)."
+                text += " Download and run the `.pkg` file.\n"
 
             text += "  * After installing Java, follow the steps in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)\n"
             text += "    * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu.\n"
-            if launcher == "All": text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
         
         return await ctx.respond(text.strip())
 
