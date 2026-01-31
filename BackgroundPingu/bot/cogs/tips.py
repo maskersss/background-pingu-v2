@@ -760,7 +760,8 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 
     @commands.slash_command(name="zerocycle", description="Gives links to zero cycle resources.")
     async def zerocycle(self, ctx: discord.ApplicationContext):
-        text = """[Zero Cycle tutorial](https://youtu.be/PB5UQB13VHc)
+        text = """[Zero Cycle basics tutorial](https://youtu.be/PB5UQB13VHc)
+[More updated setups](<https://youtu.be/2Nw7Y5QxYFg>)
 [Couriway Metafy Guide End section (requires account)](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm/chapter-6-the-end-I88hY9AXfrU>)
 [Zero practice map](<https://github.com/Mescht/Zero-Practice/releases/latest>)
 
