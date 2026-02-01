@@ -195,7 +195,7 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
             text += "* If you're using MultiMC: use [**this video guide**](<https://youtu.be/WGFEMkWilK0>) or [**this text guide**](<https://gist.github.com/maskersss/89428e4bb1cb64b4e7b9c6346dbf1732#multimc>) to update your Java version.\n"
             text += f"* We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
         else: # multimc
-            text += "* If you're using MultiMC: use [**this video guide**](<https://youtu.be/XeVKnvYEVSg>) or read the instructions below to update your Java version.\n"
+            text += "* If you're using MultiMC: use [**this video guide**](<https://youtu.be/WGFEMkWilK0>) or read the instructions below to update your Java version.\n"
             if os == "Linux":
                 text += f"  * You can install the latest version of Java [**here**](<https://www.google.com/search?q=%7Binsert+your+distro+name+here%7D+how+to+install+java+21>).\n"
             elif os == "Windows":
