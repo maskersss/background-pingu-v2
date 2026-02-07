@@ -1703,10 +1703,11 @@ class IssueChecker:
                   and self.server_id != 1095808506239651942
                   and self.log.is_waywall_log
             ):
-                builder.error(
+                if len(wrong_mods) == 0: builder.error("linux_crash_not_mod")
+                else: builder.error(
                     "linux_crash",
                     "s" if len(wrong_mods) > 1 else "",
-                    "`; `".join(wrong_mods[:12]) if len(wrong_mods) > 0 else "?",
+                    "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
             elif len(wrong_mods) == 1:
