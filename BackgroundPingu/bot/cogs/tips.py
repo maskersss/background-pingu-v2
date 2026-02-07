@@ -594,7 +594,7 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
     ):
-        if launcher == "MultiMC / Prism": text = "https://i.imgur.com/UgdLz7W.png"
+        if launcher == "MultiMC / Prism": text = "https://i.imgur.com/AOiPPIx.png"
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
         return await ctx.respond(text)
 
