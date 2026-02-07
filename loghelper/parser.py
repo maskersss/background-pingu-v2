@@ -804,9 +804,6 @@ class Log:
     def recommended_mods(self) -> list[str]:
         mods = []
 
-        if self.operating_system == OperatingSystem.MACOS:
-            mods.append("retino")
-
         if not self.is_newer_than("1.15"): return mods
         
         mods.append("sodium")
