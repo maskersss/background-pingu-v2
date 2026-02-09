@@ -783,7 +783,10 @@ class IssueChecker:
             pattern = r"Could not find or load main class (.*)\n"
             match = re.search(pattern, self.log._content)
             if not match is None:
-                builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
+                if match.group(1) == "":
+                    builder.error("newline_in_java_args", " ")
+                else:
+                    builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
 
         if self.log.has_content("(missing)\n") and self.log.has_content("Launched instance in offline mode"):
