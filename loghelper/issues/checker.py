@@ -1864,11 +1864,14 @@ Failed to download the log (`{match.group(1)}`). Please try the following steps:
 
 1. **Copy** your log using the `Copy` button.
 2. Upload it to {website}, then provide the new link.
+""".strip()
+                if self.mode != "web": output += "\n" + """
 3. Alternatively, paste the log directly into Discord as a message, then:
    - Right-click the message.
    - Select `Apps`.
    - Choose `Recommend Settings`.
-
+""".strip()
+                output += "\n" + """
 _Note: Simply changing the link's domain won't work – you need to re-upload the log._
 """.strip()
                 if self.channel_id == 1271835972912545904: output += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
