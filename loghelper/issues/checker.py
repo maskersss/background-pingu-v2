@@ -1854,13 +1854,14 @@ class IssueChecker:
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
             match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__", self.log._content)
+            if "mclo.gs" in self.link: website = "<https://pastee.dev/>"
+            else: website = "<https://mclo.gs/>"
             if not match is None:
                 output += f"""
 Failed to download the log (`{match.group(1)}`). Please try the following steps:
 
 1. **Copy** your log using the `Copy` button.
-2. Upload it to either <https://mclo.gs/> or <https://pastee.dev/>, then provide the new link.
-   - If one service doesn't work, try the other.
+2. Upload it to {website}, then provide the new link.
 3. Alternatively, paste the log directly into Discord as a message, then:
    - Right-click the message.
    - Select `Apps`.
