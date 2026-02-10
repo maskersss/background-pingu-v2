@@ -75,14 +75,14 @@ class Log:
         self._lower_content = self._content.lower()
     
     @staticmethod
-    def from_link(link: str):
+    def from_link(link: str, timeout: int = 5):
         paste_ee_match = re.search(r"https://(?:api\.)?(?:pastee\.dev|paste\.ee)/(?:p/|d/)([a-zA-Z0-9]+)", link)
         mclogs_match = re.search(r"https://mclo\.gs/(\w+)", link)
         if paste_ee_match: link = f"https://pastee.dev/d/{paste_ee_match.group(1)}/0"
         elif mclogs_match: link = f"https://api.mclo.gs/1/raw/{mclogs_match.group(1)}"
         elif not ".txt" in link and not ".log" in link and not ".tdump" in link and not ".json" in link: return None
         try:
-            res = requests.get(link, timeout=5)
+            res = requests.get(link, timeout=timeout)
         except requests.exceptions.Timeout:
             return Log("__PINGU__DOWNLOAD_ERROR__timeout__")
         if res.status_code == 200:

@@ -30,7 +30,7 @@ class Tips(Cog):
             return await ctx.respond(text)
 
         link = match.group(0)     
-        (link, log) = (link.split("?ex")[0], parser.Log.from_link(link))
+        (link, log) = (link.split("?ex")[0], parser.Log.from_link(link=link, timeout=2))
         if log is None:
             text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
