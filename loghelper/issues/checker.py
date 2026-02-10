@@ -145,7 +145,9 @@ class IssueChecker:
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
             match = re.search(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__", self.log._content)
-            if not match is None: builder.error("failed_to_download_log", match.group(1))
+            if "mclo.gs" in self.link: website = "<https://pastee.dev/>"
+            else: website = "<https://mclo.gs/>"
+            if not match is None: builder.error("failed_to_download_log", match.group(1), website)
             return builder
 
         is_mcsr_log = any(self.log.has_mod(mcsr_mod) for mcsr_mod in self.mcsr_mods) or self.log.minecraft_version == "1.16.1"

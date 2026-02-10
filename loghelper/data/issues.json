@@ -79,7 +79,7 @@
     "error.exclamation_mark_in_path": "You have a `!` in your instance path, which breaks Java. You should fix this.",
     "error.exit_wall": "To leave to title screen from `SeedQueue`'s wall screen, press `Shift` + `Esc` on the wall, or `Options` > `Stop Resets & Quit` from a world.",
     "error.exitcode": "Your game crashed with exitcode `{}`. Here are some possible causes:",
-    "error.failed_to_download_log": "Failed to download the log (`{}`). Try sending it in a different way (`mclo.gs` link, `pastee.dev` link, attached file).",
+    "error.failed_to_download_log": "Failed to download the log (`{}`). Please try the following steps:\n\n1. **Copy** your log using the `Copy` button.\n2. Upload it to {}, then provide the new link.",
     "error.flatpak_sandboxing": "This issue is caused by using `Prism` installed from Flatpak, which is sandboxed. Consider installing it [**in a different way**](https://prismlauncher.org/download) instead.",
     "error.forge_java_bug": "Old versions of `Forge` crash with `Java 8u321+`. To fix this, update `Forge` to the latest version in `Edit > Version > Forge > Change Version`. Alternatively, you can install and select `Java 8u312 or lower`; see [**here**](https://github.com/adoptium/temurin8-binaries/releases/tag/jdk8u312-b07).",
     "error.forge_missing_dependencies": "You seem to be missing dependencies. Check your log to see which mods you're missing.",
