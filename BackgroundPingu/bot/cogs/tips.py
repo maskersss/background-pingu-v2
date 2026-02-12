@@ -587,7 +587,7 @@ Practice mods:
 Open Jingle and add a hotkey for **Eye Measuring** under the **Hotkeys** tab.
 
 **Eye Line-up:**
-The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1325558188044587038/image.png)"""
+The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="ram", description="Gives a guide to change the amount of allocated RAM.")
