@@ -25,14 +25,14 @@ class Tips(Cog):
         match = re.search(LINK_PATTERN, log)
         if match is None:
             text = "No pastee.dev or mclo.gs link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
+            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
             return await ctx.respond(text)
 
         link = match.group(0)     
         (link, log) = (link.split("?ex")[0], parser.Log.from_link(link=link, timeout=2))
         if log is None:
             text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
+            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
             return await ctx.respond(text)
 
         text, success = IssueChecker(
@@ -49,7 +49,7 @@ class Tips(Cog):
                 text = "You uploaded a link to the log instead of a log. Press the `Copy` button instead of the `Upload` button to copy the log, and **not** the link to it."
             else:
                 text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in a help channel._"
+            if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
         
         return await ctx.respond(text)
     
