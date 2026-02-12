@@ -667,6 +667,11 @@ This mod requires Atum, which should be obtained from <https://mods.tildejustin.
 Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
         return await ctx.respond(text)
     
+    @commands.slash_command(name="centerobs", description="Gives a guide to center the Minecraft source in OBS.")
+    async def centerobs(self, ctx: discord.ApplicationContext):
+        text = """Select your Minecraft Capture source ➔ Press Ctrl+E ➔ Set *Positional Alignment* to *Center* and *Bounding Box Type* to *No Bounds* ➔ Close the window ➔ Press Ctrl+D"""
+        return await ctx.respond(text)
+    
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext):
         text = """Search crafting resources: https://frontcage.com/t/search-crafting-resource-collection/32"""
