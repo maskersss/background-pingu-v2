@@ -177,7 +177,6 @@
     "error.starlight_crash": "This seems to be a rare crash caused by `Starlight` that was fixed in a newer update.",
     "error.tl_malware": "You are using `TLauncher`, which is [**malware**](https://www.reddit.com/r/PiratedGames/comments/xo5rf2/about_tlauncher_spywaremalware_sorry_for_made/). You should at least uninstall it.",
     "error.too_little_ram_crash": "You have too little RAM allocated, which caused this crash.",
-    "error.too_much_ram": "You have way too much RAM allocated, which is unnecesssary and [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce).",
     "error.try_admin_launch": "You need to open your launcher with administrator privileges.",
     "error.try_changing_lwjgl_version": "Try changing your `LWJGL` version in `Edit{} > Version`.",
     "error.turkish_crash": "This crash is caused by having a `Turkish` locale. To solve it, add `-Duser.language=en` to your launcher's Java arguments.",

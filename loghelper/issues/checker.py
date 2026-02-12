@@ -681,8 +681,6 @@ class IssueChecker:
             ):
                 max_limit_0, max_limit_1, max_limit_2 = self.log.recommended_max_allocated
                 if self.log.max_allocated > max_limit_0:
-                    builder.error("too_much_ram").add(*self.log.ram_guide)
-                elif self.log.max_allocated > max_limit_1:
                     builder.warning("too_much_ram").add(*self.log.ram_guide)
                 elif self.log.max_allocated > max_limit_2:
                     builder.note("too_much_ram").add(*self.log.ram_guide)
