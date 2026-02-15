@@ -618,6 +618,13 @@ If you do not have software for your mouse, or you are limited to certain DPI op
         text = "Read section A.4 for resource pack rules: <https://rules.minecraftspeedrunning.com/latest>"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="toolscreen", description="Explains what Toolscreen is.")
+    async def toolscreen(self, ctx: discord.ApplicationContext):
+        text = """Toolscreen is a program that uses DLL injection to add overlays and instant resizing to the game, in fullscreen or borderless. It also has other functionality such as key rebinding and a virtual camera for screensharing. Magnifiers for EyeZoom, mapless, and preemptive are already set up.
+Setup video: https://youtu.be/YqS-fxPx_jo
+Discord: <https://discord.com/invite/A2v6bCJg6K>"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
     async def thinmag(self, ctx: discord.ApplicationContext):
         text = "https://www.youtube.com/watch?v=ZXPM1f00wmY"
