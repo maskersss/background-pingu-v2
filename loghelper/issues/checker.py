@@ -57,6 +57,7 @@ class IssueChecker:
             "mangodfps",
             "statsperreset",
             "ninjabrain-bot",
+            "hermes",
         ] + self.not_mods
         self.mcsr_mods = [
             "worldpreview",
