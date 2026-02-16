@@ -432,13 +432,12 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
     
     @commands.slash_command(name="godsens", description="Gives a godsens guide for boateye.")
     async def godsens(self, ctx: discord.ApplicationContext):
-        text = """360/2560 sensitivities: 
-
-0.02291165
-0.058765005
-0.07446537
-
-Use one of these sensitivities, set to green boat in Ninjabrainbot and update the sens. If you ever do a/d in a boat (like when boating in the ocean) then you need to reset your angle by getting in and out of a boat at some point without doing a/d, this can be done at any point like while waiting for blazes or while boating down something. The third sensitivity is a bit worse, you can't turn past 105 degrees in a boat with your mouse (turning past the max) or you will have to reset your angle again."""
+        text = """* Use [this calculator](https://qmaxxen.github.io/Toolscreen-sens-calc/) to set up your godsens
+* Change your mouse sensitivity in config/mcsr/standardsettings.json to the one given by the calculator (alternatively you can change it in options.txt **IF** you are not using Standard Settings)
+* Change the Global Sensitivity in *Toolscreen ➔ Basic* to the number given by the calculator (you can press Tab after clicking on the slider to type in specific numbers)
+* Enable green boat and update the sensitivity in *Ninjabrain Bot Settings ➔ Optional features ➔ Boat measurement*
+### Green boat explanation:
+If you ever do A/D in a boat (like when boating in the ocean) then you need to reset your angle by getting in and out of a boat at some point without doing A/D, this can be done at any point like while waiting for blazes or while boating down something. You can make a habit of entering a boat right before measuring to be sure you have no error."""
         return await ctx.respond(text)
     
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
