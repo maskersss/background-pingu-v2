@@ -34,6 +34,7 @@ class IssueChecker:
             "areessgee",
             "peepopractice",
             "standardsettings-1.2.3.1+1.16.5",
+            "hermes"
         ]
         self.outdated_java_17_mods = [
             "antiresourcereload-1.16.1-4.0.0",
@@ -1688,16 +1689,6 @@ class IssueChecker:
             ):
                 builder.error(
                     "ranked_mod_crash",
-                    "s" if len(wrong_mods) > 1 else "",
-                    "`; `".join(wrong_mods[:12]),
-                    "" if len(wrong_mods) > 1 else "s",
-                )
-            elif any(mayasmod in " ".join(wrong_mods) for mayasmod in [
-                "peepopractice",
-                "areessgee",
-            ]) and self.server_id != 1070838405925179392:
-                builder.error(
-                    "mayas_mod_crash",
                     "s" if len(wrong_mods) > 1 else "",
                     "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
