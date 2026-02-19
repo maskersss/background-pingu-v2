@@ -481,6 +481,11 @@ All allowed mods can be downloaded from <https://mods.tildejustin.dev/> or by us
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.png)"""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="pieray", description="Links an advanced guide for finding the fortress.")
+    async def pieray(self, ctx: discord.ApplicationContext):
+        text = "https://www.youtube.com/watch?v=fw0KzXyEFtY"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="piedirectory", description="Gives the useful pie directories.")
     async def piedirectory(
         self,
