@@ -562,7 +562,7 @@ Practice mods:
 
     @commands.slash_command(name="boateye", description="Gives a link to boat measurement setup guide.")
     async def boateye(self, ctx: discord.ApplicationContext):
-        text = """Guide to set up boat eye: https://youtu.be/l1Z2t9e6Qko"""
+        text = """Guide to set up boateye: https://gist.github.com/greenfrogee/88eca4b40db92e3330cff15463afeb64"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="entity_culling", description="Explains how to turn off Entity Culling to fix e-1.")
