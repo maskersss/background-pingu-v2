@@ -15,6 +15,7 @@ class LogType(enum.Enum):
     HS_ERR_PID_LOG = "hs_err_pid log"
     LATEST_LOG = "latest.log"
     LAUNCHER_LOG = "launcher log"
+    TOOLSCREEN_LOG = "toolscreen log"
 
 class Launcher(enum.Enum):
     JINGLE = "Jingle"
@@ -229,6 +230,11 @@ class Log:
     @cached_property
     def minecraft_version(self) -> str | None:
         if self.type == LogType.LAUNCHER_LOG: return None
+        if self.type == LogType.TOOLSCREEN_LOG:
+            pattern = r"Detected Minecraft version from mmc-pack.json: (\S+)\n"
+            match = re.compile(pattern).search(self._content)
+            if not match is None:
+                return match.group(1)
 
         for pattern in [
             r"/com/mojang/minecraft/(\S+?)/",
@@ -377,6 +383,11 @@ class Log:
 
         if self._content.startswith("---- Minecraft Crash Report ----"):
             return LogType.CRASH_REPORT
+
+        if any(self.has_content(toolscreen_log) for toolscreen_log in [
+            "Toolscreen Version:",
+        ]):
+            return LogType.TOOLSCREEN_LOG
         
         if self.has_content("---------------  T H R E A D  ---------------"):
             return LogType.HS_ERR_PID_LOG
@@ -788,6 +799,7 @@ class Log:
     @cached_property
     def is_log(self) -> bool:
         if self.type == LogType.LAUNCHER_LOG: return True
+        if self.type == LogType.TOOLSCREEN_LOG: return True
         if self.minecraft_version is None: return False
         return True
 

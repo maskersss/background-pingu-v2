@@ -179,6 +179,7 @@ class IssueChecker:
             LogType.CRASH_REPORT,
             LogType.THREAD_DUMP,
             LogType.LAUNCHER_LOG,
+            LogType.TOOLSCREEN_LOG,
         ]: footer += f" {self.log.type.value}"
         elif self.log.type == LogType.LATEST_LOG:
             footer += " latest.log"
@@ -1808,7 +1809,7 @@ class IssueChecker:
                         builder.error("exit_wall")
                 
                 if (not found_crash_cause
-                    and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP]
+                    and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
                 ):
                     builder.error("send_full_log_2", self.log.edit_instance)
