@@ -280,9 +280,9 @@ Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Cust
     ):
         if os == "macOS": text = """To set up speedrunning on Mac, follow the macOS setup guide: https://www.youtube.com/watch?v=sRSR55A7VCE.
 
-To run several instances, use **SeedQueue** (`/seedqueue` / watch the above video).
+To run several instances, use **SeedQueue** (watch the above video).
 [SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
-Boateye guide: <https://youtu.be/Mj42HbnPUZ4>
+Boateye guide: <https://youtu.be/cf0Z2pRC39o>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
