@@ -109,6 +109,11 @@ If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR 
 If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
         return await ctx.respond(text)
 
+    @commands.slash_command(name="oneshot", description="Links the oneshot guide.")
+    async def oneshot(self, ctx: discord.ApplicationContext):
+        text = "https://youtu.be/717kfB39gjQ"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="rankedfaq", description="Sends a link to the MCSR Ranked Tech Support FAQ document.")
     async def rankedfaq(self, ctx: discord.ApplicationContext):
         text = """You can find MCSR Ranked Tech Support FAQ document here: <https://wiki.mcsrranked.com/install/faq>"""
@@ -304,6 +309,7 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
             if sid == server_id and not cid is None:
                 channel = f"<#{cid}> "
                 break
+        
         text = f"""If you have a problem, type your problem in {channel}. Please do not ask to VC or DM, using voice chats or direct messages are a bad way to solve your problem, since:
 
 1) You are making the other person to commit to helping you.
@@ -816,11 +822,17 @@ This mod allows you to adjust FOV and distortion effects.
     
     @commands.slash_command(name="help", description="Gives a guide to using the bot.")
     async def help(self, ctx: discord.ApplicationContext):
-        text = """- **Log Analysis**: Send a message containing a Minecraft log link from pastee.dev or mclo.gs, or upload a log file directly in the chat. The bot will analyze the log and provide feedback automatically.
-- **/tags**: Use this command to get a list of all available tags related to MCSR strategies, guides, and more.
-- **Need Help?**: If you're still unsure after the bot's response, please ask in the appropriate help channel.
+        server_id = ctx.guild_id
+        channel = "a support channel"
+        for sid, cid, _ in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if sid == server_id and not cid is None:
+                channel = f"<#{cid}> "
+                break
+        text = f"""If you have an issue with Minecraft, send the log as an attachment or as a [mclo.gs](<https://mclo.gs/>)/pastee.dev link for the bot to provide suggestions.
+See `/tags` for a list of all available tags related to MCSR strategies, guides, and more.
+If you need help, please ask in {channel}.
 
-If you have any questions or suggestions regarding the bot, feel free to ping or dm `maskers`.
+If you have any questions/suggestions about the bot, feel free to ping or dm `maskers`.
 Source code available on [GitHub](<https://github.com/maskersss/background-pingu-v2>)."""
         return await ctx.respond(text)
     
