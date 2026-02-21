@@ -92,9 +92,10 @@ class Tips(Cog):
 
     @commands.slash_command(name="borderless", description="Explains how to run Minecraft as a borderless window.")
     async def borderless(self, ctx: discord.ApplicationContext):
-        text = """If you use [Jingle](<https://github.com/DuncanRuns/Jingle/releases>) (recommended), simply click "Go Borderless".
-Otherwise, [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases>)
-ℹ️ Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings."""
+        text = """* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (recommended): Ctrl+I to open the menu, then you may set a hotkey to toggle Borderless in Basic ⟶ Other ⟶ Window Hotkeys.
+* Otherwise, if you're using [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>): click "Go Borderless".
+* Otherwise, you may download this [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases/latest>).
+ℹ️ Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings and Options ⟶ Video settings"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
@@ -147,7 +148,9 @@ You may remap keys using external programs, but:
 
     @commands.slash_command(name="narrator", description="Gives a guide to disable the narrator on MultiMC/Prism.")
     async def narrator(self, ctx: discord.ApplicationContext):
-        text = "Guide to disable narrator on MultiMC / Prism Launcher: https://discord.com/channels/83066801105145856/405839885509984256/1412190230655799337"
+        text = """Disabling the narrator hotkey:
+* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>): Ctrl+I to open the menu, then go to Advanced ⟶ Hotkeys ⟶ Add New Hotkey ⟶ Choose Ctrl+B and tick "Block key from game".
+* Otherwise, follow this guide (for MultiMC / Prism Launcher): https://discord.com/channels/83066801105145856/405839885509984256/1412190230655799337"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="new", description="Provides a comprehensive guide to start learning speedrunning.")
@@ -234,7 +237,7 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
 - These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
-Also, make sure that the resolution for Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size" is set to `384x16384` , and make sure you're switching to 30 FOV.
+Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
 
@@ -339,7 +342,8 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
     @commands.slash_command(name="mapless", description="Gives links to mapless tutorials.")
     async def mapless(self, ctx: discord.ApplicationContext):
         text = """meebie's tutorial: https://youtu.be/o0LDg3fe2iI
-older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
+[Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) is now recommended over Jingle for resizing.
+Older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="discords", description="Gives a link to the MCSR discords spreadsheet.")
@@ -593,8 +597,8 @@ Practice mods:
 
     @commands.slash_command(name="eyezoom", description="Gives a link to a tutorial for Eye Zoom Macro.")
     async def eyezoom(self, ctx: discord.ApplicationContext):
-        text = """Link to Jingle (Download the .jar file): ⁠<https://github.com/DuncanRuns/Jingle/releases>
-Open Jingle and add a hotkey for **Eye Measuring** under the **Hotkeys** tab.
+        text = """Download Toolscreen: <https://github.com/jojoe77777/Toolscreen/releases/latest>
+Ctrl+I and assign a hotkey for **EyeZoom** (in the Basic ⟶ General tab)
 
 **Eye Line-up:**
 The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)"""
@@ -612,10 +616,9 @@ The right edge of the crosshair should line up with the left edge of the eye's m
 
     @commands.slash_command(name="rawaccel", description="Links the RawAccel guide.")
     async def rawaccel(self, ctx: discord.ApplicationContext):
-        text = """## RawAccel
-If you do not have software for your mouse, or you are limited to certain DPI options, then you can use alternative software like RawAccel to change your desktop sensitivity.
+        text = """With [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>), you can adjust your global Minecraft sensitivity (Ctrl+I, then go to Basic ⟶ General ⟶ Sensitivity and adjust the Global slider).
 
-[RawAccel Guide (Timestamped)](<https://youtu.be/l1Z2t9e6Qko&t=217>)"""
+RawAccel should no longer be required for most players. [RawAccel Guide (Timestamped)](<https://youtu.be/l1Z2t9e6Qko&t=217>)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
@@ -642,12 +645,13 @@ Discord: <https://discord.com/invite/A2v6bCJg6K>"""
 
     @commands.slash_command(name="thinbt", description="Gives a guide to set up the ThinBT macro.")
     async def thinbt(self, ctx: discord.ApplicationContext):
-        text = """### With Jingle 
-* Download [Jingle](https://github.com/DuncanRuns/Jingle/releases). Choose the latest **.jar** file.
+        text = """### With Toolscreen (recommended)
+* Download [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (the **.jar** file).
+* Ctrl+I to open the menu, then assign a hotkey for **Thin** (in the Basic > General tab). You can change your thin resolution here as well.
+### With Jingle
+* Download [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>) (the **.jar** file).
 * Set a hotkey in **Hotkeys > Add > Resizing - Thin BT (Script)**
 * You can change your resolution in **Scripts > Resizing - Customize > Enter your thin bt size**
-### With Julti or Autohotkey (not recommended)
-- See this message: https://discord.com/channels/83066801105145856/433058639956410383/1364609888126242816 
 
 How to use thin resolution effectively: <https://www.youtube.com/watch?v=OwKqLv2MJrg>"""
         return await ctx.respond(text)
