@@ -735,12 +735,12 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
 
     @commands.slash_command(name="mpk", description="Gives a link to MiniPracticeKit.")
     async def mpk(self, ctx: discord.ApplicationContext):
-        text = """MiniPracticeKit:
-<https://github.com/Knawk/mc-MiniPracticeKit>
+        text = """MiniPracticeKit: <https://github.com/Knawk/mc-MiniPracticeKit>
 https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915
 
-MiniPracticeKit Editor (for customizing setup):
-https://qmaxxen.github.io/MiniPracticeKit-Editor/"""
+MiniPracticeKit Editors (for customizing setup)
+Basic: <https://qmaxxen.github.io/MiniPracticeKit-Editor/>
+Advanced: <https://repeater64.github.io/AdvancedMpkEditor/>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
