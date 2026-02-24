@@ -290,7 +290,7 @@ Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ Eye
 
 To run several instances, use **SeedQueue** (watch the above video).
 [SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
-Boateye guide: <https://youtu.be/cf0Z2pRC39o>
+Boateye guide: <https://youtu.be/RmAmL7JhGJw>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
