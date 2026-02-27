@@ -372,6 +372,7 @@ class Log:
             "polymc",
             "pollymc",
             "mcsr launcher",
+            "Running Toolscreen...", # mcsr launcher
         ]]):
             return LogType.FULL_LOG
 

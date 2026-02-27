@@ -195,9 +195,9 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
         if launcher == "Official Launcher":
             text += f"We do not recommend using the official Minecraft launcher since it is [tedious](<https://bit.ly/updatejavamc>) to switch Java versions. Type `/setup` to set up Prism for speedrunning.\n"
         elif launcher == "MCSR Launcher":
-            text += "On MCSR Launcher, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/60d308c6-5782-469a-a532-a2c57993881b) <https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>.\n"
+            text += "On MCSR Launcher, use this guide to update your Java version[:](https://gist.github.com/user-attachments/assets/60d308c6-5782-469a-a532-a2c57993881b.png) <https://gist.github.com/maskersss/ee30ca16d33e7b8bb51e246ff62c83d6>.\n"
         elif launcher == "Prism":
-            text += "On Prism, use this guide (timestamped) to update your Java version[:](https://gist.github.com/user-attachments/assets/2cb8c15b-caf1-40ef-8e8e-3f8b736df254) <https://youtu.be/aaxASwZUPkQ?t=29>.\n"
+            text += "On Prism, use this guide (timestamped) to update your Java version: <https://youtu.be/aaxASwZUPkQ?t=29>.\n"
         elif launcher == "Modrinth App":
             text += "On Modrinth App, use this guide to update your Java version: <https://youtu.be/XeVKnvYEVSg>.\n"
         elif launcher == "All":
@@ -253,7 +253,7 @@ Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ Eye
     @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
     async def mpkdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot MiniPracticeKit not working, please verify the following:
-- A 20-100 KB file named **exactly** "hotbar" or "hotbar.nbt", __not__ "hotbar (1).nbt" or similar, exists in your .minecraft folder.
+- A file that's at least 20 KB named **exactly** "hotbar" or "hotbar.nbt", __not__ "hotbar (1).nbt" or similar, exists in your .minecraft folder.
 - You are pressing your **Hotbar slot 1** hotkey while holding your **Load hotbar** hotkey, and both of these aren't conflicting with other hotkeys."""
         return await ctx.respond(text)
 
@@ -678,6 +678,7 @@ More updated guides:
     async def fortress(self, ctx: discord.ApplicationContext):
         text = """Basic fortress guide: <https://youtu.be/pmx9LyUvLTk> (find fortress with pieray, blaze bed/tnt, spawnerless and more)
 More tips: <https://youtu.be/9LpyDBPC3u4>
+More updated blaze bed setups: <https://youtu.be/n11v-59LJnA>
 Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>"""
         return await ctx.respond(text)
     
