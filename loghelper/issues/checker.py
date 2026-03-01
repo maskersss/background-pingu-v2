@@ -825,17 +825,21 @@ class IssueChecker:
             elif self.log.has_content("at org.lwjgl.opengl.LinuxDisplay.getAvailableDisplayModes"):
                 builder.error("missing_xrandr")
                 found_crash_cause = True
+            
+            elif self.log.has_content("The wrapper command \"waywall\" couldn't be found."):
+                builder.error("waywall_not_on_path")
+                found_crash_cause = True
+            
+            elif self.log.has_content("GLFW error 65544: EGL: Failed to clear current context: An EGLDisplay argument does not name a valid EGL display connection"):
+                builder.error("linux_nvidia_crash", experimental=True)
+                found_crash_cause = True
                 
-            elif is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
+            if is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
                 builder.note("linux_update_lwjgl")
                 
             elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
                 builder.error("linux_lwjgl_3_3_6")
                 if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
-            
-            if self.log.has_content("The wrapper command \"waywall\" couldn't be found."):
-                builder.error("waywall_not_on_path")
-                found_crash_cause = True
             
             if (self.log.is_waywall_log
                 and self.log.java_arguments
@@ -887,10 +891,10 @@ class IssueChecker:
             builder.error("outdated_nvidia_flatpak_driver", experimental=experimental)
             found_crash_cause = True
         
-        elif (not found_crash_cause
-              and is_mcsr_log
-              and self.log.operating_system in [None, OperatingSystem.LINUX]
-              and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
+        if (not found_crash_cause
+            and is_mcsr_log
+            and self.log.operating_system in [None, OperatingSystem.LINUX]
+            and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
         ):
             if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
                 builder.error("flatpak_sandboxing")
