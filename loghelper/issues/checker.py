@@ -860,6 +860,10 @@ class IssueChecker:
             if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):
                 builder.error("linux_ranked_musl", experimental=True)
                 found_crash_cause = True
+            
+            if self.log.has_content_in_stacktrace("libXtst.so.6: cannot open shared object file: No such file or directory"):
+                builder.error("linux_nixos_fairplay", experimental=True)
+                found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
