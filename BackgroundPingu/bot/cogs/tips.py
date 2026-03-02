@@ -448,7 +448,7 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
 * Change the Global Sensitivity in *Toolscreen ➔ Basic* to the number given by the calculator (you can press Tab after clicking on the slider to type in specific numbers)
 * Enable green boat and update the sensitivity in *Ninjabrain Bot Settings ➔ Optional features ➔ Boat measurement*
 ### Green boat explanation:
-If you ever do A/D in a boat (like when boating in the ocean) then you need to reset your angle by getting in and out of a boat at some point without doing A/D, this can be done at any point like while waiting for blazes or while boating down something. You can make a habit of entering a boat right before measuring to be sure you have no error."""
+If you ever do A/D in a boat (like when boating in the ocean) then you need to reset your angle by placing a boat and getting in and out of it at some point without doing A/D, this can be done at any point like while waiting for blazes or while boating down something. You can make a habit of entering a boat right before measuring to be sure you have no error."""
         return await ctx.respond(text)
     
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
