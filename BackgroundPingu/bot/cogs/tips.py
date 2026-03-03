@@ -735,14 +735,12 @@ Otherwise, open your `options.txt` file in your Minecraft directory and change t
 *Example: If the spawner loads in at 15 chunks, you should decrease your render distance to 11 (press Shift-F3-F four times), then increase it to 14 (press F3-F three times). Reopen the pie chart and the spawner should be gone.*"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="mpk", description="Gives a link to MiniPracticeKit.")
+    @commands.slash_command(name="mpk", description="Explains what MiniPracticeKit is.")
     async def mpk(self, ctx: discord.ApplicationContext):
-        text = """MiniPracticeKit: <https://github.com/Knawk/mc-MiniPracticeKit>
-https://discord.com/channels/83066801105145856/405839885509984256/1146302423095332915
-
-MiniPracticeKit Editors (for customizing setup)
-Basic: <https://qmaxxen.github.io/MiniPracticeKit-Editor/>
-Advanced: <https://repeater64.github.io/AdvancedMpkEditor/>"""
+        text = """MiniPracticeKit is a customisable saved hotbar used for practicing splits.
+Tutorial: <https://youtu.be/o1AwsJ3adso>
+Editor: <https://repeater64.github.io/AdvancedMpkEditor>
+Github: <https://github.com/Knawk/mc-MiniPracticeKit>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
