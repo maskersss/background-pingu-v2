@@ -80,7 +80,7 @@ class Tips(Cog):
         launcher: discord.Option(str, choices=["MultiMC", "Prism", "Modrinth App", "Other"], required=False, default="MultiMC"),
     ):
         if launcher == "MultiMC": link = "https://i.imgur.com/MfrJwcM.png"
-        elif launcher == "Prism": link = "https://i.imgur.com/wNlSlcn.png"
+        elif launcher == "Prism": link = "https://i.imgur.com/b8HOzdP.png"
         elif launcher == "Modrinth App": link = "https://media.discordapp.net/attachments/727673359860760627/1446445444732420179/image.png"
         else: link = "https://media.discordapp.net/attachments/433058639956410383/1061333462826614844/image.png"
         text = f"Please send a log by following this image[:]({link})"
