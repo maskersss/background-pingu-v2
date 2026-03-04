@@ -32,7 +32,7 @@ class Core(Cog):
     async def check_log(self, msg: discord.Message, include_content=False):
         if (not include_content
             and not msg.author.id in IGNORED_USERS
-            and any(msg.channel.id == t[1] for t in SERVER_SUPPORT_BOT_CHANNEL_IDS)
+            and any(msg.channel.id in [t[1], t[2]] for t in SERVER_SUPPORT_BOT_CHANNEL_IDS)
         ):
             include_content = True
 
