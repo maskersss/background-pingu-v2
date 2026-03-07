@@ -35,11 +35,12 @@ class IssueChecker:
             "areessgee",
             "peepopractice",
             "standardsettings-1.2.3.1+1.16.5",
-            "hermes",
         ]
         self.outdated_java_17_mods = [
             "antiresourcereload-1.16.1-4.0.0",
             "speedrunapi-1.2+1.16.1",
+            "hermes-0.12.0",
+            "hermes-0.11",
         ]
         self.not_needed_java_17_mods = [
             "serversiderng",
@@ -59,7 +60,6 @@ class IssueChecker:
             "mangodfps",
             "statsperreset",
             "ninjabrain-bot",
-            "hermes",
         ] + self.not_mods
         self.mcsr_mods = [
             "worldpreview",

@@ -15,7 +15,7 @@ def get_mods(start: bool=True):
     if start: print("Getting mods...")
     path = Path(__file__).parent / "mods.json"
     mods = []
-    link = "https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-6/mods.json"
+    link = "https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-7/mods.json"
     headers = {'Cache-Control': 'no-cache'}
     res = requests.get(link, headers=headers, timeout=10)
     if res.status_code == 200:
@@ -31,7 +31,9 @@ def get_mods(start: bool=True):
             item["files"] = item.pop("versions", [])
             item["incompatible"] = item.pop("incompatibilities", [])
             for fi in item["files"]:
-                fi.pop("hash", "")
+                fi.pop("sha1", "")
+                fi.pop("sha512", "")
+                fi.pop("size", "")
                 fi["game_versions"] = [f"=={format_version(a)}" for a in fi.pop("target_version")]
                 fi["name"] = fi["url"].split("/")[-1]
                 fi["page"] = fi.pop("url")
