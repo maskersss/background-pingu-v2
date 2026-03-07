@@ -881,6 +881,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if (not found_crash_cause
+            and is_mcsr_log
             and (self.log.operating_system == OperatingSystem.MACOS
                  or self.log.has_mod("sodiummac"))
             and self.log.has_content_in_stacktrace("java.lang.IndexOutOfBoundsException")
@@ -1076,8 +1077,8 @@ class IssueChecker:
         if (not found_crash_cause
             and self.log.has_mod("sodium")
             and any(self.log.has_content(sodium_rtss_crash) for sodium_rtss_crash in [
-            "RivaTuner Statistics Server (RTSS) is not compatible with Sodium",
-            "READ ME! You appear to be using the RivaTuner Statistics Server (RTSS)!"
+                "RivaTuner Statistics Server (RTSS) is not compatible with Sodium",
+                "READ ME! You appear to be using the RivaTuner Statistics Server (RTSS)!"
         ])):
             builder.error("sodium_rtss")
             found_crash_cause = True

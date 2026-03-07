@@ -572,8 +572,22 @@ Practice mods:
         return await ctx.respond(text)
 
     @commands.slash_command(name="boateye", description="Gives a link to boat measurement setup guide.")
-    async def boateye(self, ctx: discord.ApplicationContext):
-        text = """Guide to set up boateye: https://gist.github.com/greenfrogee/88eca4b40db92e3330cff15463afeb64"""
+    async def boateye(
+        self,
+        ctx: discord.ApplicationContext,
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+    ):
+        if os == "macOS":
+            guide = "https://youtu.be/RmAmL7JhGJw"
+            temp = " on macOS"
+        elif os == "Linux":
+            guide = "https://its-saanvi.github.io/linux-mcsr/minecraft/wayland/boat-eye.html"
+            temp = " on Linux"
+        else:
+            guide = "https://gist.github.com/greenfrogee/88eca4b40db92e3330cff15463afeb64"
+            temp = " on Windows"
+
+        text = f"Guide to set up boateye{temp}: {guide}"
         return await ctx.respond(text)
 
     @commands.slash_command(name="entity_culling", description="Explains how to turn off Entity Culling to fix e-1.")
