@@ -100,12 +100,11 @@ class IssueChecker:
         ]
         self.cmd_prefix = "!!" if self.server_id == 83066801105145856 else "/"
     
-    def get_mod_metadata(self, mod_filename: str) -> dict:
+    def get_mod_metadata(self, mod_filename: str) -> dict | None:
         mod_filename = mod_filename.lower().replace("optifine", "optifabric")
         filename = mod_filename.replace(" ", "").replace("-", "").replace("+", "").replace("_", "")
         for mod in self.legal_mods:
-            original_name = mod["name"].lower()
-            mod_name = original_name.replace(" ", "").replace("-", "").replace("_", "")
+            mod_name = mod["name"].lower().replace(" ", "").replace("-", "").replace("_", "")
             mod_name = "zbufferfog" if mod_name == "legacyplanarfog" else mod_name
             mod_name = "dynamicmenufps" if mod_name == "dynamicfps" else mod_name
             if mod_name.endswith("mod"): mod_name = mod_name[:-3]
