@@ -1576,6 +1576,9 @@ class IssueChecker:
                 ): builder.add("eav_crash_mods")
                 builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
+            elif self.log.exitcode == -1073741571:
+                builder.error("exitcode", "-1073741571", experimental=True)
+                builder.add("eav_crash_overlay")
             elif self.log.exitcode in [-805306369, 143]:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_kill")
