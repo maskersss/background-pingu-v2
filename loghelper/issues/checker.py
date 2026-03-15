@@ -547,7 +547,10 @@ class IssueChecker:
             and not self.log.major_java_version is None
             and self.log.major_java_version < 17
         ):
-            if self.log.has_content("sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"):
+            if any(self.log.has_content(java_8_network) for java_8_network in [
+                "sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target",
+                "java.security.InvalidKeyException: Illegal key size or default parameters",
+            ]):
                 builder.error("java_8_network", self.log.major_java_version).add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork: builder.add("read_pls")
                 if not self.log.stacktrace and not self.log.exitcode:
