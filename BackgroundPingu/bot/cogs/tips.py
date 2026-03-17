@@ -396,6 +396,11 @@ Discord server: <https://discord.gg/9P6PJkHCdU>"""
         text = "https://youtu.be/izyY35w30II"
         return await ctx.respond(text)
     
+    @commands.slash_command(name="cobblestone", description="Explains how to prevent cobblestone in 2x1 portals.")
+    async def cobblestone(self, ctx: discord.ApplicationContext):
+        text = "https://youtu.be/SSlsWfwdkb8"
+        return await ctx.respond(text)
+    
     @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
     async def coaching(self, ctx: discord.ApplicationContext):
         cmd_prefix = "!!"
