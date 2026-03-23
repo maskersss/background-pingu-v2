@@ -796,6 +796,11 @@ class Log:
         if self.has_mod("seedqueue"): return True
         
         return False
+
+    @cached_property
+    def is_toolscreen_log(self) -> bool:
+        if self.has_content("toolscreen"): return True
+        return False
     
     @cached_property
     def is_log(self) -> bool:

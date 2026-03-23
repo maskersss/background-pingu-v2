@@ -18,6 +18,7 @@
     "add.eav_crash_reboot": "- Reboot your PC.",
     "add.eav_crash_sodium": "- `Sodium` may cause this crash. If Minecraft doesn't crash with `Sodium` disabled, using `Sodium Mac` instead (from [this website](https://mods.tildejustin.dev/?version=1.16.1&macos) or select `Mac` in [ModCheck](https://github.com/tildejustin/modcheck/releases/latest)) should fix the crash.",
     "add.eav_crash_srigt": "- A compatibility issue between `SpeedRunIGT`, `Intel Graphics` and `OpenGL`: enable `Safe Font Mode` in `SpeedRunIGT`'s options.",
+    "add.eav_crash_ts_hook": "- Using programs that can conflict with Toolscreen. To fix it, try either disabling/closing them or adding `disableHookChaining = true` to `%userprofile%/.config/toolscreen/config.toml`.",
     "add.fabric_guide_mcsrlauncher": "You can {} Fabric by right clicking your instance and doing `Edit Instance > Version > Change Version` in `MCSR Launcher`.",
     "add.fabric_guide_mmc": "You can {} Fabric by doing `Edit Instance > Version > Install Fabric` in `MultiMC`.",
     "add.fabric_guide_prism": "You can {} Fabric by doing `Edit > Version > Install Loader > Fabric` in `Prism`.",

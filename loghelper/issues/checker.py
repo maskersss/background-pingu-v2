@@ -1143,7 +1143,7 @@ class IssueChecker:
                 except version.InvalidVersion:
                     pass
         # toolscreen end
-        
+
         ranked_mod = None
         for mod in self.log.whatever_mods[::-1]:
             if "mcsrranked" in mod.lower():
@@ -1587,7 +1587,11 @@ class IssueChecker:
                 ): builder.add("eav_crash_srigt")
             if (is_mcsr_log and not self.log.major_java_version is None
                 and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-            if is_mcsr_log: builder.add("eav_crash_jingle_java8")
+            if self.log.is_toolscreen_log:
+                builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+            if is_mcsr_log and not self.log.is_toolscreen_log:
+                builder.add("eav_crash_jingle_java8")
             if self.log.lines < 500:
                 if (self.log.has_mod("sodium")
                     and not self.log.has_mod("sodiummac")
@@ -1604,7 +1608,11 @@ class IssueChecker:
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
+                if self.log.is_toolscreen_log:
+                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+                if is_mcsr_log and not self.log.is_toolscreen_log:
+                    builder.add("eav_crash_jingle_java8")
                 if self.log.lines < 500:
                     if (self.log.has_mod("sodium")
                         and not self.log.has_mod("sodiummac")
@@ -1618,7 +1626,11 @@ class IssueChecker:
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
+                if self.log.is_toolscreen_log:
+                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+                if is_mcsr_log and not self.log.is_toolscreen_log:
+                    builder.add("eav_crash_jingle_java8")
                 if (self.log.lines < 500
                     and (self.log.mods is None or len(self.log.mods) > 0)
                 ): builder.add("eav_crash_mods")
@@ -1629,14 +1641,24 @@ class IssueChecker:
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                if is_mcsr_log: builder.add("eav_crash_jingle_java8")
+                if self.log.is_toolscreen_log:
+                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+                if is_mcsr_log and not self.log.is_toolscreen_log:
+                    builder.add("eav_crash_jingle_java8")
                 if (self.log.lines < 500
                     and (self.log.mods is None or len(self.log.mods) > 0)
                 ): builder.add("eav_crash_mods")
                 builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073741571:
-                builder.error("ts_hook", "(unknown)", experimental=True).add("ts_hook_examples")
+                if self.log.is_toolscreen_log:
+                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+            elif self.log.exitcode == -529697949:
+                if self.log.is_toolscreen_log:
+                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
+                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
             elif self.log.exitcode in [-805306369, 143]:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_kill")
@@ -1646,7 +1668,7 @@ class IssueChecker:
             elif self.log.exitcode == 126:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_reboot")
-
+        
         if (not found_crash_cause
             and (self.log.is_multimc_or_fork or self.log.is_mcsrlauncher)
             and self.log.type in [LogType.CRASH_REPORT, LogType.LATEST_LOG, LogType.HS_ERR_PID_LOG, None]
