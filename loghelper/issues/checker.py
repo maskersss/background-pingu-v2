@@ -141,6 +141,29 @@ class IssueChecker:
                     return True
         return False
 
+    def get_dll(self, line: str) -> str | None:
+        line = line.rsplit("hookTarget=", 1)[-1]
+
+        match = re.search(r'path="[^"]+(?:\\|\/)([^"]+\.dll)"', line, re.IGNORECASE)
+        if not match: return None
+        dll_name = match.group(1).lower()
+
+        matches = list(re.finditer(r'product="([^"]*)"', line))
+        product_name = matches[-1].group(1) if matches else None
+
+        if dll_name in [
+            "toolscreen.dll",
+            "opengl32.dll",        # ??
+            "graphics-hook64.dll", # obs
+        ]: return None
+        if dll_name == "medal-hook64.dll": product_name = "Medal"
+        if dll_name == "rtsshooks64.dll": product_name = "RivaTuner Statistics Server"
+
+        if product_name is None:
+            product_name = dll_name
+
+        return product_name
+
     def check(self) -> IssueBuilder:
         builder = IssueBuilder(self.log, self.mode)
 
@@ -1088,6 +1111,39 @@ class IssueChecker:
             builder.error("sodium_rtss")
             found_crash_cause = True
         
+        # toolscreen start
+        if self.log.type == LogType.TOOLSCREEN_LOG:
+            programs = []
+            temp = False
+            for line in self.log._content.split("\n"):
+                if not "[wglSwapBuffers] chain-detect" in line:
+                    continue
+                program = self.get_dll(line)
+                if program: programs.append(program)
+                if not programs and "(unknown module)" in line:
+                    temp = True
+            if not programs and temp:
+                programs = ["(unknown)"]
+            if programs:
+                builder.error("ts_hook", "`, `".join(programs), experimental=True).add("ts_hook_examples")
+                found_crash_cause = True
+
+            if self.log.has_content("Mirror Capture Thread: Fence wait failed"):
+                builder.error("ts_amd", experimental=True)
+                found_crash_cause = True
+
+            match = re.search(r"toolscreen version: ([\d.]+)\n", self.log._lower_content)
+            if not match is None:
+                extracted_version = match.group(1)
+                try:
+                    extracted_version = version.parse(extracted_version)
+                    needed_version = version.parse("1.2.0")
+                    if extracted_version < needed_version:
+                        builder.error("old_ts_version")
+                except version.InvalidVersion:
+                    pass
+        # toolscreen end
+        
         ranked_mod = None
         for mod in self.log.whatever_mods[::-1]:
             if "mcsrranked" in mod.lower():
@@ -1580,8 +1636,7 @@ class IssueChecker:
                 builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073741571:
-                builder.error("exitcode", "-1073741571", experimental=True)
-                builder.add("eav_crash_overlay")
+                builder.error("ts_hook", "(unknown)", experimental=True).add("ts_hook_examples")
             elif self.log.exitcode in [-805306369, 143]:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_kill")
