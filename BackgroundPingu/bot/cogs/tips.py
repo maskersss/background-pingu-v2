@@ -142,9 +142,31 @@ You may remap keys using external programs, but:
 • Rebinding "Attack/Destroy" or "Use Item/Place Block" to a keyboard button in order to abuse as an autoclicker is not allowed"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="rebind", description="Gives a guide to rebind keys using AutoHotkey.")
+    @commands.slash_command(name="rebind", description="Gives a guide to rebind keys using Toolscreen.")
     async def rebind(self, ctx: discord.ApplicationContext):
-        return await self.ahk(ctx)
+        cmd_prefix = "/"
+        in_channel = ""
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id and not bot_cid is None:
+                in_channel = f" in <#{bot_cid}>"
+                cmd_prefix = "!!" if ctx.guild_id == 83066801105145856 else "/"
+                break
+        
+        text = f"""• To rebind keys on Windows, install [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>)
+• In Toolscreen, navigate to Advanced  ➔ Inputs  ➔ Keyboard  ➔ Open Keyboard Layout
+• Rebind keys by right-clicking
+
+If you are on Mac or Linux, type `{cmd_prefix}mac` or `{cmd_prefix}linux`{in_channel} for other resources.
+
+**Rebind Rules**
+You may remap keys using external programs, but:
+• Each game input may have only one key, and each key may cause only one game input
+• F3 shortcuts (such as F3+C, Shift+F3, etc.) can't be bound to a single button
+• Inputs must be buttons - no scrolling the scroll-wheel or similar
+• Rebinding "Attack/Destroy" or "Use Item/Place Block" to a keyboard button in order to abuse as an autoclicker is not allowed
+
+For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/433058639956410383/1483327618622165103)."""
+        return await ctx.respond(text)
 
     @commands.slash_command(name="narrator", description="Gives a guide to disable the narrator on MultiMC/Prism.")
     async def narrator(self, ctx: discord.ApplicationContext):
@@ -314,7 +336,7 @@ For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0
                 channel = f"<#{cid}> "
                 break
         
-        text = f"""If you have a problem, type your problem in {channel}. Please do not ask to VC or DM, using voice chats or direct messages are a bad way to solve your problem, since:
+        text = f"""If you have a problem, type your problem in {channel}. Please do not ask to VC or DM or ping people out of nowhere, using voice chats or direct messages are a bad way to solve your problem, since:
 
 1) You are making the other person to commit to helping you.
 2) The person might not know how to solve your issue.
@@ -404,18 +426,18 @@ Discord server: <https://discord.gg/9P6PJkHCdU>"""
     
     @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
     async def coaching(self, ctx: discord.ApplicationContext):
-        cmd_prefix = "!!"
-        channel = "<#433058639956410383>"
+        cmd_prefix = "/"
+        in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
             if ctx.guild_id == server_id and not bot_cid is None:
-                channel = f"<#{bot_cid}>"
+                in_channel = f" in <#{bot_cid}>"
                 cmd_prefix = "!!" if ctx.guild_id == 83066801105145856 else "/"
                 break
         
         text = f"""Coaching in MCSR isn’t something most people have access to. 
 Long-term coaching usually only happens between friends, content creators who stream it, or paid services.
 
-**If you’re looking for help starting out, type `{cmd_prefix}new` in {channel} for setup information and resources.**
+**If you’re looking for help starting out, type `{cmd_prefix}new`{in_channel} for setup information and resources.**
 
 If you want an idea of what coaching looks like, here are some playlists of coaching VODs you can learn from:
 
@@ -737,9 +759,17 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
 
     @commands.slash_command(name="gamma", description="Gives a guide for increasing brightness past 100%.")
     async def gamma(self, ctx: discord.ApplicationContext):
-        text = """It is legal to set gamma to up to 5.0.
+        cmd_prefix = "/"
+        in_channel = ""
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id and not bot_cid is None:
+                in_channel = f" in <#{bot_cid}>"
+                cmd_prefix = "!!" if ctx.guild_id == 83066801105145856 else "/"
+                break
+        
+        text = f"""It is legal to set gamma to up to 5.0.
 If you're using Speedrunning Sodium or Planifolia, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen.
-Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `!!setup` for a guide on setting up mods."""
+Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `{cmd_prefix}setup`{in_channel} for a guide on setting up mods."""
         return await ctx.respond(text)
 
     @commands.slash_command(name="ghostbucket", description="Gives an explanation for ghost buckets.")
@@ -851,6 +881,7 @@ This mod allows you to adjust FOV and distortion effects.
             if sid == server_id and not cid is None:
                 channel = f"<#{cid}> "
                 break
+        
         text = f"""If you have an issue with Minecraft, send the log as an attachment or as a [mclo.gs](<https://mclo.gs/>)/pastee.dev link for the bot to provide suggestions.
 See `/tags` for a list of all available tags related to MCSR strategies, guides, and more.
 If you need help, please ask in {channel}.
