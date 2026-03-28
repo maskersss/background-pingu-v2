@@ -417,6 +417,16 @@ class IssueChecker:
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
                 found_crash_cause = True
+            if (self.log.is_newer_than("26.1")
+                and not self.log.major_java_version is None
+                and self.log.major_java_version < 25
+            ):
+                builder.error(
+                    "need_new_java_mc",
+                    25,
+                    f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
+                ).add(self.log.java_update_guide)
+                found_crash_cause = True
             if (self.log.is_newer_than("1.20.5")
                 and not self.log.major_java_version is None
                 and self.log.major_java_version < 21
@@ -461,7 +471,12 @@ class IssueChecker:
         match = re.search(pattern, self.log._content)
         if not found_crash_cause and not match is None:
             switch_java = False
-            if self.log.is_newer_than("1.20.5"):
+            if self.log.is_newer_than("26.1"):
+                try:
+                    current_version = int(match.group(1))
+                    switch_java = (current_version < 25)
+                except: switch_java = True
+            elif self.log.is_newer_than("1.20.5"):
                 try:
                     current_version = int(match.group(1))
                     switch_java = (current_version < 21)
