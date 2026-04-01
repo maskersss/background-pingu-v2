@@ -154,7 +154,7 @@ You may remap keys using external programs, but:
         
         text = f"""• To rebind keys on Windows, install [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>)
 • In Toolscreen, navigate to Advanced  ➔ Inputs  ➔ Keyboard  ➔ Open Keyboard Layout
-• Rebind keys by right-clicking
+• Rebind keys by right-clicking. A more detailed rebind tutorial is available [here](<https://youtu.be/LG13ljK9RPs?t=486>) (timestamped)
 
 If you are on Mac or Linux, type `{cmd_prefix}mac` or `{cmd_prefix}linux`{in_channel} for other resources.
 
@@ -262,6 +262,18 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
 - These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
 Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
+        return await ctx.respond(text)
+
+    @commands.slash_command(name="nbboverlay", description="Links a guide to using the Ninjabrain Bot overlay with Toolscreen.")
+    async def nbboverlay(self, ctx: discord.ApplicationContext):
+        text = "https://youtu.be/LG13ljK9RPs?t=61 (timestamped)"
+        return await ctx.respond(text)
+
+    @commands.slash_command(name="noinv", description="Explains how to stop Toolscreen resize hotkeys from triggering in the inventory.")
+    async def noinv(self, ctx: discord.ApplicationContext):
+        text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), to stop resize hotkeys from triggering while the inventory or chat is open, go to Advanced ➔ Hotkeys ➔ (Select the hotkey) ➔ Required Game States, untick `Any`, tick `In World (Cursor Grabbed)` and untick `In World (Cursor Free)`
+
+More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG13ljK9RPs?t=738>) (timestamped)"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="waywalldebug", description="Gives a guide to troubleshooting Waywall issues.")
@@ -524,6 +536,12 @@ All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.
         text = "https://www.youtube.com/watch?v=fw0KzXyEFtY"
         return await ctx.respond(text)
 
+    @commands.slash_command(name="glowdar", description="Links an advanced guide for finding the fortress without breaking the spawner in treasure.")
+    async def glowdar(self, ctx: discord.ApplicationContext):
+        text = """Tutorial: https://youtu.be/8r4icysEvsI
+Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13ljK9RPs?t=195>"""
+        return await ctx.respond(text)
+
     @commands.slash_command(name="piedirectory", description="Gives the useful pie directories.")
     async def piedirectory(
         self,
@@ -677,12 +695,14 @@ RawAccel should no longer be required for most players. [RawAccel Guide (Timesta
     async def toolscreen(self, ctx: discord.ApplicationContext):
         text = """Toolscreen is a program that uses DLL injection to add overlays and instant resizing to the game, in fullscreen or borderless. It also has other functionality such as key rebinding and a virtual camera for screensharing. Magnifiers for EyeZoom, mapless, and preemptive are already set up.
 Setup video: https://youtu.be/YqS-fxPx_jo
+Advanced configuration tutorial: <https://youtu.be/LG13ljK9RPs>
 Discord: <https://discord.com/invite/A2v6bCJg6K>"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
     async def thinmag(self, ctx: discord.ApplicationContext):
-        text = "https://www.youtube.com/watch?v=ZXPM1f00wmY"
+        text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), mirrors for the entity counter and the pie chart in Thin and EyeZoom modes are set up by default
+Otherwise, follow this tutorial: https://www.youtube.com/watch?v=ZXPM1f00wmY"""
         return await ctx.respond(text)
 
     @commands.slash_command(name="thinbt", description="Gives a guide to set up the ThinBT macro.")
