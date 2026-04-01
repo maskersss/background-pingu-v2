@@ -427,7 +427,7 @@ class IssueChecker:
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
                 found_crash_cause = True
-            if (self.log.is_newer_than("1.20.5")
+            elif (self.log.is_newer_than("1.20.5")
                 and not self.log.major_java_version is None
                 and self.log.major_java_version < 21
             ):
@@ -1603,7 +1603,6 @@ class IssueChecker:
             if (is_mcsr_log and not self.log.major_java_version is None
                 and self.log.major_java_version < 17): builder.add("eav_crash_java17")
             if self.log.is_toolscreen_log:
-                builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_ts_hook").add("ts_hook_examples")
             if is_mcsr_log and not self.log.is_toolscreen_log:
                 builder.add("eav_crash_jingle_java8")
@@ -1624,7 +1623,6 @@ class IssueChecker:
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
                 if self.log.is_toolscreen_log:
-                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                     builder.add("eav_crash_ts_hook").add("ts_hook_examples")
                 if is_mcsr_log and not self.log.is_toolscreen_log:
                     builder.add("eav_crash_jingle_java8")
@@ -1642,7 +1640,6 @@ class IssueChecker:
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
                 if self.log.is_toolscreen_log:
-                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                     builder.add("eav_crash_ts_hook").add("ts_hook_examples")
                 if is_mcsr_log and not self.log.is_toolscreen_log:
                     builder.add("eav_crash_jingle_java8")
@@ -1657,7 +1654,6 @@ class IssueChecker:
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
                 if self.log.is_toolscreen_log:
-                    builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                     builder.add("eav_crash_ts_hook").add("ts_hook_examples")
                 if is_mcsr_log and not self.log.is_toolscreen_log:
                     builder.add("eav_crash_jingle_java8")
