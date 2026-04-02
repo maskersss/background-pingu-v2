@@ -334,8 +334,8 @@ resetti (for window resizing on X11, and multi-instancing on versions without Se
 waywall (for window resizing on Wayland + many useful features): <https://tesselslate.github.io/waywall>
 
 MCSR Linux Discord server: https://discord.gg/CVxuagAXMt"""
-        else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/l-q-_4R8_6M
-For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
+        else: text = """1.16.1 setup video tutorial, including SeedQueue and MCSR Ranked: https://youtu.be/l-q-_4R8_6M
+For other categories/versions, change the relevant options on the MCSR Mods List webpage at 1:41."""
         
         return await ctx.respond(text)
     
