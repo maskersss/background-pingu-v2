@@ -180,7 +180,7 @@ For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/
     async def new(self, ctx: discord.ApplicationContext):
         text = """The most popular category/version to run is 1.16.1 Any% Random Seed Glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/RSLv7FfQZKY>) It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
+[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/l-q-_4R8_6M>) It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
 
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
@@ -334,7 +334,7 @@ resetti (for window resizing on X11, and multi-instancing on versions without Se
 waywall (for window resizing on Wayland + many useful features): <https://tesselslate.github.io/waywall>
 
 MCSR Linux Discord server: https://discord.gg/CVxuagAXMt"""
-        else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/RSLv7FfQZKY
+        else: text = """1.16.1/1.15.2 setup video tutorial, including SeedQueue: https://youtu.be/l-q-_4R8_6M
 For other categories/versions, follow [this video](<https://youtu.be/VL8Syekw4Q0>), substituting any mention of 1.16.1 & RSG for your chosen category/version."""
         
         return await ctx.respond(text)
@@ -398,7 +398,7 @@ Older tutorials: https://discord.com/channels/83066801105145856/4330586399564103
 
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
     async def julti(self, ctx: discord.ApplicationContext):
-        text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=RSLv7FfQZKY>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
+        text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=l-q-_4R8_6M>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
 Julti tutorial: <https://youtu.be/_8gQkgZcTKo>
 Julti discord: <https://discord.gg/cXf86mXAWR>"""
         return await ctx.respond(text)
@@ -421,7 +421,7 @@ If you want worlds to be deleted automatically, you can use the [**Jingle WorldB
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
 Download: <https://github.com/contariaa/seedqueue/releases>
 Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
-Tutorial: <https://www.youtube.com/watch?v=RSLv7FfQZKY>
+Tutorial: <https://www.youtube.com/watch?v=l-q-_4R8_6M>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
         return await ctx.respond(text)
