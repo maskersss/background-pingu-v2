@@ -125,16 +125,6 @@ If you want to unlink OneDrive, follow [this link](<https://support.microsoft.co
         text = """https://cdn.discordapp.com/attachments/83066801105145856/1033984974614962286/1.16.1_Regions.png"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="repeatrate", description="Explains how to increase key repeat rate with Toolscreen.")
-    async def repeatrate(self, ctx: discord.ApplicationContext):
-        text = """To increase key repeat rate (faster F3 + F), install [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>).
-
-In Toolscreen, navigate to Advanced ➔ Inputs ➔ Keyboard ➔ Key Repeat Rate
-• "Key Repeat Start Delay" controls how long it will take for the key to begin repeating after holding it down
-• "Key Repeat Delay" controls how fast keys will repeat
-• Both values can be set to whatever you want. Experiment with the values until you find something you like."""
-        return await ctx.respond(text)
-
     @commands.slash_command(name="ahk", description="Gives a guide to rebind keys using AutoHotkey.")
     async def ahk(self, ctx: discord.ApplicationContext):
         text = """To rebind keys, you can download AutoHotkey (<https://www.autohotkey.com/>, **make sure to get version 1.1**) and create a file with your desired key bindings. For instance, if you want to swap the keys "F3" and "r", you can create a file and name it *something*.ahk with the following content:
