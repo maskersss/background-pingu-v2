@@ -961,36 +961,6 @@ class IssueChecker:
         ):
             builder.error("incompatible_forge_mac")
             found_crash_cause = True
-        
-        if found_crash_cause: system_libs = []
-        else: system_libs = [lib for lib in ["GLFW", "OpenAL"] if self.log.has_content("Using system " + lib)]
-        temp = None
-        if len(system_libs) == 2: temp = f"{system_libs[0]} and {system_libs[1]} installations"
-        elif len(system_libs) == 1: temp = f"{system_libs[0]} installation"
-        if not temp is None:
-            if self.log.has_content("Failed to locate library:"):
-                if self.log.is_waywall_log:
-                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
-                else:
-                    builder.error(
-                        "builtin_lib_crash",
-                        temp,
-                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                        " > Tweaks" if self.log.is_prism else "",
-                        "Tweaks" if self.log.is_prism else "Workarounds",
-                    )
-                    found_crash_cause = True
-            elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
-                if self.log.is_waywall_log:
-                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
-                else:
-                    builder.error(
-                        "builtin_lib_prob_crash",
-                        temp,
-                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
-                        " > Tweaks" if self.log.is_prism else "",
-                        "Tweaks" if self.log.is_prism else "Workarounds",
-                    )
 
         if (not found_crash_cause
             and self.log.launcher in [None, Launcher.MULTIMC]
@@ -1276,6 +1246,7 @@ class IssueChecker:
                     match = re.search(r"\[(.*?)\]", mod)
                     if match:
                         ranked_rong_versions.append(match.group(1))
+                        found_crash_cause = True
             
             ranked_anticheat_split = ranked_anticheat.split("These Fabric Mods are whitelisted and you seem to be using the correct version but the files do not match. Try downloading these files again!")
             if len(ranked_anticheat_split) > 1:
@@ -1284,6 +1255,7 @@ class IssueChecker:
                     match = re.search(r"\[(.*?)\]", mod)
                     if match:
                         ranked_rong_files.append(match.group(1))
+                        found_crash_cause = True
             
             ranked_anticheat_split = ranked_anticheat.split("These Fabric Mods are not whitelisted! You should delete these from Minecraft.")
             if len(ranked_anticheat_split) > 1:
@@ -1294,6 +1266,7 @@ class IssueChecker:
                         match = match.group(1)
                         if "extra-options" in match: continue
                         ranked_rong_mods.append("Fabric API" if match == "fabric" else match)
+                        found_crash_cause = True
 
             if len(ranked_rong_versions) > 5:
                 builder.error("ranked_rong_versions", f"`{len(ranked_rong_versions)}` mods (`{ranked_rong_versions[0]}, {ranked_rong_versions[1]}, ...`) that are", "them").add("update_mods_ranked").add(self.log.modcheck_v1_warning)
@@ -1430,6 +1403,36 @@ class IssueChecker:
             and self.log.has_content("ERROR]: Mixin apply for mod fabric-networking-api-v1 failed")
         ):
             builder.error("delete_dot_fabric", experimental=True)
+        
+        if found_crash_cause: system_libs = []
+        else: system_libs = [lib for lib in ["GLFW", "OpenAL"] if self.log.has_content("Using system " + lib)]
+        temp = None
+        if len(system_libs) == 2: temp = f"{system_libs[0]} and {system_libs[1]} installations"
+        elif len(system_libs) == 1: temp = f"{system_libs[0]} installation"
+        if not temp is None:
+            if self.log.has_content("Failed to locate library:"):
+                if self.log.is_waywall_log:
+                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                else:
+                    builder.error(
+                        "builtin_lib_crash",
+                        temp,
+                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                        " > Tweaks" if self.log.is_prism else "",
+                        "Tweaks" if self.log.is_prism else "Workarounds",
+                    )
+                    found_crash_cause = True
+            elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
+                if self.log.is_waywall_log:
+                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                else:
+                    builder.error(
+                        "builtin_lib_prob_crash",
+                        temp,
+                        self.log.launcher.value if self.log.launcher is not None else "your launcher",
+                        " > Tweaks" if self.log.is_prism else "",
+                        "Tweaks" if self.log.is_prism else "Workarounds",
+                    )
         
         if not found_crash_cause:
             pattern = r"Error analyzing \[(.*?)\]: java\.util\.zip\.ZipException: "
