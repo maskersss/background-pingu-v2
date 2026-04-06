@@ -824,10 +824,14 @@ class Log:
 
         if not self.is_newer_than("1.15"): return mods
         
-        mods.append("sodium")
         if not self.is_newer_than("1.20"): mods.append("starlight")
         if not self.is_ranked_log: mods.append("speedrunapi")
-        mods.append("lithium")
+        mods += [
+            "sodium",
+            "lithium",
+            "antiresourcereload",
+            "state-output",
+        ]
 
         if self.launcher != Launcher.OFFICIAL_LAUNCHER and not self.is_newer_than("1.17"):
             mods.append("voyager")
@@ -841,17 +845,14 @@ class Log:
                 "setspawn",
                 "chunkcacher",
                 "speedrunigt",
-                "antiresourcereload",
             ]
         elif not self.has_mod("mcsrranked") and not self.has_mod("peepopractice"):
             mods += [
                 "antigone",
                 "speedrunigt",
                 "lazystronghold",
-                "antiresourcereload",
                 "fast-reset",
                 "atum",
-                "state-output",
                 "mcsrfairplay",
             ]
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
