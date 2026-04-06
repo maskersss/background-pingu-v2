@@ -457,10 +457,6 @@ Couriway - Midoffs S1 <https://www.youtube.com/watch?v=1h-Uqhc_DtQ&list=PLiNXLWz
 Nerdi - Speedrun Bootcamp <https://www.youtube.com/watch?v=pDLufpy11GY&list=PLiNHtofX3klVmUMUxRbi2R8jcVSW9OE9_>"""
         return await ctx.respond(text)
 
-    @commands.slash_command(name="sq", description="Explains what SeedQueue is.")
-    async def sq(self, ctx: discord.ApplicationContext):
-        return await self.seedqueue(ctx)
-
     @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
     async def wall(self, ctx: discord.ApplicationContext):
         return await self.seedqueue(ctx)
@@ -909,10 +905,6 @@ If you need help, please ask in {channel}.
 If you have any questions/suggestions about the bot, feel free to ping or dm `maskers`.
 Source code available on [GitHub](<https://github.com/maskersss/background-pingu-v2>)."""
         return await ctx.respond(text)
-    
-    @commands.slash_command(name="info", description="Gives a guide to using the bot.")
-    async def info(self, ctx: discord.ApplicationContext):
-        return await self.help(ctx)
 
     # @commands.slash_command(name="", description="")
     # async def (self, ctx: discord.ApplicationContext):
