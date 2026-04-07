@@ -171,7 +171,8 @@ For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/
     @commands.slash_command(name="narrator", description="Gives a guide to disable the narrator on MultiMC/Prism.")
     async def narrator(self, ctx: discord.ApplicationContext):
         text = """Disabling the narrator hotkey:
-* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>): **Ctrl+I** to open the menu, then go to **Advanced** ⟶ **Hotkeys** ⟶ **Add New Hotkey** ⟶ choose **Ctrl+B** and tick "Block key from game".
+* If this is an MCSR Ranked instance: Go to the Ranked main menu ⟶ **Settings** and set "Narrator Hotkey" to **OFF**.
+* Otherwise, if you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>): **Ctrl+I** to open the menu, then go to **Advanced** ⟶ **Hotkeys** ⟶ **Add New Hotkey** ⟶ choose **Ctrl+B** and tick "Block key from game".
   * Note that this prevents **Ctrl+B** from being sent to the game at all. If you still require that input to be functional (e.g. you have **B** bound to **Drop item** and would like to drop a stack of an item without toggling the narrator), see the guide below instead.
 * Otherwise, follow this guide (for MultiMC / Prism Launcher): https://discord.com/channels/83066801105145856/405839885509984256/1412190230655799337"""
         return await ctx.respond(text)
