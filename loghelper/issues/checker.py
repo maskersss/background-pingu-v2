@@ -1316,7 +1316,7 @@ class IssueChecker:
                     builder.error("use_sodium_not_optifine", "Sodium").add("optifine_alternatives")
         
         if self.log.has_mod("PeepoPractice"):
-            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "AreEssGee"]:
+            for incompatible_mod in ["WorldPreview", "Atum", "SeedQueue", "AreEssGee", "hermes"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "PeepoPractice", incompatible_mod)
                     found_crash_cause = True
