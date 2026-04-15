@@ -260,7 +260,7 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
     async def nbbdebug(self, ctx: discord.ApplicationContext):
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-- These files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt`
+- Drag and drop these files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt` into Discord
 Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
         return await ctx.respond(text)
