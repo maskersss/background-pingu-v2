@@ -230,6 +230,7 @@
     "note.too_little_ram_crash": "This crash may be caused by not having enough RAM allocated.",
     "note.too_much_ram": "You likely have too much RAM allocated, which [can cause lag spikes](https://vazkii.notion.site/A-semi-technical-explanation-of-why-you-shouldn-t-allocate-too-much-RAM-to-Minecraft-78e7bd41ba6646de8d1c55c033674bce).",
     "note.use_zgc": "It's recommended to use `ZGC` for SeedQueue, but you're not using it.",
+    "note.waywall_sleepbg": "You're using the `SleepBackground` mod, which can cause various issues with `waywall`. You should delete it.",
     "top_info.uploaded_log": "The log has been uploaded to {}.",
     "top_info.uploaded_log_2": "The log has been uploaded to {}. (Note that `mclo.gs` censors sensitive information)",
     "warning.dont_use_flatpak": "You are using `Prism` installed from Flatpak, which can cause issues due to Flatpak sandboxing and Flatpak drivers. Consider installing it [**in a different way**](https://prismlauncher.org/download) instead.",

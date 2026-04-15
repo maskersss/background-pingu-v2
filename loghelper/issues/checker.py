@@ -848,6 +848,7 @@ class IssueChecker:
             builder.error("forge_too_new_java").add(self.log.java_update_guide)
             found_crash_cause = True
         
+        # linux crashes start
         if (not found_crash_cause
             and self.log.operating_system in [None, OperatingSystem.LINUX]
         ):
@@ -905,6 +906,10 @@ class IssueChecker:
             if self.log.has_content_in_stacktrace("libXtst.so.6: cannot open shared object file: No such file or directory"):
                 builder.error("linux_nixos_fairplay", experimental=True)
                 found_crash_cause = True
+            
+            if self.log.is_waywall_log and self.log.has_mod("sleepbackground"):
+                builder.note("waywall_sleepbg")
+        # linux crashes end
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
