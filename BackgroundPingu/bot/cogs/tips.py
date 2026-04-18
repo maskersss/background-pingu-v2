@@ -384,7 +384,7 @@ Older tutorials: https://discord.com/channels/83066801105145856/4330586399564103
 
     @commands.slash_command(name="discords", description="Gives a link to the MCSR discords spreadsheet.")
     async def discords(self, ctx: discord.ApplicationContext):
-        text = "https://docs.google.com/spreadsheets/d/1Gry6LCYV3VPYNekp1LE0KfuGPnAboa3zXvj545mshJU/edit#gid=0"
+        text = "https://docs.google.com/spreadsheets/d/1W5D6sxqBfIdyxS1pVEAi2ZaFhOhj4x-9bZwD39HbgLo"
         return await ctx.respond(text)
 
     @commands.slash_command(name="divine", description="Gives an infographic for nether fossil divine.")
