@@ -11,29 +11,35 @@ class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
         super().__init__()
         self.bot = bot
-    
+
+    async def _respond(self, ctx, text, mention=None):
+        if mention:
+            text = f"{mention.mention}\n{text}"
+        return await ctx.respond(text)
+
     @commands.slash_command(name="recommend_settings", description="Gives recommended settings for SeedQueue based on a log.")
     async def recommend_settings(
         self,
         ctx: discord.ApplicationContext,
         log: discord.Option(str, required=False),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if log is None:
             text = "Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
-            return await ctx.respond(text)
+            return await self._respond(ctx, text, mention)
 
         match = re.search(LINK_PATTERN, log)
         if match is None:
             text = "No pastee.dev or mclo.gs link found. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
-            return await ctx.respond(text)
+            return await self._respond(ctx, text, mention)
 
         link = match.group(0)     
         (link, log) = (link.split("?ex")[0], parser.Log.from_link(link=link, timeout=2))
         if log is None:
             text = "The link you provided is not valid. Please get a link to the log and provide it as a command parameter for this command[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
-            return await ctx.respond(text)
+            return await self._respond(ctx, text, mention)
 
         text, success = IssueChecker(
             log,
@@ -51,82 +57,84 @@ class Tips(Cog):
                 text = "The link you provided is not a valid log. Please get a link to the log and provide it as a command parameter by uploading it from your launcher[:](https://cdn.discordapp.com/attachments/531598137790562305/575381000398569493/unknown.png)"
             if ctx.channel_id == 1271835972912545904: text += "\n_If you're still confused, you should ask in https://discord.com/channels/1262887973154848828/1262901524619595887._"
         
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fabric", description="A guide on how to install Fabric.")
     async def fabric(
         self,
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC / Prism", "MCSR Launcher", "Official Launcher", "All"], required=False, default="All"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = "For your mods to work, you need to install Fabric Loader."
         if launcher in ["MultiMC / Prism", "All"]: text += "\n- For MultiMC and Prism Launcher, see the image how to do that[.](https://i.imgur.com/ZR6UJCA.png)"
         if launcher in ["MCSR Launcher", "All"]: text += "\n- For MCSR Launcher, you can install Fabric by right clicking your instance and doing `Edit Instance > Version > Change Version`."
         if launcher in ["Official Launcher", "All"]: text += """\n- For official Minecraft Launcher, follow the instructions [**here**](<https://wiki.fabricmc.net/player:tutorials:install_mcl:windows>), up to step 3. Do **NOT** install Fabric API."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="fastloot", description="Gives links to fastloot guides.")
-    async def fastloot(self, ctx: discord.ApplicationContext):
+    async def fastloot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """### Guides on different types of fastlooting:
 
 * RSG Fastlooting: <https://www.youtube.com/watch?v=ebd3q3HNnQA>
 * SSG Fastlooting: <https://www.youtube.com/watch?v=uZC_XE1t5yQ>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="log", description="Shows how to send a log.")
     async def log(
         self,
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC", "Prism", "Modrinth App", "Other"], required=False, default="MultiMC"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if launcher == "MultiMC": link = "https://i.imgur.com/MfrJwcM.png"
         elif launcher == "Prism": link = "https://i.imgur.com/b8HOzdP.png"
         elif launcher == "Modrinth App": link = "https://media.discordapp.net/attachments/727673359860760627/1446445444732420179/image.png"
         else: link = "https://media.discordapp.net/attachments/433058639956410383/1061333462826614844/image.png"
         text = f"Please send a log by following this image[:]({link})"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mmclog", description="Shows how to send a log on MultiMC/Prism Launcher.")
-    async def mmclog(self, ctx: discord.ApplicationContext):
-        return await self.log(ctx, "MultiMC")
+    async def mmclog(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        return await self.log(ctx, "MultiMC", mention=mention)
 
     @commands.slash_command(name="borderless", description="Explains how to run Minecraft as a borderless window.")
-    async def borderless(self, ctx: discord.ApplicationContext):
+    async def borderless(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (recommended): Ctrl+I to open the menu, then you may set a hotkey to toggle Borderless in Basic ⟶ Other ⟶ Window Hotkeys.
 * Otherwise, if you're using [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>): click "Go Borderless".
 * Otherwise, you may download this [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases/latest>).
 ℹ️ Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings and Options ⟶ Video settings"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
-    async def mcsr(self, ctx: discord.ApplicationContext):
+    async def mcsr(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """"MCSR" is short for "minecraft speedrunning", and is usually used to refer to the minecraft speedrunning community.
 If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR Ranked" or "Ranked" for short <:Okayge:796454436427005984>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="onedrive", description="Explains that OneDrive is bad.")
-    async def onedrive(self, ctx: discord.ApplicationContext):
+    async def onedrive(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """OneDrive can mess with your game files to save space, and this can lead to issues. If your launcher folder is located in OneDrive, you should move it out to a different folder, for example to "C:/MultiMC/".
 If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="oneshot", description="Links the oneshot guide.")
-    async def oneshot(self, ctx: discord.ApplicationContext):
+    async def oneshot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/717kfB39gjQ"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="rankedfaq", description="Sends a link to the MCSR Ranked Tech Support FAQ document.")
-    async def rankedfaq(self, ctx: discord.ApplicationContext):
+    async def rankedfaq(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """You can find MCSR Ranked Tech Support FAQ document here: <https://wiki.mcsrranked.com/install/faq>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="regions", description="Gives an infographic about structure regions.")
-    async def regions(self, ctx: discord.ApplicationContext):
+    async def regions(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """https://cdn.discordapp.com/attachments/83066801105145856/1033984974614962286/1.16.1_Regions.png"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="ahk", description="Gives a guide to rebind keys using AutoHotkey.")
-    async def ahk(self, ctx: discord.ApplicationContext):
+    async def ahk(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To rebind keys, you can download AutoHotkey (<https://www.autohotkey.com/>, **make sure to get version 1.1**) and create a file with your desired key bindings. For instance, if you want to swap the keys "F3" and "r", you can create a file and name it *something*.ahk with the following content:
 ```ahk
 #IfWinActive Minecraft
@@ -140,10 +148,10 @@ You may remap keys using external programs, but:
 • F3 shortcuts (such as F3+C, Shift+F3, etc.) can't be bound to a single button
 • Inputs must be buttons - no scrolling the scroll-wheel or similar
 • Rebinding "Attack/Destroy" or "Use Item/Place Block" to a keyboard button in order to abuse as an autoclicker is not allowed"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="rebind", description="Gives a guide to rebind keys using Toolscreen.")
-    async def rebind(self, ctx: discord.ApplicationContext):
+    async def rebind(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         cmd_prefix = "/"
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -166,19 +174,19 @@ You may remap keys using external programs, but:
 • Rebinding "Attack/Destroy" or "Use Item/Place Block" to a keyboard button in order to abuse as an autoclicker is not allowed
 
 For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/433058639956410383/1483327618622165103)."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="narrator", description="Gives a guide to disable the narrator on MultiMC/Prism.")
-    async def narrator(self, ctx: discord.ApplicationContext):
+    async def narrator(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Disabling the narrator hotkey:
 * If this is an MCSR Ranked instance: Go to the Ranked main menu ⟶ **Settings** and set "Narrator Hotkey" to **OFF**.
 * Otherwise, if you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>): **Ctrl+I** to open the menu, then go to **Advanced** ⟶ **Hotkeys** ⟶ **Add New Hotkey** ⟶ choose **Ctrl+B** and tick "Block key from game".
   * Note that this prevents **Ctrl+B** from being sent to the game at all. If you still require that input to be functional (e.g. you have **B** bound to **Drop item** and would like to drop a stack of an item without toggling the narrator), see the guide below instead.
 * Otherwise, follow this guide (for MultiMC / Prism Launcher): https://discord.com/channels/83066801105145856/405839885509984256/1412190230655799337"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="new", description="Provides a comprehensive guide to start learning speedrunning.")
-    async def new(self, ctx: discord.ApplicationContext):
+    async def new(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """The most popular category/version to run is 1.16.1 Any% Random Seed Glitchless, so we're assuming you're planning to run this category.
 
 [Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/l-q-_4R8_6M>) It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
@@ -186,25 +194,25 @@ For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/
 The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
 
 In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>) and a [full comprehensive guide](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="tutorials", description="Links Couriway's Metafy guide and Osh's tutorials YouTube playlist.")
-    async def tutorials(self, ctx: discord.ApplicationContext):
+    async def tutorials(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Couriway's Metafy guide: <https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>
 -# (it is free, you just need to create an account)
 
 Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="jarfix", description="Explains how to fix jar files not opening.")
-    async def jarfix(self, ctx: discord.ApplicationContext):
+    async def jarfix(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "If you're having issues with .jar programs on Windows, download and run **Jarfix.exe** from <https://github.com/qMaxXen/Jarfix/releases/latest> ."
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="folderinafolder", description="Explains the correct practice map folder structure.")
-    async def folderinafolder(self, ctx: discord.ApplicationContext):
+    async def folderinafolder(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://cdn.discordapp.com/attachments/433058639956410383/1195805874120314941/image.png"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="java", description="Gives a guide to update Java.")
     async def java(
@@ -212,6 +220,7 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["Prism", "MultiMC", "Modrinth App", "Official Launcher", "MCSR Launcher", "All"], required=False, default="All"),
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = ""
 
@@ -243,68 +252,69 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
             text += "  * After installing Java, follow the steps in the image below[:](https://cdn.discordapp.com/attachments/433058639956410383/1172533931485175879/image.png)\n"
             text += "    * If the Java you installed doesn't show up, click `Refresh` on the bottom left in the `Auto-detect` menu.\n"
         
-        return await ctx.respond(text.strip())
+        return await self._respond(ctx, text.strip(), mention)
 
     @commands.slash_command(name="ninjabrainbot", description="Gives a guide to using Ninjabrain Bot.")
-    async def ninjabrainbot(self, ctx: discord.ApplicationContext):
+    async def ninjabrainbot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Download: <https://github.com/Ninjabrain1/Ninjabrain-Bot/releases/latest>
 Tutorial: https://youtu.be/Gp6EnDs24NI"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbbfaq", description="Links a Ninjabrain Bot FAQ document.")
-    async def nbbfaq(self, ctx: discord.ApplicationContext):
+    async def nbbfaq(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """https://docs.google.com/document/d/1aYxL747PI6Lr0rgPSFmO-wvL6P7-YPLpNJewCJU86n0"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbbdebug", description="Gives a guide to debugging Ninjabrain Bot.")
-    async def nbbdebug(self, ctx: discord.ApplicationContext):
+    async def nbbdebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
 - Drag and drop these files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt` into Discord
 Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbboverlay", description="Links a guide to using the Ninjabrain Bot overlay with Toolscreen.")
-    async def nbboverlay(self, ctx: discord.ApplicationContext):
+    async def nbboverlay(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/LG13ljK9RPs?t=61 (timestamped)"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="noinv", description="Explains how to stop Toolscreen resize hotkeys from triggering in the inventory.")
-    async def noinv(self, ctx: discord.ApplicationContext):
+    async def noinv(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), to stop resize hotkeys from triggering while the inventory or chat is open, go to Advanced ➔ Hotkeys ➔ (Select the hotkey) ➔ Required Game States, untick `Any`, tick `In World (Cursor Grabbed)` and untick `In World (Cursor Free)`
 
 More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG13ljK9RPs?t=738>) (timestamped)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="waywalldebug", description="Gives a guide to troubleshooting Waywall issues.")
-    async def waywalldebug(self, ctx: discord.ApplicationContext):
+    async def waywalldebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To troubleshoot issues with Waywall, please send the following information:
 - Screenshots of these Prism Launcher tabs in top toolbar ➔ Settings: `Java`, `Minecraft ➔ Tweaks`, `Minecraft ➔ Custom Commands`, `Minecraft ➔ Environment Variables`
 - Screenshots of these Prism Launcher tabs in instance settings (right-click instance ➔ Edit... ➔ Settings): `Java`, `Tweaks`, `Environment Variables`
 - All `.lua` files in the `~/.config/waywall` folder (init.lua, config.lua, etc)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
-    async def mpkdebug(self, ctx: discord.ApplicationContext):
+    async def mpkdebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To troubleshoot MiniPracticeKit not working, please verify the following:
 - A file that's at least 20 KB named **exactly** "hotbar" or "hotbar.nbt", __not__ "hotbar (1).nbt" or similar, exists in your .minecraft folder.
 - You are pressing your **Hotbar slot 1** hotkey while holding your **Load hotbar** hotkey, and both of these aren't conflicting with other hotkeys."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="performance", description="Gives a guide to debugging poor Minecraft performance/lag.")
-    async def performance(self, ctx: discord.ApplicationContext):
+    async def performance(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To troubleshoot performance issues, please provide the following:
 - A screenshot of the F3 screen in Minecraft
 - A screenshot of: Ctrl+Shift+Esc ➔ **Performance** tab
 - A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
     async def prism(
         self,
         ctx: discord.ApplicationContext,
         nightly: discord.Option(bool, choices=[True, False], required=False, default=False),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = "Prism Launcher is a more updated fork of MultiMC. "
         if not nightly:
@@ -314,13 +324,14 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 
 > :warning: Warning :warning:
 > Development builds have been less tested and are therefore more likely to have bugs! For this reason, it's recommended to use Portable builds – for Windows, that would be the second lowest option on the above page."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="setup", description="Gives a link to a tutorial to setup Minecraft Speedrunning.")
     async def setup(
         self,
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if os == "macOS": text = """To set up speedrunning on Mac, follow the macOS setup guide: https://www.youtube.com/watch?v=sRSR55A7VCE.
 
@@ -338,10 +349,10 @@ MCSR Linux Discord server: https://discord.gg/CVxuagAXMt"""
         else: text = """1.16.1 setup video tutorial, including SeedQueue and MCSR Ranked: https://youtu.be/l-q-_4R8_6M
 For other categories/versions, change the relevant options on the MCSR Mods List webpage at 1:41."""
         
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="dmvc", description="Explains why using DMs/VCs for support is bad.")
-    async def dmvc(self, ctx: discord.ApplicationContext):
+    async def dmvc(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         server_id = ctx.guild_id
         channel = "a support channel"
         for sid, cid, _ in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -355,90 +366,90 @@ For other categories/versions, change the relevant options on the MCSR Mods List
 2) The person might not know how to solve your issue.
 3) Other people can't correct them if they are wrong.
 4) They require the person's schedule and availability to line up with yours."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="linux", description="Gives a link to a Linux tutorial for MCSR.")
-    async def linux(self, ctx: discord.ApplicationContext):
-        return await self.setup(ctx, os="Linux")
+    async def linux(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        return await self.setup(ctx, os="Linux", mention=mention)
 
     @commands.slash_command(name="sodium", description="Explains that the Sodium settings GUI is no longer a thing.")
-    async def sodium(self, ctx: discord.ApplicationContext):
+    async def sodium(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """"Video settings" uses **vanilla UI** if you access it from the options menu. You can access all Sodium settings from Options > Book and Quill > Sodium. __You can't get the Sodium UI anymore. This is intended.__"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
-    async def mac(self, ctx: discord.ApplicationContext):
-        return await self.setup(ctx, os="macOS")
+    async def mac(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        return await self.setup(ctx, os="macOS", mention=mention)
 
     @commands.slash_command(name="1_16_1", description="Explains why using 1.16.1 is standard for Minecraft speedrunning.")
-    async def one_sixteen_one(self, ctx: discord.ApplicationContext):
+    async def one_sixteen_one(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "1.16.1 gives 4x more pearls and 3x more string from piglin barters on average compared to later versions. This, as well as not having piglin brutes, means that using 1.16.1 is standard and recommended for Minecraft speedrunning. You can play later versions if you wish (the category is 1.16+) but it will put you at a severe disadvantage. This only applies for RSG Any%, not SSG (which uses different versions) or other category extensions."
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mapless", description="Gives links to mapless tutorials.")
-    async def mapless(self, ctx: discord.ApplicationContext):
+    async def mapless(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """meebie's tutorial: https://youtu.be/o0LDg3fe2iI
 [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) is now recommended over Jingle for resizing.
 Older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="discords", description="Gives a link to the MCSR discords spreadsheet.")
-    async def discords(self, ctx: discord.ApplicationContext):
+    async def discords(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://docs.google.com/spreadsheets/d/1W5D6sxqBfIdyxS1pVEAi2ZaFhOhj4x-9bZwD39HbgLo"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="divine", description="Gives an infographic for nether fossil divine.")
-    async def divine(self, ctx: discord.ApplicationContext):
+    async def divine(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://cdn.discordapp.com/attachments/433058639956410383/897752137507946496/Screenshot_25.png"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="preemptivebug", description="Explains the preemptive bug.")
-    async def preemptivebug(self, ctx: discord.ApplicationContext):
+    async def preemptivebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "The pie chart may occasionally bug and give spikes significantly higher than expected. Assuming you're on Windows and your Minecraft is using an NVIDIA GPU, you can fix this by turning off \"Threaded optimization\" in the NVIDIA Control Panel, which you can access by right-clicking your Desktop[:](https://cdn.discordapp.com/attachments/433058639956410383/1166992505296920628/image.png)"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
-    async def julti(self, ctx: discord.ApplicationContext):
+    async def julti(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=l-q-_4R8_6M>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
 Julti tutorial: <https://youtu.be/_8gQkgZcTKo>
 Julti discord: <https://discord.gg/cXf86mXAWR>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="jingle", description="Gives a link to Jingle's GitHub page.")
-    async def jingle(self, ctx: discord.ApplicationContext):
+    async def jingle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Speedrunning utility application by DuncanRuns
 Download: <https://github.com/DuncanRuns/Jingle/releases>
 Support discord: <https://discord.gg/cXf86mXAWR>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="worldbopper", description="Gives links to programs for auto-deleting worlds.")
-    async def worldbopper(self, ctx: discord.ApplicationContext):
+    async def worldbopper(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To delete worlds, you can use the **Clear Worlds** button in [**Jingle**](<https://github.com/DuncanRuns/Jingle>).
 If you want worlds to be deleted automatically, you can use the [**Jingle WorldBopper plugin**](<https://github.com/marin774/Jingle-WorldBopper-Plugin>)."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
-    async def seedqueue(self, ctx: discord.ApplicationContext):
+    async def seedqueue(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
 Download: <https://github.com/contariaa/seedqueue/releases>
 Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
 Tutorial: <https://www.youtube.com/watch?v=l-q-_4R8_6M>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
 Discord server: <https://discord.gg/9P6PJkHCdU>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="cape", description="Links a guide for customising your cape.")
-    async def cape(self, ctx: discord.ApplicationContext):
+    async def cape(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/izyY35w30II"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="cobblestone", description="Explains how to prevent cobblestone in 2x1 portals.")
-    async def cobblestone(self, ctx: discord.ApplicationContext):
+    async def cobblestone(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/SSlsWfwdkb8"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="coaching", description="Provides information on coaching / learning speedrunning.")
-    async def coaching(self, ctx: discord.ApplicationContext):
+    async def coaching(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         cmd_prefix = "/"
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -456,17 +467,18 @@ If you want an idea of what coaching looks like, here are some playlists of coac
 
 Couriway - Midoffs S1 <https://www.youtube.com/watch?v=1h-Uqhc_DtQ&list=PLiNXLWzA7YLYKZ_KYdn3N52we4B3bn4vK>
 Nerdi - Speedrun Bootcamp <https://www.youtube.com/watch?v=pDLufpy11GY&list=PLiNHtofX3klVmUMUxRbi2R8jcVSW9OE9_>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
-    async def wall(self, ctx: discord.ApplicationContext):
-        return await self.seedqueue(ctx)
+    async def wall(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        return await self.seedqueue(ctx, mention=mention)
     
     @commands.slash_command(name="zgc", description="Gives an explanation of Z Garbage Collector.")
     async def zgc(
         self,
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = """Z Garbage Collector (ZGC) is a garbage collector that improves performance and reduces lag spikes, though it uses more memory. It's currently **recommended** over the default GC if you use SeedQueue.
 To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/java`), then"""
@@ -475,75 +487,76 @@ To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/j
         else:
             text += "\n- If you're on the official Minecraft launcher: Go to Installations > \"...\" for the installation you're using > Edit > More options and in the JVM arguments text field, find and replace `-XX:+UseG1GC` with `-XX:+UseZGC`."
         
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="godsens", description="Gives a godsens guide for boateye.")
-    async def godsens(self, ctx: discord.ApplicationContext):
+    async def godsens(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """* Use [this calculator](https://qmaxxen.github.io/Toolscreen-sens-calc/) to set up your godsens
 * Change your mouse sensitivity in config/mcsr/standardsettings.json to the one given by the calculator (alternatively you can change it in options.txt **IF** you are not using Standard Settings)
 * Change the Global Sensitivity in *Toolscreen ➔ Basic* to the number given by the calculator (you can press Tab after clicking on the slider to type in specific numbers)
 * Enable green boat and update the sensitivity in *Ninjabrain Bot Settings ➔ Optional features ➔ Boat measurement*
 ### Green boat explanation:
 If you ever do A/D in a boat (like when boating in the ocean) then you need to reset your angle by placing a boat and getting in and out of it at some point without doing A/D, this can be done at any point like while waiting for blazes or while boating down something. You can make a habit of entering a boat right before measuring to be sure you have no error."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
-    async def graalvm(self, ctx: discord.ApplicationContext):
+    async def graalvm(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """GraalVM is a Java compiler that performs worse than other compilers at the start of sessions, but speeds up as the session goes on.
 [Download (Windows)](https://download.oracle.com/graalvm/21/latest/graalvm-jdk-21_windows-x64_bin.zip)
 [Guide](<https://gist.github.com/maskersss/5847d594fc6ce4feb66fbd2d3fda281d#graalvm>)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="modcheck", description="Gives a link to ModCheck.")
-    async def modcheck(self, ctx: discord.ApplicationContext):
+    async def modcheck(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "Application that helps install the allowed mods: <https://github.com/tildejustin/modcheck/releases/latest>"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
-    async def one_sixteen_mods(self, ctx: discord.ApplicationContext):
+    async def one_sixteen_mods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Download the mods by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>) or from <https://mods.tildejustin.dev/>.
 All other mods are banned[.](https://i.imgur.com/8k1LyKZ.png)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
-    async def areessgee(self, ctx: discord.ApplicationContext):
+    async def areessgee(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """AreEssGee is a configurable artificial seed generator mod. <https://github.com/faluhub/AreEssGee>
 Join <https://discord.gg/s9m8gf6pju> if you have any questions about / issues with this mod. 
 You can submit to the [AreEssGee leaderboard](<https://docs.google.com/spreadsheets/d/1n5Z3qsWbQX_uImx-HvzGacRpa6FjT5USRBnDKcsQbQ0/edit#gid=0>) in that server.
 ⚠️ *AreEssGee requires Java 17+. Type `/java` if you need help with updating your Java version.*"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="peepopractice", description="Gives a link to PeepoPractice.")
-    async def peepopractice(self, ctx: discord.ApplicationContext):
+    async def peepopractice(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """PeepoPractice is a versatile Fabric 1.16.1 mod to practice splits of Minecraft speedruns. It includes mapless, bastion, fortress, postblind, stronghold, end, AA splits and more.
 Don't forget to check the FAQ in the readme! 
 <https://github.com/faluhub/peepoPractice>
 :warning: *PeepoPractice is incompatible with FastReset and requires Java 17+. Do `/java` if you need help with updating your Java version.*"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
-    async def allowedmods(self, ctx: discord.ApplicationContext):
+    async def allowedmods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If you use Optifine (allowed only before 1.15), please read section A.8 of the [detailed rules](<https://www.minecraftspeedrunning.com/public-resources/rules>).
 All allowed mods can be downloaded from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.png)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="pieray", description="Links an advanced guide for finding the fortress.")
-    async def pieray(self, ctx: discord.ApplicationContext):
+    async def pieray(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://www.youtube.com/watch?v=fw0KzXyEFtY"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="glowdar", description="Links an advanced guide for finding the fortress without breaking the spawner in treasure.")
-    async def glowdar(self, ctx: discord.ApplicationContext):
+    async def glowdar(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Tutorial: https://youtu.be/8r4icysEvsI
 Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13ljK9RPs?t=195>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="piedirectory", description="Gives the useful pie directories.")
     async def piedirectory(
         self,
         ctx: discord.ApplicationContext,
         directory: discord.Option(str, choices=["Mapless / Preemptive", "Village / Fortress", "All"], required="False", default="All"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = "Common piechart directories:"
         if directory in ["Mapless / Preemptive", "All"]:
@@ -553,23 +566,23 @@ Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13l
         
         text += "\nIf you're using the StandardSettings mod, you can paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
 
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="perch", description="Gives the command to force the dragon to perch.")
-    async def perch(self, ctx: discord.ApplicationContext):
+    async def perch(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """1.13+:```/data merge entity @e[type=ender_dragon,limit=1] {DragonPhase:2}```1.11-1.12:```/entitydata @e[type=ender_dragon] {DragonPhase:2}```1.9-1.10:```/entitydata @e[type=EnderDragon] {DragonPhase:3}```"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="standardsettings", description="Explains what StandardSettings is.")
-    async def standardsettings(self, ctx: discord.ApplicationContext):
+    async def standardsettings(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If your settings reset whenever you create a world, you are probably using StandardSettings.
 If you want to change which settings reset and what do they reset to, go to Options > Book and Quill > StandardSettings and configure them.
 If you don't want your settings to reset, set "Use StandardSettings" there to "OFF"."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     # remove the spaces          (here) when uncommenting, also for `/modpack`
     '''@commands.slash_command(name = "modpack_list", description="Gives a list of MCSR modpacks.")
-    async def modpack_list(self, ctx: discord.ApplicationContext):
+    async def modpack_list(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)
 Do `/modpack` for a tutorial on how to import them.
 If the game crashes when it starts up, do `/java`.
@@ -582,17 +595,17 @@ If you're wondering why your settings keep resetting, do `/standardsettings`.
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1.mrpack)**
 - **Full Ranked Pack (Requires __Java 17+__ (`/java`))**
   - Download: **[Windows](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Windows-1.16.1-Pro.mrpack) | [macOS](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-OSX-1.16.1-Pro.mrpack) | [Linux](https://mods.tildejustin.dev/modpacks/v4/MCSRRanked-Linux-1.16.1-Pro.mrpack)**"""
-        return await ctx.respond(text)'''
+        return await self._respond(ctx, text, mention)'''
 
     @commands.slash_command(name="modpack", description="Links a speedrunning Modrinth modpack.")
-    async def modpack(self, ctx: discord.ApplicationContext):
+    async def modpack(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Contains all mods that are verifiable on speedrun.com for modern versions of Minecraft.
 To import it into MultiMC/Prism, go to Add Instance > Modrinth, search for "SpeedrunPack", select it and press OK.
 https://modrinth.com/modpack/speedrun"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="practicemaps", description="Gives a list of practice maps.")
-    async def practicemaps(self, ctx: discord.ApplicationContext):
+    async def practicemaps(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """*Consider getting [**MapCheck**](<https://github.com/cylorun/Map-Check/releases/latest>) to download multiple maps at once.*
 *Otherwise, [**see here**](<https://gist.github.com/greenfrogee/b11b285406911fb4f2721e9e47a022c0>) for a guide to download the below practice maps.*
 [MCSR Practice Map](<https://github.com/Dibedy/The-MCSR-Practice-Map/releases/latest>)
@@ -606,18 +619,19 @@ https://modrinth.com/modpack/speedrun"""
 [Zero cycle](<https://github.com/Mescht/Zero-Practice/releases/latest>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
 [PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (‼️ needs java 17+ and is incompatible with fastreset)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mapcheck", description="Gives a link to MapCheck.")
-    async def mapcheck(self, ctx: discord.ApplicationContext):
+    async def mapcheck(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "Application that helps downloading minecraft speedrun practice maps: <https://github.com/cylorun/Map-Check/releases/latest>"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="boateye", description="Gives a link to boat measurement setup guide.")
     async def boateye(
         self,
         ctx: discord.ApplicationContext,
         os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if os == "macOS":
             guide = "https://youtu.be/RmAmL7JhGJw"
@@ -630,80 +644,81 @@ Practice mods:
             temp = " on Windows (timestamped)"
 
         text = f"Guide to set up boateye{temp}: {guide}"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="entity_culling", description="Explains how to turn off Entity Culling to fix e-1.")
-    async def entity_culling(self, ctx: discord.ApplicationContext):
+    async def entity_culling(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "If your entity counter on F3 is `-1` or there isn't a `blockEntities` slice on the piechart in `root.gameRenderer.level.entities`, turn off `Entity Culling` in `Video Settings`."
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="multidraw", description="Explains how to turn off Chunk Multidraw.")
-    async def multidraw(self, ctx: discord.ApplicationContext):
+    async def multidraw(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Options > Book and Quill > Sodium`."
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="igpu", description="Gives a guide to get Minecraft to use the high-performance GPU.")
-    async def igpu(self, ctx: discord.ApplicationContext):
+    async def igpu(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "If you are experiencing bad performance or graphics-related issues, it's possible that Minecraft is using your integrated GPU. To ensure that Minecraft uses your high-performance GPU, please follow this guide: <https://docs.google.com/document/d/1aPF1lyBAfPWyeHIH80F8JJw8rvvy6lRm0WJ2xxSrRh8/edit#heading=h.4oyoeerdwbr2>"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="desync", description="Gives a guide to ender eye desync for Minecraft speedruns.")
-    async def desync(self, ctx: discord.ApplicationContext):
+    async def desync(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://www.youtube.com/watch?v=uBqAeZMlEFQ"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyezoom", description="Gives a link to a tutorial for Eye Zoom Macro.")
-    async def eyezoom(self, ctx: discord.ApplicationContext):
+    async def eyezoom(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Download Toolscreen: <https://github.com/jojoe77777/Toolscreen/releases/latest>
 Ctrl+I and assign a hotkey for **EyeZoom** (in the Basic ⟶ General tab)
 
 **Eye Line-up:**
 The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[:](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="ram", description="Gives a guide to change the amount of allocated RAM.")
     async def ram(
         self,
         ctx: discord.ApplicationContext,
         launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if launcher == "MultiMC / Prism": text = "https://i.imgur.com/AOiPPIx.png"
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="rawaccel", description="Links the RawAccel guide.")
-    async def rawaccel(self, ctx: discord.ApplicationContext):
+    async def rawaccel(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """With [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>), you can adjust your global Minecraft sensitivity (Ctrl+I, then go to Basic ⟶ General ⟶ Sensitivity and adjust the Global slider).
 
 RawAccel should no longer be required for most players. [RawAccel Guide (Timestamped)](<https://youtu.be/l1Z2t9e6Qko&t=217>)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
-    async def rules(self, ctx: discord.ApplicationContext):
+    async def rules(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "<https://rules.minecraftspeedrunning.com/latest>"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
-    async def packs(self, ctx: discord.ApplicationContext):
+    async def packs(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "Read section A.4 for resource pack rules: <https://rules.minecraftspeedrunning.com/latest>"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="toolscreen", description="Explains what Toolscreen is.")
-    async def toolscreen(self, ctx: discord.ApplicationContext):
+    async def toolscreen(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Toolscreen is a program that uses DLL injection to add overlays and instant resizing to the game, in fullscreen or borderless. It also has other functionality such as key rebinding and a virtual camera for screensharing. Magnifiers for EyeZoom, mapless, and preemptive are already set up.
 Setup video: https://youtu.be/YqS-fxPx_jo
 Advanced configuration tutorial: <https://youtu.be/LG13ljK9RPs>
 Discord: <https://discord.com/invite/A2v6bCJg6K>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
-    async def thinmag(self, ctx: discord.ApplicationContext):
+    async def thinmag(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), mirrors for the entity counter and the pie chart in Thin and EyeZoom modes are set up by default
 Otherwise, follow this tutorial: https://www.youtube.com/watch?v=ZXPM1f00wmY"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="thinbt", description="Gives a guide to set up the ThinBT macro.")
-    async def thinbt(self, ctx: discord.ApplicationContext):
+    async def thinbt(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """### With Toolscreen (recommended)
 * Download [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (the **.jar** file).
 * Ctrl+I to open the menu, then assign a hotkey for **Thin** (in the Basic > General tab). You can change your thin resolution here as well.
@@ -713,69 +728,69 @@ Otherwise, follow this tutorial: https://www.youtube.com/watch?v=ZXPM1f00wmY"""
 * You can change your resolution in **Scripts > Resizing - Customize > Enter your thin bt size**
 
 How to use thin resolution effectively: <https://www.youtube.com/watch?v=OwKqLv2MJrg>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="fnlock", description="Explains that you need to turn off FnLock.")
-    async def fnlock(self, ctx: discord.ApplicationContext):
+    async def fnlock(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If you need to press Fn-F3 to use F3, and/or some F3 hotkeys (such as F3-B) don't work, toggle Fn-lock on your pc <https://www.thewindowsclub.com/how-to-lock-and-unlock-function-fn-key-in-windows>. If you're on a Lenovo, the setting is in Lenovo Vantage > Device > Input & Accessories > Select F1-F12 function.
 
 If you don't have an F3 key at all, which means you need to press Fn-3 to use F3, type `/rebind` for a tutorial on how to rebind a key to F3."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="bastions", description="Gives links to bastion routes.")
-    async def bastions(self, ctx: discord.ApplicationContext):
+    async def bastions(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Old general guides:
 - [k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
 - [Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
 More updated guides:
 - [Modern bridge routes](<https://docs.google.com/spreadsheets/d/1TYV8RBFb4sV2VRQRZGKPjN-hTPS6bx9UllXKChZyIa0/edit?pli=1&gid=0#gid=0>)
 - [Stables triple to gap](<https://www.youtube.com/watch?v=D4Ulw7VepJc>)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
-    async def fortress(self, ctx: discord.ApplicationContext):
+    async def fortress(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Basic fortress guide: <https://youtu.be/pmx9LyUvLTk> (find fortress with pieray, blaze bed/tnt, spawnerless and more)
 More tips: <https://youtu.be/9LpyDBPC3u4>
 More updated blaze bed setups: <https://youtu.be/n11v-59LJnA>
 Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fsg", description="Gives a link to the FSG mod and discord server.")
-    async def fsg(self, ctx: discord.ApplicationContext):
+    async def fsg(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """FSG Mod: <https://modrinth.com/mod/fsg-mod>
 This mod requires Atum, which should be obtained from <https://mods.tildejustin.dev/>.
 
 Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="centerobs", description="Gives a guide to center the Minecraft source in OBS.")
-    async def centerobs(self, ctx: discord.ApplicationContext):
+    async def centerobs(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Select your Minecraft Capture source ➔ Press Ctrl+E ➔ Set *Positional Alignment* to *Center* and *Bounding Box Type* to *No Bounds* ➔ Close the window ➔ Press Ctrl+D"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
-    async def crafting(self, ctx: discord.ApplicationContext):
+    async def crafting(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Search crafting resources: https://frontcage.com/t/search-crafting-resource-collection/32"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="endfight", description="Gives a link to the end fight tutorial.")
-    async def endfight(self, ctx: discord.ApplicationContext):
+    async def endfight(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/JrCZ6E0LKko"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyelineup", description="Gives a guide to lining up the crosshair on the ender eye for measuring.")
-    async def eyelineup(self, ctx: discord.ApplicationContext):
+    async def eyelineup(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[.](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)
 Vertical (up and down) lineup does not matter. The eye always rises to the same height."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyewiggle", description="Links a page explaining eye wiggle.")
-    async def eyewiggle(self, ctx: discord.ApplicationContext):
+    async def eyewiggle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """https://frontcage.com/t/what-to-do-about-eye-wiggle/14"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="gamma", description="Gives a guide for increasing brightness past 100%.")
-    async def gamma(self, ctx: discord.ApplicationContext):
+    async def gamma(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         cmd_prefix = "/"
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -787,35 +802,35 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
         text = f"""It is legal to set gamma to up to 5.0.
 If you're using Speedrunning Sodium or Planifolia, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen.
 Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `{cmd_prefix}setup`{in_channel} for a guide on setting up mods."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="ghostbucket", description="Gives an explanation for ghost buckets.")
-    async def ghostbucket(self, ctx: discord.ApplicationContext):
+    async def ghostbucket(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "Ghost buckets occur if your crosshair moves from one block to another as you right click with a bucket. Keep your mouse still while you right click to prevent them from occurring."
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="lazychunks", description="Gives an explanation of lazy chunks for pie-ray.")
-    async def lazychunks(self, ctx: discord.ApplicationContext):
+    async def lazychunks(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Spawners up to 3 chunks outside your render distance remain loaded and will still show up on the pie chart. This is why just dropping your render distance by 1 won't unload the spawner. You have to drop it by at least 4 to unload it.
 
 *Example: If the spawner loads in at 15 chunks, you should decrease your render distance to 11 (press Shift-F3-F four times), then increase it to 14 (press F3-F three times). Reopen the pie chart and the spawner should be gone.*"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mpk", description="Explains what MiniPracticeKit is.")
-    async def mpk(self, ctx: discord.ApplicationContext):
+    async def mpk(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """MiniPracticeKit is a customisable saved hotbar used for practicing splits.
 Tutorial: <https://youtu.be/o1AwsJ3adso>
 Editor: <https://repeater64.github.io/AdvancedMpkEditor>
 Github: <https://github.com/Knawk/mc-MiniPracticeKit>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
-    async def onecycle(self, ctx: discord.ApplicationContext):
+    async def onecycle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://youtu.be/JaVyuTyDxxs"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="overlay", description="Gives a guide to changing your eye measuring overlay.")
-    async def overlay(self, ctx: discord.ApplicationContext):
+    async def overlay(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """# Changing measuring overlay
 * Use [this website](https://qmaxxen.github.io/overlay-gen/) to generate your own overlay.
 * OBS canvas width/height are usually the same as your monitors width/height
@@ -832,41 +847,41 @@ Github: <https://github.com/Knawk/mc-MiniPracticeKit>"""
 * Open Jingle ➔ Open Jingle Folder ➔ Delete "eyesee_overlay.png"
 * Drag your new overlay into the folder and rename it to "eyesee_overlay.png"
 * Restart Jingle"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
-    async def portals(self, ctx: discord.ApplicationContext):
+    async def portals(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Common magma ravine portals:
 <https://www.youtube.com/watch?v=mLuxNQZshy0>
 
 Other portals:
 https://docs.google.com/spreadsheets/d/1VU6IZpyhr-3tMXC5GG4ryuqrbmQkvCKE_1nJm2eym4c"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="portalheight", description="Links the 2nd portal y height distribution graph.")
-    async def portalheight(self, ctx: discord.ApplicationContext):
+    async def portalheight(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://cdn.discordapp.com/attachments/727673359860760627/1110309490324164658/image.png"
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="preemptive", description="Gives links to preemptive resources.")
-    async def preemptive(self, ctx: discord.ApplicationContext):
+    async def preemptive(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Video tutorial by meebie: https://youtu.be/yF4kcBk3lKo
 Original video explanation/tutorial by addlama: <https://youtu.be/2dWq2wXy43M>
 Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv1b3VJLpiDWfNixgKW3zQowmpsYo/edit>"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="zerocycle", description="Gives links to zero cycle resources.")
-    async def zerocycle(self, ctx: discord.ApplicationContext):
+    async def zerocycle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """[Zero Cycle tutorial](https://youtu.be/CSdkCmZ69RI)
 [More setups](<https://youtu.be/2Nw7Y5QxYFg>)
 [Couriway Metafy Guide End section (requires account)](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm/chapter-6-the-end-I88hY9AXfrU>)
 [Zero practice map](<https://github.com/Mescht/Zero-Practice/releases/latest>)
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="extraoptions", description="Gives a link to Extra Options mod and an explanation of SRC rules regarding it.")
-    async def extraoptions(self, ctx: discord.ApplicationContext):
+    async def extraoptions(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """⚠️ **__Warning!__** ⚠️ 
 This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
 This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> .
@@ -874,10 +889,10 @@ Download **(read the above warning)**:
 ||<https://mods.tildejustin.dev/>||
 This mod allows you to adjust FOV and distortion effects.
 <:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="seedwave", description="Gives the current Seedwave level.")
-    async def seedwave(self, ctx: discord.ApplicationContext):
+    async def seedwave(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         url = "https://seedwave.vercel.app/api/seedwave"
         try:
             response = requests.get(url)
@@ -888,10 +903,10 @@ This mod allows you to adjust FOV and distortion effects.
         except Exception as e:
             error = "".join(traceback.format_exception(e))
             text = f"```\n{error}\n```\n<@695658634436411404> :bug:"
-        return await ctx.respond(text.strip())
+        return await self._respond(ctx, text.strip(), mention)
     
     @commands.slash_command(name="help", description="Gives a guide to using the bot.")
-    async def help(self, ctx: discord.ApplicationContext):
+    async def help(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         server_id = ctx.guild_id
         channel = "a support channel"
         for sid, cid, _ in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -905,15 +920,15 @@ If you need help, please ask in {channel}.
 
 If you have any questions/suggestions about the bot, feel free to ping or dm `maskers`.
 Source code available on [GitHub](<https://github.com/maskersss/background-pingu-v2>)."""
-        return await ctx.respond(text)
+        return await self._respond(ctx, text, mention)
 
     # @commands.slash_command(name="", description="")
-    # async def (self, ctx: discord.ApplicationContext):
+    # async def (self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
     #     text = ""
-    #     return await ctx.respond(text)
+    #     return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="tags", description="Lists all possible tags.")
-    async def tags(self, ctx: discord.ApplicationContext):
+    async def tags(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         try:
             with open("BackgroundPingu/bot/cogs/tips.py") as file:
                 text = file.read()
@@ -939,11 +954,11 @@ Source code available on [GitHub](<https://github.com/maskersss/background-pingu
                     text += f"[#] {', '.join(group)}\n"
 
             text = f"```{text}```"
-            return await ctx.respond(text)
+            return await self._respond(ctx, text, mention)
         except Exception as e:
             error = "".join(traceback.format_exception(e))
             text = f"```\n{error}\n```\n<@695658634436411404> :bug:"
-            return await ctx.respond(text)
+            return await self._respond(ctx, text, mention)
 
 def setup(bot: BackgroundPingu):
     bot.add_cog(Tips(bot))
