@@ -462,7 +462,7 @@ class Log:
     @cached_property
     def java_arguments(self) -> str | None:
         # multimc/prism logs
-        match = re.compile(r"Java Arguments:\n(.*?)\n", re.DOTALL).search(self._content)
+        match = re.compile(r"Java (?:A|a)rguments:\n(.*?)\n", re.DOTALL).search(self._content)
         if not match is None:
             return match.group(1)
         
