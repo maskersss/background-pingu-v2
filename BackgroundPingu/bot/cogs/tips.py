@@ -103,7 +103,7 @@ class Tips(Cog):
         text = """* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (recommended): Ctrl+I to open the menu, then you may set a hotkey to toggle Borderless in Basic ⟶ Other ⟶ Window Hotkeys.
 * Otherwise, if you're using [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>): click "Go Borderless".
 * Otherwise, you may download this [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases/latest>).
-ℹ️ Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings and Options ⟶ Video settings"""
+:information_source: Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings and Options ⟶ Video settings"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
@@ -522,7 +522,7 @@ All other mods are banned[.](https://i.imgur.com/8k1LyKZ.png)"""
         text = """AreEssGee is a configurable artificial seed generator mod. <https://github.com/faluhub/AreEssGee>
 Join <https://discord.gg/s9m8gf6pju> if you have any questions about / issues with this mod. 
 You can submit to the [AreEssGee leaderboard](<https://docs.google.com/spreadsheets/d/1n5Z3qsWbQX_uImx-HvzGacRpa6FjT5USRBnDKcsQbQ0/edit#gid=0>) in that server.
-⚠️ *AreEssGee requires Java 17+. Type `/java` if you need help with updating your Java version.*"""
+:warning: *AreEssGee requires Java 17+. Type `/java` if you need help with updating your Java version.*"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="peepopractice", description="Gives a link to PeepoPractice.")
@@ -618,7 +618,7 @@ https://modrinth.com/modpack/speedrun"""
 [Portals](<https://github.com/Semperzz/Portal-Practice/releases/latest>)
 [Zero cycle](<https://github.com/Mescht/Zero-Practice/releases/latest>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
-[PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (‼️ needs java 17+ and is incompatible with fastreset)"""
+[PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (:bangbang: needs java 17+ and is incompatible with fastreset)"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mapcheck", description="Gives a link to MapCheck.")
@@ -882,7 +882,7 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 
     @commands.slash_command(name="extraoptions", description="Gives a link to Extra Options mod and an explanation of SRC rules regarding it.")
     async def extraoptions(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """⚠️ **__Warning!__** ⚠️ 
+        text = """:warning: **__Warning!__** :warning:
 This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
 This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> .
 Download **(read the above warning)**: 
@@ -930,7 +930,7 @@ Source code available on [GitHub](<https://github.com/maskersss/background-pingu
     @commands.slash_command(name="tags", description="Lists all possible tags.")
     async def tags(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         try:
-            with open("BackgroundPingu/bot/cogs/tips.py") as file:
+            with open("BackgroundPingu/bot/cogs/tips.py", "r", errors="replace") as file:
                 text = file.read()
             tags = re.findall(r"name=\"([^\"]*)\"", text)
 
