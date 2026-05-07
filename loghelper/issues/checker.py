@@ -707,7 +707,10 @@ class IssueChecker:
             found_crash_cause = True
 
         if self.log.has_content("java.lang.OutOfMemoryError"):
-            builder.error("too_little_ram_crash").add(*self.log.ram_guide)
+            if self.log.is_ranked_log and self.log.lines < 1000:
+                builder.error("ranked_oom")
+            else:
+                builder.error("too_little_ram_crash").add(*self.log.ram_guide)
             found_crash_cause = True
         elif not self.log.max_allocated is None:
             if not any(temp is None for temp in self.log.recommended_min_allocated):
