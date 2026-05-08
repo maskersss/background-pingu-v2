@@ -547,7 +547,8 @@ All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.
 
     @commands.slash_command(name="glowdar", description="Links an advanced guide for finding the fortress without breaking the spawner in treasure.")
     async def glowdar(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Tutorial: https://youtu.be/8r4icysEvsI
+        text = """Chloe tutorial: https://youtu.be/8r4icysEvsI
+Priffie tutorial: <https://frontcage.com/t/glowdar-guide-tips-information-examples-etc/98>
 Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13ljK9RPs?t=195>"""
         return await self._respond(ctx, text, mention)
 
@@ -876,6 +877,7 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 [More setups](<https://youtu.be/2Nw7Y5QxYFg>)
 [Couriway Metafy Guide End section (requires account)](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm/chapter-6-the-end-I88hY9AXfrU>)
 [Zero practice map](<https://github.com/Mescht/Zero-Practice/releases/latest>)
+[Zero Cycle cheat sheet](<https://wvibzz.github.io/Zero-Cycle-Cheat-Sheet>)
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await self._respond(ctx, text, mention)
