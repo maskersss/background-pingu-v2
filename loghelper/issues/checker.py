@@ -910,7 +910,7 @@ class IssueChecker:
                 builder.error("linux_nixos_fairplay", experimental=True)
                 found_crash_cause = True
             
-            if not found_crash_cause and self.log.has_content_in_stacktrace("amdgpu: The CS has cancelled because the context is lost. This context is innocent."):
+            if not found_crash_cause and self.log.has_content("amdgpu: The CS has cancelled because the context is lost. This context is innocent."):
                 builder.error("linux_change_java", experimental=True)
                 found_crash_cause = True
             
