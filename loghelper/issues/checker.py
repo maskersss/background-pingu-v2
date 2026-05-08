@@ -707,10 +707,7 @@ class IssueChecker:
             found_crash_cause = True
 
         if self.log.has_content("java.lang.OutOfMemoryError"):
-            if self.log.is_ranked_log and self.log.lines < 1000:
-                builder.error("ranked_oom")
-            else:
-                builder.error("too_little_ram_crash").add(*self.log.ram_guide)
+            builder.error("too_little_ram_crash").add(*self.log.ram_guide)
             found_crash_cause = True
         elif not self.log.max_allocated is None:
             if not any(temp is None for temp in self.log.recommended_min_allocated):
@@ -1150,7 +1147,7 @@ class IssueChecker:
             extracted_version = match.group(1)
             try:
                 extracted_version = version.parse(extracted_version)
-                needed_version = version.parse("5.4.0")
+                needed_version = version.parse("5.7.12")
 
                 if extracted_version < needed_version:
                     builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")

@@ -156,7 +156,6 @@
     "error.pasteee_down": "`paste.ee` seems to be down. Instead, please try the following:\n1. **Copy** your log using the `Copy` button.\n2. Upload it to <https://mclo.gs/>, then provide the link.\n3. Alternatively, paste the log directly into Discord as a message, then:\n   - Right-click the message.\n   - Select `Apps`.\n   - Choose `Recommend Settings`.",
     "error.ranked_atum_crash": "If this crash was caused by going to `Book & Quill` > `Atum`, configure `Atum` by shift clicking gold boots instead.",
     "error.ranked_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Ranked**](https://discord.com/invite/nnjUSyDErj) server.",
-    "error.ranked_oom": "This seems to be a crash caused by `MCSR Ranked` using too much memory. It will be fixed in `v5.7.8+`, in the meantime delete all `matches-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.json` files from `C:\\Users\\USERS\\mcsrranked`.",
     "error.ranked_rong_files": "You're using {} to be fine, but the files don't match. Try redownloading/updating {}.",
     "error.ranked_rong_mods": "You're using {}n't whitelisted for `MCSR Ranked`. Remove {} from your `mods` folder.",
     "error.ranked_rong_versions": "You're using {} outdated and therefore not allowed for `MCSR Ranked`. You should update {}.",
