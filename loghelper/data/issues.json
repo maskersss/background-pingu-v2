@@ -104,6 +104,7 @@
     "error.legacy_crash_fix": "This seems to be a rare crash that is fixed in the `legacy-crash-fix` mod. You should install it.",
     "error.legacy_fabric_modpack": "You likely imported a `Legacy Fabric` modpack. This doesn't work, you'll need to get a `Legacy Fabric` instance from [**here**](https://github.com/Minecraft-Java-Edition-Speedrunning/legacy-fabric-instance-generator/releases) and add the mods to it.",
     "error.legacyjavafixer": "This issue is caused by using older `Forge` versions on recent `Java` versions. MinecraftForge provides a mod to fix it; download it [**here**](https://dist.creeper.host/FTB2/maven/net/minecraftforge/lex/legacyjavafixer/1.0/legacyjavafixer-1.0.jar).",
+    "error.linux_change_java": "This crash may be fixed by using a different `Java` vendor. For example, if you're not using it, try `Adoptium Java`.",
     "error.linux_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Linux**](https://discord.gg/CVxuagAXMt) server.",
     "error.linux_crash_not_mod": "`?` seems to be causing this crash. You should ask for help in the [**MCSR Linux**](https://discord.gg/CVxuagAXMt) server.",
     "error.linux_lwjgl_3_3_6": "You are using `LWJGL 3.3.6`, which often causes issues. Use `LWJGL 3.3.3` instead.",
