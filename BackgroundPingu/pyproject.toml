@@ -1,0 +1,32 @@
+[project]
+name = "discord"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+  "aiohttp==3.7.4.post0",
+  "loghelper",
+  "py-cord==2.4.1",
+  "python-dotenv>=0.21.1",
+  "requests==2.30.0",
+]
+
+[tool.uv.sources]
+loghelper = { workspace = true }
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = [
+  "BackgroundPingu",
+  "BackgroundPingu.bot",
+  "BackgroundPingu.bot.cogs",
+  "BackgroundPingu.bot.ui",
+]
+
+[tool.setuptools.package-dir]
+BackgroundPingu = "."
+"BackgroundPingu.bot" = "bot"
+"BackgroundPingu.bot.cogs" = "bot/cogs"
+"BackgroundPingu.bot.ui" = "bot/ui"

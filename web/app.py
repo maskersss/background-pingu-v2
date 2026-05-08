@@ -52,7 +52,7 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 @app.post("/analyse", response_class=HTMLResponse)
 async def analyse(request: Request, loglink: str = Form(...)):
@@ -65,7 +65,4 @@ async def analyse(request: Request, loglink: str = Form(...)):
     
     html_result = "\n".join(parts)
     html_result = markdown(html_result, extensions=['nl2br', 'fenced_code'])
-    return templates.TemplateResponse("_result.html", {
-        "request": request,
-        "result": html_result
-    })
+    return templates.TemplateResponse(request, "_result.html", {"result": html_result})

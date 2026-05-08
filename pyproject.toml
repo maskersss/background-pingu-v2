@@ -1,0 +1,18 @@
+[project]
+name = "background-pingu-v2"
+version = "0.1.0"
+description = "A monorepo for a discord bot and a website for log parsing & tech support"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = [
+  "loghelper",
+  "BackgroundPingu",
+  "web",
+  "web-sq",
+]

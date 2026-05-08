@@ -41,14 +41,11 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 @app.post("/analyse", response_class=HTMLResponse)
 async def analyse(request: Request, loglink: str = Form(...)):
     raw_result = get_settings(loglink, include_content=True) or "Couldn't get settings."
     html_result = markdown(raw_result, extensions=['nl2br', 'fenced_code'])\
         .replace("<pre><code>", '<pre class="language-none" data-prismjs-copy="Copy the Java arguments!"><code>')
-    return templates.TemplateResponse("_result.html", {
-        "request": request,
-        "result": html_result
-    })
+    return templates.TemplateResponse(request, "_result.html", {"result": html_result})

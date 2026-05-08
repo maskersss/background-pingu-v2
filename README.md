@@ -12,7 +12,27 @@ Issue detection was mostly made with MultiMC / Prism Launcher `Minecraft log`'s 
 
 A lot of common Minecraft issues should be detected, including mod crashes, as well as some MultiMC/Prism issues.
 
-## Contributing
+## Development
+
+### Running the project
+
+All commands are supposed to be ran from the repository root.
+
+If you don't have it installed, install `uv`: https://docs.astral.sh/uv/getting-started/installation/
+
+Before launching:
+`uv sync --all-packages`
+
+Running the Discord bot:
+`uv run --package BackgroundPingu python -m BackgroundPingu.run`
+
+Running the log checker website:
+`uv run --directory web uvicorn app:app --host 0.0.0.0 --port 8001`
+
+Running the SeedQueue settings website:
+`uv run --directory web-sq uvicorn app:app --host 0.0.0.0 --port 8000`
+
+### Contributing
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, feel free to reach out to `maskers` on Discord.
 
