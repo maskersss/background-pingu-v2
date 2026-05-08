@@ -730,7 +730,10 @@ class IssueChecker:
                     builder.note("too_much_ram").add(*self.log.ram_guide)
 
         if self.log.has_content("There is not enough space on the disk"):
-            builder.error("out_of_disk_space")
+            if self.log.operating_system in [OperatingSystem.WINDOWS, None]:
+                builder.error("out_of_disk_space_windows")
+            else:
+                builder.error("out_of_disk_space")
             found_crash_cause = True
         
         if not found_crash_cause and any(self.log.has_pattern(oom_on_pc) for oom_on_pc in [
@@ -978,7 +981,10 @@ class IssueChecker:
             else:
                 builder.error("update_mmc", experimental=True)
         
-        if not found_crash_cause and self.log.has_content("[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl"):
+        if not found_crash_cause and any(self.log.has_content(lwjgl_crash) for lwjgl_crash in [
+            "[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl",
+            "Failed to locate library: lwjgl.dll",
+        ]):
             builder.error("try_changing_lwjgl_version", self.log.edit_instance, experimental=True)
         
         if not found_crash_cause and not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
