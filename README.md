@@ -20,11 +20,11 @@ All commands are supposed to be ran from the repository root.
 
 If you don't have it installed, install `uv`: https://docs.astral.sh/uv/getting-started/installation/
 
-Before launching:
+Before launching, optional:
 `uv sync --all-packages`
 
 Running the Discord bot:
-`uv run --package BackgroundPingu python -m BackgroundPingu.run`
+`uv run --package discord python -m BackgroundPingu.run`
 
 Running the log checker website:
 `uv run --directory web uvicorn app:app --host 0.0.0.0 --port 8001`
