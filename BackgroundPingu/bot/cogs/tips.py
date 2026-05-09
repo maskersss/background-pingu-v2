@@ -877,7 +877,6 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 [More setups](<https://youtu.be/2Nw7Y5QxYFg>)
 [Couriway Metafy Guide End section (requires account)](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm/chapter-6-the-end-I88hY9AXfrU>)
 [Zero practice map](<https://github.com/Mescht/Zero-Practice/releases/latest>)
-[Zero Cycle cheat sheet](<https://wvibzz.github.io/Zero-Cycle-Cheat-Sheet>)
 
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await self._respond(ctx, text, mention)
