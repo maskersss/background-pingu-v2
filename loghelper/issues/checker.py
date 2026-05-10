@@ -2007,6 +2007,8 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                         output = "Your game crashed. This website is for recommending settings and requires a log where the game launched, paste the log to https://maskers.xyz/log-analysis/ for potential solutions to the crash."
                     else:
                         output = "Your game crashed. This command is for recommending settings and requires a log where the game launched, send the log as a regular message for potential solutions to the crash."
+                elif self.log.has_content("SeedQueue failed to log System Information"):
+                    output = "SeedQueue failed to log your system information. Check the log for more info."
                 else:
                     output = "The log you sent doesn't seem to have the SeedQueue logging information. Make sure to wait until the game opens before uploading the log."
             elif not self.log.type is None:
