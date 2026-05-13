@@ -273,7 +273,7 @@ class IssueChecker:
                             outdated_mods[mod_name] = latest_version["page"]
                             checked_mods[mod_name.lower()] = True
                     else: checked_mods[mod_name.lower()] = False
-                elif all(not weird_mod in mod.lower() for weird_mod in self.assume_as_legal): illegal_mods.append(mod)
+                elif all(not weird_mod.lower() in mod.lower() for weird_mod in self.assume_as_legal): illegal_mods.append(mod)
         
         if is_mcsr_log and len(self.log.whatever_mods) > 0:
             for recommended_mod in self.log.recommended_mods:
