@@ -1291,7 +1291,7 @@ class IssueChecker:
                     match = re.search(r"\[(.*?)\]", mod)
                     if match:
                         match = match.group(1)
-                        if "extra-options" in match: continue
+                        if "easyinjectbundled" in match: match = "toolscreen"
                         ranked_rong_mods.append("Fabric API" if match == "fabric" else match)
                         found_crash_cause = True
 
