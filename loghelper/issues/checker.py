@@ -604,7 +604,7 @@ class IssueChecker:
                     builder.add("read_pls")
                 if not self.log.stacktrace and not self.log.exitcode:
                     found_crash_cause = True
-            elif self.log.has_content("no awt in java.library.path"):
+            elif self.log.has_pattern(r"no (?:awt|freetype) in java\.library\.path"):
                 builder.error(
                     "need_new_java",
                     17,
