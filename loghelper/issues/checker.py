@@ -901,8 +901,13 @@ class IssueChecker:
             if (self.log.is_waywall_log
                 and self.log.java_arguments
                 and not self.log.has_java_argument("-Dorg.lwjgl.glfw.libname=")
+                and not self.log.has_java_argument("-DMC_DEBUG_PREFER_WAYLAND")
+                and not self.log.has_pattern(r"waywall.*--allow-mc-x11")
             ):
-                builder.error("waywall_missing_glfw")
+                if self.log.is_newer_than("26.1"):
+                    builder.error("waywall_missing_glfw_latest")
+                else:
+                    builder.error("waywall_missing_glfw")
                 found_crash_cause = True
                 
             pattern = r"\[ERR\] \[(waywall/config/.*?\.c):(\d+)\] ?(?:failed to start action:|failed to load config:)?\s?(?P<error>[\s\S]*?)(?:\n\[|$)"
