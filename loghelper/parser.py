@@ -426,7 +426,7 @@ class Log:
     def mod_loader(self) -> ModLoader | None:
         if self.type == LogType.LAUNCHER_LOG: return None
         
-        match = re.compile(r"Main Class:\n(.*)\n").search(self._content)
+        match = re.compile(r"Main (?:C|c)lass:\s*(.*)\n").search(self._content)
         if not match is None:
             line = match.group(1)
             for loader in ModLoader:
