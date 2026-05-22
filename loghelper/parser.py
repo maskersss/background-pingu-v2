@@ -688,13 +688,18 @@ class Log:
         if self.launcher == Launcher.OFFICIAL_LAUNCHER:
             return self.setup_guide
         
+        use_java_25 = self.is_newer_than("1.20.5")
         if self.is_prism:
+            if use_java_25: return "java_update_guide_prism_25"
             return "java_update_guide_prism"
         if self.is_multimc_or_fork:
+            if use_java_25: return "java_update_guide_mmc_25"
             return "java_update_guide_mmc"
         if self.is_mcsrlauncher:
+            if use_java_25: return "java_update_guide_mcsrlauncher_25"
             return "java_update_guide_mcsrlauncher"
         if self.launcher == Launcher.MODRINTH:
+            if use_java_25: return "java_update_guide_modrinth_25"
             return "java_update_guide_modrinth"
 
         if self.operating_system == OperatingSystem.LINUX:
@@ -703,6 +708,7 @@ class Log:
         if self.launcher in [Launcher.ATLAUNCHER, Launcher.JINGLE]:
             return None
 
+        if use_java_25: return "java_update_guide_25"
         return "java_update_guide"
     
     @cached_property
