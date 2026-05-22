@@ -1266,6 +1266,10 @@ class IssueChecker:
             builder.error("old_mod_crash", "SpeedrunAPI", "https://mods.tildejustin.dev/")
             found_crash_cause = True
 
+        if self.log.has_content("Remove the disallowed mods and restart Minecraft."):
+            builder.error("read")
+            found_crash_cause = True
+        
         match = re.search(r"Incompatible mod set found! READ THE BELOW LINES!(.*?$)", self.log._content, re.DOTALL)
         if not match is None:
             found_crash_cause = True
