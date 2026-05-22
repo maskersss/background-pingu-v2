@@ -818,7 +818,7 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
         if draftout:
             text = f"""It is legal to set gamma to up to 5.0.
 On latest Minecraft versions, you have to use the Planifolia mod. With it you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen, **not** in the world.
-You can download Planifolia, as well as all other legal mods, from <https://mods.tildejustin.dev/>."""
+You can download Planifolia, as well as all other legal mods, from <https://mods.tildejustin.dev/?version=26.1.1>."""
             return await self._respond(ctx, text, mention)
         
         cmd_prefix = "/"
