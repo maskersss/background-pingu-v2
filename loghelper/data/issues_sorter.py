@@ -8,7 +8,7 @@ def sort():
     with open(path, "r") as f:
         strings = json.load(f)
         for key, string in strings.items():
-            if not string[len(string) - 1] in [".", "!", "?", "*", ":", ")", "}"]:
+            if not string[len(string) - 1] in [".", "!", "?", "*", ":", ")", "}", "`"]:
                 strings[key] = string + "."
                 added_periods += 1
         with open(path, "w") as w:

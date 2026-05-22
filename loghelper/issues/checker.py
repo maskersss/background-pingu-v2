@@ -1612,6 +1612,15 @@ class IssueChecker:
         ):
             builder.error("unsupported_intel_gpu", experimental=True)
         
+        elif (not self.log.major_java_version is None
+            and self.log.major_java_version >= 25
+            and self.log.has_content("  [jvm.dll 0x2cd888]")
+        ):
+            builder.error("eav_crash", experimental=True)
+            if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
+            else: builder.add("eav_crash_java_25_2")
+            found_crash_cause = True
+        
         elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
             wrong_mods = [mod for mod in self.log.whatever_mods if "xaero" in mod.lower()]
             if len(wrong_mods) == 1: wrong_mods == ["xaero"]
@@ -1622,7 +1631,10 @@ class IssueChecker:
             or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
         ):
             builder.error("eav_crash", experimental=True)
-            if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
+            
+            if self.log.has_content("  [jvm.dll 0x2cd888]"):
+                builder.add("eav_crash_java_25", bold=True)
+            elif self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
                 builder.add("eav_crash_obs", bold=True)
                 builder.add("eav_crash_obs_1", bold=True)
                 builder.add("eav_crash_obs_2", bold=True)
@@ -1650,6 +1662,12 @@ class IssueChecker:
                 ): builder.add(f"eav_crash_sodium")
                 if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
             builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
+            if (not self.log.major_java_version is None
+                and self.log.major_java_version >= 25
+                and self.log.has_content("  [jvm.dll")
+            ):
+                if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
+                else: builder.add("eav_crash_java_25_2")
             builder.add("eav_crash_hardware").add("eav_crash_disclaimer")
             found_crash_cause = True
 

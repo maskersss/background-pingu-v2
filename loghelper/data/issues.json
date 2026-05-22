@@ -8,6 +8,8 @@
     "add.eav_crash_fullscreen": "- Try if the crash happens in each of: `Windowed`, `Borderless`, `Fullscreen`.",
     "add.eav_crash_hardware": "- Hardware issues: don't overclock and run a stress test.",
     "add.eav_crash_java17": "- Using an old `Java` version - use `Java 17-22` instead.",
+    "add.eav_crash_java_25": "- Using some `Java 25+` distributions. To fix it, add the following to Java arguments: ```-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0```",
+    "add.eav_crash_java_25_2": "- Using some `Java 25+` distributions. To fix it, you should use an older `Java` version, for example `Java 21`.",
     "add.eav_crash_jingle_java8": "- If this crash happened when resizing, make sure `Jingle` is being ran with `Java 17+` (send `Jingle` > `Log` > `Upload Log`).",
     "add.eav_crash_kill": "Killing Minecraft when it's frozen.",
     "add.eav_crash_mods": "- Disable all mods to see if one of them is causing the crash.",
