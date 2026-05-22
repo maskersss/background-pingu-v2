@@ -238,7 +238,7 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
             if java_25: text += "You should install and select **Java 25** instead of Java 21.\n"
         elif launcher == "All":
             if java_25:
-                text += "Use [**this guide**](<https://gist.github.com/maskersss/574d81800bfd1051c4f3315ccc825c64>) to update your Java version.\n"
+                text += "Use [**this guide**](<https://gist.github.com/maskersss/574d81800bfd1051c4f3315ccc825c64>) to update your Java version to version 25.\n"
             else:
                 text += "* If you're using Prism: use [**this video guide (timestamped)**](<https://youtu.be/aaxASwZUPkQ?t=29>) to update your Java version.\n"
                 text += "* If you're using Modrinth App: use [**this video guide**](<https://youtu.be/XeVKnvYEVSg>) to update your Java version.\n"

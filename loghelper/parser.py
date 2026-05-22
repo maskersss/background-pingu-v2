@@ -798,10 +798,10 @@ class Log:
 
     @cached_property
     def is_draftout_log(self) -> bool:
-        for ranked_mod in [
+        for mod in [
             "draftout",
         ]:
-            if self.has_mod(ranked_mod): return True
+            if self.has_mod(mod): return True
         
         if self.has_content("com.draftoutmc"): return True
         
