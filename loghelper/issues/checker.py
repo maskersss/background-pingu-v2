@@ -56,12 +56,14 @@ class IssueChecker:
             "forceport",
         ]
         self.assume_as_legal = [
+            "draftout",
             "mcsrranked",
             "mangodfps",
             "statsperreset",
             "ninjabrain-bot",
         ] + self.not_mods
         self.mcsr_mods = [
+            "draftout",
             "worldpreview",
             "anchiale",
             "sleepbackground",
