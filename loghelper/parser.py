@@ -797,6 +797,17 @@ class Log:
         return False
 
     @cached_property
+    def is_draftout_log(self) -> bool:
+        for ranked_mod in [
+            "draftout",
+        ]:
+            if self.has_mod(ranked_mod): return True
+        
+        if self.has_content("com.draftoutmc"): return True
+        
+        return False
+
+    @cached_property
     def is_seedqueue_log(self) -> bool:
         if self.is_ranked_log: return False
         if self.has_mod("seedqueue"): return True
@@ -852,7 +863,7 @@ class Log:
                 "chunkcacher",
                 "speedrunigt",
             ]
-        elif not self.has_mod("mcsrranked") and not self.has_mod("peepopractice"):
+        elif not self.has_mod("mcsrranked") and not self.has_mod("peepopractice") and not self.is_draftout_log:
             mods += [
                 "antigone",
                 "speedrunigt",
@@ -965,6 +976,7 @@ stacktrace={self.stacktrace}
 exitcode={self.exitcode}
 is_ssg_log={self.is_ssg_log}
 is_ranked_log={self.is_ranked_log}
+is_draftout_log={self.is_draftout_log}
 is_seedqueue_log={self.is_seedqueue_log}
 is_log={self.is_log}
 recommended_mods={self.recommended_mods}

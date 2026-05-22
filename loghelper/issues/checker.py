@@ -195,6 +195,7 @@ class IssueChecker:
         if not self.log.minecraft_version is None: footer += f" {self.log.minecraft_version}"
 
         if self.log.is_ranked_log: footer += " Ranked"
+        elif self.log.is_draftout_log: footer += " Draftout"
         elif self.log.is_ssg_log: footer += " SSG"
         elif is_mcsr_log: footer += " RSG"
         elif not self.log.mod_loader is None: footer += f" {self.log.mod_loader.value}"
