@@ -408,6 +408,14 @@ Older tutorials: https://discord.com/channels/83066801105145856/4330586399564103
         text = "https://docs.google.com/spreadsheets/d/1W5D6sxqBfIdyxS1pVEAi2ZaFhOhj4x-9bZwD39HbgLo"
         return await self._respond(ctx, text, mention)
 
+    @commands.slash_command(name="draftout", description="Explains what Draftout is.")
+    async def draftout(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        text = """## Draftout
+Share a 5x5 board of goals with your opponent. - First to 13 goals wins.
+<https://draftoutmc.com/> (Works on recent version, not 1.16.1)
+Discord: <https://discord.gg/NSpJHVRgAR>"""
+        return await self._respond(ctx, text, mention)
+
     @commands.slash_command(name="divine", description="Gives an infographic for nether fossil divine.")
     async def divine(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://cdn.discordapp.com/attachments/433058639956410383/897752137507946496/Screenshot_25.png"
