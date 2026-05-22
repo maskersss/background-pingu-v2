@@ -809,7 +809,18 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="gamma", description="Gives a guide for increasing brightness past 100%.")
-    async def gamma(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+    async def gamma(
+        self,
+        ctx: discord.ApplicationContext,
+        draftout: discord.Option(bool, "Whether to give a response for Draftout", choices=[True, False], required=False, default=False),
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
+    ):
+        if draftout:
+            text = f"""It is legal to set gamma to up to 5.0.
+On latest Minecraft versions, you have to use the Planifolia mod. With it you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen, **not** in the world.
+You can download Planifolia, as well as all other legal mods, from <https://mods.tildejustin.dev/>."""
+            return await self._respond(ctx, text, mention)
+        
         cmd_prefix = "/"
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -819,7 +830,7 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
                 break
         
         text = f"""It is legal to set gamma to up to 5.0.
-If you're using Speedrunning Sodium or Planifolia, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen.
+If you're using Speedrunning Sodium or Planifolia, you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen, **not** in the world.
 Otherwise, open your `options.txt` file in your Minecraft directory and change the value next to `gamma` to `5.0`, or do `{cmd_prefix}setup`{in_channel} for a guide on setting up mods."""
         return await self._respond(ctx, text, mention)
 
