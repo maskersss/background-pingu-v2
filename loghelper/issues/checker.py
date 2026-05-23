@@ -1463,7 +1463,11 @@ class IssueChecker:
                     found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
                 if self.log.is_waywall_log:
-                    builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                    if self.log.is_newer_than("1.21.9"):
+                        builder.error("waywall_dont_use_glfw_latest")
+                        found_crash_cause = True
+                    else:
+                        builder.error("builtin_lib_crash_waywall", temp, experimental=True)
                 else:
                     builder.error(
                         "builtin_lib_prob_crash",
