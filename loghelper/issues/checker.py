@@ -1621,9 +1621,11 @@ class IssueChecker:
         ):
             builder.error("unsupported_intel_gpu", experimental=True)
         
-        elif (not self.log.major_java_version is None
-            and self.log.major_java_version >= 25
-            and self.log.has_content("  [jvm.dll 0x2cd888]")
+        elif ((self.log.major_java_version is None
+               or self.log.major_java_version >= 25)
+            and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
+            and self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
+            # also 0x2c6a18 ?
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
@@ -1641,9 +1643,14 @@ class IssueChecker:
         ):
             builder.error("eav_crash", experimental=True)
             
-            if self.log.has_content("  [jvm.dll 0x2cd888]"):
-                builder.add("eav_crash_java_25", bold=True)
-            elif self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
+            if ((self.log.major_java_version is None
+                 or self.log.major_java_version >= 25)
+                and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
+                and self.log.has_content("  [jvm.dll")
+            ):
+                if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25", bold=True)
+                else: builder.add("eav_crash_java_25_2", bold=True)
+            if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
                 builder.add("eav_crash_obs", bold=True)
                 builder.add("eav_crash_obs_1", bold=True)
                 builder.add("eav_crash_obs_2", bold=True)
@@ -1671,12 +1678,6 @@ class IssueChecker:
                 ): builder.add(f"eav_crash_sodium")
                 if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
             builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
-            if (not self.log.major_java_version is None
-                and self.log.major_java_version >= 25
-                and self.log.has_content("  [jvm.dll")
-            ):
-                if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
-                else: builder.add("eav_crash_java_25_2")
             builder.add("eav_crash_hardware").add("eav_crash_disclaimer")
             found_crash_cause = True
 
