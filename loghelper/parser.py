@@ -888,6 +888,26 @@ class Log:
             if arg.lower() in java_arg.lower(): return java_arg.strip().strip('[],')
         return arg
     
+    def get_mod_version(self, mod_name: str) -> version.Version | None:
+        target_mod = None
+        for mod in self.whatever_mods[::-1]:
+            if mod_name.lower() in mod.lower():
+                target_mod = mod
+                break
+
+        if target_mod is None:
+            return None
+
+        match = re.search(r"(\d+\.\d+(?:\.\d+)?)", target_mod)
+        if match is None:
+            return None
+
+        extracted_version = match.group(1)
+        try:
+            return version.parse(extracted_version)
+        except version.InvalidVersion:
+            return None
+    
     def is_newer_than(self, compared_version: str) -> bool:
         if self.parsed_mc_version is None: return False
         return self.parsed_mc_version >= version.parse(compared_version)

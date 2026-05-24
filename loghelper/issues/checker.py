@@ -1164,29 +1164,23 @@ class IssueChecker:
                     pass
         # toolscreen end
 
-        ranked_mod = None
-        for mod in self.log.whatever_mods[::-1]:
-            if "mcsrranked" in mod.lower():
-                ranked_mod = mod
-                break
-        if not ranked_mod is None:
-            match = re.search(r"(\d+\.\d+(\.\d+)?)", ranked_mod)
-        else: match = None
-        
-        if not match is None:
-            extracted_version = match.group(1)
-            try:
-                extracted_version = version.parse(extracted_version)
-                needed_version = version.parse("5.7.12")
+        ranked_ver = self.log.get_mod_version("mcsrranked")
+        needed_ver = version.parse("5.7.12")
+        if not ranked_ver is None and ranked_ver < needed_ver:
+            builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
+            if self.log.is_prism: builder.add("update_mods_prism")
+            if (self.log.type == LogType.FULL_LOG
+                or not self.log.is_multimc_or_fork
+            ): found_crash_cause = True
 
-                if extracted_version < needed_version:
-                    builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
-                    if self.log.is_prism: builder.add("update_mods_prism")
-                    if (self.log.type == LogType.FULL_LOG
-                        or not self.log.is_multimc_or_fork
-                    ): found_crash_cause = True
-            except version.InvalidVersion:
-                pass
+        draftout_ver = self.log.get_mod_version("draftout")
+        needed_ver = version.parse("1.9.0")
+        if not draftout_ver is None and draftout_ver < needed_ver:
+            builder.error("old_mod_version", "Draftout", "https://modrinth.com/mod/draftout/versions/")
+            if self.log.is_prism: builder.add("update_mods_prism")
+            if (self.log.type == LogType.FULL_LOG
+                or not self.log.is_multimc_or_fork
+            ): found_crash_cause = True
         
         fsg_mod = None
         for mod in self.log.whatever_mods:
