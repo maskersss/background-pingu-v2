@@ -1581,8 +1581,9 @@ class IssueChecker:
                 found_crash_cause = True
 
         if not self.log.minecraft_folder is None:
-            if "!" in self.log.minecraft_folder:
+            if "!\\" in self.log.minecraft_folder or "!/" in self.log.minecraft_folder:
                 builder.error("exclamation_mark_in_path")
+                found_crash_cause = True
             if not found_crash_cause and "OneDrive" in self.log.minecraft_folder:
                 builder.note("onedrive")
             if "C:/Program Files" in self.log.minecraft_folder:
