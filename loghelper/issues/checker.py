@@ -1164,50 +1164,18 @@ class IssueChecker:
                     pass
         # toolscreen end
 
-        ranked_ver = self.log.get_mod_version("mcsrranked")
-        needed_ver = version.parse("5.7.12")
-        if not ranked_ver is None and ranked_ver < needed_ver:
-            builder.error("old_mod_version", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/")
-            if self.log.is_prism: builder.add("update_mods_prism")
-            if (self.log.type == LogType.FULL_LOG
-                or not self.log.is_multimc_or_fork
-            ): found_crash_cause = True
-
-        draftout_ver = self.log.get_mod_version("draftout")
-        needed_ver = version.parse("1.9.0")
-        if not draftout_ver is None and draftout_ver < needed_ver:
-            builder.error("old_mod_version", "Draftout", "https://modrinth.com/mod/draftout/versions/")
-            if self.log.is_prism: builder.add("update_mods_prism")
-            if (self.log.type == LogType.FULL_LOG
-                or not self.log.is_multimc_or_fork
-            ): found_crash_cause = True
+        for (filename, needed_ver, mod_name, update_link) in MINIMUM_MOD_VERSIONS:
+            mod_ver = self.log.get_mod_version(filename)
+            needed_ver = version.parse(needed_ver)
+            if not mod_ver is None and mod_ver < needed_ver:
+                builder.error("old_mod_version", mod_name, update_link)
+                if self.log.is_prism: builder.add("update_mods_prism")
+                if (self.log.type == LogType.FULL_LOG
+                    or not self.log.is_multimc_or_fork
+                ): found_crash_cause = True
         
-        fsg_mod = None
-        for mod in self.log.whatever_mods:
-            if "fsg-mod" in mod.lower():
-                fsg_mod = mod
-                break
-        if not fsg_mod is None:
-            match = re.search(r"(\d+\.\d+(\.\d+)?)", fsg_mod)
-        else: match = None
-        
-        if not match is None:
-            extracted_version = match.group(1)
-            try:
-                extracted_version = version.parse(extracted_version)
-                needed_version = version.parse("2.4.1")
-
-                if extracted_version < needed_version:
-                    builder.error("old_mod_version", "fsg-mod", "https://modrinth.com/mod/fsg-mod/versions/")
-                    if (self.log.is_prism
-                        and not extracted_version == version.parse("2.4.0") # duncan deleted 2.4.0 lol
-                    ): builder.add("update_mods_prism")
-                    found_crash_cause = True
-            except version.InvalidVersion:
-                pass
-
-            if self.log.has_mod("beachfilter"):
-                builder.error("incompatible_mod", "beachfilter", "fsg-mod")
+        if self.log.has_mod("fsg-mod") and self.log.has_mod("beachfilter"):
+            builder.error("incompatible_mod", "beachfilter", "fsg-mod")
 
         if (self.log.has_mod("peepopractice")
             and (self.log.has_mod("peepopractice-1")
