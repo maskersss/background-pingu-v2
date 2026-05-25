@@ -574,16 +574,26 @@ Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13l
     async def piedirectory(
         self,
         ctx: discord.ApplicationContext,
+        draftout: discord.Option(bool, "Whether to give a response for Draftout", choices=[True, False], required=False, default=False),
         directory: discord.Option(str, choices=["Mapless / Preemptive", "Village / Fortress", "All"], required="False", default="All"),
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = "Common piechart directories:"
+        if draftout: text = "Common piechart directories on 26.1.1:"
+        else: text = "Common piechart directories on 1.16.1:"
+
         if directory in ["Mapless / Preemptive", "All"]:
-            text += "\n- Mapless / Preemptive: ```root.gameRenderer.level.entities```"
+            if draftout:
+                text += "\n- Mapless / Preemptive: ```root.frame.extract.level```\n-# look at the # of blockEntities, or you can press into blockEntities and look at the number top right"
+            else:
+                text += "\n- Mapless / Preemptive: ```root.gameRenderer.level.entities```"
         if directory in ["Village / Fortress", "All"]:
-            text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
+            if draftout:
+                text += "\n- Village / Fortress: ```root.tick.blockEntities```"""
+            else:
+                text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
         
-        text += "\nIf you're using the StandardSettings mod, you can paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
+        if not draftout:
+            text += "\nIf you're using the StandardSettings mod, you can paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
 
         return await self._respond(ctx, text, mention)
 
