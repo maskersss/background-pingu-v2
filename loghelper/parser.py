@@ -330,6 +330,7 @@ class Log:
             "com.redlimerl.mcsrlauncher",
             "/MCSRLauncher",
             "\\MCSRLauncher",
+            "MCSR Launcher version: ",
         ]):
             return Launcher.MCSRLAUNCHER
         

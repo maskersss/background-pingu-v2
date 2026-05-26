@@ -995,6 +995,14 @@ class IssueChecker:
             found_crash_cause = True
 
         if (not found_crash_cause
+            and self.log.launcher == Launcher.MCSRLAUNCHER
+            and self.log.is_newer_than("1.21")
+            and self.log.has_content("java.lang.ClassNotFoundException: org.lwjgl.Version")
+        ):
+            builder.error("mcsrlauncher_lwjgl")
+            found_crash_cause = True
+        
+        if (not found_crash_cause
             and self.log.launcher in [None, Launcher.MULTIMC]
             and (self.log.is_newer_than("1.20") or not self.log.is_newer_than("1.1")) # so it works on snapshots too
             and self.log.has_content("[LWJGL] Failed to load a library. Possible solutions:")

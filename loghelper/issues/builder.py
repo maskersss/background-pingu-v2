@@ -136,7 +136,6 @@ class IssueBuilder:
     def add(self, key: Optional[str], *args, experimental: bool = False, bold: bool = False):
         """
         Appends a continuation line under the last added type.
-        Mirrors your old behaviour. If no previous type, it does nothing.
         """
         if key is None or self._last_added is None:
             return
