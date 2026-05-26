@@ -995,11 +995,11 @@ class IssueChecker:
             found_crash_cause = True
 
         if (not found_crash_cause
-            and self.log.launcher == Launcher.MCSRLAUNCHER
-            and self.log.is_newer_than("1.21")
+            and self.log.launcher in [Launcher.MCSRLAUNCHER, None]
+            and self.log.is_newer_than("1.21.5")
             and self.log.has_content("java.lang.ClassNotFoundException: org.lwjgl.Version")
         ):
-            builder.error("mcsrlauncher_lwjgl")
+            builder.error("mcsrlauncher_lwjgl", experimental=not bool(self.log.launcher))
             found_crash_cause = True
         
         if (not found_crash_cause
