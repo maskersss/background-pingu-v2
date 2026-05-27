@@ -805,6 +805,7 @@ class IssueChecker:
         if (is_mcsr_log
             and not self.log.java_arguments is None
             and (self.log.pc_ram is None or self.log.pc_ram > 5000)
+            and not self.log.is_newer_than("1.20.5")
         ):
             temp = False
             if not self.log.has_java_argument("UseZGC"):
