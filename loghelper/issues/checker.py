@@ -1953,6 +1953,26 @@ class IssueChecker:
                     
                     if asking_for_help_total >= 2 and leave_total >= 10 and wall_total >= 10:
                         builder.error("exit_wall")
+                    
+                    gamma_indicators = {
+                        r"full ?bright": 50,
+                        r"gamma ?5": 50,
+                        "gamma": 5,
+                        "500": 4,
+                        "cave": 3,
+                        "ocean": 3,
+                        "see": 5,
+                    }
+                    gamma_total = 0
+                    for pattern, value in gamma_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            gamma_total += value
+                    
+                    if asking_for_help_total >= 2 and gamma_total >= 10:
+                        if self.channel_id == 1495250366873206965: # draftoutcord
+                            builder.error("gamma_draftout")
+                        else:
+                            builder.error("gamma")
                 
                 if (not found_crash_cause
                     and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
