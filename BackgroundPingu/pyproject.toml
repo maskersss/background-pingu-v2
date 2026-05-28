@@ -8,6 +8,8 @@ dependencies = [
   "py-cord==2.4.1",
   "python-dotenv>=0.21.1",
   "requests==2.30.0",
+  "Pillow>=10.0.0",
+  "pytesseract>=0.3.10",
 ]
 
 [tool.uv.sources]
