@@ -28,9 +28,15 @@ class Core(Cog):
         logs = sorted(logs, key=lambda x: len(x[1]._content), reverse=True) # check the longest logs first
         if include_content:
             content = msg.content
-            ocr_text = await ocr.extract_text(msg)
-            if ocr_text:
-                content = f"{content} {ocr_text}" if content else ocr_text
+            # import time
+            # start = time.time()
+            # ocr_text = await ocr.extract_text(msg)
+            # end = time.time()
+            # print("\n\n")
+            # print(f"OCR: '{ocr_text}'")
+            # print(f"OCR time: {end - start}s")
+            # if ocr_text:
+            #     content = f"{content} {ocr_text}" if content else ocr_text
             logs.append(("message", parser.Log(content)))
 
         return logs
