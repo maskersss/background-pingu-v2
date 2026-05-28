@@ -1375,9 +1375,12 @@ class IssueChecker:
         
         if (not found_crash_cause
             and not self.log.is_multimc_or_fork
-            and self.log.has_content("Non [a-z0-9/._-] character in path of location")
+            and any(self.log.has_content(weird_char) for weird_char in [
+                "İ",
+                "ı",
+            ])
         ):
-            experimental = not (self.log.is_ranked_log or self.log.has_content("mcsrranked") or self.log.has_content("ı"))
+            experimental = not self.log.is_draftout_log
             builder.error(
                 "turkish_crash",
                 experimental=experimental,
