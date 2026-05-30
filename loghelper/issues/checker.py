@@ -871,7 +871,9 @@ class IssueChecker:
         if (not found_crash_cause
             and self.log.operating_system in [None, OperatingSystem.LINUX]
         ):
-            if self.log.has_content("BadWindow (invalid Window parameter)"):
+            if (self.log.has_content("BadWindow (invalid Window parameter)")
+                and not self.log.has_library("3.3.3/lwjgl")
+            ):
                 builder.error("linux_update_lwjgl")
                 found_crash_cause = True
             
@@ -917,10 +919,11 @@ class IssueChecker:
             pattern = r"\[ERR\] \[(waywall/config/.*?\.c):(\d+)\] ?(?:failed to start action:|failed to load config:)?\s?(?P<error>[\s\S]*?)(?:\n\[|$)"
             match = re.search(pattern, self.log._content)
             if not match is None:
-                match = match.group("error").strip()
-                match = match.split("\nProcess")[0].strip()
-                match = match.replace("\n", " ")[:600]
-                builder.error("waywall_wrong_config", match)
+                if self.log.lines > 25:
+                    match = match.group("error").strip()
+                    match = match.split("\nProcess")[0].strip()
+                    match = match.replace("\n", " ")[:600]
+                    builder.error("waywall_wrong_config", match)
                 found_crash_cause = True
             
             if self.log.has_content_in_stacktrace("libsnappyjava.so: libc.musl-x86_64.so.1: cannot open shared object file: No such file or directory"):
