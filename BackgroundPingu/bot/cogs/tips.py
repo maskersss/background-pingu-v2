@@ -729,7 +729,8 @@ RawAccel should no longer be required for most players. [RawAccel Guide (Timesta
 
     @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
     async def packs(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = "Read section A.4 for resource pack rules: <https://rules.minecraftspeedrunning.com/latest>"
+        text = """Read section A.4 for speedrun.com resource pack rules: <https://rules.minecraftspeedrunning.com/latest>.
+For MCSR Ranked, all external resourcepacks are not allowed."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="toolscreen", description="Explains what Toolscreen is.")
