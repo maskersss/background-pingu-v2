@@ -1378,6 +1378,7 @@ class IssueChecker:
         
         if (not found_crash_cause
             and not self.log.is_multimc_or_fork
+            and (self.log.exitcode or self.log.stacktrace)
             and any(self.log.has_content(weird_char) for weird_char in [
                 "İ",
                 "ı",
