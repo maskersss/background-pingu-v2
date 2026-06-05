@@ -767,6 +767,12 @@ class IssueChecker:
                     builder.add("oompc_paging_nonwindows").add("oompc_idk")
             found_crash_cause = True
 
+        if (not found_crash_cause
+            and self.log.has_content("Not enough RAM available to launch this instance")
+        ):
+            builder.error("out_of_memory_pc_warning")
+            found_crash_cause = True
+        
         if (self.log.has_mod("phosphor")
             and (self.log.minecraft_version is None
                  or self.log.is_newer_than("1.14") )
