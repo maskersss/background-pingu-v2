@@ -770,8 +770,11 @@ class IssueChecker:
         if (not found_crash_cause
             and self.log.has_content("Not enough RAM available to launch this instance")
         ):
-            builder.error("out_of_memory_pc_warning")
-            found_crash_cause = True
+            if not self.log.has_content("Main class:"):
+                builder.error("out_of_memory_pc_warning")
+                found_crash_cause = True
+            else:
+                builder.warning("out_of_memory_pc_warning")
         
         if (self.log.has_mod("phosphor")
             and (self.log.minecraft_version is None

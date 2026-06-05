@@ -263,6 +263,7 @@
     "warning.missing_mods": "You seem to be missing `{}` recommended mods (`{}`).",
     "warning.missing_mods_linked": "You seem to be missing `{}` recommended mod{}. You can download {} here: {}.",
     "warning.not_using_mac_sodium": "You seem to be using a version of `Sodium` that has a memory leak on `MacOS`. Delete the one you have and download `Sodium Mac` from [**this website**](https://mods.tildejustin.dev/?version=1.16.1&macos) or by using [**ModCheck**](https://github.com/tildejustin/modcheck/releases/latest) **after selecting Mac** instead.",
+    "warning.out_of_memory_pc_warning": "You don't have enough free RAM on your PC for this instance. This isn't critical, and is just likely to cause performance issues. Either free up some memory by closing apps, or ignore it.",
     "warning.outdated_mods": "You are using `{}` outdated mods (`{}`)!",
     "warning.relatively_old_fabric": "You're using an old version of `Fabric Loader`. You should update it.",
     "warning.too_little_ram": "You have too little RAM allocated, which can cause crashes and lag spikes.",

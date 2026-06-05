@@ -24,7 +24,7 @@ IGNORED_USERS = [
 ]
 
 MINIMUM_MOD_VERSIONS = [
-    # mod name substring,  version, name         , update link
+    # mod name substring, version , name         , update link
     ("mcsrranked"       , "5.7.12", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/"),
     ("draftout"         , "1.9.0" , "Draftout"   , "https://modrinth.com/mod/draftout/versions/"   ),
     ("fsg-mod"          , "2.4.1" , "FSG Mod"    , "https://modrinth.com/mod/fsg-mod/versions/"    ),
