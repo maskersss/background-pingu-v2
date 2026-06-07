@@ -12,10 +12,10 @@ class Tips(Cog):
         super().__init__()
         self.bot = bot
 
-    async def _respond(self, ctx, text, mention=None):
+    async def _respond(self, ctx, text, mention=None, ephemeral=False):
         if mention:
             text = f"{mention.mention}\n{text}"
-        return await ctx.respond(text)
+        return await ctx.respond(text, ephemeral=ephemeral)
 
     @commands.slash_command(name="recommend_settings", description="Gives recommended settings for SeedQueue based on a log.")
     async def recommend_settings(
@@ -480,6 +480,26 @@ If you want an idea of what coaching looks like, here are some playlists of coac
 
 Couriway - Midoffs S1 <https://www.youtube.com/watch?v=1h-Uqhc_DtQ&list=PLiNXLWzA7YLYKZ_KYdn3N52we4B3bn4vK>
 Nerdi - Speedrun Bootcamp <https://www.youtube.com/watch?v=pDLufpy11GY&list=PLiNHtofX3klVmUMUxRbi2R8jcVSW9OE9_>"""
+        return await self._respond(ctx, text, mention)
+    
+    @commands.slash_command(name="notsupport", description="Explains this isn't the support channel.")
+    async def notsupport(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        channel = None
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id and not support_cid is None:
+                channel = f"<#{support_cid}>"
+                break
+        
+        if channel is None:
+            text = "No known support channel for this server :( if you think there should be one, feel free to ping `maskers`"
+            return await self._respond(ctx, text, mention, ephemeral=True)
+        
+        if support_cid == ctx.channel_id:
+            text = "This is already a support channel :question:"
+            return await self._respond(ctx, text, mention, ephemeral=True)
+        
+        text = f"""This channel is not meant for support!
+Please use :point_right: {channel} :point_left: to ask for help, this will increase the likelihood of you getting a good answer."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
