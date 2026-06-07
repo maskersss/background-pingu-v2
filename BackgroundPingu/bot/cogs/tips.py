@@ -123,11 +123,6 @@ If you want to unlink OneDrive, follow [this link](<https://support.microsoft.co
         text = "https://youtu.be/717kfB39gjQ"
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="rankedfaq", description="Sends a link to the MCSR Ranked Tech Support FAQ document.")
-    async def rankedfaq(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """You can find MCSR Ranked Tech Support FAQ document here: <https://wiki.mcsrranked.com/install/faq>"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="regions", description="Gives an infographic about structure regions.")
     async def regions(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """https://cdn.discordapp.com/attachments/83066801105145856/1033984974614962286/1.16.1_Regions.png"""
