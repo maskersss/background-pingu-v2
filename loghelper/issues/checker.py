@@ -1612,8 +1612,8 @@ class IssueChecker:
         elif ((self.log.major_java_version is None
                or self.log.major_java_version >= 25)
             and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
-            and self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
-            # also 0x2c6a18 ?
+            and (self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
+                 or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c6a18\]"))
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
