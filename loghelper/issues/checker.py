@@ -1381,9 +1381,11 @@ class IssueChecker:
             builder.error("missing_dependency_2", "indium")
             found_crash_cause = True
         
-        if self.log.has_mod("worldpreview") and self.log.has_mod("carpet"):
-            builder.error("incompatible_mod", "WorldPreview", "carpet")
-            found_crash_cause = True
+        if self.log.has_mod("carpet"):
+            for incompatible_mod in ["WorldPreview", "fast-reset"]:
+                if self.log.has_mod(incompatible_mod):
+                    builder.error("incompatible_mod", "carpet", incompatible_mod)
+                    found_crash_cause = True
         
         if (not found_crash_cause
             and not self.log.is_multimc_or_fork
