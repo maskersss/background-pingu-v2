@@ -1845,6 +1845,7 @@ class IssueChecker:
                     builder.error("corrupted_mod_config", wrong_mods[0], experimental=experimental)
                 else:
                     builder.error("unknown_corrupted_mod_config", experimental=True)
+                found_crash_cause = True
             elif (not self.log.is_waywall_log
                   and self.server_id != 1056779246728658984
                   and "ranked" in " ".join(wrong_mods)
@@ -1855,6 +1856,7 @@ class IssueChecker:
                     "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
+                found_crash_cause = True
             elif ((self.log.stacktrace or self.log.exitcode)
                   and self.server_id != 83066801105145856
                   and self.server_id != 1095808506239651942
@@ -1867,16 +1869,19 @@ class IssueChecker:
                     "`; `".join(wrong_mods[:12]),
                     "" if len(wrong_mods) > 1 else "s",
                 )
+                found_crash_cause = True
             elif len(wrong_mods) == 1:
                 if is_mcsr_log:
                     builder.error("mod_crash", wrong_mods[0])
                 else:
                     builder.error("mod_crash_disable", wrong_mods[0])
+                found_crash_cause = True
             elif len(wrong_mods) > 0 and len(wrong_mods) < 10:
                 if is_mcsr_log:
                     builder.error("mods_crash", "`; `".join(wrong_mods))
                 else:
                     builder.error("mods_crash_disable", "`; `".join(wrong_mods))
+                found_crash_cause = True
         
         
         if not found_crash_cause and self.is_discord and self.link == "message":
@@ -1989,13 +1994,12 @@ class IssueChecker:
                         else:
                             builder.error("gamma")
                 
-                if (not found_crash_cause
-                    and not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
+                if (not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
                 ):
                     builder.error("send_full_log_2", self.log.edit_instance)
                 
-                if not found_crash_cause and self.log.has_content("Host api.paste.ee not found"):
+                if self.log.has_content("Host api.paste.ee not found"):
                     builder.error("pasteee_down")
                 
                 pattern = r"https://minecraft\.fandom\.com/wiki/([A-Za-z0-9_]+)"
