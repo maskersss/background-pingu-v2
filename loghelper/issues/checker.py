@@ -941,6 +941,7 @@ class IssueChecker:
             
             if self.log.has_content_in_stacktrace("libXtst.so.6: cannot open shared object file: No such file or directory"):
                 builder.error("linux_nixos_fairplay", experimental=True)
+                if self.log.is_ranked_log: builder.add("fairplay_ranked_useless")
                 found_crash_cause = True
             
             if not found_crash_cause and self.log.has_content("amdgpu: The CS has cancelled because the context is lost. This context is innocent."):
