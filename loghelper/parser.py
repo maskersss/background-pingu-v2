@@ -96,7 +96,7 @@ class Log:
     def mods(self) -> list[str]:
         pattern = re.compile(r"\[(?:✔️|✅)\]\s+([^\[\]]+?\.jar)")
         mods = pattern.findall(self._content)
-        if len(mods) > 0: return mods
+        if len(mods) > 0: return list(set(mods))
 
         pattern = re.compile(r"\[✔\]\s+([^\[\]\n]+)")
         mods = [mod.rstrip("\n").replace(" ", "+") + ".jar" for mod in pattern.findall(self._content)]
