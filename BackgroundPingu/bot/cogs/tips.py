@@ -546,8 +546,8 @@ If you ever do A/D in a boat (like when boating in the ocean) then you need to r
 
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
     async def one_sixteen_mods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Download the mods by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>) or from <https://mods.tildejustin.dev/>.
-All other mods are banned[.](https://i.imgur.com/8k1LyKZ.png)"""
+        text = """Download the mods from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
+All other mods are banned[.](https://i.imgur.com/L7s7wDq.png)"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
