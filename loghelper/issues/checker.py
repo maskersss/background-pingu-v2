@@ -1214,8 +1214,8 @@ class IssueChecker:
         ):
             builder.error("old_mod_version", "AreEssGee", "https://github.com/faluhub/AreEssGee/releases/latest/")
         
-        if self.log.has_pattern(r"^Prism Launcher version: [2-8]"):
-            if self.log.has_pattern(r"^Prism Launcher version: [8-8]"):
+        if self.log.has_pattern(r"^Prism Launcher version: [2-9]"):
+            if self.log.has_pattern(r"^Prism Launcher version: [8-9]"):
                 builder.note("semi_old_prism_version")
             else:
                 builder.note("old_prism_version")
@@ -1617,6 +1617,7 @@ class IssueChecker:
             and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
             and (self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
                  or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c6a18\]"))
+                 # also 0x2cdd08 ?
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
