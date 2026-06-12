@@ -951,6 +951,10 @@ class IssueChecker:
             if self.log.is_waywall_log and self.log.has_mod("sleepbackground"):
                 builder.note("waywall_sleepbg")
         # linux crashes end
+
+        if is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.4.1/lwjgl"):
+            builder.error("lwjgl_3_4_1")
+            if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
