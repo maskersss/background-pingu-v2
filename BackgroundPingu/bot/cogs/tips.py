@@ -739,7 +739,7 @@ RawAccel should no longer be required for most players. [RawAccel Guide (Timesta
 
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
     async def rules(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = "<https://rules.minecraftspeedrunning.com/latest>"
+        text = "https://mc.sr/rules"
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
