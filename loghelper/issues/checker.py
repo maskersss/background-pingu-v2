@@ -908,10 +908,6 @@ class IssueChecker:
                 
             if is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
                 builder.note("linux_update_lwjgl")
-                
-            elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
-                builder.error("linux_lwjgl_3_3_6")
-                if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
             
             if (self.log.is_waywall_log
                 and self.log.java_arguments
@@ -954,6 +950,10 @@ class IssueChecker:
 
         if is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.4.1/lwjgl"):
             builder.error("lwjgl_3_4_1")
+            if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+                
+        elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
+            builder.error("lwjgl_3_3_6")
             if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
