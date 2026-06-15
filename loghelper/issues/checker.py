@@ -789,6 +789,7 @@ class IssueChecker:
                 
         if (not found_crash_cause
             and self.log.operating_system in [None, OperatingSystem.MACOS]
+            and not self.log.is_newer_than("1.17")
             and self.log.has_content("Terminating app due to uncaught exception 'NSInternalInconsistencyException'")
         ):
             builder.error("mac_too_new_java")
@@ -951,7 +952,7 @@ class IssueChecker:
         if is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.4.1/lwjgl"):
             builder.error("lwjgl_3_4_1")
             if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
-                
+
         elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
             builder.error("lwjgl_3_3_6")
             if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
