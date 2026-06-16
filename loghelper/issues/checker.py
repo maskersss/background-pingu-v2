@@ -219,7 +219,10 @@ class IssueChecker:
             LogType.THREAD_DUMP,
             LogType.LAUNCHER_LOG,
             LogType.TOOLSCREEN_LOG,
-        ]: footer += f" {self.log.type.value}"
+        ]:
+            if self.log.type == LogType.CRASH_REPORT and self.log.stacktrace_hash:
+                footer += f" {self.log.stacktrace_hash}"
+            footer += f" {self.log.type.value}"
         elif self.log.type == LogType.LATEST_LOG:
             footer += " latest.log"
             if self.log.stacktrace or self.log.exitcode:
