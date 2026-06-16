@@ -726,7 +726,11 @@ class Log:
         log = self._content
         ignored_patterns = [
             r"(?s)---- Minecraft Crash Report ----.*?This is just a prompt for computer specs to be printed",
-            r"(?s)WARNING: coremods are present:.*?Contact their authors BEFORE contacting forge"
+            r"(?s)WARNING: coremods are present:.*?Contact their authors BEFORE contacting forge",
+            r"knot//",
+            r"_",
+            r"(?m)^// .*?$",
+            r"\{[^{}]*\}",
         ]
         for pattern in ignored_patterns:
             log = re.sub(pattern, "", log)
@@ -749,9 +753,6 @@ class Log:
             match = re.search(crash_pattern, log, re.DOTALL)
             if not match is None:
                 stacktrace = match.group().lower()
-                stacktrace = stacktrace.replace("_", "").replace("knot//", "")
-                stacktrace = re.sub(r"\{[^{}]*\}", "", stacktrace)
-                stacktrace = re.sub(r"(?m)^// .*?$", "", stacktrace)
                 return stacktrace
         
         return None
