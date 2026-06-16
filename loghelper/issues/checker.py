@@ -2089,7 +2089,7 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                 if self.mode == "web": output = output.replace("command", "website")
             elif self.log.type in [LogType.FULL_LOG, LogType.LATEST_LOG]:
                 if not self.log.has_mod("seedqueue"):
-                    output = "You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
+                    output = "❌ You sent a log, but it doesn't seem to be a SeedQueue log. Make sure you have the SeedQueue mod, re-launch your instance, and upload and send the log again."
                 elif not self.log.mod_loader == ModLoader.FABRIC:
                     output = "You sent a log, but you seem to be missing Fabric. Install Fabric (`/fabric`), re-launch your instance, and upload and send the log again."
                     if self.mode == "web": output = output.replace(" (`/fabric`)", "")
