@@ -786,10 +786,15 @@ class Log:
         # print(f"# stacktrace is \n----------\n{stacktrace}\n----------\n")
 
         if stacktrace_num == 0:
-            pattern = r"(?m)^description:.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
-            match = re.search(pattern, stacktrace)
-            if not match is None:
-                trimmed_stacktrace = match.group(1)
+            pattern = r"(?m)^caused by: ([^\r\n]*\r?\n[^\r\n]*)"
+            matches = re.findall(pattern, stacktrace)
+            if not matches is None:
+                trimmed_stacktrace = matches[-1]
+            else:
+                pattern = r"(?m)^description:.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
+                match = re.search(pattern, stacktrace)
+                if not match is None:
+                    trimmed_stacktrace = match.group(1)
         elif stacktrace_num in [5, 7]:
             pattern = r"(?m)^caused by: ([^\r\n]*\r?\n[^\r\n]*)"
             matches = re.findall(pattern, stacktrace)
@@ -797,6 +802,11 @@ class Log:
                 trimmed_stacktrace = matches[-1]
         elif stacktrace_num == 8:
             pattern = r"(?m)^unreported exception thrown!.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+        elif stacktrace_num == 9:
+            pattern = r"(?m)^encountered an unexpected exception.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
             match = re.search(pattern, stacktrace)
             if not match is None:
                 trimmed_stacktrace = match.group(1)
@@ -812,7 +822,7 @@ class Log:
                 trimmed_stacktrace = match.group(1)
                 trimmed_stacktrace = re.sub(r"^.*?(?=glfw error )", "", trimmed_stacktrace, flags=re.DOTALL)
         
-        print(trimmed_stacktrace)
+        # print(trimmed_stacktrace)
         
         if not trimmed_stacktrace: return None
         trimmed_stacktrace = trimmed_stacktrace.strip()
