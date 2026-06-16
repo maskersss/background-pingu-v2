@@ -209,8 +209,12 @@ class IssueChecker:
         ]: footer += f" {self.log.type.value}"
         elif self.log.type == LogType.LATEST_LOG:
             footer += " latest.log"
-            if self.log.stacktrace or self.log.exitcode: footer += " crash"
-        elif self.log.stacktrace or self.log.exitcode: footer += " crash"
+            if self.log.stacktrace or self.log.exitcode:
+                if self.log.stacktrace_hash: footer += f" {self.log.stacktrace_hash}"
+                footer += " crash"
+        elif self.log.stacktrace or self.log.exitcode:
+            if self.log.stacktrace_hash: footer += f" {self.log.stacktrace_hash}"
+            footer += " crash"
         elif footer == "" and self.link == "message": footer += " message"
         elif self.link.endswith("standardsettings.json"): footer += " standardsettings.json"
         elif self.link.endswith("options.txt"): footer += " options.txt"
@@ -1602,8 +1606,11 @@ class IssueChecker:
         ):
             builder.warning("medal", experimental=True)
         
-        if found_crash_cause or not self.log.stacktrace is None: pass
-        elif self.log.operating_system in [OperatingSystem.MACOS, OperatingSystem.LINUX]: pass
+        if (found_crash_cause
+            or (not self.log.stacktrace is None and self.log.stacktrace_num != 11)
+            or self.log.operating_system in [OperatingSystem.MACOS, OperatingSystem.LINUX]
+        ):
+            pass
 
         elif ((self.log.is_ranked_log or self.log.has_content("speedrunigt"))
             and (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")

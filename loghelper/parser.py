@@ -1,4 +1,4 @@
-import re, requests, enum
+import enum, hashlib, re, requests
 from packaging import version
 from cached_property import cached_property
 from .config import *
@@ -722,7 +722,7 @@ class Log:
         return None
     
     @cached_property
-    def stacktrace(self) -> str | None:
+    def _stacktrace(self) -> tuple[int | None, str | None]:
         log = self._content
         ignored_patterns = [
             r"(?s)---- Minecraft Crash Report ----.*?This is just a prompt for computer specs to be printed",
@@ -735,6 +735,7 @@ class Log:
         for pattern in ignored_patterns:
             log = re.sub(pattern, "", log)
         
+        # do not change order of existing patterns
         crash_patterns = [
             r"---- Minecraft Crash Report ----.*A detailed walkthrough of the error",
             r"-- Crash --.*-- Mods --",
@@ -747,15 +748,69 @@ class Log:
             r"Unreported exception thrown!\n.*",
             r"Encountered an unexpected exception\n.*",
             r"Unhandled game exception\n.*",
+            r"# A fatal error has been detected by the Java Runtime Environment:.*# See problematic frame for where to report the bug.",
             r"Failed to create window: \n.*",
         ]
-        for crash_pattern in crash_patterns:
+        for (i, crash_pattern) in enumerate(crash_patterns):
             match = re.search(crash_pattern, log, re.DOTALL)
             if not match is None:
                 stacktrace = match.group().lower()
-                return stacktrace
+                return i, stacktrace
         
-        return None
+        return None, None
+    
+    @cached_property
+    def stacktrace(self) -> str | None:
+        return self._stacktrace[1]
+    
+    @cached_property
+    def stacktrace_num(self) -> int | None:
+        return self._stacktrace[0]
+    
+    @cached_property
+    def stacktrace_hash(self) -> str | None:
+        if self.stacktrace is None:
+            if self.exitcode:
+                return hashlib.blake2b(str(self.exitcode).encode("utf-8"), digest_size=4).hexdigest()
+            return None
+
+        trimmed_stacktrace = None
+        stacktrace_num = self.stacktrace_num
+        stacktrace = self.stacktrace
+        # remove lines with only whitespaces & clear indentation
+        stacktrace = re.sub(r"(?:\r?\n[ \t]*)+", "\n", stacktrace)
+        # remove text inside ()s
+        stacktrace = re.sub(r"\(.*\)", "()", stacktrace)
+
+        # print(stacktrace_num)
+        # print(f"# stacktrace is \n----------\n{stacktrace}\n----------\n")
+
+        if stacktrace_num == 0:
+            pattern = r"(?m)^description:.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+        elif stacktrace_num in [5, 7]:
+            pattern = r"(?m)^caused by: ([^\r\n]*\r?\n[^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+        elif stacktrace_num == 8:
+            pattern = r"(?m)^unreported exception thrown!.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+        elif stacktrace_num == 11:
+            pattern = r"(?m)^# problematic frame:.*\r?\n([^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+        
+        # print(trimmed_stacktrace)
+        
+        if not trimmed_stacktrace: return None
+        trimmed_stacktrace = trimmed_stacktrace.strip()
+        return hashlib.blake2b(trimmed_stacktrace.encode("utf-8"), digest_size=4).hexdigest()
     
     @cached_property
     def exitcode(self) -> int | None:
