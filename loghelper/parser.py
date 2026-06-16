@@ -770,8 +770,8 @@ class Log:
     @cached_property
     def stacktrace_hash(self) -> str | None:
         if self.stacktrace is None:
-            if self.exitcode:
-                return hashlib.blake2b(str(self.exitcode).encode("utf-8"), digest_size=4).hexdigest()
+            # if self.exitcode:
+            #     return hashlib.blake2b(str(self.exitcode).encode("utf-8"), digest_size=4).hexdigest()
             return None
 
         trimmed_stacktrace = None
