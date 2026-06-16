@@ -56,12 +56,21 @@ class IssueChecker:
             "forceport",
         ]
         self.assume_as_legal = [
-            "draftout",
             "mcsrranked",
             "mangodfps",
             "statsperreset",
             "ninjabrain-bot",
         ] + self.not_mods
+        self.assume_as_legal_draftout = [
+            "draftout",
+            "commandqmod",
+        ]
+        self.assume_as_legal_ranked = [
+            "replaymod",
+            "eyezoommod",
+            "betteraasaving",
+            "oneslot",
+        ]
         self.mcsr_mods = [
             "draftout",
             "worldpreview",
@@ -186,6 +195,10 @@ class IssueChecker:
         all_incompatible_mods = {}
         duplicate_mods = []
         footer = ""
+
+        # ranked legal mods are all kinda weird, should maybe still yell at them idk
+        if self.log.is_ranked_log: self.assume_as_legal += self.assume_as_legal_ranked
+        if self.log.is_draftout_log: self.assume_as_legal += self.assume_as_legal_draftout
 
         if self.log.operating_system == OperatingSystem.MACOS: footer += " MacOS"
         elif self.log.operating_system == OperatingSystem.LINUX: footer += " Linux"
