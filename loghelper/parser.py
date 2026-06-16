@@ -805,6 +805,12 @@ class Log:
             match = re.search(pattern, stacktrace)
             if not match is None:
                 trimmed_stacktrace = match.group(1)
+        elif stacktrace_num == 12:
+            pattern = r"(?m)failed to create window: .*\r?\n([^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
+                trimmed_stacktrace = re.sub(r"^.*?(?=glfw error )", "", trimmed_stacktrace, flags=re.DOTALL)
         
         # print(trimmed_stacktrace)
         
