@@ -788,7 +788,7 @@ class Log:
         if stacktrace_num == 0:
             pattern = r"(?m)^caused by: ([^\r\n]*\r?\n[^\r\n]*)"
             matches = re.findall(pattern, stacktrace)
-            if not matches is None:
+            if matches:
                 trimmed_stacktrace = matches[-1]
             else:
                 pattern = r"(?m)^description:.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
@@ -798,7 +798,7 @@ class Log:
         elif stacktrace_num in [5, 7]:
             pattern = r"(?m)^caused by: ([^\r\n]*\r?\n[^\r\n]*)"
             matches = re.findall(pattern, stacktrace)
-            if not matches is None:
+            if matches:
                 trimmed_stacktrace = matches[-1]
         elif stacktrace_num == 8:
             pattern = r"(?m)^unreported exception thrown!.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"

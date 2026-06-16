@@ -695,9 +695,9 @@ class IssueChecker:
             
             if self.log.fabric_version < version.parse("0.15.0"):
                 builder.error("really_old_fabric").add(self.log.fabric_guide, "update")
-            elif self.log.fabric_version < version.parse("0.16.0"):
+            elif self.log.fabric_version < version.parse("0.17.0"):
                 builder.warning("relatively_old_fabric").add(self.log.fabric_guide, "update")
-            elif self.log.fabric_version < version.parse("0.16.6"):
+            elif self.log.fabric_version < version.parse("0.18.0"):
                 builder.note("old_fabric").add(self.log.fabric_guide, "update")
         
         if (not found_crash_cause
@@ -945,7 +945,7 @@ class IssueChecker:
                 if self.log.lines > 25:
                     match = match.group("error").strip()
                     match = match.split("\nProcess")[0].strip()
-                    match = match.replace("\n", " ")[:600]
+                    match = match.replace("\n", "\\n")[:600]
                     builder.error("waywall_wrong_config", match)
                 found_crash_cause = True
             
@@ -1355,7 +1355,7 @@ class IssueChecker:
             if self.log.is_newer_than("1.15"):
                 if is_mcsr_log:
                     builder.error("use_sodium_not_optifine_mcsr").add("update_mods").add(self.log.modcheck_v1_warning)
-                elif self.log.mod_loader == ModLoader.FORGE:
+                elif self.log.mod_loader == ModLoader.FORGE and not self.log.is_newer_than("1.21"):
                     builder.error("use_sodium_not_optifine", "Embeddium").add("optifine_alternatives")
                 else:
                     builder.error("use_sodium_not_optifine", "Sodium").add("optifine_alternatives")
