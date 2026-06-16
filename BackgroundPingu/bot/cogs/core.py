@@ -125,7 +125,7 @@ class Core(Cog):
             reply, found_result = await self.get_settings(msg)
             if found_result:
                 return await msg.reply(content=reply)
-            return await msg.reply(content=":x: **No log found in this message.**")
+            return await msg.reply(content="❌ **No log found in this message.**")
         
         result = await self.check_log(msg)
         if self.should_reply(result):
@@ -149,7 +149,7 @@ class Core(Cog):
         reply, found_result = await self.get_settings(msg)
         if found_result:
             return await ctx.response.send_message(content=reply)
-        return await ctx.response.send_message(":x: **No log found in this message.**", ephemeral=True)
+        return await ctx.response.send_message("❌ **No log found in this message.**", ephemeral=True)
 
 def setup(bot: BackgroundPingu):
     bot.add_cog(Core(bot))
