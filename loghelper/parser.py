@@ -722,6 +722,15 @@ class Log:
         return None
     
     @cached_property
+    def env_vars(self) -> str | None:
+        pattern = r"\nCustom environment variables:\n(.*?)\nJava arguments:\n"
+        match = re.search(pattern, self._content, re.DOTALL)
+        if not match is None:
+            return match.group(1)
+        
+        return None
+    
+    @cached_property
     def _stacktrace(self) -> tuple[int | None, str | None]:
         log = self._content
         ignored_patterns = [
@@ -1020,6 +1029,10 @@ class Log:
     def has_library(self, content: str) -> bool:
         if self.libraries is None: return False
         return content.lower() in self.libraries.lower()
+    
+    def has_env_var(self, content: str) -> bool:
+        if self.env_vars is None: return False
+        return content.lower() in self.env_vars.lower()
     
     def upload(self) -> tuple[bool, str | None]:
         api_url = "https://api.mclo.gs/1/log"

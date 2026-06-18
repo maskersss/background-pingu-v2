@@ -907,7 +907,9 @@ class IssueChecker:
                 builder.error("linux_update_lwjgl")
                 found_crash_cause = True
             
-            elif self.log.has_content("[libnvidia-glcore.so"):
+            elif (not self.log.has_env_var("__GL_THREADED_OPTIMIZATIONS")
+                  and self.log.has_content("[libnvidia-glcore.so")
+            ):
                 builder.error("linux_nvidia_crash")
                 found_crash_cause = True
         
@@ -923,8 +925,10 @@ class IssueChecker:
                 builder.error("waywall_not_on_path")
                 found_crash_cause = True
             
-            elif self.log.has_content("GLFW error 65544: EGL: Failed to clear current context: An EGLDisplay argument does not name a valid EGL display connection"):
-                builder.error("linux_nvidia_crash", experimental=True)
+            elif (not self.log.has_env_var("__GL_THREADED_OPTIMIZATIONS")
+                  and self.log.has_content("GLFW error 65544: EGL: Failed to clear current context: An EGLDisplay argument does not name a valid EGL display connection")
+            ):
+                builder.error("linux_nvidia_crash")
                 found_crash_cause = True
                 
             if is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
@@ -967,6 +971,9 @@ class IssueChecker:
             
             if self.log.is_waywall_log and self.log.has_mod("sleepbackground"):
                 builder.note("waywall_sleepbg")
+            
+            if self.log.has_env_var("GL_THREADED_OPTIMIZATIONS") and not self.log.has_env_var("__GL_THREADED_OPTIMIZATIONS"):
+                builder.warning("linux_nvidia_crash_misspell")
         # linux crashes end
 
         if is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.4.1/lwjgl"):
