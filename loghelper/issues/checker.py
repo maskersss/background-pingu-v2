@@ -220,7 +220,7 @@ class IssueChecker:
             LogType.LAUNCHER_LOG,
             LogType.TOOLSCREEN_LOG,
         ]:
-            if self.log.type == LogType.CRASH_REPORT and self.log.stacktrace_hash:
+            if self.log.type in [LogType.CRASH_REPORT, LogType.HS_ERR_PID_LOG] and self.log.stacktrace_hash:
                 footer += f" {self.log.stacktrace_hash}"
             footer += f" {self.log.type.value}"
         elif self.log.type == LogType.LATEST_LOG:
@@ -1630,7 +1630,7 @@ class IssueChecker:
             builder.warning("medal", experimental=True)
         
         if (found_crash_cause
-            or (not self.log.stacktrace is None and self.log.stacktrace_num != 11)
+            or (not self.log.stacktrace is None and not self.log.stacktrace_num in [11, 12])
             or self.log.operating_system in [OperatingSystem.MACOS, OperatingSystem.LINUX]
         ):
             pass

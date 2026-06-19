@@ -477,6 +477,12 @@ class Log:
         if not match is None:
             return match.group(1)
         
+        # hs_err_pid logs
+        if self.type == LogType.HS_ERR_PID_LOG:
+            match = re.compile(r"Command Line: ([^\n]*)", re.DOTALL).search(self._content)
+            if not match is None:
+                return match.group(1)
+        
         return None
 
     @cached_property
@@ -757,7 +763,8 @@ class Log:
             r"Unreported exception thrown!\n.*",
             r"Encountered an unexpected exception\n.*",
             r"Unhandled game exception\n.*",
-            r"# A fatal error has been detected by the Java Runtime Environment:.*# See problematic frame for where to report the bug.",
+            r"# A fatal error has been detected by the Java Runtime Environment:.*# See problematic frame for where to report the bug\.",
+            r"# A fatal error has been detected by the Java Runtime Environment:.*If you would like to submit a bug report, please visit:",
             r"Failed to create window: \n.*",
         ]
         for (i, crash_pattern) in enumerate(crash_patterns):
@@ -819,12 +826,12 @@ class Log:
             match = re.search(pattern, stacktrace)
             if not match is None:
                 trimmed_stacktrace = match.group(1)
-        elif stacktrace_num == 11:
+        elif stacktrace_num in [11, 12]:
             pattern = r"(?m)^# problematic frame:.*\r?\n([^\r\n]*)"
             match = re.search(pattern, stacktrace)
             if not match is None:
                 trimmed_stacktrace = match.group(1)
-        elif stacktrace_num == 12:
+        elif stacktrace_num == 13:
             pattern = r"(?m)failed to create window: .*\r?\n([^\r\n]*)"
             match = re.search(pattern, stacktrace)
             if not match is None:
