@@ -1472,7 +1472,7 @@ class IssueChecker:
         elif len(system_libs) == 1: temp = f"{system_libs[0]} installation"
         if not temp is None:
             if self.log.has_content("Failed to locate library:"):
-                if self.log.is_waywall_log:
+                if self.log.is_waywall_log and not "OpenAL" in system_libs:
                     builder.error("builtin_lib_crash_waywall", temp, experimental=True)
                 else:
                     builder.error(
@@ -1489,7 +1489,7 @@ class IssueChecker:
                         builder.error("waywall_dont_use_glfw_latest")
                         found_crash_cause = True
                     else:
-                        builder.error("builtin_lib_crash_waywall", temp, experimental=True)
+                        pass
                 else:
                     builder.error(
                         "builtin_lib_prob_crash",
