@@ -421,13 +421,6 @@ Discord: <https://discord.gg/NSpJHVRgAR>"""
         text = "The pie chart may occasionally bug and give spikes significantly higher than expected. Assuming you're on Windows and your Minecraft is using an NVIDIA GPU, you can fix this by turning off \"Threaded optimization\" in the NVIDIA Control Panel, which you can access by right-clicking your Desktop[:](https://cdn.discordapp.com/attachments/433058639956410383/1166992505296920628/image.png)"
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="julti", description="Gives a link to a Julti tutorial.")
-    async def julti(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """**Julti is no longer recommended for 1.16.1 & 1.15.2, you should use [SeedQueue](<https://www.youtube.com/watch?v=l-q-_4R8_6M>) and [Jingle](<https://github.com/DuncanRuns/Jingle>) instead.**
-Julti tutorial: <https://youtu.be/_8gQkgZcTKo>
-Julti discord: <https://discord.gg/cXf86mXAWR>"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="jingle", description="Gives a link to Jingle's GitHub page.")
     async def jingle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Speedrunning utility application by DuncanRuns
@@ -500,6 +493,32 @@ Nerdi - Speedrun Bootcamp <https://www.youtube.com/watch?v=pDLufpy11GY&list=PLiN
         
         text = f"""This channel is not meant for support!
 Please use :point_right: {channel} :point_left: to ask for help, this will increase the likelihood of you getting a good answer."""
+        return await self._respond(ctx, text, mention)
+    
+    @commands.slash_command(name="bot", description="Redirects using bot commands to a bot channel.")
+    async def bot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        support_channel = None
+        bot_channel = None
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id:
+                if not bot_cid is None: bot_channel = f"<#{bot_cid}>"
+                if not support_cid is None: support_channel = f"<#{support_cid}>"
+                break
+        
+        if bot_channel is None:
+            text = "No known bot commands channel for this server :( if you think there should be one, feel free to ping `maskers`"
+            return await self._respond(ctx, text, mention, ephemeral=True)
+        
+        if bot_cid == ctx.channel_id:
+            text = "This is already a bot commands channel :question:"
+            return await self._respond(ctx, text, mention, ephemeral=True)
+        
+        if ctx.channel_id == support_cid:
+            temp = f" here"
+        elif support_channel is not None:
+            temp = f" in {support_channel}"
+        text = f"""If you want to use bot commands, please use {bot_channel}.
+Otherwise, if you have an issue/a question, describe it{temp}, and try to provide as much information as possible."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
