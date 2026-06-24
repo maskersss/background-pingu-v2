@@ -1027,6 +1027,17 @@ class IssueChecker:
                 builder.warning("dont_use_flatpak")
         
         if (not found_crash_cause
+            and is_mcsr_log
+            and self.log.operating_system in [None, OperatingSystem.LINUX]
+            and self.log.has_pattern(r"^Prism Launcher version: .* \(snap\)")
+        ):
+            if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
+                builder.error("snap_sandboxing")
+                found_crash_cause = True
+            else:
+                builder.warning("dont_use_snap")
+        
+        if (not found_crash_cause
             and self.log.mod_loader in [None, ModLoader.FORGE]
             and self.log.has_content_in_stacktrace("java.lang.NoSuchMethodError: sun.security.util.ManifestEntryVerifier.<init>(Ljava/util/jar/Manifest;)V")
         ):
@@ -1651,8 +1662,13 @@ class IssueChecker:
                or self.log.major_java_version >= 25)
             and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
             and (self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
+                 # prism microsoft java 25.0.1
                  or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c6a18\]"))
+                 # - https://mclo.gs/YAQEgK6
+                 #   C:/Program Files/Java/jdk-25.0.2/bin/javaw.exe
                  # also 0x2cdd08 ?
+                 # - https://mclo.gs/aJ9Eb3o
+                 #   C:/Program Files/Microsoft/jdk-25.0.3.9-hotspot/bin/javaw.exe
         ):
             builder.error("eav_crash", experimental=True)
             if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
