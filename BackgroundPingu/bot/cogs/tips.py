@@ -118,9 +118,11 @@ If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR 
 If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="oneshot", description="Links the oneshot guide.")
+    @commands.slash_command(name="oneshot", description="Links the oneshot guides.")
     async def oneshot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = "https://youtu.be/717kfB39gjQ"
+        text = """<https://youtu.be/717kfB39gjQ> - original oneshot tutorial with lots of detail on underlying mechanics, but outdated for specific technique. worth watching if you want to understand the mechanics.
+https://youtu.be/6DLoZLNE_xc - damageless oneshot tutorial, light on details but explains the technique that is best for regular speedruns.
+-# [zero oneshot tutorial](<https://youtu.be/15zK6zejNAk>) - only applicable for ranked weekly race and doesn't explain mechanics."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="regions", description="Gives an infographic about structure regions.")
