@@ -717,6 +717,24 @@ class Log:
 
         if use_java_25: return "java_update_guide_25"
         return "java_update_guide"
+
+    @cached_property
+    def update_mods(self) -> str | None:
+        if (self.operating_system == OperatingSystem.MACOS
+            or not self.minecraft_version in [None, "1.16.1"]
+        ):
+            update_mods_guide = "update_mods_modcheckless"
+        else:
+            update_mods_guide = "update_mods"
+
+        if self.minecraft_version is None:
+            if self.operating_system == OperatingSystem.MACOS:
+                return (update_mods_guide, "?macos")
+            return (update_mods_guide, "")
+
+        if self.operating_system == OperatingSystem.MACOS:
+            return (update_mods_guide, f"?version={self.minecraft_version}&macos")
+        return (update_mods_guide, f"?version={self.minecraft_version}")
     
     @cached_property
     def libraries(self) -> str | None:

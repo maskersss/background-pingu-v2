@@ -313,13 +313,13 @@ class IssueChecker:
                     "outdated_mods",
                     len(outdated_mods),
                     "`, `".join([mod for mod in outdated_mods.keys()]),
-                ).add("update_mods").add(self.log.modcheck_v1_warning)
+                ).add(*self.log.update_mods).add(self.log.modcheck_v1_warning)
             elif len(outdated_mods) == 0:
                 builder.warning(
                     "missing_mods",
                     len(missing_mods),
                     "`, `".join([mod[0] for mod in missing_mods]),
-                ).add("update_mods").add(self.log.modcheck_v1_warning)
+                ).add(*self.log.update_mods).add(self.log.modcheck_v1_warning)
             else:
                 builder.warning(
                     "missing_and_outdated_mods",
@@ -329,7 +329,7 @@ class IssueChecker:
                     len(outdated_mods),
                     "s" if len(outdated_mods) > 1 else "",
                     "`, `".join([mod for mod in outdated_mods.keys()]),
-                ).add("update_mods").add(self.log.modcheck_v1_warning)
+                ).add(*self.log.update_mods).add(self.log.modcheck_v1_warning)
         elif len(outdated_mods) + len(missing_mods) > 0:
             if len(outdated_mods) > 0:
                 builder.note(
@@ -347,7 +347,7 @@ class IssueChecker:
                     "them" if len(missing_mods) > 1 else "it",
                     ", ".join(f"[**{name}**]({link})" for name, link in missing_mods),
                 )
-            builder.add("update_mods").add(self.log.modcheck_v1_warning)
+            builder.add(*self.log.update_mods).add(self.log.modcheck_v1_warning)
 
         for key, value in all_incompatible_mods.items():
             for incompatible_mod in value:
@@ -987,7 +987,7 @@ class IssueChecker:
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
                 builder.error("gl_framebuffer_macos")
-                if not self.log.has_mod("retino"): builder.add("update_mods")
+                if not self.log.has_mod("retino"): builder.add(*self.log.update_mods)
             else:
                 temp = ""
                 for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -1090,7 +1090,7 @@ class IssueChecker:
                     builder.error("requires_mod", mod_name)
                 found_crash_cause = True
             if any(mcsr_mod.lower() in " ".join(required_mods) for mcsr_mod in self.mcsr_mods):
-                builder.add("update_mods")
+                builder.add(*self.log.update_mods)
         
         if not found_crash_cause and self.log.has_pattern(r"java\.io\.IOException: Directory \'(.+?)\' could not be created"):
             builder.error("try_admin_launch")
@@ -1115,14 +1115,14 @@ class IssueChecker:
         
         if found_crash_cause: pass
         elif is_mcsr_log and self.log.has_content_in_stacktrace("java.lang.NoClassDefFoundError: me/jellysquid/mods/sodium/client/world/WorldRendererExtended"):
-            builder.error("old_sodium_crash").add("update_mods")
+            builder.error("old_sodium_crash").add(*self.log.update_mods)
             found_crash_cause = True
         elif is_mcsr_log and self.log.has_content_in_stacktrace("java.lang.NullPointerException: Cannot invoke \"net.minecraft.class_2680.method_26213()\" because \"state\" is null"):
-            builder.error("old_sodium_crash", experimental=True).add("update_mods")
+            builder.error("old_sodium_crash", experimental=True).add(*self.log.update_mods)
             found_crash_cause = True
         elif self.log.has_content_in_stacktrace("me.jellysquid.mods.sodium.client.SodiumClientMod.options"):
             if self.log.has_mod("sodiummac"):
-                builder.error("sodiummac_crash").add("update_mods")
+                builder.error("sodiummac_crash").add(*self.log.update_mods)
                 found_crash_cause = True
             elif not self.log.has_mod("speedrunapi"):
                 builder.error("sodium_config_crash_old")
@@ -1184,7 +1184,7 @@ class IssueChecker:
                 "java.lang.RuntimeException: Already decorating",
                 "TickNextTick list out of synch",
         ])):
-            builder.error("legacy_crash_fix").add("update_mods")
+            builder.error("legacy_crash_fix").add(*self.log.update_mods)
             found_crash_cause = True
         
         if (not found_crash_cause
@@ -1289,7 +1289,7 @@ class IssueChecker:
             "java.lang.ClassNotFoundException: org.mcsr.speedrunapi",
             "java.lang.ClassNotFoundException: com.redlimerl.speedrunigt",
         ]):
-            builder.error("outdated_mods_crash").add("update_mods")
+            builder.error("outdated_mods_crash").add(*self.log.update_mods)
             found_crash_cause = True
         
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
@@ -1378,7 +1378,7 @@ class IssueChecker:
                 found_crash_cause = True
             if self.log.is_newer_than("1.15"):
                 if is_mcsr_log:
-                    builder.error("use_sodium_not_optifine_mcsr").add("update_mods").add(self.log.modcheck_v1_warning)
+                    builder.error("use_sodium_not_optifine_mcsr").add(*self.log.update_mods).add(self.log.modcheck_v1_warning)
                 elif self.log.mod_loader == ModLoader.FORGE and not self.log.is_newer_than("1.21"):
                     builder.error("use_sodium_not_optifine", "Embeddium").add("optifine_alternatives")
                 else:
