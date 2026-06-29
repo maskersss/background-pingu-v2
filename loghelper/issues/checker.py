@@ -1222,12 +1222,15 @@ class IssueChecker:
                 extracted_version = match.group(1)
                 try:
                     extracted_version = version.parse(extracted_version)
-                    needed_version = version.parse("1.2.0")
+                    needed_version = version.parse("1.3.0")
                     if extracted_version < needed_version:
                         builder.error("old_ts_version")
                 except version.InvalidVersion:
                     pass
         # toolscreen end
+
+        if self.log.has_content("[Updater] User declined update"):
+            builder.warning("old_ts_version")
 
         for (filename, needed_ver, mod_name, update_link) in MINIMUM_MOD_VERSIONS:
             mod_ver = self.log.get_mod_version(filename)
