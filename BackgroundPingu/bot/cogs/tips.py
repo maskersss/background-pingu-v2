@@ -377,11 +377,6 @@ For other categories/versions, change the relevant options on the MCSR Mods List
     async def linux(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         return await self.setup(ctx, os="Linux", mention=mention)
 
-    @commands.slash_command(name="sodium", description="Explains that the Sodium settings GUI is no longer a thing.")
-    async def sodium(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """"Video settings" uses **vanilla UI** if you access it from the options menu. You can access all Sodium settings from Options > Book and Quill > Sodium. __You can't get the Sodium UI anymore. This is intended.__"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="mac", description="Gives links to tutorials for Minecraft Speedrunning on a Mac.")
     async def mac(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         return await self.setup(ctx, os="macOS", mention=mention)
@@ -569,14 +564,6 @@ If you ever do A/D in a boat (like when boating in the ocean) then you need to r
 All other mods are banned[.](https://i.imgur.com/L7s7wDq.png)"""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="areessgee", description="Gives a link to AreEssGee.")
-    async def areessgee(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """AreEssGee is a configurable artificial seed generator mod. <https://github.com/faluhub/AreEssGee>
-Join <https://discord.gg/s9m8gf6pju> if you have any questions about / issues with this mod. 
-You can submit to the [AreEssGee leaderboard](<https://docs.google.com/spreadsheets/d/1n5Z3qsWbQX_uImx-HvzGacRpa6FjT5USRBnDKcsQbQ0/edit#gid=0>) in that server.
-:warning: *AreEssGee requires Java 17+. Type `/java` if you need help with updating your Java version.*"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="peepopractice", description="Gives a link to PeepoPractice.")
     async def peepopractice(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """PeepoPractice is a versatile Fabric 1.16.1 mod to practice splits of Minecraft speedruns. It includes mapless, bastion, fortress, postblind, stronghold, end, AA splits and more.
@@ -749,13 +736,6 @@ The right edge of the crosshair should line up with the left edge of the eye's m
         else: text = "https://media.discordapp.net/attachments/433058639956410383/996360988179828746/unknown.png"
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="rawaccel", description="Links the RawAccel guide.")
-    async def rawaccel(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """With [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>), you can adjust your global Minecraft sensitivity (Ctrl+I, then go to Basic ⟶ General ⟶ Sensitivity and adjust the Global slider).
-
-RawAccel should no longer be required for most players. [RawAccel Guide (Timestamped)](<https://youtu.be/l1Z2t9e6Qko&t=217>)"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="rules", description="Links the speedrun.com rules document.")
     async def rules(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = "https://mc.sr/rules"
@@ -773,25 +753,6 @@ For MCSR Ranked, all external resourcepacks are not allowed."""
 Setup video: https://youtu.be/YqS-fxPx_jo
 Advanced configuration tutorial: <https://youtu.be/LG13ljK9RPs>
 Discord: <https://discord.com/invite/A2v6bCJg6K>"""
-        return await self._respond(ctx, text, mention)
-
-    @commands.slash_command(name="thinmag", description="Links a guide to set up the E-Counter with the ThinBT macro.")
-    async def thinmag(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), mirrors for the entity counter and the pie chart in Thin and EyeZoom modes are set up by default
-Otherwise, follow this tutorial: https://www.youtube.com/watch?v=ZXPM1f00wmY"""
-        return await self._respond(ctx, text, mention)
-
-    @commands.slash_command(name="thinbt", description="Gives a guide to set up the ThinBT macro.")
-    async def thinbt(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """### With Toolscreen (recommended)
-* Download [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (the **.jar** file).
-* Ctrl+I to open the menu, then assign a hotkey for **Thin** (in the Basic > General tab). You can change your thin resolution here as well.
-### With Jingle
-* Download [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>) (the **.jar** file).
-* Set a hotkey in **Hotkeys > Add > Resizing - Thin BT (Script)**
-* You can change your resolution in **Scripts > Resizing - Customize > Enter your thin bt size**
-
-How to use thin resolution effectively: <https://www.youtube.com/watch?v=OwKqLv2MJrg>"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="fnlock", description="Explains that you need to turn off FnLock.")
@@ -827,19 +788,9 @@ This mod requires Atum, which should be obtained from <https://mods.tildejustin.
 Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
         return await self._respond(ctx, text, mention)
     
-    @commands.slash_command(name="centerobs", description="Gives a guide to center the Minecraft source in OBS.")
-    async def centerobs(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Select your Minecraft Capture source ➔ Press Ctrl+E ➔ Set *Positional Alignment* to *Center* and *Bounding Box Type* to *No Bounds* ➔ Close the window ➔ Press Ctrl+D"""
-        return await self._respond(ctx, text, mention)
-    
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Search crafting resources: https://frontcage.com/t/search-crafting-resource-collection/32"""
-        return await self._respond(ctx, text, mention)
-
-    @commands.slash_command(name="endfight", description="Gives a link to the end fight tutorial.")
-    async def endfight(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = "https://youtu.be/JrCZ6E0LKko"
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyelineup", description="Gives a guide to lining up the crosshair on the ender eye for measuring.")
