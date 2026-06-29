@@ -1290,7 +1290,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
-            builder.error("old_mod_crash", "SpeedrunAPI", "https://mods.tildejustin.dev/")
+            builder.error("old_mod_crash", "SpeedrunAPI", "https://mc.sr/mods/")
             found_crash_cause = True
 
         if self.log.has_content("Remove the disallowed mods and restart Minecraft."):
@@ -1602,7 +1602,7 @@ class IssueChecker:
             "java.lang.NoSuchFieldError: freezePreview",
             "does not have member field 'boolean freezePreview'",
         ]):
-            builder.error("old_mod_crash", "SleepBackground", "https://mods.tildejustin.dev/")
+            builder.error("old_mod_crash", "SleepBackground", "https://mc.sr/mods/")
             found_crash_cause = True
 
         if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):

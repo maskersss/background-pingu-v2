@@ -560,7 +560,7 @@ If you ever do A/D in a boat (like when boating in the ocean) then you need to r
 
     @commands.slash_command(name="1_16mods", description="Gives an explanation of 1.16 mods.")
     async def one_sixteen_mods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Download the mods from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
+        text = """Download the mods from <https://mc.sr/mods/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods are banned[.](https://i.imgur.com/L7s7wDq.png)"""
         return await self._respond(ctx, text, mention)
 
@@ -575,7 +575,7 @@ Don't forget to check the FAQ in the readme!
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
     async def allowedmods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """If you use Optifine (allowed only before 1.15), please read section A.8 of the [detailed rules](<https://www.minecraftspeedrunning.com/public-resources/rules>).
-All allowed mods can be downloaded from <https://mods.tildejustin.dev/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
+All allowed mods can be downloaded from <https://mc.sr/mods/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.png)"""
         return await self._respond(ctx, text, mention)
 
@@ -743,7 +743,7 @@ The right edge of the crosshair should line up with the left edge of the eye's m
 
     @commands.slash_command(name="packs", description="Links the speedrun.com resource packs rules.")
     async def packs(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Read section A.4 for speedrun.com resource pack rules: <https://rules.minecraftspeedrunning.com/latest>.
+        text = """Read section A.4 for speedrun.com resource pack rules: <https://mc.sr/rules>.
 For MCSR Ranked, all external resourcepacks are not allowed."""
         return await self._respond(ctx, text, mention)
 
@@ -783,7 +783,7 @@ Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>"""
     @commands.slash_command(name="fsg", description="Gives a link to the FSG mod and discord server.")
     async def fsg(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """FSG Mod: <https://modrinth.com/mod/fsg-mod>
-This mod requires Atum, which should be obtained from <https://mods.tildejustin.dev/>.
+This mod requires Atum, which should be obtained from <https://mc.sr/mods/>.
 
 Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
         return await self._respond(ctx, text, mention)
@@ -814,7 +814,7 @@ Vertical (up and down) lineup does not matter. The eye always rises to the same 
         if draftout:
             text = f"""It is legal to set gamma to up to 5.0.
 On latest Minecraft versions, you have to use the Planifolia mod. With it you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen, **not** in the world.
-You can download Planifolia, as well as all other legal mods, from <https://mods.tildejustin.dev/?version=26.1.1>."""
+You can download Planifolia, as well as all other legal mods, from <https://mc.sr/mods/?version=26.1.1>."""
             return await self._respond(ctx, text, mention)
         
         cmd_prefix = "/"
@@ -912,7 +912,7 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
 This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> .
 Download **(read the above warning)**: 
-||<https://mods.tildejustin.dev/>||
+||<https://mc.sr/mods/>||
 This mod allows you to adjust FOV and distortion effects.
 <:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
         return await self._respond(ctx, text, mention)
