@@ -274,7 +274,15 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
 
     @commands.slash_command(name="nbbdebug", description="Gives a guide to debugging Ninjabrain Bot.")
     async def nbbdebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """To troubleshoot issues with Ninjabrain Bot, please send the following information:
+        in_channel = ""
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id:
+                if not support_cid is None:
+                    if ctx.channel_id == support_cid: in_channel = " here"
+                    else: in_channel = f" in <#{support_cid}>"
+                break
+        
+        text = f"""To troubleshoot issues with Ninjabrain Bot, please send the following information{in_channel}:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
 - Drag and drop these files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt` into Discord
 Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
@@ -576,7 +584,7 @@ Don't forget to check the FAQ in the readme!
 
     @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
     async def allowedmods(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """If you use Optifine (allowed only before 1.15), please read section A.8 of the [detailed rules](<https://www.minecraftspeedrunning.com/public-resources/rules>).
+        text = """If you use OptiFine (allowed only before 1.15), please read section A.8 of the [detailed rules](<https://mc.sr/rules/>).
 All allowed mods can be downloaded from <https://mc.sr/mods/> or by using [**ModCheck**](<https://github.com/tildejustin/modcheck/releases/latest>).
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.png)"""
         return await self._respond(ctx, text, mention)
