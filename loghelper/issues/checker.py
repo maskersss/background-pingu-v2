@@ -1822,7 +1822,10 @@ class IssueChecker:
                     builder.info("ask_in_support_channel", server_id, support_cid)
                     break
         
-        if not found_crash_cause:
+        if (not found_crash_cause
+            and not self.log.type is None
+        ):
+            # trying to get crashing mods from stacktrace
             if any(self.log.has_content_in_stacktrace(corrupted_config) for corrupted_config in [
                 "com.google.gson.stream.MalformedJsonException",
                 "Cannot invoke \"com.google.gson.JsonObject.entrySet()\"",
