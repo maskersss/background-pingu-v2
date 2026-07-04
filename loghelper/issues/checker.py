@@ -1888,6 +1888,8 @@ class IssueChecker:
                         if len(mod_name) > 2 and self.log.has_content_in_stacktrace(mod_name):
                             if not mod in wrong_mods: wrong_mods.append(mod)
             
+            wrong_mods = list(set(wrong_mods))
+            
             if not is_mcsr_log and any(mcsr_mod in " ".join(wrong_mods) for mcsr_mod in self.mcsr_mods):
                 is_mcsr_log = True
 
