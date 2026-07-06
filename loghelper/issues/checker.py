@@ -903,6 +903,7 @@ class IssueChecker:
         ):
             if (self.log.has_content("BadWindow (invalid Window parameter)")
                 and not self.log.has_library("3.3.3/lwjgl")
+                and not self.log.is_newer_than("1.21.5")
             ):
                 builder.error("linux_update_lwjgl")
                 found_crash_cause = True
@@ -920,6 +921,15 @@ class IssueChecker:
             elif self.log.has_content("at org.lwjgl.opengl.LinuxDisplay.getAvailableDisplayModes"):
                 builder.error("missing_xrandr")
                 found_crash_cause = True
+            
+            elif (is_mcsr_log
+                  and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
+            ):
+                if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
+                    builder.error("flatpak_sandboxing")
+                    found_crash_cause = True
+                else:
+                    builder.warning("dont_use_flatpak")
             
             elif self.log.has_content("The wrapper command \"waywall\" couldn't be found."):
                 builder.error("waywall_not_on_path")
@@ -1014,17 +1024,6 @@ class IssueChecker:
             experimental = not self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
             builder.error("outdated_nvidia_flatpak_driver", experimental=experimental)
             found_crash_cause = True
-        
-        if (not found_crash_cause
-            and is_mcsr_log
-            and self.log.operating_system in [None, OperatingSystem.LINUX]
-            and self.log.has_pattern(r"^Prism Launcher version: .* \(flatpak\)")
-        ):
-            if self.log.has_pattern(r"The wrapper command .* couldn't be found."):
-                builder.error("flatpak_sandboxing")
-                found_crash_cause = True
-            else:
-                builder.warning("dont_use_flatpak")
         
         if (not found_crash_cause
             and is_mcsr_log
