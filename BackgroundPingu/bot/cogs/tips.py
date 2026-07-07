@@ -398,9 +398,12 @@ For other categories/versions, change the relevant options on the MCSR Mods List
 
     @commands.slash_command(name="mapless", description="Gives links to mapless tutorials.")
     async def mapless(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """meebie's tutorial: https://youtu.be/o0LDg3fe2iI
-[Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) is now recommended over Jingle for resizing.
-Older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788"""
+        text = """* Meebie's tutorial: https://youtu.be/o0LDg3fe2iI
+  * [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) is now recommended over Jingle for resizing
+* Older tutorials: https://discord.com/channels/83066801105145856/433058639956410383/1310491974381600788
+* Mapless practice map: <https://github.com/Mescht/BTPractice/releases/latest>
+* PeepoPractice mod (includes mapless split) *(‼️Requires Java 17+ and is incompatible with FastReset mod):*
+<https://github.com/faluhub/peepoPractice/releases/latest>"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="discords", description="Gives a link to the MCSR discords spreadsheet.")
@@ -779,7 +782,9 @@ If you don't have an F3 key at all, which means you need to press Fn-3 to use F3
 - [Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
 More updated guides:
 - [Modern bridge routes](<https://docs.google.com/spreadsheets/d/1TYV8RBFb4sV2VRQRZGKPjN-hTPS6bx9UllXKChZyIa0/edit?pli=1&gid=0#gid=0>)
-- [Stables triple to gap](<https://www.youtube.com/watch?v=D4Ulw7VepJc>)"""
+- [Stables triple to gap](<https://www.youtube.com/watch?v=D4Ulw7VepJc>)
+Bastion practice map:
+<https://github.com/LlamaPag/bastion/releases/latest>"""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
@@ -787,7 +792,8 @@ More updated guides:
         text = """Basic fortress guide: <https://youtu.be/pmx9LyUvLTk> (find fortress with pieray, blaze bed/tnt, spawnerless and more)
 More tips: <https://youtu.be/9LpyDBPC3u4>
 More updated blaze bed setups: <https://youtu.be/n11v-59LJnA>
-Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>"""
+Dynamic rd spawnerless (advanced technique): <https://youtu.be/qfwyFWTY3ds>
+Blaze practice map: <https://github.com/Mescht/Blaze-Practice/releases/latest>"""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fsg", description="Gives a link to the FSG mod and discord server.")
@@ -800,7 +806,12 @@ Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
     
     @commands.slash_command(name="crafting", description="Gives links to search crafting resources.")
     async def crafting(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Search crafting resources: https://frontcage.com/t/search-crafting-resource-collection/32"""
+        text = """Crafting practice maps:
+[Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>)
+[Search crafting](<https://github.com/7rowl/Search-Crafting-Practice/releases/latest>)
+
+Search crafting resources:
+https://frontcage.com/t/search-crafting-resource-collection/32"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyelineup", description="Gives a guide to lining up the crosshair on the ender eye for measuring.")
@@ -862,7 +873,12 @@ Github: <https://github.com/Knawk/mc-MiniPracticeKit>"""
 
     @commands.slash_command(name="onecycle", description="Gives a link to a onecycle tutorial.")
     async def onecycle(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = "https://youtu.be/JaVyuTyDxxs"
+        text = """One Cycle practice maps:
+[End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice/releases/latest>)
+[Zero Cycle (Includes one cycle practice)](<https://github.com/Mescht/Zero-Practice/releases/latest>)
+
+One Cycle tutorial:
+https://youtu.be/JaVyuTyDxxs"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="overlay", description="Gives a guide to changing your eye measuring overlay.")
@@ -887,7 +903,10 @@ Github: <https://github.com/Knawk/mc-MiniPracticeKit>"""
 
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
     async def portals(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Common magma ravine portals:
+        text = """Portal practice map:
+<https://github.com/Semperzz/Portal-Practice/releases/latest>
+
+Common magma ravine portals:
 <https://www.youtube.com/watch?v=mLuxNQZshy0>
 
 Other portals:
