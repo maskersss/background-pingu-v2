@@ -789,7 +789,8 @@ class Log:
             match = re.search(crash_pattern, log, re.DOTALL)
             if not match is None:
                 stacktrace = match.group().lower()
-                stacktrace = stacktrace.replace(self.minecraft_folder.lower(), "")
+                if not self.minecraft_folder is None:
+                    stacktrace = stacktrace.replace(self.minecraft_folder.lower(), "")
                 return i, stacktrace
         
         return None, None
