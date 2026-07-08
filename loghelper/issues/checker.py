@@ -435,14 +435,21 @@ class IssueChecker:
                 found_crash_cause = True
         
         if not found_crash_cause:
-            if self.log.has_pattern(r"require the use of Java 1(7|6)"):
+            if self.log.has_content("require the use of Java 25"):
+                builder.error(
+                    "need_new_java_mc",
+                    25,
+                    f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
+                ).add(self.log.java_update_guide)
+                found_crash_cause = True
+            elif self.log.has_pattern(r"require the use of Java 1(7|6)"):
                 builder.error(
                     "need_new_java_mc",
                     17,
                     f", but you're using `Java {self.log.major_java_version}`" if not self.log.major_java_version is None else "",
                 ).add(self.log.java_update_guide)
                 found_crash_cause = True
-            if (self.log.is_newer_than("26.1")
+            elif (self.log.is_newer_than("26.1")
                 and not self.log.major_java_version is None
                 and self.log.major_java_version < 25
             ):
