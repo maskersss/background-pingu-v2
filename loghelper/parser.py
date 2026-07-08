@@ -846,6 +846,11 @@ class Log:
             match = re.search(pattern, stacktrace)
             if not match is None:
                 trimmed_stacktrace = match.group(1)
+        elif stacktrace_num == 10:
+            pattern = r"(?m)^unhandled game exception.*\r?\n([^\r\n]*\r?\n[^\r\n]*)"
+            match = re.search(pattern, stacktrace)
+            if not match is None:
+                trimmed_stacktrace = match.group(1)
         elif stacktrace_num in [11, 12]:
             pattern = r"(?m)^# problematic frame:.*\r?\n([^\r\n]*)"
             match = re.search(pattern, stacktrace)
