@@ -84,12 +84,13 @@ class Tips(Cog):
     async def log(
         self,
         ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MultiMC", "Prism", "Modrinth App", "Other"], required=False, default="MultiMC"),
+        launcher: discord.Option(str, choices=["MultiMC", "Prism", "Modrinth App", "Other", "Prism (launcher log)"], required=False, default="MultiMC"),
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         if launcher == "MultiMC": link = "https://i.imgur.com/MfrJwcM.png"
         elif launcher == "Prism": link = "https://i.imgur.com/b8HOzdP.png"
         elif launcher == "Modrinth App": link = "https://media.discordapp.net/attachments/727673359860760627/1446445444732420179/image.png"
+        elif launcher == "Prism (launcher log)": link = "https://i.imgur.com/Te1GYuD.png"
         else: link = "https://media.discordapp.net/attachments/433058639956410383/1061333462826614844/image.png"
         text = f"Please send a log by following this image[:]({link})"
         return await self._respond(ctx, text, mention)
