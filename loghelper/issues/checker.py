@@ -1266,13 +1266,13 @@ class IssueChecker:
         ):
             builder.error("old_mod_version", "AreEssGee", "https://github.com/faluhub/AreEssGee/releases/latest/")
         
-        if self.log.has_pattern(r"^Prism Launcher version: [2-9]"):
-            if self.log.has_pattern(r"^Prism Launcher version: [8-9]"):
-                builder.note("semi_old_prism_version")
-            else:
+        if self.log.has_pattern(r"^Prism Launcher version: (?:[2-9]|1[0-0])"):
+            if self.log.has_pattern(r"^Prism Launcher version: [2-7]"):
                 builder.note("old_prism_version")
                 if self.log.has_content("AppData/Roaming/PrismLauncher"): builder.add("update_prism_installer")
-
+            else:
+                builder.note("semi_old_prism_version")
+            
         match = re.search(r"^MultiMC version: 0\.7\.0-(.{4})", self.log._content)
         if not match is None and self.log.operating_system == OperatingSystem.WINDOWS:
             if match.group(1) < "3863" or match.group(1) == "stab": # STABle
