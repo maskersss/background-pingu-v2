@@ -648,6 +648,7 @@ class IssueChecker:
         
         if (self.log.operating_system == OperatingSystem.MACOS
             and not self.log.is_intel_mac
+            and self.log.is_multimc_or_fork
             and not self.log.has_content("32-bit architecture")
             and not self.log.has_content("aarch64")
         ):
@@ -1025,6 +1026,7 @@ class IssueChecker:
             found_crash_cause = True
 
         if (not found_crash_cause
+            and self.log.operating_system in [None, OperatingSystem.LINUX]
             and (self.log.has_content("org.lwjgl.LWJGLException: Could not choose GLX13 config")
                  or self.log.has_content("GLFW error 65545: GLX: Failed to find a suitable GLXFBConfig"))
         ):
