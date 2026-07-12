@@ -638,7 +638,7 @@ Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13l
 
     @commands.slash_command(name="standardsettings", description="Explains what StandardSettings is.")
     async def standardsettings(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """If your settings reset whenever you create a world, you are probably using StandardSettings.
+        text = """If your settings reset whenever you create a world, you are probably using [StandardSettings](<https://github.com/contariaa/StandardSettings>).
 If you want to change which settings reset and what do they reset to, go to Options > Book and Quill > StandardSettings and configure them.
 If you don't want your settings to reset, set "Use StandardSettings" there to "OFF"."""
         return await self._respond(ctx, text, mention)

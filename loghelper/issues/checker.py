@@ -500,7 +500,7 @@ class IssueChecker:
                 ).add(self.log.setup_guide)
                 found_crash_cause = True
         
-        pattern = r"This instance is not compatible with Java version (\d+)\.\nPlease switch to one of the following Java versions for this instance:\nJava version (\d+)"
+        pattern = r"This instance is not compatible with Java version (\d+)\.\n+Please switch to one of the following Java versions for this instance:\nJava version (\d+)"
         match = re.search(pattern, self.log._content)
         if not found_crash_cause and not match is None:
             switch_java = False

@@ -372,9 +372,11 @@ class Log:
             "prism",
             "polymc",
             "pollymc",
-            "mcsr launcher",
-            "Running Toolscreen...", # mcsr launcher
         ]]):
+            return LogType.FULL_LOG
+
+        # mcsrlauncher logs some stuff before the line below
+        if self.has_content("MCSR Launcher version: "):
             return LogType.FULL_LOG
 
         if any(self.has_content(thread_dump) for thread_dump in [
