@@ -796,7 +796,10 @@ class IssueChecker:
             found_crash_cause = True
 
         if (not found_crash_cause
-            and self.log.has_content("Not enough RAM available to launch this instance")
+            and any(self.log.has_content(pc_oom) for pc_oom in [
+                "Not enough RAM available to launch this instance",
+                "The system is under high memory pressure",
+            ])
         ):
             if not self.log.has_content("Main class:"):
                 builder.error("out_of_memory_pc_warning")
