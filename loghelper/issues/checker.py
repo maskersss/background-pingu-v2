@@ -1675,11 +1675,15 @@ class IssueChecker:
         elif ((self.log.major_java_version is None
                or self.log.major_java_version >= 25)
             and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
+            and self.log.has_pattern(r"  \[jvm\.dll[+ ]0x.+\]")
             and (self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2cd888\]")
                  # prism microsoft java 25.0.1
-                 or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c6a18\]"))
+                 or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c6a18\]")
                  # - https://mclo.gs/YAQEgK6
                  #   C:/Program Files/Java/jdk-25.0.2/bin/javaw.exe
+                 or self.log.has_pattern(r"  \[jvm\.dll[+ ]0x2c66e8\]"))
+                 #   C:/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot/bin/javaw.exe
+                 #   C:/Program Files/Java/jdk-25.0.3+9/bin/java.exe
                  # also 0x2cdd08 ?
                  # - https://mclo.gs/aJ9Eb3o
                  #   C:/Program Files/Microsoft/jdk-25.0.3.9-hotspot/bin/javaw.exe
