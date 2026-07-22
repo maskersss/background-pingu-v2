@@ -131,6 +131,7 @@
     "error.locked_libs": "Another process appears to be locking your native library JARs. To solve this, restart your PC.",
     "error.lwjgl_3_3_6": "You are using `LWJGL 3.3.6`, which isn't legal and often causes issues. Use `LWJGL 3.3.3` (which is legal) instead.",
     "error.lwjgl_3_4_1": "You are using `LWJGL 3.4.1`, which isn't legal and often causes issues. Use `LWJGL 3.3.3` (which is legal) instead.",
+    "error.lwjgl_3_4_2_draftout": "You are using `LWJGL 3.4.2`, which is causing this crash. Use `LWJGL 3.4.1` instead.",
     "error.m1_multimc_hack": "You seem to be using `M1 MultiMC hack`. It can often cause issues. You should use [**Prism Launcher**](https://prismlauncher.org/) instead.",
     "error.mac_too_new_java": "You are using too new of a `Java` version. Please follow the steps on [**this wiki page**](https://prismlauncher.org/wiki/getting-started/installing-java/#older-minecraft-on-macos) to install 8u241.",
     "error.macos_armorstand_crash": "This is a crash caused by `Sodium Mac` on `MacOS`. To fix it, add `mixin.features.gui.font=false` to the bottom of `.minecraft/config/sodium-mixins.properties`.",

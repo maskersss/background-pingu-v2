@@ -1816,6 +1816,10 @@ class IssueChecker:
                           "?" if self.log.type is None else self.log.type.value,
                           self.log.launcher.value,
                           self.log.edit_instance)
+
+        if self.log.stacktrace_hash == "0c02080a":
+            builder.error("lwjgl_3_4_2_draftout", experimental=True)
+            found_crash_cause = True
         
         if (not found_crash_cause
             and self.is_discord
