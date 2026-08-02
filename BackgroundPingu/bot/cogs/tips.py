@@ -119,7 +119,7 @@ If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR 
 If you want to unlink OneDrive, follow [this link](<https://support.microsoft.com/en-au/office/turn-off-disable-or-uninstall-onedrive-f32a17ce-3336-40fe-9c38-6efb09f944b0>)."""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="oneshot", description="Links the oneshot guides.")
+    @commands.slash_command(name="oneshot", description="Links guides for killing the dragon with a single arrow.")
     async def oneshot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """<https://youtu.be/717kfB39gjQ> - original oneshot tutorial with lots of detail on underlying mechanics, but outdated for specific technique. worth watching if you want to understand the mechanics.
 https://youtu.be/R3iebSGQPkU - damageless oneshot tutorial, light on details but explains the technique that is best for regular speedruns.
@@ -357,6 +357,7 @@ Boateye guide: <https://youtu.be/RmAmL7JhGJw>
 
 Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
+Collection of Linux MCSR resources: <https://linux-mcsr-resources.github.io/>
 
 resetti (for window resizing on X11, and multi-instancing on versions without SeedQueue): <https://github.com/tesselslate/resetti>
 waywall (for window resizing on Wayland + many useful features): <https://tesselslate.github.io/waywall>
@@ -627,8 +628,8 @@ Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13l
             else:
                 text += "\n- Village / Fortress: ```root.tick.level.entities.blockEntities```"""
         
-        if not draftout:
-            text += "\nIf you're using the StandardSettings mod, you can paste it into the `Pie Directory` option in `Options > Book and Quill > StandardSettings` to reset your pie chart to the given directory on reset."
+        text += "\n\nPie Chart directories for other Minecraft versions: <https://docs.google.com/spreadsheets/d/1Z3yi0v4snTotHmMe_Xu42vt36TmBejYuNOKr3OjXu6Y>"
+        text += "\n\nIf you're using the StandardSettings mod, paste them into the `Pie Directory` option in `Options ➔ Book and Quill ➔ StandardSettings` to reset your Pie Chart to the given directory on reset."
 
         return await self._respond(ctx, text, mention)
 
@@ -676,7 +677,7 @@ https://modrinth.com/modpack/speedrun"""
 [Bastions](<https://github.com/LlamaPag/bastion/releases/latest>)
 [Blaze](<https://github.com/Mescht/Blaze-Practice/releases/latest>)
 [Buried treasure](<https://github.com/Mescht/BTPractice/releases/latest>)
-[Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>) / [Search crafting](<https://github.com/7rowl/Search-Crafting-Practice/releases/latest>)
+[Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>) / [Search crafting](<https://github.com/Mescht/Searchcraft-Practice/releases/latest>)
 [One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice/releases/latest>)
 [Overworld](<https://github.com/7rowl/OWPractice/releases/latest>)
 [Portals](<https://github.com/Semperzz/Portal-Practice/releases/latest>)
@@ -809,7 +810,7 @@ Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
     async def crafting(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Crafting practice maps:
 [Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>)
-[Search crafting](<https://github.com/7rowl/Search-Crafting-Practice/releases/latest>)
+[Search Crafting](<https://github.com/Mescht/Searchcraft-Practice/releases/latest>)
 
 Search crafting resources:
 https://frontcage.com/t/search-crafting-resource-collection/32"""
