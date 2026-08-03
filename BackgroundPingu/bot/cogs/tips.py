@@ -535,22 +535,6 @@ Otherwise, if you have an issue/a question, describe it{temp}, and try to provid
     async def wall(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         return await self.seedqueue(ctx, mention=mention)
     
-    @commands.slash_command(name="zgc", description="Gives an explanation of Z Garbage Collector.")
-    async def zgc(
-        self,
-        ctx: discord.ApplicationContext,
-        launcher: discord.Option(str, choices=["MultiMC / Prism", "Official Launcher"], required=False, default="MultiMC / Prism"),
-        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-    ):
-        text = """Z Garbage Collector (ZGC) is a garbage collector that improves performance and reduces lag spikes, though it uses more memory. It's currently **recommended** over the default GC if you use SeedQueue.
-To use ZGC, set Minecraft to use Java 17+ if you haven't already done so (do `/java`), then"""
-        if launcher == "MultiMC / Prism":
-            text += "\n- If you're on MultiMC or Prism: Go to `Settings > Java` and set your JVM arguments to `-XX:+UseZGC`."
-        else:
-            text += "\n- If you're on the official Minecraft launcher: Go to Installations > \"...\" for the installation you're using > Edit > More options and in the JVM arguments text field, find and replace `-XX:+UseG1GC` with `-XX:+UseZGC`."
-        
-        return await self._respond(ctx, text, mention)
-    
     @commands.slash_command(name="godsens", description="Gives a godsens guide for boateye.")
     async def godsens(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """* Use [this calculator](https://qmaxxen.github.io/Toolscreen-sens-calc/) to set up your godsens
