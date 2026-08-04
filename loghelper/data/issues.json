@@ -26,6 +26,7 @@
     "add.fabric_guide_prism": "You can {} Fabric by doing `Edit > Version > Install Loader > Fabric` in `Prism`.",
     "add.fairplay_ranked_useless": "Note that `MCSR Fairplay` is entirely useless for `MCSR Ranked`.",
     "add.intell_hd2000_info": "For more information about this issue and possible solutions, please refer to [**this page**](https://prismlauncher.org/wiki/getting-started/installing-java/#a-note-about-intel-hd-20003000-on-windows-10).",
+    "add.java_args_mmc": "To edit per-instance Java arguments, go to `Edit{} > Settings > Java`.",
     "add.java_guide.discord": "Do `/recommend_settings` for a guide on how to fix it.",
     "add.java_guide.web": "Upload your log to [**this website**](https://maskers.xyz/sq-settings/) for a guide on how to fix it.",
     "add.java_guide_javacord": "DM `/recommend_settings` to me for a guide on how to fix it.",

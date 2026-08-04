@@ -580,6 +580,7 @@ class IssueChecker:
             match = re.search(pattern, self.log._content)
             if not match is None:
                 builder.error("newline_in_java_args", self.log.get_java_arg(match.group(1)))
+                builder.add(*self.log.java_arg_guide)
                 found_crash_cause = True
             
             pattern = r" VM option '(.*)'"
@@ -591,6 +592,7 @@ class IssueChecker:
                         builder.add("read_pls")
                 else:
                     builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
+                    builder.add(*self.log.java_arg_guide)
                 found_crash_cause = True
         
         if (not found_crash_cause
@@ -889,6 +891,7 @@ class IssueChecker:
             if not match is None:
                 if match.group(1) == "":
                     builder.error("newline_in_java_args", " ")
+                    builder.add(*self.log.java_arg_guide)
                 else:
                     builder.error("wrong_java_arg", self.log.get_java_arg(match.group(1)))
                 found_crash_cause = True
@@ -1059,7 +1062,7 @@ class IssueChecker:
             and self.log.operating_system in [None, OperatingSystem.MACOS]
             and self.log.has_content_in_stacktrace("java.lang.IllegalStateException: GLFW error before init: [0x10008]Cocoa: Failed to find service port for display")
         ):
-            builder.error("incompatible_forge_mac")
+            builder.error("incompatible_forge_mac").add(*self.log.java_arg_guide)
             found_crash_cause = True
 
         if (not found_crash_cause
@@ -1457,7 +1460,7 @@ class IssueChecker:
             builder.error(
                 "turkish_crash",
                 experimental=experimental,
-            )
+            ).add(*self.log.java_arg_guide)
             if not experimental: found_crash_cause = True
         
         if self.log.has_mod("beachfilter"):
@@ -1689,8 +1692,10 @@ class IssueChecker:
                  #   C:/Program Files/Microsoft/jdk-25.0.3.9-hotspot/bin/javaw.exe
         ):
             builder.error("eav_crash", experimental=True)
-            if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25")
-            else: builder.add("eav_crash_java_25_2")
+            if self.log.is_newer_than("1.20.5"):
+                builder.add("eav_crash_java_25").add(*self.log.java_arg_guide)
+            else:
+                builder.add("eav_crash_java_25_2")
             found_crash_cause = True
         
         elif (len(self.log.whatever_mods) == 0 or self.log.has_mod("xaero")) and self.log.has_content("Field too big for insn"):
@@ -1709,8 +1714,11 @@ class IssueChecker:
                 and not self.log.has_java_argument("-XX:CompileCommand=exclude,io/netty/util/internal/ReferenceCountUpdater,retryRelease0")
                 and self.log.has_content("  [jvm.dll")
             ):
-                if self.log.is_newer_than("1.20.5"): builder.add("eav_crash_java_25", bold=True)
-                else: builder.add("eav_crash_java_25_2", bold=True)
+                if self.log.is_newer_than("1.20.5"):
+                    builder.add("eav_crash_java_25", bold=True)
+                    builder.add(*self.log.java_arg_guide, bold=True)
+                else:
+                    builder.add("eav_crash_java_25_2", bold=True)
             if self.log.has_pattern(r"  \[ntdll\.dll\+(0x[0-9a-f]+)\]"):
                 builder.add("eav_crash_obs", bold=True)
                 builder.add("eav_crash_obs_1", bold=True)

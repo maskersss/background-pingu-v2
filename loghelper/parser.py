@@ -721,6 +721,12 @@ class Log:
         return "java_update_guide"
 
     @cached_property
+    def java_arg_guide(self) -> str | None:
+        if self.is_multimc_or_fork:
+            return ("java_args_mmc", self.edit_instance)
+        return (None,)
+
+    @cached_property
     def update_mods(self) -> str | None:
         if (self.operating_system == OperatingSystem.MACOS
             or not self.minecraft_version in [None, "1.16.1"]
