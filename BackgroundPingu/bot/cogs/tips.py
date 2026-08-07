@@ -629,6 +629,11 @@ If you want to change which settings reset and what do they reset to, go to Opti
 If you don't want your settings to reset, set "Use StandardSettings" there to "OFF"."""
         return await self._respond(ctx, text, mention)
 
+    @commands.slash_command(name="stablestriple", description="Explains how to know which triple you're in in a stables.")
+    async def stablestriple(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        text = "https://i.imgur.com/luqad2E.png"
+        return await self._respond(ctx, text, mention)
+
     # remove the spaces          (here) when uncommenting, also for `/modpack`
     '''@commands.slash_command(name = "modpack_list", description="Gives a list of MCSR modpacks.")
     async def modpack_list(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
