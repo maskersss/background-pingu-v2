@@ -283,9 +283,9 @@ Tutorial: https://youtu.be/Gp6EnDs24NI"""
                     else: in_channel = f" in <#{support_cid}>"
                 break
         
-        text = f"""To troubleshoot issues with Ninjabrain Bot, please send the following information{in_channel}:
+        text = f"""To troubleshoot issues with Ninjabrain Bot, please send the following information{in_channel} so someone can review it:
 - Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-- Drag and drop these files in your instance folder: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt` into Discord
+- Drag and drop these files from your instance folder into Discord: `.minecraft/config/mcsr/standardsettings.json` and `.minecraft/options.txt` 
 Also, make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom (or Jingle ➔ Scripts ➔ Resizing ➔ Customize ➔ "Eye measuring size") is set to `384x16384` , and make sure you're switching to 30 FOV.
 -# You don't need to retype this command, it just sends this text."""
         return await self._respond(ctx, text, mention)
