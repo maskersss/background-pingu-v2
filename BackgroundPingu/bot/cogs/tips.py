@@ -634,7 +634,7 @@ If you don't want your settings to reset, set "Use StandardSettings" there to "O
         text = "https://i.imgur.com/luqad2E.png"
         return await self._respond(ctx, text, mention)
 
-    # remove the spaces          (here) when uncommenting, also for `/modpack`
+    # remove the spaces          (here) when uncommenting
     '''@commands.slash_command(name = "modpack_list", description="Gives a list of MCSR modpacks.")
     async def modpack_list(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """### Modpacks for [PrismLauncher](<https://prismlauncher.org/>) / [MultiMC](<https://multimc.org/>) / [ATLauncher](<https://atlauncher.com/>)

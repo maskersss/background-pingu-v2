@@ -774,7 +774,9 @@ class IssueChecker:
                 elif self.log.max_allocated > max_limit_2:
                     builder.note("too_much_ram").add(*self.log.ram_guide)
 
-        if self.log.has_content("There is not enough space on the disk"):
+        if (self.log.has_content("There is not enough space on the disk")
+            or self.log.has_content("No space left on device")
+        ):
             if self.log.operating_system in [OperatingSystem.WINDOWS, None]:
                 builder.error("out_of_disk_space_windows")
             else:
