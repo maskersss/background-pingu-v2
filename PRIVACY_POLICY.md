@@ -1,12 +1,12 @@
 # Privacy Policy
 
-_Last updated: 22.07.2024_
+_Last updated: 13.08.2026_
 
 ## Bot Overview
 
 Background Pingu is a Discord bot designed for automatic parsing of Minecraft logs, primarily for the MCSR (Minecraft Speedrunning) community. It provides insights and identifies common issues within Minecraft logs. The bot processes messages in real-time and replies with the necessary insights or information. Background Pingu does not collect or store any personal information long-term.
 
-The bot's source code is available on [GitHub](https://github.com/faluhub/background-pingu-v2).
+The bot's source code is available on [GitHub](https://github.com/maskersss/background-pingu-v2).
 
 ## Data Collection
 
