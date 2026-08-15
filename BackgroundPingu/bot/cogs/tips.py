@@ -264,8 +264,10 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
 
     @commands.slash_command(name="ninjabrainbot", description="Gives a guide to using Ninjabrain Bot.")
     async def ninjabrainbot(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """Download: <https://github.com/Ninjabrain1/Ninjabrain-Bot/releases/latest>
-Tutorial: https://youtu.be/Gp6EnDs24NI"""
+        text = """Ninjabrain Bot is a calculator used to find the location of Strongholds.
+
+Download: <https://github.com/Ninjabrain1/Ninjabrain-Bot/releases/latest>
+Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbbfaq", description="Links a Ninjabrain Bot FAQ document.")
