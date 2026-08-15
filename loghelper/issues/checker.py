@@ -64,6 +64,8 @@ class IssueChecker:
         self.assume_as_legal_draftout = [
             "draftout",
             "commandqmod",
+            "no-telemetry",
+            "nochatrestrictions",
         ]
         self.assume_as_legal_ranked = [
             "replaymod",
@@ -365,7 +367,7 @@ class IssueChecker:
 
         if len(self.log.mods) == 0:
             for mod in self.log.fabric_mods:
-                if any(weird_mod in mod.lower() for weird_mod in self.assume_as_legal): continue
+                if any(weird_mod.lower() in mod.lower() for weird_mod in self.assume_as_legal): continue
                 metadata = self.get_mod_metadata(mod)
                 if metadata is None: illegal_mods.append(mod)
             if is_mcsr_log and len(illegal_mods) > 0:
