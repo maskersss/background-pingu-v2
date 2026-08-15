@@ -357,7 +357,7 @@ To run several instances, use **SeedQueue** (watch the above video).
 [SlackowWall](<https://github.com/Slackow/SlackowWall/releases/latest>): used for resizing Minecraft.
 Boateye guide: <https://youtu.be/RmAmL7JhGJw>
 
-Mac speedrunning discord: <https://discord.gg/sczfsdE39W>"""
+Mac speedrunning discord: <https://discord.gg/invite/sczfsdE39W>"""
         elif os == "Linux": text = """Guide to setup Minecraft for speedrunning on Linux: <https://its-saanvi.github.io/linux-mcsr>
 Collection of Linux MCSR resources: <https://linux-mcsr-resources.github.io/>
 
@@ -449,11 +449,10 @@ If you want worlds to be deleted automatically, you can use the [**Jingle WorldB
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
     async def seedqueue(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """SeedQueue is a mod that is meant to replace multi-instancing. Instead of having multiple Minecrafts generating worlds open at the same time, it does it all in just one Minecraft instance. This greatly improves performance, especially for lower end hardware, and is also aimed to make speedrunning more accessible.
-Download: <https://github.com/contariaa/seedqueue/releases>
-Explanation: <https://www.youtube.com/watch?v=fGu2MYZxh_c>
 Tutorial: <https://www.youtube.com/watch?v=l-q-_4R8_6M>
+Download: <https://github.com/contariaa/seedqueue/releases>
 Wiki: <https://github.com/contariaa/seedqueue/wiki>
-Discord server: <https://discord.gg/9P6PJkHCdU>"""
+Discord server: https://discord.gg/9P6PJkHCdU"""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="cape", description="Links a guide for customising your cape.")
@@ -758,7 +757,7 @@ For MCSR Ranked, all external resourcepacks are not allowed."""
         text = """Toolscreen is a program that uses DLL injection to add overlays and instant resizing to the game, in fullscreen or borderless. It also has other functionality such as key rebinding and a virtual camera for screensharing. Magnifiers for EyeZoom, mapless, and preemptive are already set up.
 Setup video: https://youtu.be/YqS-fxPx_jo
 Advanced configuration tutorial: <https://youtu.be/LG13ljK9RPs>
-Discord: <https://discord.com/invite/A2v6bCJg6K>"""
+Discord: <https://discord.gg/invite/A2v6bCJg6K>"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="fnlock", description="Explains that you need to turn off FnLock.")
