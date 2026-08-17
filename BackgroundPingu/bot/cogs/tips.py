@@ -670,7 +670,7 @@ https://modrinth.com/modpack/speedrun"""
 [Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>) / [Search crafting](<https://github.com/Mescht/Searchcraft-Practice/releases/latest>)
 [One cycle & End practice](<https://github.com/ryguy2k4/ryguy2k4endpractice/releases/latest>)
 [Overworld](<https://github.com/7rowl/OWPractice/releases/latest>)
-[Portals](<https://github.com/Semperzz/Portal-Practice/releases/latest>)
+[Portals](<https://github.com/Mescht/Portal-Practice/releases/latest>)
 [Zero cycle](<https://github.com/Mescht/Zero-Practice/releases/latest>) / [Mongeycoaster variant](<https://drive.google.com/drive/folders/1Z9RSDIwlg5E6U5JdrdZPRvqM8AyqZDP->)
 Practice mods:
 [PeepoPractice, for practicing splits](<https://github.com/faluhub/peepoPractice>) (:bangbang: needs java 17+ and is incompatible with fastreset)"""
@@ -896,7 +896,7 @@ https://youtu.be/JaVyuTyDxxs"""
     @commands.slash_command(name="portals", description="Gives a link to the portals spreadsheet.")
     async def portals(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """Portal practice map:
-<https://github.com/Semperzz/Portal-Practice/releases/latest>
+<https://github.com/Mescht/Portal-Practice/releases/latest>
 
 Common magma ravine portals:
 <https://www.youtube.com/watch?v=mLuxNQZshy0>

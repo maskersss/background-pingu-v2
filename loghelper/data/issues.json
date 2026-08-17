@@ -168,7 +168,7 @@
     "error.old_mod_version": "You're using an old `{}` mod version. You should update it, you can download the latest version [**here**]({}).",
     "error.old_sodium_crash": "This crash is caused by using an old version of `Sodium`.",
     "error.old_ts_version": "You're using an old `Toolscreen` version. You should update it, either use the update prompt or download the latest version [**here**](https://github.com/jojoe77777/Toolscreen/releases/latest).",
-    "error.online_launch_required": "Either launch your instance **not** in `offline mode` or do `Edit{} > Version > Download All` so that your launcher can download assets. If Minecraft is getting launched offline by default, try removing and add back your Microsoft account.",
+    "error.online_launch_required": "Either launch your instance **not** in `offline mode` or do `Edit{} > Version > Download All` so that your launcher can download assets. If Minecraft is getting launched offline by default, try updating your launcher or removing & adding back your Microsoft account.",
     "error.openal_crash": "This seems to be a crash caused by `OpenAL`. See [**here**](https://www.reddit.com/r/linux_gaming/comments/18qjnwk/minecraft_crashing_from_openal/) for more details.",
     "error.out_of_disk_space": "It looks like you ran out of disk space. If that's the case, you should free up some space on it.",
     "error.out_of_disk_space_windows": "It looks like you ran out of disk space. If that's the case, you should free up some space on it; [**WizTree**](https://diskanalyzer.com/) is a great tool for it.",

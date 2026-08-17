@@ -869,7 +869,7 @@ class IssueChecker:
                 if self.log.has_java_argument("-XX:+ZGenerational"):
                     builder.warning("use_zgenerational_is_bad")
                     temp = True
-            if temp:
+            if self.log.is_seedqueue_log and temp:
                 if self.server_id == 83066801105145856:
                     builder.add("java_guide_javacord").add("javacord_slash_cmds")
                 else:
