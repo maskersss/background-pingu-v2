@@ -552,13 +552,13 @@ class IssueChecker:
             "Could not start java:\n\n\nCheck your ",
             "Incompatible magic value 0 in class file sun/security/provider/SunEntries",
             "Assertion `version->filename == NULL || ! _dl_name_match_p (version->filename, map)' failed"
-        ]) or self.log.has_pattern(r"The java binary \"(.+)\" couldn't be found.")):
+        ]) or self.log.has_pattern(r"The java binary \"(.+)\" couldn't be found")):
             builder.error("broken_java").add(self.log.java_update_guide)
             if self.log.is_multimc_or_fork and self.log.operating_system != OperatingSystem.LINUX:
                 builder.add("read_pls")
             found_crash_cause = True
         
-        if not found_crash_cause and self.log.has_content("The java binary \"\" couldn't be found."):
+        if not found_crash_cause and self.log.has_content("The java binary \"\" couldn't be found"):
             if self.log.has_content("Please set up java in the settings."): # java isn't selected globally & no override
                 builder.error("no_java").add(self.log.java_update_guide)
                 if self.log.is_multimc_or_fork and self.log.operating_system != OperatingSystem.LINUX:
@@ -1386,7 +1386,9 @@ class IssueChecker:
         if (self.log.is_ranked_log
             and self.log.has_content("Update Status: FAILED_AUTH")
         ):
-            if (not self.log.major_java_version is None
+            if self.log.has_content("/storage/emulated/0/Android/"):
+                builder.error("ranked_failed_auth_android")
+            elif (not self.log.major_java_version is None
                 and self.log.major_java_version < 17
             ):
                 builder.error("ranked_failed_auth_java_8")

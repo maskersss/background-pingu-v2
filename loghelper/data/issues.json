@@ -179,6 +179,7 @@
     "error.pasteee_down": "`paste.ee` seems to be down. Instead, please try the following:\n1. **Copy** your log using the `Copy` button.\n2. Upload it to <https://mclo.gs/>, then provide the link.\n3. Alternatively, paste the log directly into Discord as a message, then:\n   - Right-click the message.\n   - Select `Apps`.\n   - Choose `Recommend Settings`.",
     "error.ranked_atum_crash": "If this crash was caused by going to `Book & Quill` > `Atum`, configure `Atum` by shift clicking gold boots instead.",
     "error.ranked_failed_auth": "To fix `MCSR Ranked` auth issues, try removing your Microsoft account from your launcher and adding it back.",
+    "error.ranked_failed_auth_android": "This auth issue is caused by playing on Android. There is no known workaround for it to make `MCSR Ranked` work on a phone.",
     "error.ranked_failed_auth_java_8": "To fix `MCSR Ranked` auth issues, first try switching to `Java 17+`. If this doesn't help, try removing your Microsoft account from your launcher and adding it back.",
     "error.ranked_mod_crash": "Mod{} `{}` seem{} to be causing this crash. You should ask for help in the [**MCSR Ranked**](https://discord.com/invite/nnjUSyDErj) server.",
     "error.ranked_rong_files": "You're using {} to be fine, but the files don't match. Try redownloading/updating {}.",
