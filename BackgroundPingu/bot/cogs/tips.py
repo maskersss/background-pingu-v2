@@ -305,14 +305,6 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
 More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG13ljK9RPs?t=738>) (timestamped)"""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="waywalldebug", description="Gives a guide to troubleshooting Waywall issues.")
-    async def waywalldebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        text = """To troubleshoot issues with Waywall, please send the following information:
-- Screenshots of these Prism Launcher tabs in top toolbar ➔ Settings: `Java`, `Minecraft ➔ Tweaks`, `Minecraft ➔ Custom Commands`, `Minecraft ➔ Environment Variables`
-- Screenshots of these Prism Launcher tabs in instance settings (right-click instance ➔ Edit... ➔ Settings): `Java`, `Tweaks`, `Environment Variables`
-- All `.lua` files in the `~/.config/waywall` folder (init.lua, config.lua, etc)"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="mpkdebug", description="Gives a guide to debugging MiniPracticeKit not working.")
     async def mpkdebug(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
         text = """To troubleshoot MiniPracticeKit not working, please verify the following:
@@ -326,6 +318,15 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 - A screenshot of the F3 screen in Minecraft
 - A screenshot of: Ctrl+Shift+Esc ➔ **Performance** tab
 - A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)"""
+        return await self._respond(ctx, text, mention)
+
+    @commands.slash_command(name="prelaunch", description="Gives a guide to fix Toolscreen not installing for Prism Launcher.")
+    async def prelaunch(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+        text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0 and it's not working:
+
+- Right click the instance, Edit -> Settings -> Custom Commands
+- Enable "Override Global Settings"
+- Paste this into the Pre-launch command: `"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"` (do not replace anything in it, just that exact text)"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
