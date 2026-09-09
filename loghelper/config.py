@@ -1,5 +1,3 @@
-LINK_PATTERN = r"https:\/\/(?:api\.)?(?:pastee\.dev|paste.ee)\/.\/\w+|https://(?:api\.)?mclo\.gs/(?:1/raw/)?\w+|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)"
-
 MAX_STARTING_LOG_LINES = 3500
 MAX_ENDING_LOG_LINES = 6000
 
@@ -24,9 +22,14 @@ IGNORED_USERS = [
     834848683697635328,    # test
 ]
 
+LEGALMODS_JSON_URL = "https://meta.mc.sr/schema-7/mods.json"
+
 MINIMUM_MOD_VERSIONS = [
     # mod name substring, version , name         , update link
     ("mcsrranked"       , "5.7.12", "MCSR Ranked", "https://modrinth.com/mod/mcsr-ranked/versions/"),
     ("draftout"         , "1.9.0" , "Draftout"   , "https://modrinth.com/mod/draftout/versions/"   ),
     ("fsg-mod"          , "2.4.1" , "FSG Mod"    , "https://modrinth.com/mod/fsg-mod/versions/"    ),
 ]
+
+LINK_PATTERN = r"https:\/\/(?:api\.)?(?:pastee\.dev|paste.ee)\/.\/\w+|https://(?:api\.)?mclo\.gs/(?:1/raw/)?\w+|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)"
+# there's more hardcoded stuff in the code so you generally can't just update ^

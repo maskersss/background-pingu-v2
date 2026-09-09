@@ -1,6 +1,8 @@
 import json, requests
 from pathlib import Path
 
+from loghelper.config import LEGALMODS_JSON_URL
+
 ignored = []
 
 def get_mods(start: bool=True):
@@ -15,7 +17,7 @@ def get_mods(start: bool=True):
     if start: print("Getting mods...")
     path = Path(__file__).parent / "mods.json"
     mods = []
-    link = "https://raw.githubusercontent.com/tildejustin/mcsr-meta/schema-7/mods.json"
+    link = LEGALMODS_JSON_URL
     headers = {'Cache-Control': 'no-cache'}
     res = requests.get(link, headers=headers, timeout=10)
     if res.status_code == 200:
