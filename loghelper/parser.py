@@ -992,9 +992,10 @@ class Log:
                 "lazystronghold",
                 "fast-reset",
                 "atum",
-                "mcsrfairplay",
                 "glacier",
             ]
+            if self.operating_system != OperatingSystem.MACOS:
+                mods.append("mcsrfairplay")
             if all(not self.has_mod(seedqueue_incompatible) for seedqueue_incompatible in [
                 "fsg",
                 "beachfilter",
