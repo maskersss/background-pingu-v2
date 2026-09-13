@@ -1,8 +1,9 @@
 import discord, os, json, dotenv
 from datetime import datetime
-from discord import AutoShardedBot as asb
+from discord import AutoShardedBot
+from discord.enums import IntegrationType
 
-class BackgroundPingu(asb):
+class BackgroundPingu(AutoShardedBot):
     def __init__(self):
         dotenv.load_dotenv()
 
@@ -22,8 +23,12 @@ class BackgroundPingu(asb):
             intents=intents,
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions(everyone=False),
-            owner_ids=[810863994985250836, 695658634436411404],
-            debug_guilds=[1018128160962904114] if self.debug else None
+            owner_ids=[695658634436411404],
+            debug_guilds=[781169188550869022] if self.debug else None,
+            default_command_integration_types={
+                IntegrationType.guild_install,
+                IntegrationType.user_install,
+            },
         )
 
         print("\nLoading cogs..."),

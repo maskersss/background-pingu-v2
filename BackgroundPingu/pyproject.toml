@@ -3,9 +3,8 @@ name = "discord"
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
-  "aiohttp==3.7.4.post0",
   "loghelper",
-  "py-cord==2.4.1",
+  "py-cord==2.8.1",
   "python-dotenv>=0.21.1",
   "requests==2.30.0",
   "Pillow>=10.0.0",
