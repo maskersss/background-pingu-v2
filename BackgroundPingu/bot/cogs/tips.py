@@ -581,7 +581,7 @@ Support discord: <https://discord.gg/cXf86mXAWR>"""
 - For other cases, you can use the **Clear Worlds** button in [**Jingle**](<https://github.com/DuncanRuns/Jingle>) for manual deletion, or the **WorldBopper** plugin (Jingle ➔ Plugins ➔ World Bopper) in Jingle for automatic deletion and more customization."""
         return await self._respond(ctx, text, mention)
     
-    @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
+    @commands.slash_command(name="seedqueue", description="Gives resources for SeedQueue, a wall/multiinstance mod.")
     async def seedqueue(
         self,
         ctx: discord.ApplicationContext,
@@ -690,10 +690,6 @@ Please use :point_right: {channel} :point_left: to ask for help, this will incre
         text = f"""If you want to use bot commands, please use {bot_channel}.
 Otherwise, if you have an issue/a question, describe it{temp}, and try to provide as much information as possible."""
         return await self._respond(ctx, text, mention)
-
-    @commands.slash_command(name="wall", description="Redirects to `/seedqueue`.")
-    async def wall(self, ctx: discord.ApplicationContext, mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
-        return await self.seedqueue(ctx, mention=mention)
     
     @commands.slash_command(name="godsens", description="Gives a godsens guide for boateye.")
     async def godsens(
