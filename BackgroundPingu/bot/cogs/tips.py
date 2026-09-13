@@ -576,8 +576,9 @@ Support discord: <https://discord.gg/cXf86mXAWR>"""
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """To delete worlds, you can use the **Clear Worlds** button in [**Jingle**](<https://github.com/DuncanRuns/Jingle>).
-If you want worlds to be deleted automatically, you can use the [**Jingle WorldBopper plugin**](<https://github.com/marin774/Jingle-WorldBopper-Plugin>)."""
+        text = """To delete worlds:
+- For MCSR Ranked, you can configure how many saves are kept in Ranked Settings ➔ Performance ➔ Max World Saves.
+- For other cases, you can use the **Clear Worlds** button in [**Jingle**](<https://github.com/DuncanRuns/Jingle>) for manual deletion, or the **WorldBopper** plugin (Jingle ➔ Plugins ➔ World Bopper) in Jingle for automatic deletion and more customization."""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="seedqueue", description="Explains what SeedQueue is.")
@@ -1114,8 +1115,7 @@ https://frontcage.com/t/search-crafting-resource-collection/32"""
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """The right edge of the crosshair should line up with the left edge of the eye's middle pixel, as shown in the image below[.](https://cdn.discordapp.com/attachments/1431006887091900439/1462705179097825312/image.png)
-Vertical (up and down) lineup does not matter. The eye always rises to the same height."""
+        text = """Line up the crosshair with the eye as shown in the [image](https://iili.io/Cpir6n2.jpg) below. The vertical line-up does __not__ matter."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="eyewiggle", description="Links a page explaining eye wiggle.")
