@@ -376,7 +376,7 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), to stop resize hotkeys from triggering while the inventory or chat is open, go to Advanced ➔ Hotkeys ➔ (Select the hotkey) ➔ Required Game States, untick `Any`, tick `In World (Cursor Grabbed)` and untick `In World (Cursor Free)`
+        text = """If you are using [Toolscreen](<https://www.youtube.com/watch?v=YqS-fxPx_jo>), to stop resize hotkeys from triggering while the inventory or chat is open, go to Advanced ➔ Hotkeys ➔ (Select the hotkey) ➔ Required Game States, untick `Any`, tick `Any (Cursor Grabbed)` and untick `Any (Cursor Free)`
 
 More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG13ljK9RPs?t=738>) (timestamped)"""
         return await self._respond(ctx, text, mention)
