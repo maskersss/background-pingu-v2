@@ -356,7 +356,7 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
         text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384`, and make sure you're switching to 30 FOV when measuring.
 * Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
 * If you are doing the above correctly then please:
-  * Download and run [this jar file](<67cat.com>) to fix your Ninjabrainbot Settings.
+  * Download and run [this jar file](<https://github.com/maskersss/background-pingu-v2/raw/refs/heads/master/BackgroundPingu/boateye_settings.jar>) to fix your Ninjabrainbot Settings.
   * Drag and drop these files from your instance folder into Discord{in_channel}: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt`.
 -# You don't need to retype this command; it just sends this text."""
         return await self._respond(ctx, text, mention)
