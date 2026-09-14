@@ -51,7 +51,6 @@ class BackgroundPingu(AutoShardedBot):
     
     async def on_connect(self):
         print("Registering commands...")
-        print("Registering commands...")
         await self.sync_commands()
         await self.register_commands()
         print("\nConnected")
