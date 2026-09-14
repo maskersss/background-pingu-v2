@@ -8,3 +8,4 @@ test.py
 run.bat
 test/
 BackgroundPingu/data/old_mods.json
+*discord.egg-info/

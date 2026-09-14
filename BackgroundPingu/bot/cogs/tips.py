@@ -353,12 +353,12 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
                     else: in_channel = f" in <#{support_cid}>"
                 break
         
-        text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
+        text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384`, and make sure you're switching to 30 FOV when measuring.
 * Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
-* If you are doing the above correctly then please send **__all__** of the following information{in_channel} so someone can review it:
-  * Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-  * Drag and drop these files from your instance folder into Discord: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt` 
--# You don't need to retype this command, it just sends this text."""
+* If you are doing the above correctly then please:
+  * Download and run [this jar file](<67cat.com>) to fix your Ninjabrainbot Settings.
+  * Drag and drop these files from your instance folder into Discord{in_channel}: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt`.
+-# You don't need to retype this command; it just sends this text."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbboverlay", description="Links a guide to using the Ninjabrain Bot overlay with Toolscreen.")
@@ -1302,6 +1302,30 @@ If you need help, please ask in {channel}.
 If you have any questions/suggestions about the bot, feel free to ping or dm `maskers`.
 Source code available on [GitHub](<https://github.com/maskersss/background-pingu-v2>)."""
         return await self._respond(ctx, text, mention)
+    @commands.slash_command(name="greenboat", description="Explains why and how green boat is used.")
+    async def greenboat(
+        self, 
+        ctx: discord.ApplicationContext, 
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)
+        ):
+
+        text = "Green boat allows you to measure without having to get into a boat. This is helpful in some rare cases where you lost your boat if you didn't have one from the start. Though, this doesn't mean you should skip using a boat every time - if you turned left or right in a boat at any point of the run, you'll need to get in and out of a boat. For this reason, many players overlap this with going through a Nether Portal."
+        return await self._respond(ctx, text, mention)
+    
+    @commands.slash_command(name="stillmissing", description="Gives other Ninjabrainbot debugging solutions.")
+    async def stillmissing(
+        self,
+        ctx: discord.ApplicationContext, 
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)):
+            
+        text = """If you're still missing after changing your settings to the correct values, make sure:
+- You are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>)
+- Your +1 and -1 hotkeys are not swapped
+- You are accounting for desync ([see here](<https://www.youtube.com/watch?v=uBqAeZMlEFQ>) for more information)
+- You are accounting for eye wiggle ([see here](<https://frontcage.com/t/what-to-do-about-eye-wiggle/14>) for more information)
+- If you still can't figure out why you're missing, send a clip of a missed measurement with Ninjabrainbot visible."""
+        return await self._respond(ctx, text, mention)
+
 
     @commands.slash_command(name="tags", description="Lists all possible tags.")
     async def tags(

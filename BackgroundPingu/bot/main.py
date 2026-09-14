@@ -24,7 +24,7 @@ class BackgroundPingu(AutoShardedBot):
             case_insensitive=True,
             allowed_mentions=discord.AllowedMentions(everyone=False),
             owner_ids=[695658634436411404],
-            debug_guilds=[781169188550869022] if self.debug else None,
+            debug_guilds=[781169188550869022, 1543018842379526224] if self.debug else None,
             default_command_integration_types={
                 IntegrationType.guild_install,
                 IntegrationType.user_install,
@@ -50,6 +50,7 @@ class BackgroundPingu(AutoShardedBot):
                     self.load_cogs(file)
     
     async def on_connect(self):
+        print("Registering commands...")
         print("Registering commands...")
         await self.sync_commands()
         await self.register_commands()

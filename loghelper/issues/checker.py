@@ -154,6 +154,11 @@ class IssueChecker:
                     return True
         return False
 
+    def get_toolscreen_sens(self, sens: float):
+        numerator = (((0.6 * sens) + 0.2)**3) * 1.2
+        denominator = (((0.6 * 0.02291165) + 0.2)**3) * 1.2
+        return round(numerator / denominator, 2)
+
     def get_dll(self, line: str) -> str | None:
         line = line.rsplit("hookTarget=", 1)[-1]
 
@@ -254,7 +259,8 @@ class IssueChecker:
                 sens = data["mouseSensitivity"]
                 if isinstance(sens, dict): sens = sens["value"]
                 if not self.is_boateye_sens(float(sens)):
-                    builder.error("wrong_sens", sens, "standardsettings.json")
+                    toolscreen_sens = self.get_toolscreen_sens(float(sens))
+                    builder.error("wrong_sens", sens, "standardsettings.json", toolscreen_sens).add("boateye_still_missing")
             except: pass
             
             found_crash_cause = True
@@ -265,7 +271,8 @@ class IssueChecker:
                 sens = match.group(1)
                 try:
                     if not self.is_boateye_sens(float(sens)):
-                        builder.error("wrong_sens", sens, "options.txt")
+                        toolscreen_sens = self.get_toolscreen_sens(float(sens))
+                        builder.error("wrong_sens", sens, "options.txt", toolscreen_sens).add("boateye_still_missing")
                 except ValueError:
                     pass
             
@@ -2098,6 +2105,21 @@ class IssueChecker:
                             builder.error("gamma_draftout")
                         else:
                             builder.error("gamma")
+                    
+                    boateye_indicators = {
+                        "boateye": 5,
+                        r"100 ?(%|percent)": 5,
+                        "working": 5,
+                        r"ninja ?brain ?bot": 5,
+                        }
+
+                    boateye_total = 0
+                    for pattern, value in boateye_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            boateye_total += value
+                    
+                    if asking_for_help_total >= 2 and boateye_total >= 10:
+                        builder.error("boateye_help")    
                 
                 if (not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")

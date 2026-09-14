@@ -14,6 +14,7 @@ SERVER_SUPPORT_BOT_CHANNEL_IDS = [
     (1033677387143061574, 1033763530798800908, None               ), # srigtcord
     (1493030345048719483, 1495250366873206965, 1507390946910928916), # draftoutcord
     (781169188550869022 , 1071138999604891729, None               ), # for testing
+    (1543018842379526224, 1543018842828185610, None               )  # for testing, part 2: electric boogaloo (greenfrog testing server)
 ]
 
 IGNORED_USERS = [
