@@ -1769,22 +1769,25 @@ class IssueChecker:
 
         if not found_crash_cause and self.log.stacktrace is None and self.log.lines > 5:
             if self.log.exitcode == -1073741819:
-                builder.error("exitcode", "-1073741819", experimental=True)
-                builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
-                if (is_mcsr_log and not self.log.major_java_version is None
-                    and self.log.major_java_version < 17): builder.add("eav_crash_java17")
-                if self.log.is_toolscreen_log:
-                    builder.add("eav_crash_ts_hook").add("ts_hook_examples")
-                if is_mcsr_log and not self.log.is_toolscreen_log:
-                    builder.add("eav_crash_jingle_java8")
-                if self.log.lines < 500:
-                    if (self.log.has_mod("sodium")
-                        and not self.log.has_mod("sodiummac")
-                        and self.log.minecraft_version in ["1.16.1", None]
-                    ): builder.add(f"eav_crash_sodium")
-                    if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
-                builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
-                builder.add("eav_crash_drivers").add("eav_crash_hardware")
+                if self.log.is_newer_than("26.3"):
+                    builder.error("stackshadowpages").add(*self.log.java_arg_guide)
+                else:
+                    builder.error("exitcode", "-1073741819", experimental=True)
+                    builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
+                    if (is_mcsr_log and not self.log.major_java_version is None
+                        and self.log.major_java_version < 17): builder.add("eav_crash_java17")
+                    if self.log.is_toolscreen_log:
+                        builder.add("eav_crash_ts_hook").add("ts_hook_examples")
+                    if is_mcsr_log and not self.log.is_toolscreen_log:
+                        builder.add("eav_crash_jingle_java8")
+                    if self.log.lines < 500:
+                        if (self.log.has_mod("sodium")
+                            and not self.log.has_mod("sodiummac")
+                            and self.log.minecraft_version in ["1.16.1", None]
+                        ): builder.add(f"eav_crash_sodium")
+                        if self.log.mods is None or len(self.log.mods) > 0: builder.add(f"eav_crash_mods")
+                    builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
+                    builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740791:
                 builder.error("exitcode", "-1073740791", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
