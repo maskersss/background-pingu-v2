@@ -105,7 +105,7 @@ class Tips(Cog):
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        return await self.log(ctx, "MultiMC", mention=mention)
+        return await self.log(ctx, launcher="MultiMC", mention=mention)
 
     @commands.slash_command(name="borderless", description="Explains how to run Minecraft as a borderless window.")
     async def borderless(
