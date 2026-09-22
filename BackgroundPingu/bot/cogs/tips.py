@@ -404,17 +404,27 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 - A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)"""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="prelaunch", description="Gives a guide to fix Toolscreen not installing for Prism Launcher.")
+    @commands.slash_command(name="prelaunch", description="Gives a guide to fix Toolscreen not installing.")
     async def prelaunch(
         self,
         ctx: discord.ApplicationContext,
-        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None)
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
+        launcher: discord.Option(str, choices=["Prism", "Modrinth App"], required=False, default="Prism"),
     ):
-        text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0 and it's not working:
+        if launcher == "Prism":
+            text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0 and it's not working:
 
 - Right click the instance, Edit -> Settings -> Custom Commands
 - Enable "Override Global Settings"
-- Paste this into the Pre-launch command: `"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"` (do not replace anything in it, just that exact text)"""
+- If you use Toolscreen.**jar**, paste this into the Pre-launch command:
+`"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"` (do not replace anything in it, just that exact text)
+- If you use Toolscreen.**exe **paste this into the Pre-launch command: 
+`"$INST_DIR/Toolscreen.exe"` (do not replace anything in it, just that exact text)"""
+        else:
+            text = """If you are trying to install Toolscreen onto Modrinth App and it's not working:
+- download the jar in your instance folder
+- rename it to Toolscreen.jar
+- set your instance settings like that[:](https://cdn.discordapp.com/attachments/1472103453806563484/1520512031852199997/image.png) (value: `"PATHTOYOUR\javaw.exe" -jar "PATHTOYOURMODRINTH\profiles\myinstance\Toolscreen.jar" --prelaunch`); replace `PATHTOYOUR...` with actual paths on your system"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
