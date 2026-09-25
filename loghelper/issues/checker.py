@@ -654,19 +654,31 @@ class IssueChecker:
             and not self.log.is_intel_mac
             and self.log.is_multimc_or_fork
             and not self.log.has_content("32-bit architecture")
-            and not self.log.has_content("aarch64")
+            and not self.log.has_content("aarch64) architecture")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 if self.log.is_arm_mac:
                     builder.warning("mac_use_prism")
                 else:
                     builder.note("mac_use_prism")
-                builder.add("mac_setup_guide").add("prism_mmc_migrate")
+                builder.add(self.log.setup_guide).add("prism_mmc_migrate")
             elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
                 if self.log.is_arm_mac:
                     builder.warning("mac_use_arm_java")
                 else:
                     builder.note("mac_use_arm_java")
+                if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
+        
+        if (self.log.is_arm_windows
+            and self.log.is_multimc_or_fork
+            and not self.log.has_content("32-bit architecture")
+            and not self.log.has_content("aarch64) architecture")
+        ):
+            if self.log.launcher == Launcher.MULTIMC:
+                builder.warning("snapdragon_use_prism")
+                builder.add(self.log.setup_guide).add("prism_mmc_migrate")
+            elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
+                builder.warning("snapdragon_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
         
         if (not found_crash_cause
@@ -923,7 +935,7 @@ class IssueChecker:
                 and not self.log.has_library("3.3.3/lwjgl")
                 and not self.log.is_newer_than("1.21.5")
             ):
-                builder.error("linux_update_lwjgl")
+                builder.error("update_lwjgl")
                 found_crash_cause = True
             
             elif (not self.log.has_env_var("__GL_THREADED_OPTIMIZATIONS")
@@ -960,7 +972,7 @@ class IssueChecker:
                 found_crash_cause = True
                 
             if is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
-                builder.note("linux_update_lwjgl")
+                builder.note("update_lwjgl")
             
             if (self.log.is_waywall_log
                 and self.log.java_arguments
@@ -1004,13 +1016,20 @@ class IssueChecker:
                 builder.warning("linux_nvidia_crash_misspell")
         # linux crashes end
 
-        if is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.4.1/lwjgl"):
-            builder.error("lwjgl_3_4_1")
-            if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+        if self.log.is_arm_windows:
+            if is_mcsr_log and self.log.has_library("3.2.2/lwjgl"):
+                builder.note("update_lwjgl")
 
-        elif is_mcsr_log and not self.log.is_newer_than("1.21.5") and self.log.has_library("3.3.6/lwjgl"):
-            builder.error("lwjgl_3_3_6")
-            if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+        if is_mcsr_log and not self.log.is_newer_than("1.21.5"):
+            if self.log.has_library("3.4.3/lwjgl"):
+                builder.error("lwjgl_3_4_3")
+                if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+            elif self.log.has_library("3.4.1/lwjgl"):
+                builder.error("lwjgl_3_4_1")
+                if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
+            elif self.log.has_library("3.3.6/lwjgl"):
+                builder.error("lwjgl_3_3_6")
+                if self.log.has_content_in_stacktrace("glfw"): found_crash_cause = True
         
         if self.log.has_content_in_stacktrace("GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT"):
             if self.log.operating_system == OperatingSystem.MACOS:
@@ -1092,7 +1111,7 @@ class IssueChecker:
             "[LWJGL] Platform/architecture mismatch detected for module: org.lwjgl",
             "Failed to locate library: lwjgl.dll",
         ]):
-            builder.error("try_changing_lwjgl_version", self.log.edit_instance, experimental=True)
+            builder.error("maybe_lwjgl_version_crash", self.log.edit_instance, experimental=True)
         
         if not found_crash_cause and not self.log.is_newer_than("1.13") and self.log.has_pattern(r"Switching to No Sound\s*[^\n]*\(Silent Mode\)"):
             builder.error("silent_mode", self.log.edit_instance, experimental=True)

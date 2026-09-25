@@ -217,6 +217,16 @@ class Log:
         return False
 
     @cached_property
+    def is_arm_windows(self) -> bool:
+        if not self.operating_system in [OperatingSystem.WINDOWS, None]: return False
+
+        if any(self.has_content(arm) for arm in [
+            "snapdragon",
+        ]): return True
+
+        return False
+
+    @cached_property
     def is_arm_mac(self) -> bool:
         if not self.operating_system in [OperatingSystem.MACOS, None]: return False
 
