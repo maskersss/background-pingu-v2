@@ -84,6 +84,7 @@
     "error.builtin_lib_crash": "Your instance is using your system's {}, which is causing the crash. Disable it either in {}'s global settings in `Settings > Minecraft{}` or in instance settings in `Settings > {}`.",
     "error.builtin_lib_crash_waywall": "Your instance is using your system's {}, which is causing the crash. Make sure you configured it properly.",
     "error.builtin_lib_prob_crash": "Your instance is using your system's {}, which may be causing the crash. Try disabling it either in {}'s global settings in `Settings > Minecraft{}` or in instance settings in `Settings > {}`.",
+    "error.checksum_mismatch": "To fix `Minecraft` not downloading, in `Prism`, go to the top toolbar, click `Folders` > `Launcher Root`, and **close the launcher** and any open instances. Then, delete the `meta` folder and try again.",
     "error.chunk_multidraw": "If you're experiencing graphics related issues, such as water being invisible or blocks being inside you, try turning off `Chunk Multidraw` in `Options > Book and Quill > Sodium`.",
     "error.corrupted_file": "The file `{}` seems to be corrupted. Try redownloading it.",
     "error.corrupted_instance": "Your instance's `mmc-pack.json` appears to be corrupted. Make a new instance for the correct Minecraft version & modloader, and copy over `mmc-pack.json` from the new instance to the old instance, then try launching the old instance again. To prevent this in the future, ensure your system has sufficient disk space and avoid forcefully shutting down your PC.",

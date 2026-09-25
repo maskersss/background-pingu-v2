@@ -1214,6 +1214,13 @@ class IssueChecker:
             builder.error("sodium_rtss")
             found_crash_cause = True
         
+        if (self.log.type == LogType.LAUNCHER_LOG
+            and self.log.launcher in [None, Launcher.PRISM]
+            and self.log.has_content("Checksum mismatch")
+        ):
+            builder.error("checksum_mismatch")
+            found_crash_cause = True
+
         # toolscreen start
         if self.log.type == LogType.TOOLSCREEN_LOG:
             programs = []

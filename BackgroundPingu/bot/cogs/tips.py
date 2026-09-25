@@ -417,9 +417,9 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 - Right click the instance, Edit -> Settings -> Custom Commands
 - Enable "Override Global Settings"
 - If you use Toolscreen.**jar**, paste this into the Pre-launch command:
-`"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"` (do not replace anything in it, just that exact text)
+```"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"``` (Copy and paste this exact text)
 - If you use Toolscreen.**exe **paste this into the Pre-launch command: 
-`"$INST_DIR/Toolscreen.exe"` (do not replace anything in it, just that exact text)"""
+```"$INST_DIR/Toolscreen.exe"``` (Copy and paste this exact text)"""
         else:
             text = """If you are trying to install Toolscreen onto Modrinth App and it's not working:
 - download the jar in your instance folder
