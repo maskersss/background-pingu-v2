@@ -121,6 +121,8 @@ class Core(Cog):
 
     @Cog.listener()
     async def on_message(self, msg: discord.Message):
+        if re.compile(IGNORE_FLAG).search(msg.content):
+            return
         result = await self.check_log(msg)
         if self.should_reply(result):
             try:
