@@ -133,6 +133,28 @@ class Core(Cog):
                 await msg.reply(content=result["text"], embed=result["embed"], view=result["view"])
             except discord.errors.Forbidden: pass
     
+    @commands.message_command(name="Delete this bot's reply")
+    async def delete_reply_cmd(self, ctx: discord.ApplicationContext, msg: discord.Message):
+        if msg.author.id != self.bot.user.id:
+            return await ctx.response.send_message(":x: **This command is only for deleting messages sent by this bot.**", ephemeral=True)
+        if msg.reference is None or msg.reference.message_id is None:
+            return await ctx.response.send_message(":x: **This message isn't a reply.**", ephemeral=True)
+        
+        try:
+            original = await msg.channel.fetch_message(msg.reference.message_id)
+        except discord.NotFound:
+            return await ctx.response.send_message(":x: **The original message could not be found.**", ephemeral=True)
+        if original.author.id != ctx.author.id:
+            return await ctx.response.send_message(":x: **You can only delete bot replies to your own messages.**", ephemeral=True)
+
+        try:
+            await msg.delete()
+        except discord.Forbidden:
+            return await ctx.response.send_message(":x: **I don't have permission to delete this message.**", ephemeral=True)
+        except discord.NotFound:
+            return await ctx.response.send_message(":x: **This message has already been deleted?**", ephemeral=True)
+        return await ctx.response.send_message(":white_check_mark: **Deleted.**", ephemeral=True)
+    
     @commands.message_command(name="Check Log")
     async def check_log_cmd(self, ctx: discord.ApplicationContext, msg: discord.Message):
         result = await self.check_log(msg, include_content=True)
