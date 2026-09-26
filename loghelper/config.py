@@ -23,6 +23,8 @@ IGNORED_USERS = [
     834848683697635328,    # test
 ]
 
+COMMAND_DELAY = 5.0        # seconds
+
 LEGALMODS_JSON_URL = "https://meta.mc.sr/schema-7/mods.json"
 
 MINIMUM_MOD_VERSIONS = [

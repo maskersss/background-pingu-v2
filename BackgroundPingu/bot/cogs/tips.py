@@ -1,4 +1,4 @@
-import discord, json, re, requests, traceback
+import asyncio, discord, hashlib, json, re, requests, time, traceback
 from discord import commands
 from discord.ext.commands import Cog
 from BackgroundPingu.bot.main import BackgroundPingu
@@ -10,11 +10,38 @@ from loghelper.config import *
 class Tips(Cog):
     def __init__(self, bot: BackgroundPingu) -> None:
         super().__init__()
+        self._ratelimits: dict[bytes, float] = {}
+        self._lock = asyncio.Lock()
         self.bot = bot
+    
+    @staticmethod
+    def _key(channel_id: int, text: str) -> bytes:
+        return hashlib.blake2b(
+            f"{channel_id}\0{text}".encode("utf-8"),
+            digest_size=16,
+        ).digest()
 
-    async def _respond(self, ctx, text, mention=None, ephemeral=False):
+    async def _should_ratelimit(self, channel_id: int, text: str) -> bool:
+        key = self._key(channel_id, text)
+        async with self._lock:
+            now = time.monotonic()
+            self._ratelimits = {
+                key: expiry
+                for key, expiry in self._ratelimits.items()
+                if expiry > now
+            }
+            if key in self._ratelimits:
+                return True
+            self._ratelimits[key] = now + COMMAND_DELAY
+            return False
+
+    async def _respond(self, ctx, text, mention=None, ephemeral=False, ratelimit=True):
         if mention:
             text = f"{mention.mention}\n{text}"
+        if not ephemeral and ratelimit:
+            if await self._should_ratelimit(ctx.channel_id, text):
+                text = "This exact command was just sent in this channel."
+                ephemeral = True
         return await ctx.respond(text, ephemeral=ephemeral)
 
     @commands.slash_command(name="recommend_settings", description="Gives recommended settings for SeedQueue based on a log.")
