@@ -1336,6 +1336,10 @@ class IssueChecker:
             builder.error("outdated_mods_crash").add(*self.log.update_mods)
             found_crash_cause = True
         
+        if self.log.has_content("because the return value of \"com.redlimerl.speedrunigt.timer.InGameTimer.getInstance()\" is null"):
+            builder.error("srigt_corrupted_folder", experimental=True)
+            found_crash_cause = True
+        
         if self.log.has_content("java.lang.ClassNotFoundException: me.contaria.speedrunapi.config"):
             builder.error("old_mod_crash", "SpeedrunAPI", "https://mc.sr/mods/")
             found_crash_cause = True
@@ -1903,7 +1907,7 @@ class IssueChecker:
         
         if (not found_crash_cause
             and self.is_discord
-            and is_mcsr_log
+            and (is_mcsr_log or self.log.is_draftout_log)
             and not self.link == "message"
         ):
             for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:

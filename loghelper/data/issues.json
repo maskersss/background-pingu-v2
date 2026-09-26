@@ -208,6 +208,7 @@
     "error.sodiummac_crash": "This looks like a crash caused by a bug in one of the old mods, which only has a 50% chance of happening. You should update all mods.",
     "error.sq_empty_sound_file": "This crash is caused by using a SeedQueue resourcepack with empty sound files. You should either use short silent ones instead, or add [this resourcepack](https://discord.com/channels/1262887973154848828/1263997861620617407/1337527657662775327) above yours.",
     "error.sq_empty_sound_file_invite": "This crash is caused by using a SeedQueue resourcepack with empty sound files. You should either use short silent ones instead, or add [this resourcepack](https://discord.com/channels/1262887973154848828/1263997861620617407/1337527657662775327) above yours (link from [SeedQueue server](https://discord.gg/9P6PJkHCdU)).",
+    "error.srigt_corrupted_folder": "This crash is caused by a corrupted `speedrunigt` folder inside a specific save folder. Try deleting it from `minecraft/saves/your_world_name`.",
     "error.srigt_log_spam": "Your log seems to be spammed by `SpeedRunIGT`. To fix it, either delete the `speedrunigt` folder in your world folder with Minecraft closed, or do `/speedrunigt start` in game.",
     "error.stackshadowpages": "This is a crash in `Minecraft 26.3+`. To fix it, add the following to Java arguments: ```-XX:StackShadowPages=32```",
     "error.starlight_crash": "This seems to be a rare crash caused by `Starlight` that was fixed in a newer update.",
