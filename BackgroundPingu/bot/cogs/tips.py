@@ -153,7 +153,7 @@ class Tips(Cog):
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = """"MCSR" is short for "minecraft speedrunning", and is usually used to refer to the minecraft speedrunning community.
-If you're referring to the mod that allows people to speedrun 1v1, that's "MCSR Ranked" or "Ranked" for short <:Okayge:796454436427005984>"""
+If you're referring to the mod that allows people to speedrun 1v1, that's __**not**__ "MCSR", but "MCSR Ranked" or "Ranked" for short <:Okayge:796454436427005984>"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="onedrive", description="Explains that OneDrive is bad.")
