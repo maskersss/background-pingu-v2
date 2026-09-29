@@ -36,5 +36,5 @@ MINIMUM_MOD_VERSIONS = [
     ("fsg-mod"          , "2.4.1" , "FSG Mod"    , "https://modrinth.com/mod/fsg-mod/versions/"    ),
 ]
 
-LINK_PATTERN = r"https:\/\/(?:api\.)?(?:pastee\.dev|paste.ee)\/.\/\w+|https://(?:api\.)?mclo\.gs/(?:1/raw/)?\w+|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)\?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)"
+LINK_PATTERN = r"https:\/\/(?:api\.)?(?:pastee\.dev|paste.ee)\/.\/\w+|https://(?:api\.)?mclo\.gs/(?:1/raw/)?\w+|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)\?(?:backend=[^&]+&)?ex=[^&]+&is=[^&]+&hm=[^&]+&|https?:\/\/[\w\-_\/.]+\.(?:json|txt|log|tdump)"
 # there's more hardcoded stuff in the code so you generally can't just update ^

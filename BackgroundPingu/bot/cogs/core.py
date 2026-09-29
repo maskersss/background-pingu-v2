@@ -23,7 +23,7 @@ class Core(Cog):
                 matches.append(attachment.url)
         if len(matches) > 3: matches = random.sample(matches, 3)
 
-        logs = [(match.split("?ex")[0], parser.Log.from_link(match)) for match in matches]
+        logs = [(match.split("?ex")[0].split("?backend")[0], parser.Log.from_link(match)) for match in matches]
         logs = [(link, log) for (link, log) in logs if not log is None]
         logs = sorted(logs, key=lambda x: len(x[1]._content), reverse=True) # check the longest logs first
         if include_content:
