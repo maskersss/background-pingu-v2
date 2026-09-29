@@ -1406,14 +1406,16 @@ class IssueChecker:
             elif len(ranked_rong_mods) > 0:
                 builder.error("ranked_rong_mods", f"a mod `{ranked_rong_mods[0]}` that is", "it")
 
-        if (self.log.is_ranked_log
+        if (not found_crash_cause
+            and self.log.is_ranked_log
             and self.log.has_mod("atum")
             and self.log.has_content_in_stacktrace("Cannot invoke \"net.minecraft.class_1928$class_4315.method_20781()\" because the return value of \"net.minecraft.class_1928.method_20746(net.minecraft.class_1928$class_4313)\" is null")
         ):
             builder.error("ranked_atum_crash")
             found_crash_cause = True
         
-        if (self.log.is_ranked_log
+        if (not found_crash_cause
+            and self.log.is_ranked_log
             and self.log.has_content("Update Status: FAILED_AUTH")
         ):
             if self.log.has_content("/storage/emulated/0/Android/"):
@@ -1424,6 +1426,14 @@ class IssueChecker:
                 builder.error("ranked_failed_auth_java_8")
             else:
                 builder.error("ranked_failed_auth")
+            found_crash_cause = True
+        
+        if (not found_crash_cause
+            and self.log.is_ranked_log
+            and self.log.has_content("[STDERR]: 	at knot//com.mcsrranked.client.info.player.ReportSample.load(ReportSample.java:51)")
+            and self.log.has_content("com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray but was com.google.gson.JsonPrimitive")
+        ):
+            builder.error("corrupted_ranked_files")
             found_crash_cause = True
 
         if self.log.has_mod("optifine"):
