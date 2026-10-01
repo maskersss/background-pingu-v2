@@ -1761,6 +1761,12 @@ class IssueChecker:
             builder.error("mods_crash", "`; `".join(wrong_mods))
             found_crash_cause = True
         
+        elif (self.log.is_toolscreen_log
+            and self.log.has_content("[Toolscreen] EXCEPTION FILTER TRIGGERED")
+        ):
+            builder.error("eav_crash").add("eav_crash_ts_hook")
+            found_crash_cause = True
+        
         elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
             or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
         ):
@@ -2113,6 +2119,18 @@ class IssueChecker:
                     
                     if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
                         builder.error("settings_reset")
+                    
+                    ts_broken_indicators = {
+                        r"(?:ctrl|control)\s*\+?\s*i\b": 1,
+                        r"toolscreen": 1,
+                    }
+                    ts_broken_total = 0
+                    for pattern, value in ts_broken_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            ts_broken_total += value
+
+                    if ts_broken_total >= 2 and asking_for_help_total >= 2:
+                        builder.error("prelaunch")
                     
                     wall_indicators = {
                         "the wall": 10,
