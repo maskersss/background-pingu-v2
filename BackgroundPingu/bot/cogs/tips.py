@@ -439,7 +439,7 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
         launcher: discord.Option(str, choices=["Prism", "Modrinth App"], required=False, default="Prism"),
     ):
         if launcher == "Prism":
-            text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0 and it's not working:
+            text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0+ and it's not working:
 
 - Right click the instance, Edit -> Settings -> Custom Commands
 - Enable "Override Global Settings"
@@ -795,6 +795,15 @@ All allowed mods can be downloaded from <https://mc.sr/mods/> or by using [**Mod
 All other mods, including Fabric API, are banned[.](https://i.imgur.com/ulBwh7C.png)"""
         return await self._respond(ctx, text, mention)
 
+    @commands.slash_command(name="eray", description="Links a basic guide for finding the bastion.")
+    async def eray(
+        self,
+        ctx: discord.ApplicationContext,
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
+    ):
+        text = "https://www.youtube.com/watch?v=M-sffdCnv-4"
+        return await self._respond(ctx, text, mention)
+
     @commands.slash_command(name="pieray", description="Links an advanced guide for finding the fortress.")
     async def pieray(
         self,
@@ -1072,14 +1081,9 @@ If you don't have an F3 key at all, which means you need to press Fn-3 to use F3
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """Old general guides:
-- [k4yfour's introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>)
-- [Buzzaboo's guide on finding and routing bastions](<https://www.youtube.com/watch?v=vy1VOQXwnUU>)
-More updated guides:
-- [Modern bridge routes](<https://docs.google.com/spreadsheets/d/1TYV8RBFb4sV2VRQRZGKPjN-hTPS6bx9UllXKChZyIa0/edit?pli=1&gid=0#gid=0>)
-- [Stables triple to gap](<https://www.youtube.com/watch?v=D4Ulw7VepJc>)
-Bastion practice map:
-<https://github.com/LlamaPag/bastion/releases/latest>"""
+        text = """You can find a detailed guide for modern bastion routes in Couriway's metafy guide: <https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm/chapter-3-the-nether-part-1-WmN8KSvRDDz>
+
+Bastion practice map: <https://github.com/LlamaPag/bastion/releases/latest>"""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="fortress", description="Gives links to guides for finding and routing fortresses.")
