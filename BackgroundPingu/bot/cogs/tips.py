@@ -1141,6 +1141,10 @@ Tutorial: <https://www.youtube.com/watch?v=8NYvWOt42kg>
         text = """Crafting practice maps:
 [Crafting](<https://github.com/Semperzz/Crafting-Practice-v2/releases/latest>)
 [Search Crafting](<https://github.com/Mescht/Searchcraft-Practice/releases/latest>)
+[Search Crafting (Modified presets)](<https://discord.com/channels/83066801105145856/405839885509984256/1543544418710200392>)
+
+Search crafting Discord:
+<https://discord.gg/invite/8Cr723teyN>
 
 Search crafting resources:
 https://frontcage.com/t/search-crafting-resource-collection/32"""
