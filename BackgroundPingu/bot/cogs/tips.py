@@ -1176,9 +1176,7 @@ https://frontcage.com/t/search-crafting-resource-collection/32"""
         draftout: discord.Option(bool, "Whether to give a response for Draftout", choices=[True, False], required=False, default=False),
     ):
         if draftout:
-            text = f"""It is legal to set gamma to up to 5.0.
-On latest Minecraft versions, you have to use the Planifolia mod. With it you can adjust the brightness level up to 500% in-game via `Options > Video Settings` in the title screen, **not** in the world.
-You can download Planifolia, as well as all other legal mods, from <https://mc.sr/mods/?version=26.1.1>."""
+            text = f"""Draftout allows you to set gamma to up to 5.0 in video settings."""
             return await self._respond(ctx, text, mention)
         
         cmd_prefix = "/"
