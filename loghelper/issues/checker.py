@@ -2130,7 +2130,7 @@ class IssueChecker:
                             ts_broken_total += value
 
                     if ts_broken_total >= 2 and asking_for_help_total >= 2:
-                        builder.error("prelaunch")
+                        builder.error("prelaunch", self.cmd_prefix)
                     
                     wall_indicators = {
                         "the wall": 10,
@@ -2175,6 +2175,21 @@ class IssueChecker:
                             builder.error("gamma_draftout")
                         else:
                             builder.error("gamma")
+                    
+                    mcsr_indicators = {
+                        r"the\s*mcsr\s*mod(?!s)": 5,
+                        r"mcsr\s*settings": 1,
+                        r"(?:play|updat)(?:e|ing)?\s*(?:a|the)?\s*mcsr(?!.*rank)": 2,
+                    }
+                    mcsr_total = 0
+                    for pattern, value in mcsr_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            mcsr_total += value
+                    if self.server_id == 1056779246728658984: # rankedcord
+                        mcsr_total += 1
+                    
+                    if mcsr_total >= 2:
+                        builder.error("mcsr_not_ranked")
                 
                 if (not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")

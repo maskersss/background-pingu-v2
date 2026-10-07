@@ -832,7 +832,7 @@ Adding mob_spawner mirror with Toolscreen (timestamped): <https://youtu.be/LG13l
         draftout: discord.Option(bool, "Whether to give a response for Draftout", choices=[True, False], required=False, default=False),
         directory: discord.Option(str, choices=["Mapless / Preemptive", "Village / Fortress", "All"], required="False", default="All"),
     ):
-        if draftout: text = "Common piechart directories on 26.1.1:"
+        if draftout: text = "Common piechart directories on 26.3:"
         else: text = "Common piechart directories on 1.16.1:"
 
         if directory in ["Mapless / Preemptive", "All"]:
