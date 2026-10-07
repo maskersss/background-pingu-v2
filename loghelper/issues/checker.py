@@ -2177,9 +2177,9 @@ class IssueChecker:
                             builder.error("gamma")
                     
                     mcsr_indicators = {
-                        r"the\s*mcsr\s*mod(?!s)": 5,
-                        r"mcsr\s*settings": 1,
-                        r"(?:play|updat)(?:e|ing)?\s*(?:a|the)?\s*mcsr(?!.*rank)": 2,
+                        r"the\s*m[cs]{2}r\s*mod(?!s)": 5,
+                        r"m[cs]{2}r\s*settings": 1,
+                        r"(?:play|updat)(?:e|ing)?\s*(?:a|the)?\s*m[cs]{2}r(?!.*rank)": 2,
                     }
                     mcsr_total = 0
                     for pattern, value in mcsr_indicators.items():
