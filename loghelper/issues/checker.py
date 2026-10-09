@@ -2358,7 +2358,9 @@ _Note: Simply changing the link's domain won't work – you need to re-upload th
                     if latest_version is None: continue
                     missing_mods.append(recommended_mod)
         if len(missing_mods) > 0:
-            notes.append(f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info.")
+            note = f"⚠️ You seem to be missing `{len(missing_mods)}` recommended mods (`{', '.join(missing_mods)}`). See `/allowedmods` for more info."
+            if self.mode == "web": note = note.replace("`/allowedmods`", "[the MCSR Mods website](https://mc.sr/mods)")
+            notes.append(note)
         
         ping = f" for <@{self.user_id}>" if self.user_id else ""
         output = f"## Recommended SeedQueue settings{ping}:\n"
