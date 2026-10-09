@@ -36,12 +36,12 @@ class Tips(Cog):
             return False
 
     async def _respond(self, ctx, text, mention=None, ephemeral=False, ratelimit=True):
-        if mention:
-            text = f"{mention.mention}\n{text}"
         if not ephemeral and ratelimit:
             if await self._should_ratelimit(ctx.channel_id, text):
                 text = "This exact command was just sent in this channel."
                 ephemeral = True
+        if mention:
+            text = f"{mention.mention}\n{text}"
         return await ctx.respond(text, ephemeral=ephemeral)
 
     @commands.slash_command(name="recommend_settings", description="Gives recommended settings for SeedQueue based on a log.")
