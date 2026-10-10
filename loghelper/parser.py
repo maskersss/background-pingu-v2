@@ -985,9 +985,6 @@ class Log:
         if self.launcher != Launcher.OFFICIAL_LAUNCHER and not self.is_newer_than("1.17"):
             mods.append("voyager")
         
-        if self.is_newer_than("1.17") and not self.is_ssg_log:
-            mods.append("planifolia")
-
         if self.is_ssg_log:
             mods += [
                 "seedqueue",
@@ -1013,6 +1010,8 @@ class Log:
                 mods.append("seedqueue")
             if not self.minecraft_version in ["1.16.1", "1.15.2"]:
                 mods.append("sleepbackground")
+            if self.is_newer_than("1.17"):
+                mods.append("planifolia")
         
         return mods
 
