@@ -980,7 +980,9 @@ class IssueChecker:
                 and not self.log.has_java_argument("-DMC_DEBUG_PREFER_WAYLAND")
                 and not self.log.has_pattern(r"waywall.*--allow-mc-x11")
             ):
-                if self.log.is_newer_than("26.1"):
+                if self.log.is_newer_than("26.3"):
+                    pass
+                elif self.log.is_newer_than("26.1"):
                     builder.error("waywall_missing_glfw_latest")
                 else:
                     builder.error("waywall_missing_glfw")
@@ -1570,7 +1572,9 @@ class IssueChecker:
                     found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
                 if self.log.is_waywall_log:
-                    if self.log.is_newer_than("1.21.9"):
+                    if self.log.is_newer_than("26.3"):
+                        pass
+                    elif self.log.is_newer_than("1.21.9"):
                         builder.error("waywall_dont_use_glfw_latest")
                         found_crash_cause = True
                     else:
