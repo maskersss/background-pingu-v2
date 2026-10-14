@@ -152,6 +152,7 @@
     "error.missing_xrandr": "This crash is caused by not having `xrandr` installed on Linux on Minecraft versions using `LWJGL 2`.",
     "error.mod_crash": "Mod `{}` seems to be causing this crash.",
     "error.mod_crash_disable": "Mod `{}` seems to be causing this crash. Removing it could stop this crash from happening.",
+    "error.mod_crash_remove": "This crash is caused by the `{}` mod. To fix the crash, disable it.",
     "error.mods_crash": "Mods `{}` seem to be causing this crash.",
     "error.mods_crash_disable": "Mods `{}` seem to be causing this crash. Removing one of them could stop this crash from happening.",
     "error.multiple_modloaders": "You have multiple modloaders installed (`{}`). Please delete everything but the one you need in `Edit{} > Version`.",

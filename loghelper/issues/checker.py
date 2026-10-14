@@ -1683,6 +1683,12 @@ class IssueChecker:
             builder.error("old_mod_crash", "SleepBackground", "https://mc.sr/mods/")
             found_crash_cause = True
 
+        if (self.log.operating_system in [None, OperatingSystem.MACOS]
+            and self.log.has_content_in_stacktrace("due to errors, provided by 'mcsrfairplay'")
+        ):
+            builder.error("mod_crash_remove", "mcsrfairplay")
+            found_crash_cause = True
+
         if not found_crash_cause and self.log.has_content_in_stacktrace("atum"):
             if self.log.has_mod("autoresetter"):
                 builder.error("downgrade_atum", experimental=True)
