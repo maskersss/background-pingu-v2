@@ -1744,7 +1744,7 @@ class IssueChecker:
             and (self.log.has_pattern(r"  \[(ig[0-9]+icd[0-9]+\.dll)[+ ](0x[0-9a-f]+)\]")
                  or self.log.has_content("[lwjgl_stb.dll"))
         ):
-            builder.error("eav_crash", experimental=True).add("eav_crash_srigt")
+            builder.error("crash_caused_by", experimental=True).add("eav_crash_srigt")
             found_crash_cause = True
         
         elif (not self.log.is_newer_than("1.17")
@@ -1768,7 +1768,7 @@ class IssueChecker:
                  # - https://mclo.gs/aJ9Eb3o
                  #   C:/Program Files/Microsoft/jdk-25.0.3.9-hotspot/bin/javaw.exe
         ):
-            builder.error("eav_crash", experimental=True)
+            builder.error("crash_caused_by", experimental=True)
             if self.log.is_newer_than("1.20.5"):
                 builder.add("eav_crash_java_25").add(*self.log.java_arg_guide)
             else:
@@ -1784,13 +1784,13 @@ class IssueChecker:
         elif (self.log.is_toolscreen_log
             and self.log.has_content("[Toolscreen] EXCEPTION FILTER TRIGGERED")
         ):
-            builder.error("eav_crash").add("eav_crash_ts_hook")
+            builder.error("crash_caused_by").add("eav_crash_ts_hook")
             found_crash_cause = True
         
         elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
             or self.log.has_content("EXCEPTION_ACCESS_VIOLATION")
         ):
-            builder.error("eav_crash", experimental=True)
+            builder.error("bs_crash", experimental=True)
             
             if ((self.log.major_java_version is None
                  or self.log.major_java_version >= 25)
