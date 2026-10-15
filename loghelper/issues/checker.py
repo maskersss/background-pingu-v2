@@ -2199,8 +2199,8 @@ class IssueChecker:
                     mcsr_indicators = {
                         r"the\s*m[cs]{2}r\s*mod(?!s)": 5,
                         r"m[cs]{2}r\s*settings": 1,
-                        r"(?:play|updat)(?:e|ing)?\s*(?:a|the)?\s*m[cs]{2}r(?!.*rank)": 2,
-                        r"load\s*(?:into|up)?\s*a?\s*m[cs]{2}r(?!.*rank)": 1,
+                        r"(?:play|updat)(?:ed?|ing)?\s*(?:a|the)?\s*m[cs]{2}r(?!.*rank)": 2,
+                        r"load(?:ed|ing)?\s*(?:into|up)?\s*a?\s*m[cs]{2}r(?!.*rank)": 1,
                     }
                     mcsr_total = 0
                     for pattern, value in mcsr_indicators.items():
