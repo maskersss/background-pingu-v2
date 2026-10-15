@@ -436,9 +436,9 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-        launcher: discord.Option(str, choices=["Prism", "Modrinth App"], required=False, default="Prism"),
+        method: discord.Option(str, choices=["Manual (Prism)", "Update to beta"], required=False, default="Manual (Prism)"),
     ):
-        if launcher == "Prism":
+        if method == "Manual (Prism)":
             text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0+ and it's not working:
 
 - Right click the instance, Edit -> Settings -> Custom Commands
@@ -448,10 +448,7 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 - If you use Toolscreen.**exe **paste this into the Pre-launch command: 
 ```"$INST_DIR/Toolscreen.exe"``` (Copy and paste this exact text)"""
         else:
-            text = """If you are trying to install Toolscreen onto Modrinth App and it's not working:
-- download the jar in your instance folder
-- rename it to Toolscreen.jar
-- set your instance settings like that[:](https://cdn.discordapp.com/attachments/1472103453806563484/1520512031852199997/image.png) (value: `"PATHTOYOUR\javaw.exe" -jar "PATHTOYOURMODRINTH\profiles\myinstance\Toolscreen.jar" --prelaunch`); replace `PATHTOYOUR...` with actual paths on your system"""
+            text = """If you are trying to install Toolscreen and it's not working, use the latest beta release – download `Toolscreen-1.5.0-double-click-me.jar` from <https://github.com/jojoe77777/Toolscreen/releases/tag/v1.5.0> and install it instead"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
@@ -1352,6 +1349,7 @@ Source code available on [GitHub](<https://github.com/maskersss/background-pingu
             with open("BackgroundPingu/bot/cogs/tips.py", "r", errors="replace") as file:
                 text = file.read()
             tags = re.findall(r"name=\"([^\"]*)\"", text)
+            tag_count = len(tags)
 
             # Separate tags into groups based on first letter
             groups = {}
@@ -1372,7 +1370,13 @@ Source code available on [GitHub](<https://github.com/maskersss/background-pingu
                 else:
                     text += f"[#] {', '.join(group)}\n"
 
-            text = f"```{text}```"
+            in_channel = ""
+            for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+                if ctx.guild_id == server_id and not bot_cid is None:
+                    in_channel = f" in <#{bot_cid}>"
+                    break
+            
+            text = f"{tag_count} available tags (use with `/tag`{in_channel}):```\n{text}\n```"
             return await self._respond(ctx, text, mention)
         except Exception as e:
             error = "".join(traceback.format_exception(e))
