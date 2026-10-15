@@ -977,16 +977,22 @@ class IssueChecker:
             if (self.log.is_waywall_log
                 and self.log.java_arguments
                 and not self.log.has_java_argument("-Dorg.lwjgl.glfw.libname=")
-                and not self.log.has_java_argument("-DMC_DEBUG_PREFER_WAYLAND")
                 and not self.log.has_pattern(r"waywall.*--allow-mc-x11")
             ):
                 if self.log.is_newer_than("26.3"):
+                    if not self.log.has_env_var("SDL_VIDEO_DRIVER=wayland"):
+                        builder.error("waywall_missing_glfw_super_latest")
+                        found_crash_cause = True
+                    if self.log.has_java_argument("-DMC_DEBUG_PREFER_WAYLAND"):
+                        builder.error("waywall_missing_glfw_super_latest_java_arg")
+                elif self.log.has_java_argument("-DMC_DEBUG_PREFER_WAYLAND"):
                     pass
                 elif self.log.is_newer_than("26.1"):
                     builder.error("waywall_missing_glfw_latest")
+                    found_crash_cause = True
                 else:
                     builder.error("waywall_missing_glfw")
-                found_crash_cause = True
+                    found_crash_cause = True
                 
             pattern = r"\[ERR\] \[(waywall/config/.*?\.c):(\d+)\] ?(?:failed to start action:|failed to load config:)?\s?(?P<error>[\s\S]*?)(?:\n\[|$)"
             match = re.search(pattern, self.log._content)
