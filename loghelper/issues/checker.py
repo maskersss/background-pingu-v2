@@ -1432,8 +1432,9 @@ class IssueChecker:
         
         if (not found_crash_cause
             and self.log.is_ranked_log
-            and self.log.has_content("[STDERR]: 	at knot//com.mcsrranked.client.info.player.ReportSample.load(ReportSample.java:51)")
-            and self.log.has_content("com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray but was com.google.gson.JsonPrimitive")
+            and self.log.has_content("[STDERR]: 	at knot//com.mcsrranked.client.info.player.ReportSample.load")
+            and (self.log.has_content("com.google.gson.JsonSyntaxException: Expected a com.google.gson.JsonArray but was com.google.gson.JsonPrimitive")
+                 or self.log.has_content("java.lang.NullPointerException: Cannot invoke \"com.google.gson.JsonArray.iterator()\" because \"reports\" is null"))
         ):
             builder.error("corrupted_ranked_files")
             found_crash_cause = True
