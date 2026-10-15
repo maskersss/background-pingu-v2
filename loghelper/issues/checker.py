@@ -1835,7 +1835,7 @@ class IssueChecker:
                 ):
                     builder.error("stackshadowpages").add(*self.log.java_arg_guide)
                 else:
-                    builder.error("exitcode", "-1073741819", experimental=True)
+                    builder.error("bs_crash", experimental=True)
                     builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                     if (is_mcsr_log and not self.log.major_java_version is None
                         and self.log.major_java_version < 17): builder.add("eav_crash_java17")
@@ -1855,7 +1855,7 @@ class IssueChecker:
                     builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                     builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740791:
-                builder.error("exitcode", "-1073740791", experimental=True)
+                builder.error("bs_crash", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
@@ -1872,7 +1872,7 @@ class IssueChecker:
                 builder.add("eav_crash_reboot").add("eav_crash_fullscreen")
                 builder.add("eav_crash_drivers").add("eav_crash_hardware")
             elif self.log.exitcode == -1073740771:
-                builder.error("exitcode", "-1073740771", experimental=True)
+                builder.error("bs_crash", experimental=True)
                 builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
                 if (is_mcsr_log and not self.log.major_java_version is None
                     and self.log.major_java_version < 17): builder.add("eav_crash_java17")
