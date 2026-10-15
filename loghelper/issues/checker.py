@@ -1579,8 +1579,11 @@ class IssueChecker:
                     found_crash_cause = True
             elif any(self.log.has_content_in_stacktrace(lib) for lib in ["GLFW", "OpenAL"]):
                 if self.log.is_waywall_log:
-                    if self.log.is_newer_than("26.3"):
+                    if not self.log.has_content_in_stacktrace("GLFW"):
                         pass
+                    elif self.log.is_newer_than("26.3"):
+                        builder.error("waywall_missing_glfw_super_latest")
+                        found_crash_cause = True
                     elif self.log.is_newer_than("1.21.9"):
                         builder.error("waywall_dont_use_glfw_latest")
                         found_crash_cause = True
