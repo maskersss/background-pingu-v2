@@ -1315,7 +1315,7 @@ class IssueChecker:
             
         match = re.search(r"^MultiMC version: 0\.7\.0-(.{4})", self.log._content)
         if not match is None and self.log.operating_system == OperatingSystem.WINDOWS:
-            if match.group(1) < "3863" or match.group(1) == "stab": # STABle
+            if match.group(1) < "4277" or match.group(1) == "stab": # STABle
                 builder.note("semi_old_mmc_version")
         
         if (self.log.mod_loader in [ModLoader.FORGE, None]
