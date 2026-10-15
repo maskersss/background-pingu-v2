@@ -1930,6 +1930,9 @@ class IssueChecker:
         if self.log.stacktrace_hash == "0c02080a":
             builder.error("lwjgl_3_4_2_draftout", experimental=True)
             found_crash_cause = True
+        if self.log.stacktrace_hash == "a06c687d":
+            builder.error("downgrade_sodium_draftout")
+            found_crash_cause = True
         
         if (not found_crash_cause
             and self.is_discord
