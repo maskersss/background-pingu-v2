@@ -1,7 +1,7 @@
 {
     "add.allocate_ram_guide": "You should allocate `{}-{}` MB{}.",
     "add.allocate_ram_guide_mmc": "You should allocate `{}-{}` MB{} by going to `Settings > Java` in `{}`.",
-    "add.download_mods_prism": "To download it in `Prism`, you can do `Edit > Mods > Download mods`.",
+    "add.download_mods_prism": "To download it in `Prism`, you can do `Edit > Mods > Download mods > Modrinth` > search for it there.",
     "add.drx_setup_guide": "Check out [**this video**](https://www.youtube.com/watch?v=l-q-_4R8_6M) for a guide on how to set up for Minecraft speedrunning.",
     "add.eav_crash_disclaimer": "Please note that the options listed above are not inherently bad things.",
     "add.eav_crash_drivers": "- Driver issues: update / downgrade graphics drivers.",

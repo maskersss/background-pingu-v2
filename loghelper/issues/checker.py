@@ -1933,6 +1933,9 @@ class IssueChecker:
         if self.log.stacktrace_hash == "a06c687d":
             builder.error("downgrade_sodium_draftout")
             found_crash_cause = True
+        if self.log.stacktrace_hash == "ac830fa6":
+            builder.error("incompatible_mod", "MCSR Ranked", "replaymod")
+            found_crash_cause = True
         
         if (not found_crash_cause
             and self.is_discord
