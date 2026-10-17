@@ -16,6 +16,10 @@ SERVER_SUPPORT_BOT_CHANNEL_IDS = [
     (1553408353529630830, None,                1553457449648918640), # requested, random server
     (781169188550869022 , 1071138999604891729, None               ), # for testing
 ]
+BUG_REPORT_CHANNEL_IDS = [
+    1076298795496775710, # rankedcord
+    1506411992620072960, # draftoutcord
+]
 
 IGNORED_USERS = [
     473868086773153793,    # zeppelin

@@ -956,6 +956,7 @@ class Log:
         if self.type == LogType.LAUNCHER_LOG: return True
         if self.type == LogType.TOOLSCREEN_LOG: return True
         if self.minecraft_version is None: return False
+        if not self.has_content("minecraft"): return False
         return True
 
     @cached_property

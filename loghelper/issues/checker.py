@@ -1915,17 +1915,6 @@ class IssueChecker:
             elif self.log.exitcode == 126:
                 builder.error("exitcode", f"{self.log.exitcode}", experimental=True)
                 builder.add("eav_crash_reboot")
-        
-        if (not found_crash_cause
-            and (self.log.is_multimc_or_fork or self.log.is_mcsrlauncher)
-            and self.log.type in [LogType.CRASH_REPORT, LogType.LATEST_LOG, LogType.HS_ERR_PID_LOG, None]
-            and not self.log.launcher is None
-            and not self.link == "message"
-        ):
-            builder.error("send_full_log",
-                          "?" if self.log.type is None else self.log.type.value,
-                          self.log.launcher.value,
-                          self.log.edit_instance)
 
         if self.log.stacktrace_hash == "0c02080a":
             builder.error("lwjgl_3_4_2_draftout", experimental=True)
@@ -1938,10 +1927,21 @@ class IssueChecker:
             found_crash_cause = True
         
         if (not found_crash_cause
+            and (self.log.is_multimc_or_fork or self.log.is_mcsrlauncher)
+            and self.log.type in [LogType.CRASH_REPORT, LogType.LATEST_LOG, LogType.HS_ERR_PID_LOG, None]
+            and not self.log.launcher is None
+            and not self.link == "message"
+            and not self.channel_id in BUG_REPORT_CHANNEL_IDS
+        ):
+            builder.error("send_full_log",
+                          "?" if self.log.type is None else self.log.type.value,
+                          self.log.launcher.value,
+                          self.log.edit_instance)
+        
+        if (not found_crash_cause
             and self.is_discord
             and self.log.is_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
-            and self.log.has_content("minecraft")
         ):
             builder.info("upload_log_attachment")
             if not self.log.leaked_pc_username and self.log.lines > MAX_STARTING_LOG_LINES + MAX_ENDING_LOG_LINES:
