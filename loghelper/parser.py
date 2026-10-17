@@ -380,8 +380,8 @@ class Log:
             "multimc",
             "ultimmc",
             "prism",
-            "polymc",
-            "pollymc",
+            r"pol+ymc",
+            "pineconemc",
         ]]):
             return LogType.FULL_LOG
 

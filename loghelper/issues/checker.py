@@ -1628,13 +1628,13 @@ class IssueChecker:
             found_crash_cause = True
         
         if not found_crash_cause and self.log.has_content_in_stacktrace("\"com.mojang.authlib.GameProfile.getId()\" is null"):
-            if self.log.has_content("[authlib-injector]"):
+            if self.log.has_pattern(r"[\[\/]authlib-injector[\]\/]"):
                 builder.error("authlib_injector_crash")
                 found_crash_cause = True
             else:
                 builder.error("authlib_injector_crash", experimental=True)
         
-        elif self.log.has_content("[authlib-injector]"):
+        elif self.log.has_pattern(r"[\[\/]authlib-injector[\]\/]"):
             builder.note("illegal_launcher")
         
         if not found_crash_cause:
