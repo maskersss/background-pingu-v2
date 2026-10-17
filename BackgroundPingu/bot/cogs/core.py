@@ -106,8 +106,13 @@ class Core(Cog):
         return (result, found_result)
 
     async def build_embed(self, results: IssueBuilder, messages: list[str], msg: discord.Message):
+        if len(messages) > 0:
+            title = f"{results.amount} Issue{'s' if results.amount > 1 else ''} Found:"
+        else:
+            title = "0 Issues Found."
+            messages = [""]
         embed = discord.Embed(
-            title=f"{results.amount} Issue{'s' if results.amount > 1 else ''} Found:",
+            title=title,
             description=messages[0],
             color=0xFFFFFF,
             timestamp=datetime.now()

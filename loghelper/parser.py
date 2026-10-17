@@ -952,12 +952,17 @@ class Log:
         return False
     
     @cached_property
-    def is_log(self) -> bool:
+    def is_definitely_log(self) -> bool:
         if self.type == LogType.LAUNCHER_LOG: return True
         if self.type == LogType.TOOLSCREEN_LOG: return True
         if self.minecraft_version is None: return False
         if not self.has_content("minecraft"): return False
         return True
+    
+    @cached_property
+    def is_maybe_log(self) -> bool:
+        if not self.type is None: return True
+        return False
 
     @cached_property
     def modcheck_v1_warning(self) -> str | None:
@@ -1136,6 +1141,6 @@ is_ssg_log={self.is_ssg_log}
 is_ranked_log={self.is_ranked_log}
 is_draftout_log={self.is_draftout_log}
 is_seedqueue_log={self.is_seedqueue_log}
-is_log={self.is_log}
+is_definitely_log={self.is_definitely_log}
 recommended_mods={self.recommended_mods}
 """.strip()

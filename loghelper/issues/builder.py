@@ -43,6 +43,7 @@ class IssueBuilder:
         self,
         log: Log,
         mode: str = "web",
+        always_reply: bool = False,
         style: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.log = log
@@ -54,6 +55,7 @@ class IssueBuilder:
             "note": [],
             "info": [],
         }
+        self.always_reply = always_reply
         self.amount = 0
         self._last_added: Optional[str] = None
         self.footer = ""
@@ -165,7 +167,7 @@ class IssueBuilder:
         return False
 
     def has_values(self) -> bool:
-        return self.amount > 0
+        return self.amount > 0 or self.always_reply
 
     def set_footer(self, s: str):
         self.footer = s

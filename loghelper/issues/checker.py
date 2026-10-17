@@ -178,7 +178,14 @@ class IssueChecker:
         return product_name
 
     def check(self) -> IssueBuilder:
-        builder = IssueBuilder(self.log, self.mode)
+        if (self.is_discord
+            and self.log.is_definitely_log
+            and any(self.channel_id in [t[1], t[2]] for t in SERVER_SUPPORT_BOT_CHANNEL_IDS)
+        ):
+            should_always_reply = True
+        else:
+            should_always_reply = False
+        builder = IssueBuilder(self.log, self.mode, should_always_reply)
 
         if self.log.has_pattern(r"^__PINGU__DOWNLOAD_ERROR__(\d+|timeout)__"):
             # when updating it, also update upload_button.disabled in views.py
@@ -1940,7 +1947,7 @@ class IssueChecker:
         
         if (not found_crash_cause
             and self.is_discord
-            and self.log.is_log
+            and self.log.is_definitely_log
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
         ):
             builder.info("upload_log_attachment")

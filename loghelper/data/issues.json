@@ -122,6 +122,7 @@
     "error.jingle_java_8": "You are running `Jingle` with `Java 8`, which often causes various issues.",
     "error.k4_setup_video_outdated": "k4yfour's setup video is outdated. For setting up 1.16.1, use [**draconix's guide**](https://youtu.be/l-q-_4R8_6M) instead.",
     "error.leaked_session_id_token.discord": "**Your log has your session ID in it. Fully log out and relog back into the launcher right now.**",
+    "error.leaked_session_id_token.web": "This log has your session ID in it. Do not send it publicly.",
     "error.legacy_crash_fix": "This seems to be a rare crash that is fixed in the `legacy-crash-fix` mod. You should install it.",
     "error.legacy_fabric_modpack": "You likely imported a `Legacy Fabric` modpack. This doesn't work, you'll need to get a `Legacy Fabric` instance from [**here**](https://github.com/Minecraft-Java-Edition-Speedrunning/legacy-fabric-instance-generator/releases) and add the mods to it.",
     "error.legacyjavafixer": "This issue is caused by using older `Forge` versions on recent `Java` versions. MinecraftForge provides a mod to fix it; download it [**here**](https://dist.creeper.host/FTB2/maven/net/minecraftforge/lex/legacyjavafixer/1.0/legacyjavafixer-1.0.jar).",
