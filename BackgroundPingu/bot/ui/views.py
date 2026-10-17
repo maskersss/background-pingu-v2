@@ -13,9 +13,9 @@ class Paginator(View):
         self.builder = builder
         self.post = post
         self.reupload_url = None
-        next_button = self.get_item("next")
-        if isinstance(next_button, Button):
-            next_button.disabled = len(self._messages) == 1
+        self.back_button = self.get_item("back")
+        self.next_button = self.get_item("next")
+        self.update_arrow_buttons()
         upload_button = self.get_item("upload")
         if isinstance(upload_button, Button):
             if (not self.builder.log.is_maybe_log
@@ -29,6 +29,18 @@ class Paginator(View):
                     or self.builder.has("top_info", "uploaded_log_2")
                 )
     
+    def update_arrow_buttons(self):
+        if len(self._messages) <= 1:
+            for button in (self.back_button, self.next_button):
+                if isinstance(button, Button) and button in self.children:
+                    self.remove_item(button)
+        else:
+            for button in (self.back_button, self.next_button):
+                if isinstance(button, Button) and button not in self.children:
+                    self.add_item(button)
+            self.back_button.disabled = (self.page == 0)
+            self.next_button.disabled = (self.page == len(self._messages) - 1)
+
     async def edit_message(self, interaction: discord.Interaction):
         embed = interaction.message.embeds[0]
         embed.description = self._messages[self.page]
@@ -43,10 +55,7 @@ class Paginator(View):
             return await interaction.response.send_message("You're not the original poster of this log.", ephemeral=True)
         if self.page == 0: return
         self.page -= 1
-        button.disabled = self.page == 0
-        next_button = self.get_item("next")
-        if isinstance(next_button, Button):
-            next_button.disabled = False
+        self.update_arrow_buttons()
         return await self.edit_message(interaction)
     
     @discord.ui.button(emoji="➡️", custom_id="next", disabled=True)
@@ -55,10 +64,7 @@ class Paginator(View):
             return await interaction.response.send_message("You're not the original poster of this log.", ephemeral=True)
         if self.page == len(self._messages) - 1: return
         self.page += 1
-        button.disabled = self.page == len(self._messages) - 1
-        back_button = self.get_item("back")
-        if isinstance(back_button, Button):
-            back_button.disabled = False
+        self.update_arrow_buttons()
         return await self.edit_message(interaction)
     
     @discord.ui.button(label="Re-Upload Log", emoji="📜", custom_id="upload", disabled=True)
@@ -71,6 +77,8 @@ class Paginator(View):
                 raise RuntimeError("Failed to re-upload log.")
             self.builder.top_info("uploaded_log" + ("_2" if includes else ""), self.reupload_url)
             self._messages = self.builder.build()
+            self.page = min(self.page, len(self._messages) - 1)
+            self.update_arrow_buttons()
             button.disabled = True
             await self.edit_message(interaction)
             try: await self.post.delete(reason="Re-uploaded log.")
