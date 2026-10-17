@@ -1,4 +1,4 @@
-import discord, re
+import discord
 from discord.ui import View, Button
 from loghelper.issues.builder import IssueBuilder
 
@@ -44,9 +44,15 @@ class Paginator(View):
     async def edit_message(self, interaction: discord.Interaction):
         embed = interaction.message.embeds[0]
         embed.description = self._messages[self.page]
-        footer = embed._footer["text"]
-        footer = re.sub(r"Page \d+/\d+", f"Page {self.page + 1}/{len(self._messages)}", footer)
+
+        footer = []
+        if len(self._messages) > 1:
+            footer.append(f"Page {self.page + 1}/{len(self._messages)}")
+        if len(self.builder.footer) > 0:
+            footer.append(self.builder.footer)
+        footer = " • ".join(footer)
         embed.set_footer(text=footer)
+
         return await interaction.response.edit_message(content="" if self.reupload_url is None else f"<{self.reupload_url}>", embeds=[embed], view=self)
 
     @discord.ui.button(emoji="⬅️", custom_id="back", disabled=True)

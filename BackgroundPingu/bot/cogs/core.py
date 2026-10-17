@@ -118,7 +118,13 @@ class Core(Cog):
             timestamp=datetime.now()
         )
         embed.set_author(name=msg.author.name, icon_url=msg.author.avatar.url if msg.author.avatar is not None else "")
-        embed.set_footer(text=f"Page 1/{len(messages)}" + (f" • {results.footer}" if len(results.footer) > 0 else ""))
+        footer = []
+        if len(messages) > 1:
+            footer.append(f"Page 1/{len(messages)}")
+        if len(results.footer) > 0:
+            footer.append(results.footer)
+        footer = " • ".join(footer)
+        embed.set_footer(text=footer)
         return embed
     
     def should_reply(self, result: dict):
