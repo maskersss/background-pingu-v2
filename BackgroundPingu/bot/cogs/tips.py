@@ -371,6 +371,38 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
+        method: discord.Option(str, choices=["Manual", "Bosefi (experimental)"], required=False, default="Manual"),
+    ):
+        cmd_prefix = "/"
+        in_channel = ""
+        for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
+            if ctx.guild_id == server_id:
+                if not support_cid is None:
+                    if ctx.channel_id == support_cid: in_channel = " in this channel"
+                    else: in_channel = f" in <#{support_cid}>"
+                    cmd_prefix = "!!" if ctx.guild_id == 83066801105145856 else "/"
+                break
+        
+        if method == "Manual":
+            text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
+* Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
+* If you are doing the above correctly then please send **__all__** of the following information{in_channel} so someone can review it:
+  * Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
+  * Drag and drop these files from your instance folder into Discord: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt` 
+-# You don't need to retype this command, it just sends this text."""
+        else:
+            text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
+* Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
+* If you are doing the above correctly, download and run this program to fix your settings: <https://github.com/greenfrogee/Bosefi/releases/latest>.
+* If you are still missing after running Bosefi, use `/stillmissing` for more solutions."""
+
+        return await self._respond(ctx, text, mention)
+
+    @commands.slash_command(name="stillmissing", description="Gives other Ninjabrain Bot debugging solutions.")
+    async def stillmissing(
+        self,
+        ctx: discord.ApplicationContext,
+        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -380,12 +412,12 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
                     else: in_channel = f" in <#{support_cid}>"
                 break
         
-        text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
-* Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
-* If you are doing the above correctly then please send **__all__** of the following information{in_channel} so someone can review it:
-  * Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
-  * Drag and drop these files from your instance folder into Discord: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt` 
--# You don't need to retype this command, it just sends this text."""
+        text = f"""If you're still missing after changing your settings to the correct values, make sure:
+- you are measuring in accordance with [this image](<https://iili.io/Cpir6n2.jpg>)
+- your +1 and -1 hotkeys are not swapped
+- you are accounting for desync ([see here](<https://www.youtube.com/watch?v=uBqAeZMlEFQ>) for more information)
+- you are accounting for eye wiggle ([see here](<https://frontcage.com/t/what-to-do-about-eye-wiggle/14>) for more information)
+If you still can't figure out why you're missing, send a clip of a missed measurement{in_channel} with Ninjabrain Bot visible."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="nbboverlay", description="Links a guide to using the Ninjabrain Bot overlay with Toolscreen.")

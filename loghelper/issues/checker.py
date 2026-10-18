@@ -2105,7 +2105,7 @@ class IssueChecker:
                             total += value
                     if total >= 2: builder.error("entity_culling")
                 
-                if len(self.log._content) < 110:
+                if len(self.log._content) < 120:
                     asking_for_help_indicators = {
                         "why": 10,
                         "how": 10,
@@ -2208,6 +2208,22 @@ class IssueChecker:
                             builder.error("gamma_draftout")
                         else:
                             builder.error("gamma")
+                    
+                    boateye_indicators = {
+                        r"miss": 3,
+                        r"100 ?(?:%|percent)": 3,
+                        r"not? ?work": 3,
+                        r"boat ?eye": 2,
+                        r"nin(ja)? ?b?(rain)? ?bot": 2,
+                    }
+
+                    boateye_total = 0
+                    for pattern, value in boateye_indicators.items():
+                        if self.log.has_pattern(pattern):
+                            boateye_total += value
+                    
+                    if asking_for_help_total >= 2 and boateye_total >= 5:
+                        builder.error("boateye_help", self.cmd_prefix)   
                     
                     mcsr_indicators = {
                         r"the\s*m[cs]{2}r\s*mod(?!s)": 5,

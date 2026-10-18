@@ -79,6 +79,7 @@
     "error.assets_index_fail": "Try restarting your PC and then launching the instance again. If this doesn't help, it's likely a network issue.",
     "error.authlib_injector_crash": "This crash is caused by using a launcher that isn't legal for speedrunning.",
     "error.beachfilter_unsupported": "`BeachFilter Mod` is no longer supported. You should use [**FSG Mod**](https://modrinth.com/mod/fsg-mod) with the beach filter instead.",
+    "error.boateye_help": "If `Ninjabrain Bot` is giving you incorrect coordinates, use `{}nbbdebug` to begin debugging.",
     "error.broken_java": "Your `Java` installation seems to be broken.",
     "error.broken_loader": "Your modloader doesn't seem to be installed correctly. Try removing and installing it back in `Edit{} > Version`.",
     "error.bs_crash": "This crash is really difficult to diagnose. Here are some possible causes:",
