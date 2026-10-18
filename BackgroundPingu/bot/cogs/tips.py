@@ -140,10 +140,10 @@ class Tips(Cog):
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (recommended): Ctrl+I to open the menu, then you may set a hotkey to toggle Borderless in Basic ⟶ Other ⟶ Window Hotkeys.
-* Otherwise, if you're using [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>): click "Go Borderless".
-* Otherwise, you may download this [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases/latest>).
-:information_source: Make sure to disable fullscreen in Options ⟶ Book & Quill ⟶ StandardSettings and Options ⟶ Video settings"""
+        text = """:information_source: Make sure to **disable fullscreen** in `Options ➔ Video Settings` and `Options ➔ Book & Quill ➔ StandardSettings`
+* If you're using [Toolscreen](<https://github.com/jojoe77777/Toolscreen/releases/latest>) (recommended): `Ctrl+I` to open the menu, enable **Auto-Borderless** in `Basic ➔ Other ➔ Window Hotkeys`, then click the **Go Borderless** button once.
+* Otherwise, if you're using [Jingle](<https://github.com/DuncanRuns/Jingle/releases/latest>): click **Go Borderless**.
+* Otherwise, you may download this [application to run Minecraft as a borderless window](<https://github.com/Mr-Technician/BorderlessMinecraft/releases/latest>)."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="mcsr", description="Explains that MCSR != Ranked.")
@@ -394,7 +394,7 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
             text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
 * Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
 * If you are doing the above correctly, download and run this program to fix your settings: <https://github.com/greenfrogee/Bosefi/releases/latest>.
-* If you are still missing after running Bosefi, use `/stillmissing` for more solutions."""
+* If you are still missing after running Bosefi, use `{cmd_prefix}stillmissing` for more solutions."""
 
         return await self._respond(ctx, text, mention)
 

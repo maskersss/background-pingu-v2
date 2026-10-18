@@ -2213,6 +2213,7 @@ class IssueChecker:
                         r"miss": 3,
                         r"100 ?(?:%|percent)": 3,
                         r"not? ?work": 3,
+                        r"wrong ?coo?rd": 3,
                         r"boat ?eye": 2,
                         r"nin(ja)? ?b?(rain)? ?bot": 2,
                     }
