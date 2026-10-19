@@ -962,6 +962,7 @@ class Log:
     @cached_property
     def is_maybe_log(self) -> bool:
         if not self.type is None: return True
+        if self.is_definitely_log: return True
         return False
 
     @cached_property
@@ -1142,5 +1143,6 @@ is_ranked_log={self.is_ranked_log}
 is_draftout_log={self.is_draftout_log}
 is_seedqueue_log={self.is_seedqueue_log}
 is_definitely_log={self.is_definitely_log}
+is_maybe_log={self.is_maybe_log}
 recommended_mods={self.recommended_mods}
 """.strip()

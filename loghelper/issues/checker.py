@@ -1948,6 +1948,7 @@ class IssueChecker:
         if (not found_crash_cause
             and self.is_discord
             and self.log.is_definitely_log
+            and not self.log.leaked_session_id
             and any(self.link.endswith(file_extension) for file_extension in [".log", ".txt", ".tdump"])
         ):
             builder.info("upload_log_attachment")
