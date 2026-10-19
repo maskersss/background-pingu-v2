@@ -45,7 +45,7 @@ class Log:
 
         pattern = r"\"USERNAME=([^/\\]+)\"" # from mmc/prism logs
         for match in re.findall(pattern, content):
-            if match and match[3].lower() not in ["user", "admin", "********"]:
+            if match and match.lower() not in ["user", "admin", "********"]:
                 self.leaked_pc_username = True
                 break
         match = None
