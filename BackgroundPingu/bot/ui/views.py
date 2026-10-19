@@ -73,7 +73,7 @@ class Paginator(View):
         self.update_arrow_buttons()
         return await self.edit_message(interaction)
     
-    @discord.ui.button(label="Re-Upload Log", emoji="📜", custom_id="upload", disabled=True)
+    @discord.ui.button(label="Upload to mclo.gs", emoji="📜", custom_id="upload", disabled=True)
     async def upload_callback(self, button: Button, interaction: discord.Interaction):
         if interaction.user.id != self.post.author.id:
             return await interaction.response.send_message("You're not the original poster of this log.", ephemeral=True)

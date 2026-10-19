@@ -182,7 +182,7 @@ class IssueBuilder:
         for typ in ["top_info", "error", "warning", "note", "info"]:
             items = self._messages.get(typ, [])
             for j_idx, entry in enumerate(items):
-                if "Re-Upload Log" in entry and self.has("top_info", "uploaded_log"):
+                if "Upload to mclo.gs" in entry and self.has("top_info", "uploaded_log"):
                     continue
 
                 add = entry + "\n"

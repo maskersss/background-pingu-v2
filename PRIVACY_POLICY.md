@@ -1,37 +1,60 @@
 # Privacy Policy
 
-_Last updated: 13.08.2026_
+_Last updated: 19.10.2026_
 
-## Bot Overview
+## Overview
 
-Background Pingu is a Discord bot designed for automatic parsing of Minecraft logs, primarily for the MCSR (Minecraft Speedrunning) community. It provides insights and identifies common issues within Minecraft logs. The bot processes messages in real-time and replies with the necessary insights or information. Background Pingu does not collect or store any personal information long-term.
+Background Pingu is an open-source project consisting of a Discord bot and two websites providing technical help for Minecraft players, primarily for the Minecraft Speedrunning (MCSR) community.
 
-The bot's source code is available on [GitHub](https://github.com/maskersss/background-pingu-v2).
+This Privacy Policy applies only to the following official services:
 
-## Data Collection
+- **Discord bot:** User ID: `1110166332059697222`
+- **Minecraft log analyser:** https://maskers.xyz/log-analysis/
+- **SeedQueue settings analyser:** https://maskers.xyz/sq-settings/
 
-Background Pingu does not collect or store any personal information. The bot processes messages and replies to them in real-time but does not retain any data.
+Other individuals may host their own instances using the publicly available [source code](https://github.com/maskersss/background-pingu-v2). These instances are not covered by this Privacy Policy.
 
-## Data Usage
+## Data Collection and Usage
 
-Since we do not collect or store any data, there is no usage of personal information beyond real-time processing of messages.
+Background Pingu processes information, including:
+
+- **Discord bot:** Message content, attachments, and associated metadata, including user, server, and channel IDs. The bot processes this information from received messages and in response to user interactions.
+- **Websites:** Text and links submitted by users for analysis. Technical information, including IP addresses, may also be processed by infrastructure providers such as Cloudflare when users access the websites.
+
+This information is used to provide technical assistance, analyse potential issues, and generate responses. We do not use processed information to train AI or machine learning models.
+
+We rely on our legitimate interests in operating Background Pingu and providing technical assistance.
 
 ## Data Sharing
 
-We do not share any personal information with third parties, as we do not collect or store any data.
+We do not sell user data.
+
+Users may choose to upload processed logs to external log-hosting services, such as mclo.gs, through the Discord bot's provided controls. Uploaded logs may be accessible to anyone with the resulting link.
+
+The websites use third-party infrastructure and external resources, including Cloudflare and content delivery networks, which may process technical information such as IP addresses. Some third-party services used by Background Pingu may process information outside the European Economic Area (EEA), subject to their respective privacy policies and applicable data protection safeguards.
+
+## Storage and Retention
+
+Background Pingu processes messages, logs, and other submitted information temporarily in memory and does not maintain a persistent database of this content. When accessing the websites, technical information such as IP addresses may be recorded in server logs as part of normal service operation.
+
+Messages and responses posted on Discord, as well as logs uploaded to external services such as mclo.gs, may remain accessible according to those services' retention and deletion policies.
 
 ## Data Security
 
-Even though we do not store data, we take reasonable measures to ensure the bot operates securely and does not expose any sensitive information. Specifically, Background Pingu scans Minecraft logs for session IDs, which can be used to access your Minecraft account, and PC usernames, which might contain personal names. If such sensitive information is detected, the bot will warn the user and censor it in any output to ensure it is not exposed.
+Background Pingu attempts to detect and redact sensitive information in Minecraft logs, including computer usernames and Minecraft session tokens. We do not guarantee that all sensitive information will be detected or successfully redacted.
 
-## User Rights
+## Your Rights
 
-As Background Pingu does not collect any data, there are no user rights related to data access, correction, or deletion. However, if you have any concerns, feel free to contact us.
+Depending on applicable data protection laws, you may have rights regarding your personal information, including requesting access, correction, deletion, objecting to processing, and lodging a complaint with a relevant data protection authority.
+
+As Background Pingu does not maintain a persistent database of submitted content, we may not have any stored information available to access, correct, or delete.
+
+You can contact us regarding privacy-related requests using the contact details provided below.
+
+## Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time. Any changes will be published in the project's GitHub repository, with the updated date indicated at the top of this policy.
 
 ## Contact Us
 
 If you have any questions or concerns about our Privacy Policy, please contact us on Discord by sending a direct message to `maskers`.
-
-## Changes to This Privacy Policy
-
-We may update this Privacy Policy from time to time. We will update it by posting the new Privacy Policy on the bot's GitHub page.
