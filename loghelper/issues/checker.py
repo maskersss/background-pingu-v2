@@ -661,7 +661,7 @@ class IssueChecker:
             and not self.log.is_intel_mac
             and self.log.is_multimc_or_fork
             and not self.log.has_content("32-bit architecture")
-            and not self.log.has_content("aarch64) architecture")
+            and not self.log.has_pattern(r"aarch64\)? architecture")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 if self.log.is_arm_mac:
@@ -679,7 +679,7 @@ class IssueChecker:
         if (self.log.is_arm_windows
             and self.log.is_multimc_or_fork
             and not self.log.has_content("32-bit architecture")
-            and not self.log.has_content("aarch64) architecture")
+            and not self.log.has_pattern(r"aarch64\)? architecture")
         ):
             if self.log.launcher == Launcher.MULTIMC:
                 builder.warning("snapdragon_use_prism")
