@@ -18,8 +18,9 @@ class Paginator(View):
         self.update_arrow_buttons()
         upload_button = self.get_item("upload")
         if isinstance(upload_button, Button):
-            if (not self.builder.log.is_maybe_log
-                or self.builder.has("error", "leaked_session_id_token")
+            if (not self.builder.log.leaked_pc_username
+                and (not self.builder.log.is_maybe_log
+                     or self.builder.has("error", "leaked_session_id_token"))
             ):
                 self.remove_item(upload_button)
             else:

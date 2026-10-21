@@ -1135,7 +1135,7 @@ Blaze practice map: <https://github.com/Mescht/Blaze-Practice/releases/latest>""
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
         text = """FSG Mod: <https://modrinth.com/mod/fsg-mod>
-This mod requires Atum, which should be obtained from <https://mc.sr/mods/>.
+This mod requires Atum, which should be obtained from <https://mc.sr/mods/> alongside other mods.
 
 Join the FSG discord for the latest resources : https://discord.gg/cADcJe8ND8"""
         return await self._respond(ctx, text, mention)
