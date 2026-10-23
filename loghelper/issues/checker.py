@@ -1791,7 +1791,7 @@ class IssueChecker:
         elif (self.log.is_toolscreen_log
             and self.log.has_content("[Toolscreen] EXCEPTION FILTER TRIGGERED")
         ):
-            builder.error("crash_caused_by").add("eav_crash_ts_hook")
+            builder.error("crash_caused_by").add("eav_crash_ts_hook").add("ts_hook_examples")
             found_crash_cause = True
         
         elif (self.log.has_content("A fatal error has been detected by the Java Runtime Environment")
