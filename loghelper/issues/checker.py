@@ -669,7 +669,7 @@ class IssueChecker:
                 else:
                     builder.note("mac_use_prism")
                 builder.add(self.log.setup_guide).add("prism_mmc_migrate")
-            elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
+            elif self.log.is_prism and self.log.has_pattern(r"using 64 \((?:x86_64|amd64)\) architecture"):
                 if self.log.is_arm_mac:
                     builder.warning("mac_use_arm_java")
                 else:
@@ -684,7 +684,7 @@ class IssueChecker:
             if self.log.launcher == Launcher.MULTIMC:
                 builder.warning("snapdragon_use_prism")
                 builder.add(self.log.setup_guide).add("prism_mmc_migrate")
-            elif self.log.is_prism and self.log.has_content("using 64 (x86_64) architecture"):
+            elif self.log.is_prism and self.log.has_pattern(r"using 64 \((?:x86_64|amd64)\) architecture"):
                 builder.warning("snapdragon_use_arm_java")
                 if not found_crash_cause: builder.add(self.log.java_update_guide).add("read_pls")
         
