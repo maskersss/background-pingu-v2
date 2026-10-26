@@ -1849,7 +1849,11 @@ class IssueChecker:
                 if (self.log.is_newer_than("26.3")
                     and not self.log.has_java_argument("-XX:StackShadowPages=32")
                 ):
-                    builder.error("stackshadowpages").add(*self.log.java_arg_guide)
+                    if self.log.java_arguments is None:
+                        builder.error("stackshadowpages", experimental=True).add(*self.log.java_arg_guide)
+                    else:
+                        builder.error("stackshadowpages").add(*self.log.java_arg_guide)
+                        found_crash_cause = True
                 else:
                     builder.error("bs_crash", experimental=True)
                     builder.add("eav_crash_obs").add("eav_crash_obs_1").add("eav_crash_obs_2").add("eav_crash_obs_3")
