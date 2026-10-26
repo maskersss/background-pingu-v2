@@ -174,6 +174,7 @@ If you want to unlink OneDrive, follow [this link](<https://support.microsoft.co
     ):
         text = """<https://youtu.be/717kfB39gjQ> - original oneshot tutorial with lots of detail on underlying mechanics, but outdated for specific technique. worth watching if you want to understand the mechanics.
 https://youtu.be/R3iebSGQPkU - damageless oneshot tutorial, light on details but explains the technique that is best for regular speedruns.
+-# <https://youtu.be/6DLoZLNE_xc?t=504> - rsg damageless (timestamped)
 -# [zero oneshot tutorial](<https://youtu.be/15zK6zejNAk>) - only applicable for ranked weekly race and doesn't explain mechanics."""
         return await self._respond(ctx, text, mention)
 
@@ -1317,19 +1318,20 @@ Detailed document by Mimi: <https://docs.google.com/document/d/1Xnmki5jOwuiwVnyv
 [Zero Cycle music video by Dylqn & Fulham](<https://youtu.be/iuti2oacMNI>)"""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="extraoptions", description="Gives a link to Extra Options mod and an explanation of SRC rules regarding it.")
+    @commands.slash_command(name="extraoptions", description="Links the Extra Options mod and an explanation of SRC rules regarding it.")
     async def extraoptions(
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """:warning: **__Warning!__** :warning:
-This mod is now configurable through Options > Book and Quill > ExtraOptions, __**not**__ through accessibility settings.
-This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064 . If you are unsure something may be deemed as an abuse of unintended behaviour, you may ask by opening a thread in <#728007511386488872> .
-Download **(read the above warning)**: 
-||<https://mc.sr/mods/>||
-This mod allows you to adjust FOV and distortion effects.
-<:MCSRRanked:1310948334604783627> If you're playing Ranked, this mod is already bundled in the Ranked mod and is therefore not needed."""
+        text = """ExtraOptions is a mod that allows you to adjust FOV and distortion effects. It can be configured through Options ➔ Book and Quill ➔ ExtraOptions, __**not**__ through accessibility settings.
+-# <:MCSRRanked:1310948334604783627> If you're playing MCSR Ranked, this mod is already bundled in the Ranked mod and is therefore not needed.
+
+⚠️ **__Warning!__** ⚠️
+This mod is allowed, but may result in your run being **rejected** if it is used to gain an advantage that was otherwise unavailable, such as the examples listed here: https://discord.com/channels/83066801105145856/765767120008773662/1251662769518936064. If you are unsure whether something may be deemed an abuse of unintended behavior, you may ask by opening a thread in <#728007511386488872>.
+
+Download **(read the above warning)**:
+||<https://mc.sr/mods/>||"""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="seedwave", description="Gives the current Seedwave level.")
