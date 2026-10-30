@@ -1,6 +1,8 @@
 import asyncio, discord, hashlib, json, re, requests, time, traceback
 from discord import commands
 from discord.ext.commands import Cog
+from typing import Literal
+
 from BackgroundPingu.bot.main import BackgroundPingu
 from loghelper.issues.builder import IssueBuilder
 from loghelper.issues.checker import IssueChecker
@@ -13,6 +15,14 @@ class Tips(Cog):
         self._ratelimits: dict[bytes, float] = {}
         self._lock = asyncio.Lock()
         self.bot = bot
+
+    @staticmethod
+    def likely_os(server_id: int | None) -> Literal["Linux", "Windows", "macOS"]:
+        if server_id == 1095808506239651942: # linuxcord
+            return "Linux"
+        if server_id == 1115090280719339520: # maccord
+            return "macOS"
+        return "Windows"
     
     @staticmethod
     def _key(channel_id: int, text: str) -> bytes:
@@ -302,9 +312,12 @@ Osh's tutorials playlist: <https://www.youtube.com/playlist?list=PLwJbTWLH-1dakB
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
         launcher: discord.Option(str, choices=["Prism", "MultiMC", "Modrinth App", "Official Launcher", "MCSR Launcher", "All"], required=False, default="All"),
-        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default=None),
         java_25: discord.Option(bool, "Whether to link the guide for Java 25", choices=[True, False], required=False, default=False),
     ):
+        if os is None:
+            os = self.likely_os(ctx.guild_id)
+        
         text = ""
 
         if launcher == "Official Launcher":
@@ -366,14 +379,20 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
     ):
         text = """https://docs.google.com/document/d/1aYxL747PI6Lr0rgPSFmO-wvL6P7-YPLpNJewCJU86n0"""
         return await self._respond(ctx, text, mention)
-
+    
     @commands.slash_command(name="nbbdebug", description="Gives a guide to debugging Ninjabrain Bot.")
     async def nbbdebug(
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-        method: discord.Option(str, choices=["Manual", "Bosefi (experimental)"], required=False, default="Manual"),
+        method: discord.Option(str, choices=["Manual", "Bosefi (Windows)"], required=False, default=None),
     ):
+        if method is None:
+            if self.likely_os(ctx.guild_id) == "Windows":
+                method = "Bosefi (Windows, experimental)"
+            else:
+                method = "Manual"
+        
         cmd_prefix = "/"
         in_channel = ""
         for server_id, support_cid, bot_cid in SERVER_SUPPORT_BOT_CHANNEL_IDS:
@@ -457,11 +476,22 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default=None),
     ):
-        text = """To troubleshoot performance issues, please provide the following:
+        if os is None:
+            os = self.likely_os(ctx.guild_id)
+
+        if os == "Windows":
+            performance = "- A screenshot of: Ctrl+Shift+Esc ➔ **Performance** tab"
+        elif os == "Linux":
+            performance = "- A `fastfetch` or similar screenshot"
+        elif os == "macOS":
+            performance = ""
+        
+        text = f"""To troubleshoot performance issues, please provide the following:
 - A screenshot of the F3 screen in Minecraft
-- A screenshot of: Ctrl+Shift+Esc ➔ **Performance** tab
-- A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)"""
+{performance}
+- A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)""".replace("\n\n", "\n")
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="prelaunch", description="Gives a guide to fix Toolscreen not installing.")
@@ -506,8 +536,11 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default=None),
     ):
+        if os is None:
+            os = self.likely_os(ctx.guild_id)
+        
         if os == "macOS": text = """To set up speedrunning on Mac, follow the macOS setup guide: https://www.youtube.com/watch?v=sRSR55A7VCE.
 
 To run several instances, use **SeedQueue** (watch the above video).
@@ -977,8 +1010,11 @@ Practice mods:
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default="Windows"),
+        os: discord.Option(str, choices=["Windows", "Linux", "macOS"], required=False, default=None),
     ):
+        if os is None:
+            os = self.likely_os(ctx.guild_id)
+        
         if os == "macOS":
             guide = "https://youtu.be/RmAmL7JhGJw"
             temp = " on macOS"
