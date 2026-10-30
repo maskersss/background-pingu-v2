@@ -1254,7 +1254,7 @@ class IssueChecker:
             builder.error("checksum_mismatch")
             found_crash_cause = True
 
-        # toolscreen start
+        # toolscreen log start
         if self.log.type == LogType.TOOLSCREEN_LOG:
             programs = []
             temp = False
@@ -1285,11 +1285,14 @@ class IssueChecker:
                         builder.error("old_ts_version")
                 except version.InvalidVersion:
                     pass
-        # toolscreen end
+        # toolscreen log end
 
         if self.log.has_content("[Updater] User declined update"):
             builder.warning("old_ts_version")
 
+        if self.log.has_pattern("Running Pre-Launch command:.*toolscreen.*\nThe process failed to start"):
+            builder.error("ts_deleted_av", experimental=True)
+        
         for (filename, needed_ver, mod_name, update_link) in MINIMUM_MOD_VERSIONS:
             mod_ver = self.log.get_mod_version(filename)
             needed_ver = version.parse(needed_ver)

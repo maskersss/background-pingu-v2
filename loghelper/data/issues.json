@@ -225,6 +225,7 @@
     "error.too_little_ram_crash": "You have too little RAM allocated, which caused this crash.",
     "error.try_admin_launch": "You need to open your launcher with administrator privileges.",
     "error.ts_amd": "If Minecraft is freezing after resizing, you may need to downgrade AMD drivers to 25.9.1 or earlier. See [this thread](https://discord.com/channels/1472102343381352539/1472741961453797549) from the [Toolscreen discord](https://discord.com/invite/A2v6bCJg6K) for more information.",
+    "error.ts_deleted_av": "Your `Toolscreen.jar` was likely deleted by your antivirus. Toolscreen uses DLL injection, so antivirus flags it as malicious (false positive).\nFix: 1) check your antivirus quarantine/history and restore any Toolscreen files; 2) add a folder exclusion for Toolscreen.jar and the .config\\toolscreen\\dlls folder; 3) re-download and install.",
     "error.ts_hook": "You are using programs that can conflict with Toolscreen: `{}`. To fix it, try either disabling/closing them or adding `disableHookChaining = true` to `%userprofile%\\.config\\toolscreen\\config.toml`.",
     "error.turkish_crash": "This crash is caused by having a `Turkish` locale. To solve it, add `-Duser.language=en` to your launcher's Java arguments.",
     "error.unknown_corrupted_mod_config": "The config file of some mod seems to be corrupted. Try renaming / moving out the `.minecraft/config` folder to see if it'll fix the crash.",
