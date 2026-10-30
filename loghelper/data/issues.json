@@ -159,6 +159,7 @@
     "error.mod_crash_remove": "This crash is caused by the `{}` mod. To fix the crash, disable it.",
     "error.mods_crash": "Mods `{}` seem to be causing this crash.",
     "error.mods_crash_disable": "Mods `{}` seem to be causing this crash. Removing one of them could stop this crash from happening.",
+    "error.move_in_replay": "To move around in replays, you have to have to be in partial or hidden UI. To toggle between them, press `q` (by default).",
     "error.multiple_modloaders": "You have multiple modloaders installed (`{}`). Please delete everything but the one you need in `Edit{} > Version`.",
     "error.need_java_17_mods": "You are using {} (`{}`) that require{} `Java 17+`{}.",
     "error.need_java_17_outdated_mods": "You are using an outdated version of {} (`{}`) that required `Java 17+`{}. The latest version of {} is compatible with `Java 8`.",

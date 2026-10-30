@@ -392,7 +392,7 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
   * Drag and drop these files from your instance folder into Discord: `minecraft/config/mcsr/standardsettings.json` and `minecraft/options.txt` 
 -# You don't need to retype this command, it just sends this text."""
         else:
-            text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
+            text = f"""* Make sure you're switching to 30 FOV when measuring.
 * Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
 * If you are doing the above correctly, download and run this program to fix your settings: <https://github.com/greenfrogee/Bosefi/releases/latest>.
 * If you are still missing after running Bosefi, use `{cmd_prefix}stillmissing` for more solutions."""

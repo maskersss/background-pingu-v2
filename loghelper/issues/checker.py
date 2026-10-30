@@ -2245,6 +2245,20 @@ class IssueChecker:
                     
                     if mcsr_total >= 2:
                         builder.error("mcsr_not_ranked")
+
+                    replay_indicators = {
+                        r"free\s*cam": 1,
+                        r"replay": 5,
+                        r"move": 1,
+                    }
+                    replay_total = 0
+                    if self.server_id == 1056779246728658984:
+                        for pattern, value in replay_indicators.items():
+                            if self.log.has_pattern(pattern):
+                                replay_total += value
+                    
+                    if asking_for_help_total >= 2 and replay_total >= 6:
+                        builder.error("move_in_replay")
                 
                 if (not self.log.type in [LogType.FULL_LOG, LogType.LAUNCHER_LOG, LogType.THREAD_DUMP, LogType.TOOLSCREEN_LOG]
                     and self.log.has_pattern(r"Process (crashed|exited) with (exit)? ?code (-?\d+)")
