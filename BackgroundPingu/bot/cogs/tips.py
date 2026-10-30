@@ -389,7 +389,7 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
     ):
         if method is None:
             if self.likely_os(ctx.guild_id) == "Windows":
-                method = "Bosefi (Windows, experimental)"
+                method = "Bosefi (Windows)"
             else:
                 method = "Manual"
         
@@ -404,7 +404,11 @@ Tutorial: https://youtu.be/l-q-_4R8_6M?t=713 (timestamped)"""
                 break
         
         if method == "Manual":
-            text = f"""* Make sure that the resolution for Toolscreen ➔ Basic ➔ General ➔ EyeZoom is set to `384x16384` , and make sure you're switching to 30 FOV when measuring.
+            if self.likely_os(ctx.guild_id) == "Windows":
+                eyezoom = "Toolscreen ➔ Basic ➔ General ➔ EyeZoom"
+            else:
+                eyezoom = "EyeZoom"
+            text = f"""* Make sure that the resolution for {eyezoom} is set to `384x16384`, and make sure you're switching to 30 FOV when measuring.
 * Make sure you are measuring in accordance to [this image](<https://iili.io/Cpir6n2.jpg>).
 * If you are doing the above correctly then please send **__all__** of the following information{in_channel} so someone can review it:
   * Screenshots of these Ninjabrain Bot tabs in options: `Basic`, `Advanced`, Optional features ➔ `Angle adjustment` & `Boat measurement`
