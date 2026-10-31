@@ -2042,17 +2042,16 @@ class IssueChecker:
             if not is_mcsr_log and any(mcsr_mod in " ".join(wrong_mods) for mcsr_mod in self.mcsr_mods):
                 is_mcsr_log = True
 
-            if corrupted_config:
-                if any("speedrunapi" in mod for mod in wrong_mods):
-                    builder.error("mcsr_corrupted_mods_config", experimental=experimental)
+            if corrupted_config and not experimental:
+                if any("speedrunapi" in mod.lower() for mod in wrong_mods):
+                    builder.error("mcsr_corrupted_mods_config")
                 elif len(wrong_mods) > 1:
                     builder.error(
                         "corrupted_mods_config",
                         "`; `".join(wrong_mods[:12]),
-                        experimental=experimental,
                     )
                 elif len(wrong_mods) > 0:
-                    builder.error("corrupted_mod_config", wrong_mods[0], experimental=experimental)
+                    builder.error("corrupted_mod_config", wrong_mods[0])
                 else:
                     builder.error("unknown_corrupted_mod_config", experimental=True)
                 found_crash_cause = True
@@ -2091,6 +2090,20 @@ class IssueChecker:
                     builder.error("mods_crash", "`; `".join(wrong_mods))
                 else:
                     builder.error("mods_crash_disable", "`; `".join(wrong_mods))
+                found_crash_cause = True
+            if corrupted_config and experimental:
+                if any("speedrunapi" in mod for mod in wrong_mods):
+                    builder.error("mcsr_corrupted_mods_config", experimental=experimental)
+                elif len(wrong_mods) > 1:
+                    builder.error(
+                        "corrupted_mods_config",
+                        "`; `".join(wrong_mods[:12]),
+                        experimental=True,
+                    )
+                elif len(wrong_mods) > 0:
+                    builder.error("corrupted_mod_config", wrong_mods[0], experimental=True)
+                else:
+                    builder.error("unknown_corrupted_mod_config", experimental=True)
                 found_crash_cause = True
         
         
