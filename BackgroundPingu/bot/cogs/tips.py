@@ -269,11 +269,11 @@ For other uses, see [AutoHotkey](https://discord.com/channels/83066801105145856/
     ):
         text = """The most popular category/version to run is 1.16.1 Any% Random Seed Glitchless, so we're assuming you're planning to run this category.
 
-[Follow this video for a tutorial to set up Minecraft for speedrunning.](<https://youtu.be/l-q-_4R8_6M>) It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
+Follow this video for a tutorial to set up Minecraft for speedrunning: <https://youtu.be/l-q-_4R8_6M>. It goes through everything from setting up Prism Launcher to installing mods and practice maps, so it's highly recommended to watch this first.
 
-The most important things to learn when starting out are bastion routes and one-cycling. Watch [these videos for introductory bastion routes](<https://www.youtube.com/playlist?list=PL7Q35RXRsOR-udeKzwlYGJd0ZrvGJ0fwu>) and [this video for one-cycling.](<https://youtu.be/JaVyuTyDxxs>)
+The most important things to learn when starting out are bastion routes and one-cycling – see the below guide.
 
-In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a [more comprehensive playlist](<https://www.youtube.com/playlist?list=PLwJbTWLH-1dakBZaROfNJZ-m59OQg_hFp>) and a [full comprehensive guide](<https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>), but since they cover a lot of strategies it may seem overwhelming at first, so take it easy."""
+In general, it's a good idea to watch top runs and top runners' streams to get a feel of how a speedrun goes. Here's a full comprehensive guide: <https://metafy.gg/guides/view/ultimate-minecraft-speedrun-guide-cIzfjeTmwOm>, but since it covers a lot of strategies it may seem overwhelming at first, so take it easy."""
         return await self._respond(ctx, text, mention)
 
     @commands.slash_command(name="tutorials", description="Links Couriway's Metafy guide and Osh's tutorials YouTube playlist.")
