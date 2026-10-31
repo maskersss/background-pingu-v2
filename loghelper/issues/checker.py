@@ -2215,22 +2215,22 @@ class IssueChecker:
                             builder.error("gamma_draftout")
                         else:
                             builder.error("gamma")
-                    
+
+                    # multiplicative
                     boateye_indicators = {
                         r"miss": 3,
                         r"100 ?(?:%|percent)": 3,
-                        r"not? ?work": 3,
-                        r"wrong ?coo?rd": 3,
+                        r"n[o'’‘]?t? ?work": 3,
+                        r"wrong ?coo?rd": 6,
                         r"boat ?eye": 2,
-                        r"nin(ja)? ?b?(rain)? ?bot": 2,
+                        r"nin(ja)? ?b?(rain)? ?bot|\bnbb\b": 2,
                     }
-
-                    boateye_total = 0
+                    boateye_total = 1
                     for pattern, value in boateye_indicators.items():
                         if self.log.has_pattern(pattern):
-                            boateye_total += value
+                            boateye_total *= value
                     
-                    if asking_for_help_total >= 2 and boateye_total >= 5:
+                    if asking_for_help_total >= 2 and boateye_total % 6 == 0:
                         builder.error("boateye_help", self.cmd_prefix)   
                     
                     mcsr_indicators = {
