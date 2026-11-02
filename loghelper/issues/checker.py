@@ -1518,7 +1518,7 @@ class IssueChecker:
             found_crash_cause = True
         
         if self.log.has_mod("carpet"):
-            for incompatible_mod in ["WorldPreview", "fast-reset"]:
+            for incompatible_mod in ["fast-reset"]:
                 if self.log.has_mod(incompatible_mod):
                     builder.error("incompatible_mod", "carpet", incompatible_mod)
                     found_crash_cause = True
