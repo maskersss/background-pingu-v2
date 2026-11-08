@@ -47,7 +47,6 @@ class IssueChecker:
         ]
         self.assume_as_latest = [
             "sodiummac",
-            "krypton",
             "optifine",
             "sodium-extra",
             "biomethreadlocalfix",
@@ -2172,18 +2171,6 @@ class IssueChecker:
                     
                     if new_world_total >= 2 and settings_total >= 2 and asking_for_help_total >= 2:
                         builder.error("settings_reset")
-                    
-                    ts_broken_indicators = {
-                        r"(?:ctrl|control)\s*\+?\s*i\b": 1,
-                        r"toolscreen": 1,
-                    }
-                    ts_broken_total = 0
-                    for pattern, value in ts_broken_indicators.items():
-                        if self.log.has_pattern(pattern):
-                            ts_broken_total += value
-
-                    if ts_broken_total >= 2 and asking_for_help_total >= 2:
-                        builder.error("prelaunch", self.cmd_prefix)
                     
                     wall_indicators = {
                         "the wall": 10,

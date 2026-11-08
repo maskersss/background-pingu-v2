@@ -498,26 +498,6 @@ More information on Toolscreen hotkeys is available [here](<https://youtu.be/LG1
 - A Minecraft log[:](https://i.imgur.com/MfrJwcM.png)""".replace("\n\n", "\n")
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="prelaunch", description="Gives a guide to fix Toolscreen not installing.")
-    async def prelaunch(
-        self,
-        ctx: discord.ApplicationContext,
-        mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
-        method: discord.Option(str, choices=["Manual (Prism)", "Update to beta"], required=False, default="Manual (Prism)"),
-    ):
-        if method == "Manual (Prism)":
-            text = """If you are trying to install Toolscreen onto Prism Launcher 11.1.0+ and it's not working:
-
-- Right click the instance, Edit -> Settings -> Custom Commands
-- Enable "Override Global Settings"
-- If you use Toolscreen.**jar**, paste this into the Pre-launch command:
-```"$INST_JAVA" -jar "$INST_DIR/Toolscreen.jar"``` (Copy and paste this exact text)
-- If you use Toolscreen.**exe **paste this into the Pre-launch command: 
-```"$INST_DIR/Toolscreen.exe"``` (Copy and paste this exact text)"""
-        else:
-            text = """If you are trying to install Toolscreen and it's not working, use the latest beta release – download `Toolscreen-1.5.0-double-click-me.jar` from <https://github.com/jojoe77777/Toolscreen/releases/tag/v1.5.0> and install it instead"""
-        return await self._respond(ctx, text, mention)
-
     @commands.slash_command(name="prism", description="Gives a link to download Prism Launcher.")
     async def prism(
         self,
@@ -801,12 +781,9 @@ Otherwise, if you have an issue/a question, describe it{temp}, and try to provid
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
     ):
-        text = """* Use [this calculator](https://qmaxxen.github.io/Toolscreen-sens-calc/) to set up your godsens
-* Change your mouse sensitivity in config/mcsr/standardsettings.json to the one given by the calculator (alternatively you can change it in options.txt **IF** you are not using Standard Settings)
-* Change the Global Sensitivity in *Toolscreen ➔ Basic* to the number given by the calculator (you can press Tab after clicking on the slider to type in specific numbers)
-* Enable green boat and update the sensitivity in *Ninjabrain Bot Settings ➔ Optional features ➔ Boat measurement*
+        text = """Download and run this program to set up godsens: <https://github.com/greenfrogee/Bosefi/releases/latest>. Follow all instructions Bosefi gives you.
 ### Green boat explanation:
-If you ever do A/D in a boat (like when boating in the ocean) then you need to reset your angle by placing a boat and getting in and out of it at some point without doing A/D, this can be done at any point like while waiting for blazes or while boating down something. You can make a habit of entering a boat right before measuring to be sure you have no error."""
+Green boat allows you to measure without having to get into a boat, which is helpful in some rare cases where you lost your boat or never had one. Though, this doesn't mean you should skip using a boat - if you turned left or right in a boat at any point of the run, you'll need to get in and out of a boat. For this reason, players overlap this with going through a Nether Portal every run. This ensures boat desync is never an issue."""
         return await self._respond(ctx, text, mention)
     
     @commands.slash_command(name="graalvm", description="Gives a link to the GraalVM guide.")
@@ -851,8 +828,8 @@ Don't forget to check the FAQ in the readme!
 :warning: *PeepoPractice is incompatible with FastReset and requires Java 17+. Do `/java` if you need help with updating your Java version.*"""
         return await self._respond(ctx, text, mention)
 
-    @commands.slash_command(name="allowedmods", description="Gives a link to allowed mods.")
-    async def allowedmods(
+    @commands.slash_command(name="mods", description="Gives a link to allowed mods.")
+    async def mods(
         self,
         ctx: discord.ApplicationContext,
         mention: discord.Option(discord.Member, "User to ping with the response", required=False, default=None),
