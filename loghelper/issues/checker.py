@@ -1423,6 +1423,17 @@ class IssueChecker:
                 builder.error("ranked_rong_mods", f"a mod `{ranked_rong_mods[0]}` that is", "it")
 
         if (not found_crash_cause
+            and (self.log.is_ranked_log or len(self.log.whatever_mods) == 0)
+            and self.log.has_pattern(r"Illegal launcher\(.*\) has detected!")
+        ):
+            pattern = r"Illegal launcher\((.*)\) has detected!"
+            match = re.search(pattern, self.log._content)
+            if not match is None:
+                name = match.group(1)
+                builder.error("ranked_illegal_launcher", name)
+                found_crash_cause = True
+        
+        if (not found_crash_cause
             and self.log.is_ranked_log
             and self.log.has_mod("atum")
             and self.log.has_content_in_stacktrace("Cannot invoke \"net.minecraft.class_1928$class_4315.method_20781()\" because the return value of \"net.minecraft.class_1928.method_20746(net.minecraft.class_1928$class_4313)\" is null")
