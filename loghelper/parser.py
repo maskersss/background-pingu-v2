@@ -1029,24 +1029,22 @@ class Log:
         return arg
     
     def get_mod_version(self, mod_name: str) -> version.Version | None:
-        target_mod = None
-        for mod in self.whatever_mods[::-1]:
-            if mod_name.lower() in mod.lower():
-                target_mod = mod
-                break
+        mod_versions = []
+        for mod in self.whatever_mods:
+            if not mod_name.lower() in mod.lower():
+                continue
 
-        if target_mod is None:
-            return None
+            match = re.search(r"(\d+\.\d+(?:\.\d+)?)", mod)
+            if match is None:
+                continue
 
-        match = re.search(r"(\d+\.\d+(?:\.\d+)?)", target_mod)
-        if match is None:
-            return None
+            extracted_version = match.group(1)
+            try:
+                mod_versions.append(version.parse(extracted_version))
+            except version.InvalidVersion:
+                pass
 
-        extracted_version = match.group(1)
-        try:
-            return version.parse(extracted_version)
-        except version.InvalidVersion:
-            return None
+        return max(mod_versions, default=None)
     
     def is_newer_than(self, compared_version: str) -> bool:
         if self.parsed_mc_version is None: return False
